@@ -386,6 +386,86 @@
         [data-theme="dark"] #taskNoteQuill .ql-toolbar .ql-picker { color: var(--text-medium); }
         [data-theme="dark"] #taskNoteQuill .ql-toolbar .ql-picker-options { background: var(--bg-white); border-color: var(--border); }
 
+        /* ======================== CENTRO DE TRABAJO ======================== */
+        .ct-container { padding: 20px 32px; }
+        .ct-tabs { display: flex; gap: 4px; margin-bottom: 24px; overflow-x: auto; padding-bottom: 4px; border-bottom: 1px solid var(--border); }
+        .ct-tab { padding: 10px 18px; border-radius: 10px 10px 0 0; border: none; background: transparent; color: var(--text-light); font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: all 0.2s; border-bottom: 2px solid transparent; }
+        .ct-tab:hover { color: var(--text-dark); background: var(--bg-body); }
+        .ct-tab.active { color: var(--accent); border-bottom-color: var(--accent); background: var(--accent-light); }
+        .ct-module { display: none; animation: fadeIn 0.3s ease; }
+        .ct-module.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .ct-section { background: var(--bg-white); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 16px; overflow: hidden; }
+        .ct-section-header { padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: background 0.2s; }
+        .ct-section-header:hover { background: var(--bg-body); }
+        .ct-section-title { font-size: 14px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 10px; }
+        .ct-section-title svg { width: 18px; height: 18px; color: var(--accent); }
+        .ct-section-chevron { width: 16px; height: 16px; color: var(--text-light); transition: transform 0.3s; }
+        .ct-section.open .ct-section-chevron { transform: rotate(180deg); }
+        .ct-section-body { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s ease; }
+        .ct-section.open .ct-section-body { max-height: 5000px; padding: 0 20px 20px; }
+        .ct-text { font-size: 13px; color: var(--text-medium); line-height: 1.8; margin-bottom: 12px; }
+        .ct-text strong { color: var(--text-dark); }
+        .ct-text ul, .ct-text ol { padding-left: 20px; margin: 8px 0; }
+        .ct-text li { margin-bottom: 6px; }
+        .ct-checklist { list-style: none; padding: 0; margin: 12px 0; }
+        .ct-checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; border-radius: 10px; margin-bottom: 4px; transition: background 0.2s; cursor: pointer; }
+        .ct-checklist li:hover { background: var(--bg-body); }
+        .ct-check { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; margin-top: 1px; }
+        .ct-check.checked { background: var(--success); border-color: var(--success); }
+        .ct-check.checked::after { content: ''; width: 8px; height: 5px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translateY(-1px); }
+        .ct-check-text { font-size: 13px; color: var(--text-medium); line-height: 1.5; }
+        .ct-check-text.done { text-decoration: line-through; color: var(--text-light); }
+        .ct-template { background: var(--bg-body); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin: 12px 0; position: relative; }
+        .ct-template pre { font-family: 'Inter', monospace; font-size: 12px; color: var(--text-dark); white-space: pre-wrap; line-height: 1.7; margin: 0; }
+        .ct-copy-btn { position: absolute; top: 10px; right: 10px; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-white); color: var(--text-light); font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 4px; }
+        .ct-copy-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .ct-copy-btn.copied { background: var(--success); color: #fff; border-color: var(--success); }
+        .ct-table-wrap { overflow-x: auto; margin: 12px 0; }
+        .ct-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        .ct-table th { background: var(--bg-body); padding: 10px 14px; text-align: left; font-weight: 700; color: var(--text-dark); border-bottom: 2px solid var(--border); white-space: nowrap; }
+        .ct-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text-medium); }
+        .ct-table tr:hover td { background: var(--bg-body); }
+        .ct-table input[type="text"], .ct-table textarea { width: 100%; border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; font-size: 12px; font-family: inherit; background: var(--bg-white); color: var(--text-dark); }
+        .ct-table input[type="text"]:focus, .ct-table textarea:focus { outline: none; border-color: var(--accent); }
+        .ct-badge { display: inline-block; padding: 3px 10px; border-radius: 8px; font-size: 11px; font-weight: 600; }
+        .ct-badge.blue { background: #dbeafe; color: #1e40af; }
+        .ct-badge.green { background: #dcfce7; color: #166534; }
+        .ct-badge.yellow { background: #fef3c7; color: #92400e; }
+        .ct-badge.red { background: #fee2e2; color: #991b1b; }
+        .ct-badge.purple { background: #f3e8ff; color: #6b21a8; }
+        [data-theme="dark"] .ct-badge.blue { background: rgba(59,130,246,0.2); color: #60a5fa; }
+        [data-theme="dark"] .ct-badge.green { background: rgba(16,185,129,0.2); color: #34d399; }
+        [data-theme="dark"] .ct-badge.yellow { background: rgba(245,158,11,0.2); color: #fbbf24; }
+        [data-theme="dark"] .ct-badge.red { background: rgba(239,68,68,0.2); color: #f87171; }
+        [data-theme="dark"] .ct-badge.purple { background: rgba(139,92,246,0.2); color: #a78bfa; }
+        .ct-metric-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin: 16px 0; }
+        .ct-metric { background: var(--bg-white); border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; }
+        .ct-metric-value { font-size: 28px; font-weight: 800; color: var(--accent); }
+        .ct-metric-label { font-size: 11px; color: var(--text-light); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .ct-add-row { display: flex; gap: 8px; margin-top: 12px; }
+        .ct-add-row input { flex: 1; padding: 8px 12px; border: 1px dashed var(--border); border-radius: 8px; font-size: 12px; background: transparent; color: var(--text-dark); }
+        .ct-add-row input:focus { outline: none; border-color: var(--accent); border-style: solid; }
+        .ct-add-row button { padding: 8px 16px; border-radius: 8px; border: none; background: var(--accent); color: #fff; font-size: 12px; font-weight: 600; cursor: pointer; }
+        .ct-priority { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-radius: 10px; margin-bottom: 8px; border-left: 4px solid; background: var(--bg-white); }
+        .ct-priority.urgent { border-color: #ef4444; }
+        .ct-priority.important { border-color: #f59e0b; }
+        .ct-priority.normal { border-color: #3b82f6; }
+        .ct-priority-text { font-size: 13px; color: var(--text-dark); flex: 1; }
+        .ct-progress-bar { height: 8px; background: var(--bg-body); border-radius: 4px; overflow: hidden; margin-top: 8px; }
+        .ct-progress-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
+        .ct-progress-fill.low { background: #ef4444; }
+        .ct-progress-fill.mid { background: #f59e0b; }
+        .ct-progress-fill.high { background: #22c55e; }
+        .ct-step { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+        .ct-step:last-child { border-bottom: none; }
+        .ct-step-num { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+        .ct-step-content { flex: 1; }
+        .ct-step-title { font-size: 13px; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
+        .ct-step-desc { font-size: 12px; color: var(--text-medium); line-height: 1.6; }
+        @media (max-width: 1024px) { .ct-container { padding: 16px; } .ct-tabs { gap: 2px; } .ct-tab { padding: 8px 12px; font-size: 12px; } }
+        @media (max-width: 640px) { .ct-container { padding: 12px; } .ct-metric-cards { grid-template-columns: 1fr 1fr; } }
+
         /* ======================== TIMESHEET FEEDBACK ======================== */
         .ts-container { padding: 20px 32px; max-width: 100%; }
         .ts-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
@@ -421,70 +501,6 @@
         .ts-footer-actions { display: flex; gap: 8px; }
         @media (max-width: 640px) { .ts-container { padding: 16px; } .ts-card-top { flex-direction: column; align-items: flex-start; gap: 8px; } }
 
-        /* ======================== KANBAN BOARD ======================== */
-        .kanban-container { padding: 24px 32px; height: calc(100vh - 120px); overflow-x: auto; }
-        .kanban-board { display: flex; gap: 20px; min-height: 100%; align-items: flex-start; }
-        .kanban-column { flex: 1; min-width: 320px; max-width: 400px; background: var(--bg-white); border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; max-height: calc(100vh - 140px); }
-        .kanban-col-header { padding: 18px 20px 14px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
-        .kanban-col-title { display: flex; align-items: center; gap: 10px; }
-        .kanban-col-title h3 { font-size: 14px; font-weight: 700; color: var(--text-dark); margin: 0; }
-        .kanban-col-count { background: var(--bg-body); color: var(--text-medium); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 8px; }
-        .kanban-col-dot { width: 10px; height: 10px; border-radius: 50%; }
-        .kanban-col-dot.pendiente { background: var(--warning); }
-        .kanban-col-dot.progreso { background: var(--accent); }
-        .kanban-col-dot.hecho { background: var(--success); }
-        .kanban-add-btn { width: 30px; height: 30px; border-radius: 10px; border: 1.5px dashed var(--border); background: transparent; color: var(--text-light); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 18px; }
-        .kanban-add-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
-        .kanban-cards { padding: 12px; flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
-        .kanban-cards::-webkit-scrollbar { width: 0; }
-        .kanban-card { background: var(--bg-white); border: 1.5px solid var(--border); border-radius: 16px; padding: 16px; cursor: grab; transition: all 0.2s ease; position: relative; }
-        .kanban-card:hover { border-color: var(--accent); box-shadow: var(--shadow-md); transform: translateY(-1px); }
-        .kanban-card.dragging { opacity: 0.5; transform: rotate(2deg); }
-        .kanban-card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
-        .kanban-tag { padding: 3px 10px; border-radius: 8px; font-size: 10px; font-weight: 700; text-transform: lowercase; letter-spacing: 0.3px; }
-        .kanban-tag.tag-0 { background: #dbeafe; color: #1e40af; }
-        .kanban-tag.tag-1 { background: #dcfce7; color: #166534; }
-        .kanban-tag.tag-2 { background: #fef3c7; color: #92400e; }
-        .kanban-tag.tag-3 { background: #f3e8ff; color: #6b21a8; }
-        .kanban-tag.tag-4 { background: #ffe4e6; color: #9f1239; }
-        .kanban-tag.tag-5 { background: #e0f2fe; color: #075985; }
-        .kanban-tag.tag-6 { background: #fef9c3; color: #854d0e; }
-        .kanban-tag.tag-7 { background: #ede9fe; color: #5b21b6; }
-        .kanban-card-title { font-size: 13px; font-weight: 700; color: var(--text-dark); line-height: 1.4; margin-bottom: 8px; }
-        .kanban-card-note { font-size: 11px; color: var(--text-medium); margin-bottom: 10px; line-height: 1.4; }
-        .kanban-card-note p { margin: 0 0 4px; }
-        .kanban-card-note ul, .kanban-card-note ol { margin: 0; padding-left: 16px; }
-        .kanban-card-note a { color: var(--accent); }
-        .kanban-card-subtasks { margin-bottom: 10px; }
-        .kanban-subtask { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
-        .kanban-subtask-check { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
-        .kanban-subtask-check.done { background: var(--success); border-color: var(--success); }
-        .kanban-subtask-check.done::after { content: ''; width: 6px; height: 3px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translateY(-1px); }
-        .kanban-subtask-text { font-size: 11px; color: var(--text-medium); }
-        .kanban-subtask-text.done { text-decoration: line-through; color: var(--text-light); }
-        .kanban-card-progress { margin-bottom: 12px; }
-        .kanban-progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-        .kanban-progress-label { font-size: 10px; color: var(--text-light); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        .kanban-progress-pct { font-size: 11px; font-weight: 700; color: var(--text-dark); }
-        .kanban-progress-bar { height: 6px; background: var(--bg-body); border-radius: 3px; overflow: hidden; }
-        .kanban-progress-fill { height: 100%; border-radius: 3px; transition: width 0.3s ease; background: var(--gradient-1); }
-        .kanban-progress-fill.low { background: var(--warning); }
-        .kanban-progress-fill.mid { background: var(--accent); }
-        .kanban-progress-fill.high { background: var(--success); }
-        .kanban-card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid var(--border); }
-        .kanban-card-avatar { width: 26px; height: 26px; border-radius: 50%; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; }
-        .kanban-card-avatar svg { width: 14px; height: 14px; color: #fff; }
-        .kanban-card-actions { display: flex; gap: 4px; }
-        .kanban-card-actions button { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-white); color: var(--text-light); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-        .kanban-card-actions button:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
-        .kanban-card-actions button.del:hover { background: var(--danger); border-color: var(--danger); }
-        .kanban-card-actions button svg { width: 12px; height: 12px; }
-        .kanban-drop-zone { min-height: 40px; border-radius: 12px; border: 2px dashed transparent; transition: all 0.2s; }
-        .kanban-drop-zone.active { border-color: var(--accent); background: var(--accent-light); min-height: 60px; }
-        .kanban-empty { text-align: center; padding: 32px 16px; color: var(--text-light); font-size: 12px; }
-        .kanban-empty svg { width: 36px; height: 36px; margin-bottom: 8px; opacity: 0.4; }
-        @media (max-width: 1024px) { .kanban-container { padding: 16px; } .kanban-column { min-width: 280px; } }
-        @media (max-width: 640px) { .kanban-container { padding: 12px; } .kanban-board { flex-direction: column; } .kanban-column { max-width: none; min-width: auto; } }
     </style>
 </head>
 <body>
@@ -552,8 +568,8 @@
                 <span>Feedback</span>
             </a>
             <a class="sidebar-link" onclick="showView('tasks')">
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                <span>Tareas</span>
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                <span>Centro de Trabajo</span>
             </a>
         </div>
     <div class="sidebar-footer">
@@ -688,17 +704,12 @@
         <div id="tasksView" class="hidden">
             <div class="topbar">
                 <div class="topbar-left">
-                    <div><h2>Tareas</h2><div class="breadcrumb">STS Security / <span>Board</span></div></div>
-                </div>
-                <div class="topbar-right">
-                    <button class="btn" onclick="showView('clients')">
-                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                        Volver
-                    </button>
+                    <div><h2>Centro de Trabajo</h2><div class="breadcrumb">STS Security / <span>Herramientas</span></div></div>
                 </div>
             </div>
-            <div class="kanban-container">
-                <div class="kanban-board" id="kanbanBoard"></div>
+            <div class="ct-container">
+                <div class="ct-tabs" id="ctTabs"></div>
+                <div id="ctModules"></div>
             </div>
         </div>
     </main>
@@ -1583,197 +1594,437 @@ if (excelFeedbackData.length === 0) {
 
 function generatePDF(){const labels={mc:'MC',ma:'MA',si:'SI'};let html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Reporte Clientes STS</title><style>body{font-family:Arial,sans-serif;padding:30px;color:#333}h1{text-align:center;color:#1e293b;margin-bottom:5px}.sub{text-align:center;color:#666;font-size:14px;margin-bottom:30px}.card{border:1px solid #ddd;border-radius:8px;margin-bottom:20px;page-break-inside:avoid}.ch{background:#0f172a;color:#fff;padding:12px 16px;border-radius:8px 8px 0 0;display:flex;justify-content:space-between}.ch h2{font-size:16px;margin:0}.cb{padding:16px}.sec{margin-bottom:10px}.st{font-size:11px;text-transform:uppercase;color:#888;font-weight:700;margin-bottom:4px}.sc{font-size:13px;color:#555;line-height:1.6}.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;margin-right:4px;background:#e0f2fe;color:#075985}table{width:100%;border-collapse:collapse;margin-top:6px;font-size:12px}th,td{padding:4px 8px;text-align:left;border-bottom:1px solid #eee}th{background:#f8fafc;color:#666}.alert{padding:8px 12px;border-radius:6px;font-size:12px;margin-top:6px;border-left:3px solid}.alert-w{background:#fef3c7;border-color:#f59e0b;color:#92400e}.alert-i{background:#e0f2fe;border-color:#0ea5e9;color:#075985}.alert-d{background:#fee2e2;border-color:#ef4444;color:#991b1b}.upsell{background:#ede9fe;border:1px solid #c4b5fd;border-radius:6px;padding:10px 12px;margin-top:8px}.ut{font-size:11px;text-transform:uppercase;color:#7c3aed;font-weight:700}.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;background:#d1fae5;color:#065f46}</style></head><body><h1>Client Report - STS Security</h1><p class="sub">Generado el ${new Date().toLocaleDateString('es',{day:'2-digit',month:'long',year:'numeric'})}</p>`;clients.forEach(c=>{html+=`<div class="card"><div class="ch"><h2>${c.name}</h2><span>${c.id} ${c.contacted?'<span class="badge">Contactado</span>':''}</span></div><div class="cb">`;html+=`<div class="sec"><div class="st">Servicios</div><div class="sc">${c.services.map(s=>`<span class="tag">${labels[s]||s}</span>`).join(' ')||'Ninguno'}</div></div>`;if(c.property)html+=`<div class="sec"><div class="st">Propiedad</div><div class="sc">${c.property}</div></div>`;if(c.language)html+=`<div class="sec"><div class="st">Idioma</div><div class="sc">${c.language}</div></div>`;if(c.devices&&c.devices.length)html+=`<div class="sec"><div class="st">Dispositivos</div><table>${c.devices.map(d=>`<tr><th>${d.name}</th><td>${d.qty}</td></tr>`).join('')}</table></div>`;if(c.serviceType)html+=`<div class="sec"><div class="st">Estado del Equipo</div><div class="sc">${c.serviceType}</div></div>`;if(c.recentIssues)html+=`<div class="sec"><div class="st">Historial de Soporte</div><div class="alert alert-w">${c.recentIssues}</div></div>`;if(c.lastMaintenance||c.nextMaintenance)html+=`<div class="sec"><div class="st">Mantenimiento</div><div class="sc">${c.lastMaintenance?'Último: '+c.lastMaintenance:''} ${c.nextMaintenance?'Próximo: '+c.nextMaintenance:''}</div></div>`;if(c.blindSpots)html+=`<div class="sec"><div class="st">Evaluación de Seguridad</div><div class="sc">${c.blindSpots}</div></div>`;if(c.techNotes)html+=`<div class="sec"><div class="st">Notas Técnicas</div><div class="alert alert-i">${c.techNotes}</div></div>`;if(c.upsellOpportunity){const ns=c.upsellOpportunity.includes('NO OFRECER')||c.upsellOpportunity.includes('nada que ofrecer')||c.upsellOpportunity.includes('No hay nada');html+=`<div class="sec">${ns?`<div class="alert alert-d"><strong>NO OFRECER:</strong> ${c.upsellOpportunity}</div>`:`<div class="upsell"><div class="ut">Oportunidad de Venta</div><div style="font-size:12px;color:#555">${c.upsellOpportunity}</div></div>`}</div>`;}if(c.notes)html+=`<div class="sec"><div class="st">Notas</div><div class="sc" style="font-style:italic;color:#888">${c.notes}</div></div>`;const notes=callNotes[c.id]||[];if(notes.length>0){html+=`<div class="sec"><div class="st">Feedback</div>${notes.map(n=>`<div style="padding:6px 10px;background:#f8fafc;border-radius:6px;margin-bottom:4px;font-size:12px"><div style="font-size:10px;color:#0ea5e9;font-weight:600">${formatTime(n.time)}</div><div style="color:#555;margin-top:2px;white-space:pre-wrap">${n.text}</div></div>`).join('')}</div>`;}html+=`</div></div>`;});html+=`</body></html>`;const win=window.open('','_blank');win.document.write(html);win.document.close();setTimeout(()=>{win.print();},500);}
 
-// ===== NOTION API FUNCTIONS =====
-let kanbanTasks = JSON.parse(localStorage.getItem('sts_tasks') || '[]');
-function saveTasks() { localStorage.setItem('sts_tasks', JSON.stringify(kanbanTasks)); }
+// ===== CENTRO DE TRABAJO =====
+const ctModules = [
+    { id:'dashboard', label:'Panel Principal', icon:'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z' },
+    { id:'clientes', label:'Experiencia del Cliente', icon:'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2' },
+    { id:'social', label:'Social Media', icon:'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z' },
+    { id:'seo', label:'Contenido & SEO', icon:'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z' },
+    { id:'newsletters', label:'Newsletters', icon:'M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z' },
+    { id:'videos', label:'Videos y Diseño', icon:'M23 7l-7 5 7 5V7z' },
+    { id:'docs', label:'Documentación', icon:'M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z' },
+    { id:'metrics', label:'Métricas', icon:'M18 20V10M12 20V4M6 20v-6' }
+];
+let ctActiveModule = localStorage.getItem('ct_active_module') || 'dashboard';
+let ctChecklistState = JSON.parse(localStorage.getItem('ct_checklists') || '{}');
+let ctTableData = JSON.parse(localStorage.getItem('ct_tables') || '{}');
 
-function generateId() { return 'task_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6); }
+function saveCtChecklist(moduleId, key, value) {
+    if (!ctChecklistState[moduleId]) ctChecklistState[moduleId] = {};
+    ctChecklistState[moduleId][key] = value;
+    localStorage.setItem('ct_checklists', JSON.stringify(ctChecklistState));
+}
+function saveCtTable(moduleId, key, data) {
+    if (!ctTableData[moduleId]) ctTableData[moduleId] = {};
+    ctTableData[moduleId][key] = data;
+    localStorage.setItem('ct_tables', JSON.stringify(ctTableData));
+}
+function getCtChecklist(moduleId, key) { return ctChecklistState[moduleId] && ctChecklistState[moduleId][key] ? ctChecklistState[moduleId][key] : []; }
+function getCtTable(moduleId, key) { return ctTableData[moduleId] && ctTableData[moduleId][key] ? ctTableData[moduleId][key] : []; }
 
-function getTaskProgress(task) {
-    if (!task.subtasks || task.subtasks.length === 0) return { done: 0, total: 0, pct: 0 };
-    const done = task.subtasks.filter(s => s.done).length;
-    const total = task.subtasks.length;
-    return { done, total, pct: Math.round((done / total) * 100) };
+function renderCtTabs() {
+    const tabs = document.getElementById('ctTabs');
+    tabs.innerHTML = ctModules.map(m => `<button class="ct-tab ${m.id===ctActiveModule?'active':''}" onclick="switchCtModule('${m.id}')">${m.label}</button>`).join('');
 }
 
-function renderKanban() {
-    const board = document.getElementById('kanbanBoard');
-    if (!board) return;
-    const columns = [
-        { key: 'Pendiente', label: 'Todo list', dot: 'pendiente' },
-        { key: 'En progreso', label: 'In Progress', dot: 'progreso' },
-        { key: 'Hecho', label: 'In Review', dot: 'hecho' }
-    ];
-    board.innerHTML = columns.map(col => {
-        const tasks = kanbanTasks.filter(t => t.status === col.key);
-        const cardsHtml = tasks.length === 0
-            ? `<div class="kanban-empty"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><p>Sin tareas</p></div>`
-            : tasks.map(t => renderKanbanCard(t)).join('');
-        return `<div class="kanban-column">
-            <div class="kanban-col-header">
-                <div class="kanban-col-title">
-                    <div class="kanban-col-dot ${col.dot}"></div>
-                    <h3>${col.label}</h3>
-                    <span class="kanban-col-count">${tasks.length}</span>
-                </div>
-                <button class="kanban-add-btn" onclick="openTaskModal(null,'${col.key}')" title="Nueva tarea">+</button>
-            </div>
-            <div class="kanban-cards" data-status="${col.key}"
-                 ondragover="event.preventDefault();this.classList.add('drag-over')"
-                 ondragleave="this.classList.remove('drag-over')"
-                 ondrop="handleDrop(event,'${col.key}');this.classList.remove('drag-over')">
-                ${cardsHtml}
-            </div>
-        </div>`;
-    }).join('');
+function switchCtModule(id) {
+    ctActiveModule = id;
+    localStorage.setItem('ct_active_module', id);
+    renderCtTabs();
+    renderCtModule(id);
 }
 
-function renderKanbanCard(task) {
-    const tags = (task.tags || []).map((tag, i) => `<span class="kanban-tag tag-${i % 8}">${tag}</span>`).join('');
-    const subs = task.subtasks || [];
-    const subtasksHtml = subs.length > 0
-        ? `<div class="kanban-card-subtasks">${subs.map((s, i) => `
-            <div class="kanban-subtask">
-                <div class="kanban-subtask-check ${s.done ? 'done' : ''}" onclick="toggleSubtaskDone('${task.id}',${i})"></div>
-                <span class="kanban-subtask-text ${s.done ? 'done' : ''}">${s.text}</span>
-            </div>`).join('')}</div>`
-        : '';
-    const prog = getTaskProgress(task);
-    let progressHtml = '';
-    if (subs.length > 0) {
-        const cls = prog.pct < 40 ? 'low' : prog.pct < 80 ? 'mid' : 'high';
-        progressHtml = `<div class="kanban-card-progress">
-            <div class="kanban-progress-header">
-                <span class="kanban-progress-label">Progress</span>
-                <span class="kanban-progress-pct">${prog.pct}%</span>
-            </div>
-            <div class="kanban-progress-bar"><div class="kanban-progress-fill ${cls}" style="width:${prog.pct}%"></div></div>
-        </div>`;
-    }
-    const noteHtml = task.note ? `<div class="kanban-card-note">${task.note}</div>` : '';
-    return `<div class="kanban-card" draggable="true" ondragstart="handleDragStart(event,'${task.id}')" ondragend="this.classList.remove('dragging')">
-        ${tags ? `<div class="kanban-card-tags">${tags}</div>` : ''}
-        <div class="kanban-card-title">${task.title}</div>
-        ${noteHtml}
-        ${subtasksHtml}
-        ${progressHtml}
-        <div class="kanban-card-footer">
-            <div class="kanban-card-avatar"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-            <div class="kanban-card-actions">
-                <button onclick="editTask('${task.id}')" title="Editar"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-                <button class="del" onclick="deleteTask('${task.id}')" title="Eliminar"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
-            </div>
+function renderCtModule(id) {
+    const container = document.getElementById('ctModules');
+    const renderers = { dashboard: renderCtDashboard, clientes: renderCtClientes, social: renderCtSocial, seo: renderCtSeo, newsletters: renderCtNewsletters, videos: renderCtVideos, docs: renderCtDocs, metrics: renderCtMetrics };
+    if (renderers[id]) container.innerHTML = renderers[id]();
+}
+
+function ctSection(title, content, icon, isOpen) {
+    const id = 'sec_' + title.replace(/[^a-zA-Z]/g,'').substring(0,20);
+    return `<div class="ct-section ${isOpen?'open':''}" id="${id}"><div class="ct-section-header" onclick="document.getElementById('${id}').classList.toggle('open')"><div class="ct-section-title"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="${icon||'M9 5l7 7-7 7'}"/></svg>${title}</div><svg class="ct-section-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div><div class="ct-section-body">${content}</div></div>`;
+}
+
+function ctChecklist(key, items, moduleId) {
+    const checked = getCtChecklist(moduleId, key);
+    return `<ul class="ct-checklist">${items.map((item, i) => {
+        const isChecked = checked.includes(i);
+        return `<li onclick="ctToggleCheck('${moduleId}','${key}',${i})"><div class="ct-check ${isChecked?'checked':''}"></div><span class="ct-check-text ${isChecked?'done':''}">${item}</span></li>`;
+    }).join('')}</ul>`;
+}
+
+function ctToggleCheck(moduleId, key, idx) {
+    let checked = getCtChecklist(moduleId, key);
+    if (checked.includes(idx)) checked = checked.filter(i => i !== idx);
+    else checked.push(idx);
+    saveCtChecklist(moduleId, key, checked);
+    renderCtModule(ctActiveModule);
+}
+
+function ctCopy(text, btnId) {
+    navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById(btnId);
+        if (btn) { btn.classList.add('copied'); btn.textContent = 'Copiado!'; setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Copiar'; }, 2000); }
+    });
+}
+
+function ctTemplate(id, text) {
+    return `<div class="ct-template"><button class="ct-copy-btn" id="${id}" onclick="ctCopy(\`${text.replace(/`/g,'\\`')}\`, '${id}')">Copiar</button><pre>${text}</pre></div>`;
+}
+
+function ctTable(key, moduleId, headers, rows) {
+    const data = getCtTable(moduleId, key);
+    const allRows = data.length > 0 ? data : rows;
+    return `<div class="ct-table-wrap"><table class="ct-table"><thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${allRows.map((row, ri) => `<tr>${row.map((cell, ci) => `<td><input type="text" value="${cell}" onchange="ctUpdateCell('${moduleId}','${key}',${ri},${ci},this.value)"></td>`).join('')}</tr>`).join('')}</tbody></table></div><div class="ct-add-row"><input type="text" placeholder="Nueva fila..." onkeydown="if(event.key==='Enter'){ctAddRow('${moduleId}','${key}',${headers.length},this.value);this.value='';}"><button onclick="var inp=this.previousElementSibling;ctAddRow('${moduleId}','${key}',${headers.length},inp.value);inp.value='';">+ Agregar</button></div>`;
+}
+
+function ctUpdateCell(moduleId, key, row, col, val) {
+    let data = getCtTable(moduleId, key);
+    if (data[row]) data[row][col] = val;
+    saveCtTable(moduleId, key, data);
+}
+function ctAddRow(moduleId, key, cols, val) {
+    let data = getCtTable(moduleId, key);
+    const row = new Array(cols).fill('');
+    if (val) row[0] = val;
+    data.push(row);
+    saveCtTable(moduleId, key, data);
+    renderCtModule(ctActiveModule);
+}
+
+function ctMetricCards(metrics) {
+    return `<div class="ct-metric-cards">${metrics.map(m => `<div class="ct-metric"><div class="ct-metric-value">${m.value}</div><div class="ct-metric-label">${m.label}</div></div>`).join('')}</div>`;
+}
+
+function ctSteps(steps) {
+    return steps.map((s, i) => `<div class="ct-step"><div class="ct-step-num">${i+1}</div><div class="ct-step-content"><div class="ct-step-title">${s.title}</div><div class="ct-step-desc">${s.desc}</div></div></div>`).join('');
+}
+
+function ctPriorityList(items) {
+    return items.map(item => `<div class="ct-priority ${item.level}"><span class="ct-badge ${item.level==='urgent'?'red':item.level==='important'?'yellow':'blue'}">${item.level==='urgent'?'Urgente':item.level==='important'?'Importante':'Normal'}</span><div class="ct-priority-text">${item.text}</div></div>`).join('');
+}
+
+// ===== MODULE 1: DASHBOARD =====
+function renderCtDashboard() {
+    return `
+    ${ctMetricCards([
+        { value: clients.length, label: 'Total Clientes' },
+        { value: clients.filter(c=>c.contacted).length, label: 'Contactados' },
+        { value: clients.filter(c=>!c.contacted).length, label: 'Pendientes' },
+        { value: Object.keys(callNotes).length, label: 'Con Feedback' }
+    ])}
+    ${ctSection('Prioridades del Día', `
+        <p class="ct-text">Organiza tus tareas por prioridad. Haz clic en las prioridades para marcarlas como completadas.</p>
+        ${ctPriorityList([
+            { level:'urgent', text:'Revisar alertas activas en central de monitoreo' },
+            { level:'urgent', text:'Contactar clientes con reportes pendientes' },
+            { level:'important', text:'Actualizar información de clientes nuevos' },
+            { level:'important', text:'Programar mantenimientos del mes' },
+            { level:'normal', text:'Revisar y responder feedback de clientes' },
+            { level:'normal', text:'Actualizar métricas mensuales' }
+        ])}
+    `, 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z', true)}
+    ${ctSection('Checklist Rápido del Día', ctChecklist('daily', [
+        'Revisar central de monitoreo — ¿Hay alertas activas?',
+        'Verificar clientes con fallas reportadas — ¿Se solucionaron?',
+        'Contactar al menos 3 clientes pendientes',
+        'Revisar state de mantenimientos programados',
+        'Actualizar notas de llamadas en el panel',
+        'Revisar métricas de Google Reviews',
+        'Verificar próximo blog/contenido programado'
+    ], 'dashboard'), 'M9 11l3 3L22 4')}
+    ${ctSection('Accesos Rápidos', `
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:12px;">
+            <button class="btn" onclick="showView('clients')" style="padding:16px;text-align:left;border-radius:12px;">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                <div style="margin-top:8px;font-weight:700;">Ver Clientes</div>
+                <div style="font-size:11px;color:var(--text-light);">${clients.length} registros</div>
+            </button>
+            <button class="btn" onclick="showView('excelFeedback')" style="padding:16px;text-align:left;border-radius:12px;">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <div style="margin-top:8px;font-weight:700;">Feedback</div>
+                <div style="font-size:11px;color:var(--text-light);">Ver registros</div>
+            </button>
+            <button class="btn" onclick="switchCtModule('metrics')" style="padding:16px;text-align:left;border-radius:12px;">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                <div style="margin-top:8px;font-weight:700;">Métricas</div>
+                <div style="font-size:11px;color:var(--text-light);">KPIs y trackers</div>
+            </button>
         </div>
-    </div>`;
+    `, 'M13 10V3L4 14h7v7l9-11h-7z')}`;
 }
 
-let draggedTaskId = null;
-function handleDragStart(e, taskId) {
-    draggedTaskId = taskId;
-    e.target.classList.add('dragging');
-    e.dataTransfer.effectAllowed = 'move';
-}
-function handleDrop(e, newStatus) {
-    e.preventDefault();
-    if (!draggedTaskId) return;
-    const task = kanbanTasks.find(t => t.id === draggedTaskId);
-    if (task) {
-        task.status = newStatus;
-        saveTasks();
-        renderKanban();
-        showToast('Tarea movida a ' + newStatus, 'success');
-    }
-    draggedTaskId = null;
-}
-
-function toggleSubtaskDone(taskId, subIdx) {
-    const task = kanbanTasks.find(t => t.id === taskId);
-    if (task && task.subtasks[subIdx]) {
-        task.subtasks[subIdx].done = !task.subtasks[subIdx].done;
-        saveTasks();
-        renderKanban();
-    }
-}
-
-function openTaskModal(task, defaultStatus) {
-    if (task) {
-        document.getElementById('taskModalTitle').textContent = 'Editar Tarea';
-        document.getElementById('taskEditId').value = task.id;
-        document.getElementById('taskTitle').value = task.title;
-        document.getElementById('taskTags').value = (task.tags || []).join(', ');
-        if (window.taskQuill) window.taskQuill.root.innerHTML = task.note || '';
-        document.getElementById('taskSubtasks').value = (task.subtasks || []).map(s => s.text).join('\n');
-    } else {
-        document.getElementById('taskModalTitle').textContent = 'Nueva Tarea';
-        document.getElementById('taskEditId').value = '';
-        document.getElementById('taskTitle').value = '';
-        document.getElementById('taskTags').value = '';
-        if (window.taskQuill) window.taskQuill.root.innerHTML = '';
-        document.getElementById('taskSubtasks').value = '';
-    }
-    document.getElementById('taskModal').dataset.defaultStatus = defaultStatus || 'Pendiente';
-    document.getElementById('taskModal').classList.add('active');
-}
-
-function closeTaskModal() {
-    document.getElementById('taskModal').classList.remove('active');
-}
-
-function editTask(id) {
-    const task = kanbanTasks.find(t => t.id === id);
-    if (task) openTaskModal(task);
-}
-
-function saveTask() {
-    const editId = document.getElementById('taskEditId').value;
-    const title = document.getElementById('taskTitle').value.trim();
-    const tagsRaw = document.getElementById('taskTags').value.trim();
-    const note = window.taskQuill ? window.taskQuill.root.innerHTML.trim() : '';
-    const subtasksRaw = document.getElementById('taskSubtasks').value.trim();
-    if (!title) { showToast('El título es obligatorio', 'error'); return; }
-    const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(t => t) : [];
-    const subtasks = subtasksRaw ? subtasksRaw.split('\n').map(t => t.trim()).filter(t => t).map(text => ({ text, done: false })) : [];
-    if (editId) {
-        const task = kanbanTasks.find(t => t.id === editId);
-        if (task) {
-            task.title = title;
-            task.tags = tags;
-            task.note = note;
-            if (subtasksRaw) task.subtasks = subtasks;
-        }
-        showToast('Tarea actualizada', 'success');
-    } else {
-        const status = document.getElementById('taskModal').dataset.defaultStatus || 'Pendiente';
-        kanbanTasks.push({ id: generateId(), title, tags, note, subtasks, status, created: Date.now() });
-        showToast('Tarea creada', 'success');
-    }
-    saveTasks();
-    closeTaskModal();
-    renderKanban();
+// ===== MODULE 2: EXPERIENCIA DEL CLIENTE =====
+function renderCtClientes() {
+    return `
+    ${ctSection('Checklist de Llamadas Mensuales', `
+        <p class="ct-text">Contacta a estos clientes cada mes. Marca los completados.</p>
+        ${ctChecklist('callMonthly', [
+            'MC4 Roberto Turcios — Revisar estado de cámaras, verificar WiFi',
+            'MC9 Villa Celeste — Actualizar sobre transceptora, ofrecer Ajax',
+            'MC11 Surfers Dream — Seguimiento de instalación cableada',
+            'MC14 Casa Nilu — Revisar vegetación vs cámaras, ofrecer limpieza',
+            'MC23 Jaco Dream — Confirmar que todo funciona, sin ofrecer nada',
+            'MC27 Klaus Lote 10 — Coordinar visita para 3 cámaras + alarma',
+            'MC50 Lomas de Brasil — Seguimiento, verificar si quieren volver',
+            'MA10002-MA10182 — Revisar alarmas con clientes activos',
+            'SI1-SI7 — Verificar sistemas de seguridad inteligente',
+            'Todos los MC+MA — Revisar ambos servicios, oportunidades'
+        ], 'clientes')}
+    `, 'M3 5a2 2 0 0 1 2-2h3.28a1 1 0 0 1 .948.684l1.498 4.493a1 1 0 0 1-.502 1.21l-2.257 1.13a11.042 11.042 0 0 0 5.516 5.516l1.13-2.257a1 1 0 0 1 1.21-.502l4.493 1.498a1 1 0 0 1 .684.949V19a2 2 0 0 1-2 2h-1C9.716 21 3 14.284 3 6V5z', true)}
+    ${ctSection('Guía de Upselling', `
+        <p class="ct-text"><strong>¿Qué es upselling?</strong> Ofrecer servicios o equipos adicionales a clientes que ya tienes. Es más fácil vender a alguien que ya confía en ti.</p>
+        <p class="ct-text"><strong>Cómo detectar oportunidades:</strong></p>
+        <ul class="ct-text">
+            <li>Cliente tiene cámaras WiFi → ofrecer <strong>instalación cableada</strong> (más confiable)</li>
+            <li>Cliente tiene alarma descontinuada (DSC) → ofrecer <strong>sistema Ajax</strong></li>
+            <li>Cliente sin alarma → ofrecer <strong>paquete completo de seguridad</strong></li>
+            <li>Cliente con pocos dispositivos → ofrecer <strong>sensores adicionales</strong></li>
+            <li>Cliente con problemas de señal → ofrecer <strong>repetidores o routers</strong></li>
+        </ul>
+        <p class="ct-text"><strong>Qué ofrecer según infraestructura:</strong></p>
+        <ul class="ct-text">
+            <li><strong>Cámaras:</strong> PTZ, cableadas, analíticas,储 storage</li>
+            <li><strong>Alarmas:</strong> Ajax, DSC legacy, sensores adicionales</li>
+            <li><strong>Control de acceso:</strong> Lectoras, portones, intercomunicadores</li>
+            <li><strong>Red:</strong> Routers, repetidores, UPS para equipos</li>
+        </ul>
+    `, 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z')}
+    ${ctSection('Guión de Llamada', `
+        <p class="ct-text">Estructura de una llamada profesional con clientes:</p>
+        ${ctSteps([
+            { title:'Saludo personalizado', desc:'"Hola [nombre], buenos días. Soy [tu nombre] de STS Security. ¿Cómo estás?"' },
+            { title:'Pregunta general', desc:'"Todo bien con el sistema? Ha habido algún inconveniente?"' },
+            { title:'Revisar estado', desc:'"Últimamente hemos notado [dato]. Quería verificar que todo esté funcionando bien."' },
+            { title:'Ofrecer valor', desc:'"También quería informarte que tenemos [mejora] disponible para clientes como vos."' },
+            { title:'Agendar siguiente paso', desc:'"¿Te parece bien si coordinamos una visita técnica para el [fecha]?"' },
+            { title:'Despedida', desc:'"Gracias por tu tiempo, [nombre]. Estamos para lo que necesites."' }
+        ])}
+    `, 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z')}
+    ${ctSection('Proceso de Google Reviews', `
+        <p class="ct-text"><strong>Paso a paso para obtener reviews:</strong></p>
+        ${ctSteps([
+            { title:'Instalación completada', desc:'Confirma que todo funciona. Toma fotos del trabajo realizado.' },
+            { title:'Envía mensaje al cliente (WhatsApp)', desc:'"Hola [nombre], me alegra que todo esté funcionando. Si tienes un momento, nos ayudaría mucho si pudieras dejarnos una reseña en Google. Aquí está el enlace: [link de Google Reviews]"' },
+            { title:'A las 48 horas', desc:'Si no ha dejado review, envía recordatorio amable: "Hola [nombre], ¿pudiste dejar la reseña? Sería de mucha ayuda."' },
+            { title:'Registra en el tracker', desc:'Actualiza la tabla de métricas con la fecha y calificación.' }
+        ])}
+        ${ctTemplate('greview_msg', 'Hola [NOMBRE], me alegra que todo esté funcionando bien. Si tienes un momento, nos ayudaría mucho si pudieras dejarnos una reseña en Google. Aquí está el enlace: [LINK]. ¡Gracias por confiar en STS Security!')}
+    `, 'M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z')}`;
 }
 
-function deleteTask(id) {
-    if (!confirm('¿Eliminar esta tarea?')) return;
-    kanbanTasks = kanbanTasks.filter(t => t.id !== id);
-    saveTasks();
-    renderKanban();
-    showToast('Tarea eliminada', 'success');
+// ===== MODULE 3: SOCIAL MEDIA =====
+function renderCtSocial() {
+    return `
+    ${ctSection('Calendario de Contenido Semanal', `
+        <p class="ct-text">Publica consistentemente en cada red social. Usa este calendario como guía.</p>
+        ${ctTable('calendar', 'social', ['Red Social','Lunes','Miércoles','Viernes','Objetivo semanal'], [
+            ['Facebook', 'Post educativo', 'Caso de éxito', 'Promoción', '3 posts/semana'],
+            ['Instagram', 'Reel corto', 'Story interactiva', 'Post carrusel', '3 posts/semana'],
+            ['LinkedIn', 'Artículo/tip', '—', 'Caso de éxito', '2 posts/semana'],
+        ])}
+    `, 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z', true)}
+    ${ctSection('Estructura de un Post Efectivo', `
+        <p class="ct-text">Todo buen post tiene 5 partes:</p>
+        ${ctSteps([
+            { title:'Gancho (1ra línea)', desc:'Algo que detenga el scroll. Ej: "¿Sabías que el 80% de robos ocurren por puntos ciegos?"' },
+            { title:'Problema', desc:'Identifica el dolor del cliente. Ej: "Muchos hogares tienen cámaras pero no cubren todas las entradas."' },
+            { title:'Solución', desc:'Presenta tu servicio como la respuesta. Ej: "Con nuestro sistema de monitoreo 24/7..."' },
+            { title:'Prueba social', desc:'Datos o testimonios. Ej: "Protegemos más de 250 propiedades en Costa Rica."' },
+            { title:'Llamada a la acción', desc:'Qué hacer ahora. Ej: "Escríbenos al 8888-8888 para una evaluación gratuita."' }
+        ])}
+    `, 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z')}
+    ${ctSection('Plantillas de Posts', `
+        <p class="ct-text"><strong>Post Educativo:</strong></p>
+        ${ctTemplate('post_edu', '¿Sabías que [DATO IMPACTANTE]?\n\n[MÁS CONTEXTO SOBRE EL PROBLEMA]\n\nEn STS Security tenemos la solución: [SERVICIO/PRODUCTO]\n\n✅ [BENEFICIO 1]\n✅ [BENEFICIO 2]\n✅ [BENEFICIO 3]\n\n📲 Escríbenos al 8888-8888 para más información.\n\n#Seguridad #Monitoreo #STS')}
+        <p class="ct-text"><strong>Caso de Éxito:</strong></p>
+        ${ctTemplate('post_caso', '📍 [PROPIEDAD/UBICACIÓN]\n\n[NOMBRE DEL CLIENTE] necesitaba [PROBLEMA].\n\nInstalamos: [EQUIPO/SERVICIO]\nResultado: [RESULTADO]\n\n"[TESTIMONIO DEL CLIENTE]" — [NOMBRE]\n\n¿Quieres algo similar? Contactanos 📲 8888-8888')}
+        <p class="ct-text"><strong>Promoción:</strong></p>
+        ${ctTemplate('post_promo', '🔥 PROMOCIÓN ESPECIAL — [SERVICIO]\n\n[DESCRIPCIÓN DE LA OFERTA]\n\n💰 Precio: [PRECIO]\n📅 Vigencia: [FECHA]\n\nIncluye:\n✅ [ITEM 1]\n✅ [ITEM 2]\n✅ [ITEM 3]\n\n📲 Reserva ahora: 8888-8888\n\n#Oferta #Seguridad #STS')}
+    `, 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z')}
+    ${ctSection('Guía de Facebook Ads', `
+        <p class="ct-text"><strong>Paso a paso para crear una campaña:</strong></p>
+        ${ctSteps([
+            { title:'Business Manager', desc:'Ve a business.facebook.com. Crea una cuenta si no tienes. Conecta tu página de Facebook.' },
+            { title:'Crear campaña', desc:'Haz clic en "Crear" → Selecciona "Reconocimiento de marca" o "Tráfico" como objetivo.' },
+            { title:'Definir audiencia', desc:'Ubicación: Costa Rica. Edad: 25-65. Intereses: Seguridad, Hogar, Tecnología, Alarmas.' },
+            { title:'Presupuesto', desc:'Empieza con $5-10/día. Prueba 3-5 días antes de escalar.' },
+            { title:'Crear anuncio', desc:'Usa una imagen profesional del equipo instalado. Texto: "Protege tu hogar con monitoreo 24/7"' },
+            { title:'Medir resultados', desc:'Revisa impresiones, clics y costo por clic cada 3 días. Ajusta audiencia si es necesario.' }
+        ])}
+    `, 'M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122')}`;
 }
 
-window.taskQuill = new Quill('#taskNoteQuill', {
-    theme: 'snow',
-    placeholder: 'Describe la tarea...',
-    modules: {
-        toolbar: [
-            [{ 'header': [1, 2, 3, false] }],
-            ['bold', 'italic', 'underline', 'strike'],
-            [{ 'color': [] }, { 'background': [] }],
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            ['link'],
-            ['clean']
-        ]
-    }
-});
+// ===== MODULE 4: CONTENIDO & SEO =====
+function renderCtSeo() {
+    return `
+    ${ctSection('Plan de 15 Blogs', `
+        <p class="ct-text">Estos son los 15 artículos que necesitas escribir para posicionar tu página.</p>
+        ${ctTable('blogs', 'seo', ['#','Título','Keyword Objetivo','Estado'], [
+            ['1','Guía Completa de Monitoreo de Cámaras','monitoreo de cámaras costa rica','Pendiente'],
+            ['2','¿Cuánto Cuesta un Sistema de Alarmas?','sistema de alarmas precio','Pendiente'],
+            ['3','Seguridad Inteligente para Hogares','seguridad inteligente hogar','Pendiente'],
+            ['4','Cámaras WiFi vs Cableadas: ¿Cuál es Mejor?','cámaras wifi vs cableadas','Pendiente'],
+            ['5','Sistema de Alarma Ajax: Todo lo que Necesitas','alarma ajax costa rica','Pendiente'],
+            ['6','Monitoreo 24/7: Cómo Protegemos Tu Propiedad','monitoreo 24/7','Pendiente'],
+            ['7','Control de Acceso para Condominios','control de acceso condominios','Pendiente'],
+            ['8','Guía de Cámaras para Negocios','cámaras seguridad negocios','Pendiente'],
+            ['9','Mantenimiento de Sistemas de Seguridad','mantenimiento sistemas seguridad','Pendiente'],
+            ['10','Errores Comunes en Seguridad Residencial','errores seguridad residencial','Pendiente'],
+            ['11','Cómo Elegir tu Empresa de Monitoreo','empresa de monitoreo','Pendiente'],
+            ['12','Seguridad para Hoteles y Airbnb','seguridad hoteles','Pendiente'],
+            ['13','Tendencias en Tecnología de Seguridad 2026','tendencias seguridad 2026','Pendiente'],
+            ['14','Protege tu Negocio con Monitoreo Remoto','monitoreo remoto negocios','Pendiente'],
+            ['15','FAQ: Preguntas Frecuentes sobre Seguridad','preguntas frecuentes seguridad','Pendiente']
+        ])}
+    `, 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10', true)}
+    ${ctSection('Guía de SEO Básico', `
+        <p class="ct-text"><strong>¿Qué es SEO?</strong> Search Engine Optimization — hacer que Google muestre tu página cuando alguien busca "monitoreo de cámaras" o "alarma costa rica".</p>
+        <p class="ct-text"><strong>Palabras clave:</strong> Son las frases que la gente escribe en Google. Ej: "monitoreo de cámaras costa rica".</p>
+        <p class="ct-text"><strong>SEO On-Page</strong> (lo que controlas en tu página):</p>
+        <ul class="ct-text">
+            <li><strong>Título de la página:</strong> Incluye tu keyword principal</li>
+            <li><strong>Meta descripción:</strong> Resumen atractivo con keyword</li>
+            <li><strong>Encabezados H1, H2, H3:</strong> Organiza el contenido con keywords</li>
+            <li><strong>Texto alternativo de imágenes:</strong> Describe las fotos con keywords</li>
+            <li><strong>URLs amigables:</strong> /monitoreo-de-camaras en vez de /page123</li>
+        </ul>
+        <p class="ct-text"><strong>SEO Off-Page</strong> (fuera de tu página):</p>
+        <ul class="ct-text">
+            <li><strong>Google My Business:</strong> Registra tu empresa con fotos y reseñas</li>
+            <li><strong>Directorios:</strong> Registra tu empresa en directorios locales</li>
+            <li><strong>Backlinks:</strong> Que otros sitios hablen de ti</li>
+        </ul>
+    `, 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z')}
+    ${ctSection('Keywords Completas', `
+        ${ctTable('keywords', 'seo', ['Categoría','Keyword','Volumen','Prioridad'], [
+            ['Monitoreo','monitoreo de cámaras costa rica','Alto','Alta'],
+            ['Monitoreo','monitoreo de alarmas','Alto','Alta'],
+            ['Monitoreo','central de monitoreo','Medio','Alta'],
+            ['Alarmas','sistema de alarmas','Alto','Alta'],
+            ['Alarmas','alarma ajax costa rica','Medio','Alta'],
+            ['Alarmas','alarma para casa','Alto','Media'],
+            ['Cámaras','cámaras de seguridad','Alto','Alta'],
+            ['Cámaras','cámaras wifi para casa','Medio','Media'],
+            ['Cámaras','cámaras ip','Medio','Media'],
+            ['Inteligente','seguridad inteligente','Medio','Alta'],
+            ['Inteligente','control de acceso','Medio','Media'],
+            ['Inteligente','domótica seguridad','Bajo','Baja'],
+            ['General','empresa de seguridad','Alto','Alta'],
+            ['General','servicio de vigilancia','Medio','Media'],
+            ['General','seguridad residencial','Medio','Media']
+        ])}
+    `, 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z')}`;
+}
+
+// ===== MODULE 5: NEWSLETTERS =====
+function renderCtNewsletters() {
+    return `
+    ${ctSection('Guía de Zoho Campaign', `
+        <p class="ct-text"><strong>¿Qué es Zoho Campaign?</strong> Plataforma para enviar correos masivos profesionales (newsletters).</p>
+        ${ctSteps([
+            { title:'Crear cuenta', desc:'Ve to zoho.com/campaigns. Regístrate con tu correo de trabajo.' },
+            { title:'Importar contactos', desc:'Ve a Contactos → Importar. Sube un CSV con nombre, correo, empresa. Los clientes del panel sirven como base.' },
+            { title:'Crear campaña', desc:'Campañas → Nueva. Elige "Diseñar desde cero" o usa una plantilla.' },
+            { title:'Diseñar el correo', desc:'Usa bloques de arrastrar: encabezado, texto, imagen, botón, divider.' },
+            { title:'Programar envío', desc:'Puedes enviar ahora o programar para día y hora específica.' },
+            { title:'Medir resultados', desc:'Revisa tasa de apertura (>20% es bueno), clics, y desuscripciones.' }
+        ])}
+    `, 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', true)}
+    ${ctSection('Plantilla de Newsletter', `
+        ${ctTemplate('newsletter_tpl', '🔔 STS SECURITY — Newsletter [MES AÑO]\n\n---\n\n📢 DESTACADO DEL MES\n[Noticia o actualización principal]\n\n---\n\n🛡️ NUESTROS SERVICIOS\n• Monitoreo de Cámaras 24/7\n• Monitoreo de Alarmas\n• Seguridad Inteligente\n\n---\n\n📝 BLOG RECIENTE\n[Título del blog] — [Descripción breve]\n[Enlace al blog]\n\n---\n\n💡 TIP DEL MES\n[Consejo de seguridad práctico]\n\n---\n\n🎉 PROMOCIÓN\n[Oferta del mes]\n\n---\n\n📱 Síguenos en redes sociales\nFacebook: @STSSecurity\nInstagram: @stsoficial\n\n---\n\nST Security | [Dirección] | [Teléfono] | [Email]')}
+    `, 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15')}
+    ${ctSection('Lista de Distribución', `
+        <p class="ct-text">Registra a quiénes les envías newsletters:</p>
+        ${ctTable('distribution', 'newsletters', ['Nombre','Correo','Empresa/Tipo','Último envío','Notas'], [])}
+    `, 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z')}`;
+}
+
+// ===== MODULE 6: VIDEOS Y DISEÑO =====
+function renderCtVideos() {
+    return `
+    ${ctSection('Plan de Videos Animados', `
+        <p class="ct-text">Tres videos clave para tu marketing:</p>
+        ${ctTable('videoPlan', 'videos', ['#','Servicio','Duración','Estilo','Estado'], [
+            ['1','Monitoreo de Cámaras','60-90 seg','Motion graphics + capturas reales','Pendiente'],
+            ['2','Seguridad Remota','45-60 seg','Animación 2D + voz en off','Pendiente'],
+            ['3','Monitoreo de Alarmas','60-90 seg','Motion graphics + testimonio','Pendiente']
+        ])}
+    `, 'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z', true)}
+    ${ctSection('Guía de CapCut (Video Editing)', `
+        ${ctSteps([
+            { title:'Descargar CapCut', desc:'Gratis en App Store o Google Play. También disponible en desktop (capcut.com).' },
+            { title:'Crear proyecto', desc:'Nuevo proyecto → Selecciona relación 9:9 (Instagram) o 16:9 (YouTube/Facebook).' },
+            { title:'Agregar clips', desc:'Importa fotos/vídeos de instalaciones. Ordena según el guion.' },
+            { title:'Agregar texto', desc:'Texto → Escribe el mensaje. Usa animaciones de entrada/suave.' },
+            { title:'Música de fondo', desc:'Sonido → Música → Busca "corporate" o "tech". Volumen bajo.' },
+            { title:'Exportar', desc:'Exportar en 1080p. Comparte directo a Instagram/Facebook.' }
+        ])}
+    `, 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4')}
+    ${ctSection('Guía de Canva (Diseño)', `
+        ${ctSteps([
+            { title:'Crear cuenta', desc:'Ve a canva.com. Gratis para empezar. Plan Pro para más plantillas.' },
+            { title:'Elegir plantilla', desc:'Busca "Instagram post", "Facebook post", o "Presentación".' },
+            { title:'Personalizar', desc:'Cambia colores a los de STS (azul, negro, blanco). Agrega tu logo.' },
+            { title:'Agregar contenido', desc:'Usa textos cortos. Máximo 3 líneas por imagen.' },
+            { title:'Descargar', desc:'Descarga como PNG (calidad) o JPG (tamaño pequeño).' }
+        ])}
+    `, 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z')}`;
+}
+
+// ===== MODULE 7: DOCUMENTACIÓN =====
+function renderCtDocs() {
+    return `
+    ${ctSection('Plantilla de White Paper', `
+        <p class="ct-text">Estructura para documentos profesionales como "Guía de Seguridad para Condominios":</p>
+        ${ctTemplate('wp_tpl', 'GUÍA DE SEGURIDAD PARA [SEGMENTO]\nST Security | [Fecha]\n\n---\n\n1. INTRODUCCIÓN\n• Contexto del problema\n• Por qué es importante\n• Qué encontrarás en esta guía\n\n2. ANÁLISIS DE LA SITUACIÓN\n• Estadísticas relevantes\n• Problemas comunes en [segmento]\n• Consecuencias de no actuar\n\n3. SOLUCIONES DISPONIBLES\n• Opción 1: [Descripción]\n• Opción 2: [Descripción]\n• Opción 3: [Descripción]\n\n4. CASO DE ÉXITO\n• Cliente: [Nombre]\n• Problema: [Qué necesitaba]\n• Solución: [Qué instalamos]\n• Resultado: [Métricas/resultados]\n\n5. CONCLUSIÓN\n• Resumen de beneficios\n• Próximos pasos\n• Contacto: [Teléfono/Email]\n\n---\n\nST Security | [Dirección] | [Teléfono] | [Email]')}
+    `, 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z', true)}
+    ${ctSection('Presentaciones por Segmento', `
+        <p class="ct-text">Contenido específico para cada tipo de cliente:</p>
+        ${ctTable('presentations', 'docs', ['Segmento','Problema Clave','Solución','Dato Clave'], [
+            ['Condominios','Control de acceso + monitoreo','Cámaras + lectoras + central','90% reducción de incidentes'],
+            ['Hoteles/Airbnb','Seguridad de huéspedes + assets','Sistema integrado + app','Protege reputación'],
+            ['Construcciones','Robo de materiales','Cámaras temporales + alarma','Ahorra 15-20% en pérdidas'],
+            ['Negocios/Oficinas','Acceso no autorizado','Control de acceso + cámaras','Cumplimiento normativo'],
+            ['Hogares','Paz mental','Paquete completo residencial','Familia protegida 24/7']
+        ])}
+    `, 'M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4')}
+    ${ctSection('Plantilla de Caso de Éxito', `
+        ${ctTemplate('case_tpl', 'CASO DE ÉXITO — [NOMBRE DEL CLIENTE]\n\n📍 Ubicación: [Ciudad/Región]\n🛡️ Servicio: [Monitoreo Cámaras / Alarmas / SI]\n📅 Fecha: [Mes Año]\n\n---\n\nANTECEDENTES:\n[Descripción del cliente y su propiedad]\n\nPROBLEMA:\n[Qué necesitaba resolver]\n\nSOLUCIÓN IMPLEMENTADA:\n• [Equipo 1]\n• [Equipo 2]\n• [Servicio adicional]\n\nRESULTADOS:\n• [Métrica 1]\n• [Métrica 2]\n• [Métrica 3]\n\nTESTIMONIO:\n"[Frase del cliente]" — [Nombre]\n\n---\n\nST Security | [Contacto]')}
+    `, 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2')}`;
+}
+
+// ===== MODULE 8: MÉTRICAS =====
+function renderCtMetrics() {
+    return `
+    ${ctSection('Tracker de Google Reviews', `
+        <p class="ct-text">Registra cada review que recibas:</p>
+        ${ctTable('reviews', 'metrics', ['Cliente','Fecha','Estrellas','Comentario','Estado'], [])}
+    `, 'M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z', true)}
+    ${ctSection('Tracker de Clientes Contactados', `
+        <p class="ct-text">Registra cada llamada y su resultado:</p>
+        ${ctTable('calls', 'metrics', ['Cliente','Fecha','Tipo','Resultado','Seguimiento'], [])}
+    `, 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z')}
+    ${ctSection('KPIs Mensuales', `
+        <p class="ct-text">Metas mensuales para mantenerte enfocado:</p>
+        ${ctMetricCards([
+            { value: '25', label: 'Clientes Contactados' },
+            { value: '10', label: 'Reviews Objetivo' },
+            { value: '12', label: 'Posts Redes' },
+            { value: '4', label: 'Blogs Publicados' },
+            { value: '2', label: 'Newsletters' },
+            { value: '1', label: 'Video Mensual' }
+        ])}
+        <p class="ct-text"><strong>Tracking mensual:</strong></p>
+        ${ctTable('kpis', 'metrics', ['Mes','Contactados','Reviews','Posts','Blogs','Newsletters','Videos','Notas'], [
+            ['Enero','','','','','','',''],
+            ['Febrero','','','','','','',''],
+            ['Marzo','','','','','','',''],
+        ])}
+    `, 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z')}`;
+}
+
+function renderKanban() { renderCtTabs(); renderCtModule(ctActiveModule); }
 
 loadClients();renderTable();renderDashboard();
 </script>
