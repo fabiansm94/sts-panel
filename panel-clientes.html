@@ -1331,12 +1331,9 @@ function toggleContacted(idx,e){
     showToast(clients[idx].contacted?`"${clients[idx].name}" contactado`:`"${clients[idx].name}" pendiente`,'success');
 }
 function setFilter(btn,filter){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');currentFilter=filter;serviceFilter=null;renderTable();}
-function filterBy(type){currentFilter=type;serviceFilter=null;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));if(type==='all')document.querySelectorAll('.filter-btn')[0].classList.add('active');else if(type==='pending')document.querySelectorAll('.filter-btn')[1].classList.add('active');else if(type==='contacted')document.querySelectorAll('.filter-btn')[2].classList.add('active');renderTable();}
+function filterBy(type){currentFilter=type;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));if(type==='all')document.querySelectorAll('.filter-btn')[0].classList.add('active');else if(type==='pending')document.querySelectorAll('.filter-btn')[1].classList.add('active');else if(type==='contacted')document.querySelectorAll('.filter-btn')[2].classList.add('active');renderTable();}
 function filterByService(svc){
     serviceFilter=svc;
-    currentFilter='all';
-    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-    document.querySelectorAll('.filter-btn')[0].classList.add('active');
     document.querySelectorAll('.sidebar-link.sub').forEach(l=>l.classList.remove('active'));
     const map={mc:0,ma:1,si:2,mcma:3};
     if(map[svc]!==undefined) document.querySelectorAll('.sidebar-link.sub')[map[svc]].classList.add('active');
