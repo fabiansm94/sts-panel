@@ -74,7 +74,8 @@
         .logo-edit-icon { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s; z-index: 2; }
         .logo-edit-icon svg { width: 18px; height: 18px; color: #fff; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)); }
         .sidebar-brand h1 { font-size: 17px; color: var(--text-white); font-weight: 700; letter-spacing: -0.3px; white-space: nowrap; }
-        .sidebar-brand span { font-size: 11px; color: rgba(255,255,255,0.4); display: block; margin-top: 2px; white-space: nowrap; }
+        .sidebar-brand span { font-size: 11px; color: rgba(255,255,255,0.4); display: block; margin-top: 2px; white-space: nowrap; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+        .sidebar:hover .sidebar-brand span { opacity: 1; }
         .brand-text { opacity: 0; transition: opacity 0.2s; pointer-events: none; }
         .sidebar:hover .brand-text { opacity: 1; }
         .sidebar-user { padding: 16px 20px; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 12px; }
@@ -86,7 +87,8 @@
         .sidebar:hover .user-info { opacity: 1; }
         .sidebar-nav { flex: 1; padding: 16px 12px; overflow-y: auto; overflow-x: hidden; }
         .sidebar-section { padding: 10px 12px 6px; }
-        .sidebar-section-title { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.2); margin-bottom: 8px; font-weight: 700; white-space: nowrap; }
+        .sidebar-section-title { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.2); margin-bottom: 8px; font-weight: 700; white-space: nowrap; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+        .sidebar:hover .sidebar-section-title { opacity: 1; }
         .sf-left span { opacity: 0; transition: opacity 0.2s; pointer-events: none; white-space: nowrap; }
         .sidebar:hover .sf-left span { opacity: 1; }
         .sidebar-link { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: rgba(255,255,255,0.4); text-decoration: none; cursor: pointer; transition: all 0.25s ease; font-size: 13px; font-weight: 500; border-radius: 14px; margin: 2px 0; position: relative; white-space: nowrap; }
@@ -104,12 +106,12 @@
         .sidebar-parent .chevron { transition: transform 0.3s ease; opacity: 0; pointer-events: none; }
         .sidebar:hover .sidebar-parent .chevron { opacity: 1; }
         .sidebar-parent.open .chevron { transform: rotate(180deg); }
-        .sidebar-submenu { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
-        .sidebar-submenu.open { max-height: 300px; }
+        .sidebar-submenu { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; opacity: 0; }
+        .sidebar-submenu.open { max-height: 300px; opacity: 1; }
         .sidebar-link.sub { padding-left: 48px; font-size: 12px; border-radius: 12px; }
         .sidebar-link.sub.active { background: rgba(59,130,246,0.15); color: var(--accent); box-shadow: none; }
-        .sidebar-footer { padding: 16px 20px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; }
-        .sidebar-footer .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); box-shadow: 0 0 8px rgba(16,185,129,0.5); flex-shrink: 0; }
+        .sidebar-footer { padding: 16px 12px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        .sidebar-footer .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); box-shadow: 0 0 8px rgba(16,185,129,0.5); flex-shrink: 0; display: none; }
         .theme-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; }
         .theme-toggle-track { width: 42px; height: 24px; border-radius: 14px; background: rgba(255,255,255,0.1); position: relative; transition: background 0.3s; }
         [data-theme="dark"] .theme-toggle-track { background: var(--accent); }
@@ -1138,6 +1140,29 @@ function toggleSubmenu(el) {
     el.classList.toggle('open');
     el.nextElementSibling.classList.toggle('open');
 }
+
+// Auto-open submenu on hover when sidebar is expanded
+document.addEventListener('DOMContentLoaded', function() {
+    const sidebar = document.querySelector('.sidebar');
+    const parent = document.querySelector('.sidebar-parent');
+    const submenu = parent ? parent.nextElementSibling : null;
+    if (parent && submenu) {
+        parent.addEventListener('mouseenter', function() {
+            if (sidebar.matches(':hover')) {
+                parent.classList.add('open');
+                submenu.classList.add('open');
+            }
+        });
+        parent.addEventListener('mouseleave', function() {
+            setTimeout(function() {
+                if (!sidebar.matches(':hover')) {
+                    parent.classList.remove('open');
+                    submenu.classList.remove('open');
+                }
+            }, 100);
+        });
+    }
+});
 
 function showView(view) {
     currentView = view;
