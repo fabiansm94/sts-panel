@@ -1,311 +1,340 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STS Security - Panel de Clientes</title>
     <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-body: #f1f5f9; --bg-white: #ffffff; --bg-sidebar: #0f172a;
-            --bg-sidebar-hover: #1e293b; --bg-sidebar-active: #0ea5e9;
-            --text-dark: #0f172a; --text-medium: #475569; --text-light: #94a3b8;
-            --text-white: #f1f5f9; --accent: #0ea5e9; --accent-hover: #0284c7;
-            --success: #10b981; --warning: #f59e0b; --danger: #ef4444; --purple: #8b5cf6;
-            --border: #e2e8f0; --border-dark: #334155;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06); --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-            --radius: 8px; --radius-lg: 12px;
-            --bg-input: #f8fafc; --bg-hover: #f1f5f9; --bg-table-header: #f8fafc;
-            --bg-table-hover: #f8fafc; --bg-subtask: #f8fafc; --overlay: rgba(0,0,0,0.4);
+            --bg-body: #f0f4f8; --bg-white: #ffffff; --bg-sidebar: #0a0e27;
+            --bg-sidebar-hover: rgba(255,255,255,0.06); --bg-sidebar-active: #3b82f6;
+            --text-dark: #1a1a2e; --text-medium: #4a5568; --text-light: #a0aec0;
+            --text-white: #f7fafc; --accent: #3b82f6; --accent-hover: #2563eb;
+            --accent-light: rgba(59,130,246,0.1); --accent-glow: rgba(59,130,246,0.25);
+            --success: #10b981; --success-light: rgba(16,185,129,0.1);
+            --warning: #f59e0b; --warning-light: rgba(245,158,11,0.1);
+            --danger: #ef4444; --danger-light: rgba(239,68,68,0.1);
+            --purple: #8b5cf6; --purple-light: rgba(139,92,246,0.1);
+            --teal: #14b8a6; --teal-light: rgba(20,184,166,0.1);
+            --border: #e8ecf1; --border-dark: #1e2740;
+            --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+            --shadow-xl: 0 16px 48px rgba(0,0,0,0.16);
+            --radius: 12px; --radius-lg: 16px; --radius-xl: 20px;
+            --bg-input: #f7f9fc; --bg-hover: #f0f4f8; --bg-table-header: #f7f9fc;
+            --bg-table-hover: #f0f4f8; --bg-subtask: #f7f9fc; --overlay: rgba(10,14,39,0.5);
+            --gradient-1: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            --gradient-2: linear-gradient(135deg, #06b6d4, #3b82f6);
+            --gradient-3: linear-gradient(135deg, #f59e0b, #ef4444);
+            --gradient-4: linear-gradient(135deg, #10b981, #06b6d4);
+            --gradient-5: linear-gradient(135deg, #8b5cf6, #ec4899);
         }
         [data-theme="dark"] {
-            --bg-body: #0f172a; --bg-white: #1e293b; --bg-sidebar: #020617;
-            --bg-sidebar-hover: #1e293b; --bg-sidebar-active: #0ea5e9;
-            --text-dark: #f1f5f9; --text-medium: #cbd5e1; --text-light: #64748b;
-            --text-white: #f1f5f9; --accent: #38bdf8; --accent-hover: #0ea5e9;
-            --success: #34d399; --warning: #fbbf24; --danger: #f87171; --purple: #a78bfa;
-            --border: #334155; --border-dark: #1e293b;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.3); --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
-            --bg-input: #0f172a; --bg-hover: #334155; --bg-table-header: #1e293b;
-            --bg-table-hover: #1e293b; --bg-subtask: #1a2332; --overlay: rgba(0,0,0,0.6);
+            --bg-body: #0a0e27; --bg-white: #141830; --bg-sidebar: #060918;
+            --bg-sidebar-hover: rgba(255,255,255,0.06); --bg-sidebar-active: #3b82f6;
+            --text-dark: #f0f4f8; --text-medium: #cbd5e1; --text-light: #64748b;
+            --text-white: #f7fafc; --accent: #60a5fa; --accent-hover: #3b82f6;
+            --accent-light: rgba(96,165,250,0.12); --accent-glow: rgba(96,165,250,0.2);
+            --success: #34d399; --success-light: rgba(52,211,153,0.12);
+            --warning: #fbbf24; --warning-light: rgba(251,191,36,0.12);
+            --danger: #f87171; --danger-light: rgba(248,113,113,0.12);
+            --purple: #a78bfa; --purple-light: rgba(167,139,250,0.12);
+            --teal: #2dd4bf; --teal-light: rgba(45,212,191,0.12);
+            --border: #1e2740; --border-dark: #0d1225;
+            --shadow-xs: 0 1px 2px rgba(0,0,0,0.2);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.25);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.3);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.4);
+            --shadow-xl: 0 16px 48px rgba(0,0,0,0.5);
+            --bg-input: #0d1225; --bg-hover: #1a2040; --bg-table-header: #141830;
+            --bg-table-hover: #1a2040; --bg-subtask: #111535; --overlay: rgba(0,0,0,0.65);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg-body); color: var(--text-dark); min-height: 100vh; }
+        body { font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg-body); color: var(--text-dark); min-height: 100vh; -webkit-font-smoothing: antialiased; }
         ::-webkit-scrollbar { width: 0; height: 0; } * { scrollbar-width: none; -ms-overflow-style: none; }
         .hidden { display: none !important; }
 
-        /* Sidebar */
-        .sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 240px; background: var(--bg-sidebar); z-index: 100; display: flex; flex-direction: column; }
-        .sidebar-brand { padding: 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border-dark); }
-        .sidebar-brand .logo { width: 36px; height: 36px; background: var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; color: #fff; }
-        .sidebar-brand h1 { font-size: 16px; color: var(--text-white); font-weight: 600; }
-        .sidebar-brand span { font-size: 11px; color: var(--text-light); display: block; }
-        .sidebar-user { padding: 16px 20px; border-bottom: 1px solid var(--border-dark); display: flex; align-items: center; gap: 10px; }
-        .sidebar-user .avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--purple)); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px; color: #fff; }
+        /* ======================== SIDEBAR ======================== */
+        .sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 260px; background: var(--bg-sidebar); z-index: 100; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.04); }
+        .sidebar-brand { padding: 22px 22px 18px; display: flex; align-items: center; gap: 14px; }
+        .sidebar-brand .logo { width: 42px; height: 42px; background: var(--gradient-1); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; color: #fff; box-shadow: 0 4px 12px rgba(59,130,246,0.35); }
+        .sidebar-brand h1 { font-size: 17px; color: var(--text-white); font-weight: 700; letter-spacing: -0.3px; }
+        .sidebar-brand span { font-size: 11px; color: var(--text-light); display: block; margin-top: 1px; }
+        .sidebar-user { padding: 14px 22px; border-top: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; align-items: center; gap: 12px; }
+        .sidebar-user .avatar { width: 38px; height: 38px; border-radius: 12px; background: var(--gradient-5); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; color: #fff; }
         .sidebar-user .user-info { flex: 1; }
-        .sidebar-user .user-name { font-size: 13px; color: var(--text-white); font-weight: 500; }
+        .sidebar-user .user-name { font-size: 13px; color: var(--text-white); font-weight: 600; }
         .sidebar-user .user-role { font-size: 11px; color: var(--text-light); }
-        .sidebar-nav { flex: 1; padding: 12px 0; overflow-y: auto; }
-        .sidebar-section { padding: 8px 20px; }
-        .sidebar-section-title { font-size: 10px; text-transform: uppercase; letter-spacing: 1.2px; color: #64748b; margin-bottom: 6px; font-weight: 600; }
-        .sidebar-link { display: flex; align-items: center; gap: 10px; padding: 9px 20px; color: #94a3b8; text-decoration: none; cursor: pointer; transition: all 0.15s; font-size: 13px; border-left: 3px solid transparent; }
+        .sidebar-nav { flex: 1; padding: 14px 12px; overflow-y: auto; }
+        .sidebar-section { padding: 10px 12px 6px; }
+        .sidebar-section-title { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.25); margin-bottom: 8px; font-weight: 700; }
+        .sidebar-link { display: flex; align-items: center; gap: 12px; padding: 10px 14px; color: rgba(255,255,255,0.45); text-decoration: none; cursor: pointer; transition: all 0.2s ease; font-size: 13px; font-weight: 500; border-radius: 10px; border-left: none; margin: 2px 0; }
         .sidebar-link:hover { background: var(--bg-sidebar-hover); color: var(--text-white); }
-        .sidebar-link.active { background: rgba(14,165,233,0.12); color: var(--accent); border-left-color: var(--accent); }
-        .sidebar-link svg { width: 16px; height: 16px; flex-shrink: 0; }
-        .sidebar-link .badge { margin-left: auto; background: var(--bg-sidebar-hover); padding: 1px 7px; border-radius: 10px; font-size: 11px; color: #64748b; }
-        .sidebar-link.active .badge { background: var(--accent); color: #fff; }
+        .sidebar-link.active { background: var(--accent); color: #fff; border-left: none; box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
+        .sidebar-link svg { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.7; }
+        .sidebar-link.active svg { opacity: 1; }
+        .sidebar-link .badge { margin-left: auto; background: rgba(255,255,255,0.08); padding: 2px 8px; border-radius: 8px; font-size: 11px; color: rgba(255,255,255,0.4); font-weight: 600; }
+        .sidebar-link.active .badge { background: rgba(255,255,255,0.2); color: #fff; }
         .sidebar-parent { cursor: pointer; }
-        .sidebar-parent .chevron { transition: transform 0.2s; }
+        .sidebar-parent .chevron { transition: transform 0.25s ease; }
         .sidebar-parent.open .chevron { transform: rotate(180deg); }
-        .sidebar-submenu { max-height: 0; overflow: hidden; transition: max-height 0.25s ease; }
+        .sidebar-submenu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
         .sidebar-submenu.open { max-height: 300px; }
-        .sidebar-link.sub { padding-left: 48px; font-size: 12px; }
-        .sidebar-link.sub.active { background: rgba(14,165,233,0.08); }
-        .sidebar-footer { padding: 14px 20px; border-top: 1px solid var(--border-dark); font-size: 11px; color: #64748b; display: flex; align-items: center; justify-content: space-between; }
-        .sidebar-footer .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); }
+        .sidebar-link.sub { padding-left: 48px; font-size: 12px; border-radius: 8px; }
+        .sidebar-link.sub.active { background: rgba(59,130,246,0.15); color: var(--accent); box-shadow: none; }
+        .sidebar-footer { padding: 16px 22px; border-top: 1px solid rgba(255,255,255,0.04); display: flex; align-items: center; justify-content: space-between; }
+        .sidebar-footer .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); box-shadow: 0 0 6px rgba(16,185,129,0.4); }
         .theme-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-        .theme-toggle-track { width: 36px; height: 20px; border-radius: 12px; background: #334155; position: relative; transition: background 0.3s; }
+        .theme-toggle-track { width: 40px; height: 22px; border-radius: 12px; background: rgba(255,255,255,0.1); position: relative; transition: background 0.3s; }
         [data-theme="dark"] .theme-toggle-track { background: var(--accent); }
-        .theme-toggle-thumb { width: 16px; height: 16px; border-radius: 50%; background: #fff; position: absolute; top: 2px; left: 2px; transition: transform 0.3s; display: flex; align-items: center; justify-content: center; }
-        [data-theme="dark"] .theme-toggle-thumb { transform: translateX(16px); }
-        .theme-toggle-thumb svg { width: 10px; height: 10px; }
-        .theme-toggle-label { font-size: 11px; color: #94a3b8; }
+        .theme-toggle-thumb { width: 18px; height: 18px; border-radius: 50%; background: #fff; position: absolute; top: 2px; left: 2px; transition: transform 0.3s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+        [data-theme="dark"] .theme-toggle-thumb { transform: translateX(18px); }
+        .theme-toggle-thumb svg { width: 11px; height: 11px; }
 
-        /* Main */
-        .main { margin-left: 240px; min-height: 100vh; }
-        .topbar { background: var(--bg-white); border-bottom: 1px solid var(--border); padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; position: sticky; top: 0; z-index: 50; }
+        /* ======================== MAIN ======================== */
+        .main { margin-left: 260px; min-height: 100vh; }
+        .topbar { background: var(--bg-white); border-bottom: 1px solid var(--border); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; gap: 16px; position: sticky; top: 0; z-index: 50; backdrop-filter: blur(10px); background: rgba(255,255,255,0.85); }
+        [data-theme="dark"] .topbar { background: rgba(20,24,48,0.85); }
         .topbar-left { display: flex; align-items: center; gap: 16px; }
-        .topbar-left h2 { font-size: 18px; font-weight: 600; color: var(--text-dark); }
+        .topbar-left h2 { font-size: 20px; font-weight: 700; color: var(--text-dark); letter-spacing: -0.3px; }
         .breadcrumb { font-size: 12px; color: var(--text-light); }
-        .breadcrumb span { color: var(--accent); }
+        .breadcrumb span { color: var(--accent); font-weight: 500; }
         .topbar-right { display: flex; align-items: center; gap: 10px; position: relative; }
-        .search-box { display: flex; align-items: center; background: var(--bg-body); border: 1px solid var(--border); border-radius: var(--radius); padding: 0 12px; width: 280px; transition: all 0.2s; }
-        .search-box:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(14,165,233,0.1); }
+        .search-box { display: flex; align-items: center; background: var(--bg-body); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 0 14px; width: 300px; transition: all 0.25s ease; }
+        .search-box:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
         .search-box svg { color: var(--text-light); width: 16px; height: 16px; }
-        .search-box input { background: transparent; border: none; outline: none; color: var(--text-dark); padding: 8px 10px; width: 100%; font-size: 13px; }
+        .search-box input { background: transparent; border: none; outline: none; color: var(--text-dark); padding: 9px 10px; width: 100%; font-size: 13px; font-family: inherit; }
         .search-box input::placeholder { color: var(--text-light); }
 
-        /* Buttons */
-        .btn { padding: 7px 14px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg-white); color: var(--text-medium); cursor: pointer; font-size: 12px; font-weight: 500; transition: all 0.15s; display: inline-flex; align-items: center; gap: 5px; }
-        .btn:hover { background: var(--bg-hover); }
-        .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
-        .btn-primary:hover { background: var(--accent-hover); }
+        /* ======================== BUTTONS ======================== */
+        .btn { padding: 8px 16px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--bg-white); color: var(--text-medium); cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px; font-family: inherit; }
+        .btn:hover { background: var(--bg-hover); border-color: var(--accent); }
+        .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 2px 8px rgba(59,130,246,0.25); }
+        .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(59,130,246,0.35); }
         .btn-danger { background: var(--danger); color: #fff; border-color: var(--danger); }
+        .btn-danger:hover { background: #dc2626; }
         .btn svg { width: 14px; height: 14px; }
 
-        /* Toolbar */
-        .toolbar { padding: 12px 28px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; background: var(--bg-white); border-bottom: 1px solid var(--border); }
+        /* ======================== TOOLBAR ======================== */
+        .toolbar { padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; background: var(--bg-white); border-bottom: 1px solid var(--border); }
         .toolbar-left { display: flex; align-items: center; gap: 8px; }
-        .filter-btn { padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-white); color: var(--text-medium); cursor: pointer; font-size: 12px; font-weight: 500; transition: all 0.15s; display: flex; align-items: center; gap: 5px; }
+        .filter-btn { padding: 7px 16px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--bg-white); color: var(--text-medium); cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.2s ease; display: flex; align-items: center; gap: 6px; font-family: inherit; }
         .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
-        .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-        .filter-btn .count { background: var(--bg-hover); padding: 1px 6px; border-radius: 8px; font-size: 10px; }
+        .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 2px 8px rgba(59,130,246,0.2); }
+        .filter-btn .count { background: rgba(0,0,0,0.06); padding: 1px 7px; border-radius: 6px; font-size: 10px; font-weight: 700; }
         .filter-btn.active .count { background: rgba(255,255,255,0.25); }
 
-        /* Table */
-        .table-container { padding: 20px 28px; }
-        .table-wrapper { background: var(--bg-white); border-radius: var(--radius-lg); border: 1px solid var(--border); overflow: hidden; box-shadow: var(--shadow-sm); }
+        /* ======================== TABLE ======================== */
+        .table-container { padding: 24px 32px; }
+        .table-wrapper { background: var(--bg-white); border-radius: var(--radius-xl); border: 1px solid var(--border); overflow: hidden; box-shadow: var(--shadow-sm); }
         .data-table { width: 100%; border-collapse: collapse; }
-        .data-table th { background: var(--bg-table-header); padding: 11px 14px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-light); font-weight: 600; border-bottom: 1px solid var(--border); white-space: nowrap; }
-        .data-table td { padding: 12px 14px; font-size: 13px; color: var(--text-medium); border-bottom: 1px solid var(--border); vertical-align: middle; }
+        .data-table th { background: var(--bg-table-header); padding: 13px 16px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-light); font-weight: 700; border-bottom: 1px solid var(--border); white-space: nowrap; }
+        .data-table td { padding: 14px 16px; font-size: 13px; color: var(--text-medium); border-bottom: 1px solid var(--border); vertical-align: middle; }
         .data-table tr:last-child td { border-bottom: none; }
+        .data-table tr { transition: background 0.15s; }
         .data-table tr:hover td { background: var(--bg-table-hover); }
         .client-name-cell { display: flex; align-items: center; gap: 10px; }
-        .client-avatar { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, var(--accent), var(--purple)); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 11px; color: #fff; flex-shrink: 0; }
-        .client-name-text { font-weight: 600; color: var(--accent); cursor: pointer; }
+        .client-name-text { font-weight: 700; color: var(--accent); cursor: pointer; transition: color 0.15s; }
         .client-name-text:hover { color: var(--accent-hover); }
         .client-id { font-size: 11px; color: var(--text-light); }
-        .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; letter-spacing: 0.3px; }
-        .tag-mc { background: #065f4620; color: #34d399; }
-        .tag-ma { background: #92400e20; color: #fbbf24; }
-        .tag-si { background: #5b21b620; color: #a78bfa; }
-        [data-theme="dark"] .tag-mc { background: #34d39920; color: #34d399; }
-        [data-theme="dark"] .tag-ma { background: #fbbf2420; color: #fbbf24; }
-        [data-theme="dark"] .tag-si { background: #a78bfa20; color: #a78bfa; }
+        .tag { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 8px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; }
+        .tag-mc { background: var(--success-light); color: var(--success); }
+        .tag-ma { background: var(--warning-light); color: var(--warning); }
+        .tag-si { background: var(--purple-light); color: var(--purple); }
 
-        /* Toggle Switch */
-        .toggle { position: relative; width: 40px; height: 22px; cursor: pointer; display: inline-block; }
+        /* ======================== TOGGLE ======================== */
+        .toggle { position: relative; width: 42px; height: 24px; cursor: pointer; display: inline-block; }
         .toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
-        .toggle .slider { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--danger); border-radius: 22px; transition: all 0.25s; }
-        .toggle .slider::before { content: ''; position: absolute; width: 16px; height: 16px; border-radius: 50%; background: #fff; top: 3px; left: 3px; transition: all 0.25s; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
-        .toggle input:checked + .slider { background: var(--success); }
+        .toggle .slider { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #cbd5e1; border-radius: 24px; transition: all 0.3s ease; }
+        .toggle .slider::before { content: ''; position: absolute; width: 18px; height: 18px; border-radius: 50%; background: #fff; top: 3px; left: 3px; transition: all 0.3s ease; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
+        .toggle input:checked + .slider { background: var(--success); box-shadow: 0 0 8px rgba(16,185,129,0.3); }
         .toggle input:checked + .slider::before { transform: translateX(18px); }
 
-        .action-btns { display: flex; gap: 4px; }
-        .action-btn { width: 30px; height: 30px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-white); color: var(--text-light); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
-        .action-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .action-btns { display: flex; gap: 5px; }
+        .action-btn { width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--bg-white); color: var(--text-light); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+        .action-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); transform: translateY(-1px); }
         .action-btn.del:hover { background: var(--danger); border-color: var(--danger); }
         .action-btn svg { width: 14px; height: 14px; }
-        .notes-count { font-size: 11px; color: var(--text-light); }
-        .table-footer { padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-light); }
+        .notes-count { font-size: 11px; color: var(--text-light); font-weight: 500; background: var(--bg-body); padding: 2px 8px; border-radius: 6px; }
+        .table-footer { padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-light); font-weight: 500; }
         .no-results { text-align: center; padding: 60px 20px; color: var(--text-light); }
-        .no-results svg { margin-bottom: 12px; opacity: 0.4; }
+        .no-results svg { margin-bottom: 12px; opacity: 0.3; }
 
-        /* Dashboard */
-        .dashboard { padding: 24px 28px; }
-        .dash-welcome { background: linear-gradient(135deg, #0ea5e9, #8b5cf6); border-radius: var(--radius-lg); padding: 28px 32px; color: #fff; margin-bottom: 24px; }
-        .dash-welcome h2 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
-        .dash-welcome p { font-size: 14px; opacity: 0.9; }
-        .dash-stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 24px; }
-        .stat-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; transition: all 0.2s; }
-        .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
-        .stat-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
-        .stat-icon svg { width: 20px; height: 20px; }
-        .stat-icon.blue { background: #0ea5e920; color: var(--accent); }
-        .stat-icon.green { background: #10b98120; color: var(--success); }
-        .stat-icon.yellow { background: #f59e0b20; color: var(--warning); }
-        .stat-icon.purple { background: #8b5cf620; color: var(--purple); }
-        .stat-icon.red { background: #ef444420; color: #dc2626; }
-        .stat-value { font-size: 28px; font-weight: 700; color: var(--text-dark); line-height: 1; }
-        .stat-label { font-size: 12px; color: var(--text-light); margin-top: 4px; }
-        .dash-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+        /* ======================== DASHBOARD ======================== */
+        .dashboard { padding: 28px 32px; }
+        .dash-welcome { background: var(--gradient-1); border-radius: var(--radius-xl); padding: 32px 36px; color: #fff; margin-bottom: 28px; position: relative; overflow: hidden; }
+        .dash-welcome::before { content: ''; position: absolute; top: -50%; right: -20%; width: 300px; height: 300px; background: rgba(255,255,255,0.08); border-radius: 50%; }
+        .dash-welcome::after { content: ''; position: absolute; bottom: -30%; right: 10%; width: 200px; height: 200px; background: rgba(255,255,255,0.05); border-radius: 50%; }
+        .dash-welcome h2 { font-size: 24px; font-weight: 800; margin-bottom: 6px; position: relative; z-index: 1; }
+        .dash-welcome p { font-size: 14px; opacity: 0.9; position: relative; z-index: 1; }
+        .dash-stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; margin-bottom: 28px; }
+        .stat-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 22px; transition: all 0.25s ease; position: relative; overflow: hidden; }
+        .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+        .stat-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+        .stat-icon svg { width: 22px; height: 22px; }
+        .stat-icon.blue { background: var(--accent-light); color: var(--accent); }
+        .stat-icon.green { background: var(--success-light); color: var(--success); }
+        .stat-icon.yellow { background: var(--warning-light); color: var(--warning); }
+        .stat-icon.purple { background: var(--purple-light); color: var(--purple); }
+        .stat-icon.red { background: var(--danger-light); color: var(--danger); }
+        .stat-value { font-size: 32px; font-weight: 800; color: var(--text-dark); line-height: 1; letter-spacing: -1px; }
+        .stat-label { font-size: 12px; color: var(--text-light); margin-top: 6px; font-weight: 500; }
+        .dash-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 22px; }
         .dash-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
-        .dash-card-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-        .dash-card-header h3 { font-size: 14px; font-weight: 600; }
-        .dash-card-body { padding: 16px 20px; }
+        .dash-card-header { padding: 18px 22px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .dash-card-header h3 { font-size: 14px; font-weight: 700; color: var(--text-dark); }
+        .dash-card-body { padding: 18px 22px; max-height: 320px; overflow-y: auto; }
         .reminder-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
         .reminder-item:last-child { border-bottom: none; }
         .reminder-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
-        .reminder-dot.urgent { background: var(--danger); }
-        .reminder-dot.warning { background: var(--warning); }
-        .reminder-dot.info { background: var(--accent); }
+        .reminder-dot.urgent { background: var(--danger); box-shadow: 0 0 6px rgba(239,68,68,0.3); }
+        .reminder-dot.warning { background: var(--warning); box-shadow: 0 0 6px rgba(245,158,11,0.3); }
+        .reminder-dot.info { background: var(--accent); box-shadow: 0 0 6px rgba(59,130,246,0.3); }
         .reminder-text { font-size: 13px; color: var(--text-medium); line-height: 1.5; }
         .reminder-text strong { color: var(--text-dark); }
-        .reminder-time { font-size: 11px; color: var(--text-light); margin-top: 2px; }
         .activity-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 12px; color: var(--text-medium); }
         .activity-item:last-child { border-bottom: none; }
         .activity-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
 
-        /* Detail Panel */
-        .detail-overlay { position: fixed; inset: 0; background: var(--overlay); z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.25s; }
+        /* ======================== DETAIL PANEL ======================== */
+        .detail-overlay { position: fixed; inset: 0; background: var(--overlay); z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s ease; backdrop-filter: blur(4px); }
         .detail-overlay.active { opacity: 1; visibility: visible; }
         body.no-scroll { overflow: hidden; }
-        .detail-panel { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.95); width: 90%; max-width: 900px; max-height: 88vh; background: var(--bg-white); border-radius: var(--radius-lg); box-shadow: 0 20px 60px rgba(0,0,0,0.2); z-index: 1001; transition: all 0.25s ease; display: flex; flex-direction: column; opacity: 0; visibility: hidden; }
+        .detail-panel { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.95); width: 90%; max-width: 920px; max-height: 88vh; background: var(--bg-white); border-radius: var(--radius-xl); box-shadow: var(--shadow-xl); z-index: 1001; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; opacity: 0; visibility: hidden; }
         .detail-panel.active { transform: translate(-50%, -50%) scale(1); opacity: 1; visibility: visible; }
-        .detail-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
-        .detail-header h3 { font-size: 16px; font-weight: 600; }
-        .detail-close { width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-white); color: var(--text-light); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+        .detail-header { padding: 22px 28px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .detail-header h3 { font-size: 17px; font-weight: 700; }
+        .detail-close { width: 34px; height: 34px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--bg-white); color: var(--text-light); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
         .detail-close:hover { background: var(--danger); color: #fff; border-color: var(--danger); }
-        .detail-body { flex: 1; overflow-y: auto; padding: 20px 24px; }
-        .detail-client-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
-        .detail-avatar { width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, var(--accent), var(--purple)); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; color: #fff; }
-        .detail-client-name { font-size: 18px; font-weight: 600; color: var(--text-dark); }
-        .detail-client-id { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+        .detail-body { flex: 1; overflow-y: auto; padding: 22px 28px; }
+        .detail-client-header { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+        .detail-avatar { width: 52px; height: 52px; border-radius: 14px; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px; color: #fff; box-shadow: 0 4px 12px rgba(59,130,246,0.25); }
+        .detail-client-name { font-size: 20px; font-weight: 700; color: var(--text-dark); letter-spacing: -0.3px; }
+        .detail-client-id { font-size: 12px; color: var(--text-light); margin-top: 3px; }
         .detail-section { margin-bottom: 18px; }
-        .detail-section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-light); margin-bottom: 6px; font-weight: 600; }
-        .detail-section-content { font-size: 13px; color: var(--text-medium); line-height: 1.6; }
-        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .detail-section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-light); margin-bottom: 7px; font-weight: 700; }
+        .detail-section-content { font-size: 13px; color: var(--text-medium); line-height: 1.7; }
+        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         .detail-devices { width: 100%; border-collapse: collapse; margin-top: 4px; }
-        .detail-devices th, .detail-devices td { padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--border); font-size: 12px; }
-        .detail-devices th { color: var(--text-light); font-weight: 500; }
-        .detail-alert { padding: 10px 12px; border-radius: 6px; font-size: 12px; border-left: 3px solid; margin-top: 4px; }
-        .detail-alert.warn { background: #f59e0b15; border-color: var(--warning); color: #fbbf24; }
-        .detail-alert.info { background: #0ea5e915; border-color: var(--accent); color: #38bdf8; }
-        .detail-alert.danger { background: #ef444415; border-color: var(--danger); color: #f87171; }
-        .detail-upsell { background: linear-gradient(135deg, var(--purple)10, var(--accent)10); border: 1px solid var(--purple)40; border-radius: 8px; padding: 12px; margin-top: 4px; }
-        .detail-upsell-title { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--purple); font-weight: 700; margin-bottom: 4px; }
-        .notes-section { border-top: 1px solid var(--border); margin-top: 16px; padding-top: 16px; }
-        .notes-section h4 { font-size: 14px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
-        .note-entry { padding: 10px 12px; background: var(--bg-input); border-radius: 8px; margin-bottom: 8px; border: 1px solid var(--border); }
-        .note-time { font-size: 10px; color: var(--accent); font-weight: 600; margin-bottom: 3px; }
-        .note-text { font-size: 12px; color: var(--text-medium); line-height: 1.5; white-space: pre-wrap; }
-        .note-actions { display: flex; gap: 4px; margin-top: 6px; }
-        .note-actions button { display: inline-flex; align-items: center; gap: 3px; padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg-white); color: var(--text-light); font-size: 10px; cursor: pointer; transition: all 0.15s; }
+        .detail-devices th, .detail-devices td { padding: 7px 12px; text-align: left; border-bottom: 1px solid var(--border); font-size: 12px; }
+        .detail-devices th { color: var(--text-light); font-weight: 600; }
+        .detail-alert { padding: 11px 14px; border-radius: 10px; font-size: 12px; border-left: 3px solid; margin-top: 4px; }
+        .detail-alert.warn { background: var(--warning-light); border-color: var(--warning); color: var(--warning); }
+        .detail-alert.info { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+        .detail-alert.danger { background: var(--danger-light); border-color: var(--danger); color: var(--danger); }
+        .detail-upsell { background: linear-gradient(135deg, rgba(139,92,246,0.08), rgba(59,130,246,0.08)); border: 1px solid rgba(139,92,246,0.2); border-radius: 12px; padding: 14px; margin-top: 4px; }
+        .detail-upsell-title { font-size: 10px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--purple); font-weight: 700; margin-bottom: 5px; }
+        .notes-section { border-top: 1px solid var(--border); margin-top: 18px; padding-top: 18px; }
+        .notes-section h4 { font-size: 15px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        .note-entry { padding: 12px 14px; background: var(--bg-input); border-radius: 10px; margin-bottom: 10px; border: 1px solid var(--border); }
+        .note-time { font-size: 10px; color: var(--accent); font-weight: 700; margin-bottom: 4px; }
+        .note-text { font-size: 12px; color: var(--text-medium); line-height: 1.6; white-space: pre-wrap; }
+        .note-actions { display: flex; gap: 5px; margin-top: 8px; }
+        .note-actions button { display: inline-flex; align-items: center; gap: 4px; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-white); color: var(--text-light); font-size: 10px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
         .note-actions button:hover { border-color: var(--accent); color: var(--accent); }
         .note-actions .nd:hover { border-color: var(--danger); color: var(--danger); }
         .note-actions svg { width: 11px; height: 11px; }
-        .no-notes { text-align: center; padding: 16px; color: var(--text-light); font-size: 12px; }
-        .note-input-row { display: flex; gap: 6px; margin-top: 8px; }
-        .note-input-row textarea { flex: 1; background: var(--bg-input); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; color: var(--text-dark); font-size: 12px; font-family: inherit; resize: none; outline: none; min-height: 36px; }
-        .note-input-row textarea:focus { border-color: var(--accent); }
-        .btn-send { width: 36px; height: 36px; border-radius: 6px; background: var(--accent); color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; flex-shrink: 0; }
-        .btn-send:hover { background: var(--accent-hover); }
+        .no-notes { text-align: center; padding: 18px; color: var(--text-light); font-size: 12px; }
+        .note-input-row { display: flex; gap: 8px; margin-top: 10px; }
+        .note-input-row textarea { flex: 1; background: var(--bg-input); border: 1.5px solid var(--border); border-radius: 10px; padding: 10px 14px; color: var(--text-dark); font-size: 12px; font-family: inherit; resize: none; outline: none; min-height: 38px; transition: border-color 0.2s; }
+        .note-input-row textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+        .btn-send { width: 38px; height: 38px; border-radius: 10px; background: var(--accent); color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; box-shadow: 0 2px 8px rgba(59,130,246,0.25); }
+        .btn-send:hover { background: var(--accent-hover); transform: translateY(-1px); }
 
-        /* Modal */
-        .modal-overlay { position: fixed; inset: 0; background: var(--overlay); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.25s; }
+        /* ======================== MODAL ======================== */
+        .modal-overlay { position: fixed; inset: 0; background: var(--overlay); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; backdrop-filter: blur(4px); }
         .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal { background: var(--bg-white); border-radius: var(--radius-lg); width: 90%; max-width: 650px; max-height: 85vh; overflow-y: auto; transform: translateY(20px); transition: transform 0.25s; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
-        .modal-overlay.active .modal { transform: translateY(0); }
-        .modal-header { padding: 18px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-        .modal-header h3 { font-size: 16px; font-weight: 600; }
-        .modal-close { width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-white); color: var(--text-light); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .modal { background: var(--bg-white); border-radius: var(--radius-xl); width: 90%; max-width: 650px; max-height: 85vh; overflow-y: auto; transform: translateY(24px) scale(0.97); transition: all 0.3s cubic-bezier(0.4,0,0.2,1); box-shadow: var(--shadow-xl); }
+        .modal-overlay.active .modal { transform: translateY(0) scale(1); }
+        .modal-header { padding: 20px 28px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h3 { font-size: 17px; font-weight: 700; }
+        .modal-close { width: 34px; height: 34px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--bg-white); color: var(--text-light); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
         .modal-close:hover { background: var(--danger); color: #fff; border-color: var(--danger); }
-        .modal-body { padding: 20px 24px; }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-        .form-group { display: flex; flex-direction: column; gap: 5px; }
+        .modal-body { padding: 24px 28px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
         .form-group.full { grid-column: 1 / -1; }
-        .form-group label { font-size: 11px; font-weight: 600; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; }
-        .form-group input, .form-group textarea, .form-group select { background: var(--bg-input); border: 1px solid var(--border); border-radius: 6px; padding: 9px 12px; color: var(--text-dark); font-size: 13px; font-family: inherit; transition: all 0.15s; outline: none; }
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(14,165,233,0.1); background: var(--bg-white); }
-        .form-group textarea { resize: vertical; min-height: 70px; }
+        .form-group label { font-size: 11px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.8px; }
+        .form-group input, .form-group textarea, .form-group select { background: var(--bg-input); border: 1.5px solid var(--border); border-radius: 10px; padding: 10px 14px; color: var(--text-dark); font-size: 13px; font-family: inherit; transition: all 0.2s; outline: none; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); background: var(--bg-white); }
+        .form-group textarea { resize: vertical; min-height: 72px; }
         .form-group select { cursor: pointer; }
-        .services-checks { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
-        .service-check { display: flex; align-items: center; gap: 5px; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border); cursor: pointer; transition: all 0.15s; font-size: 12px; font-weight: 500; background: var(--bg-white); color: var(--text-medium); }
+        .services-checks { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+        .service-check { display: flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 10px; border: 1.5px solid var(--border); cursor: pointer; transition: all 0.2s; font-size: 12px; font-weight: 600; background: var(--bg-white); color: var(--text-medium); }
         .service-check:hover { border-color: var(--accent); }
         .service-check input { display: none; }
-        .service-check.checked { background: rgba(14,165,233,0.1); border-color: var(--accent); color: var(--accent); }
+        .service-check.checked { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
         .devices-editor { margin-top: 6px; }
-        .device-row { display: flex; gap: 8px; margin-bottom: 6px; align-items: center; }
-        .device-row input { flex: 1; background: var(--bg-input); border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px; color: var(--text-dark); font-size: 12px; outline: none; }
+        .device-row { display: flex; gap: 8px; margin-bottom: 7px; align-items: center; }
+        .device-row input { flex: 1; background: var(--bg-input); border: 1.5px solid var(--border); border-radius: 8px; padding: 8px 12px; color: var(--text-dark); font-size: 12px; outline: none; font-family: inherit; }
         .device-row input:focus { border-color: var(--accent); }
         .device-row input:first-child { flex: 2; }
-        .btn-remove-device { width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-white); color: var(--danger); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .btn-remove-device { width: 30px; height: 30px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--bg-white); color: var(--danger); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
         .btn-remove-device:hover { background: var(--danger); color: #fff; }
-        .btn-add-device { padding: 5px 12px; border-radius: 6px; border: 1px dashed var(--border); background: transparent; color: var(--text-light); cursor: pointer; font-size: 11px; }
+        .btn-add-device { padding: 6px 14px; border-radius: 8px; border: 1.5px dashed var(--border); background: transparent; color: var(--text-light); cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.15s; }
         .btn-add-device:hover { border-color: var(--accent); color: var(--accent); }
-        .modal-footer { padding: 14px 24px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px; }
-        .confirm-dialog { text-align: center; padding: 28px; }
-        .confirm-dialog svg { margin-bottom: 12px; color: var(--danger); }
-        .confirm-dialog h4 { font-size: 16px; margin-bottom: 6px; }
-        .confirm-dialog p { color: var(--text-medium); font-size: 13px; margin-bottom: 18px; }
-        .confirm-actions { display: flex; gap: 8px; justify-content: center; }
+        .modal-footer { padding: 16px 28px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; }
+        .confirm-dialog { text-align: center; padding: 32px; }
+        .confirm-dialog svg { margin-bottom: 14px; color: var(--danger); }
+        .confirm-dialog h4 { font-size: 18px; margin-bottom: 8px; font-weight: 700; }
+        .confirm-dialog p { color: var(--text-medium); font-size: 13px; margin-bottom: 20px; }
+        .confirm-actions { display: flex; gap: 10px; justify-content: center; }
 
-        /* Dropdown */
+        /* ======================== DROPDOWN ======================== */
         .dropdown { position: relative; z-index: 600; }
-        .dropdown-menu { display: none; position: absolute; top: 100%; right: 0; margin-top: 6px; background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius); min-width: 200px; box-shadow: var(--shadow-md); z-index: 500; padding: 4px; }
+        .dropdown-menu { display: none; position: absolute; top: 100%; right: 0; margin-top: 8px; background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius); min-width: 220px; box-shadow: var(--shadow-lg); z-index: 500; padding: 6px; }
         .dropdown-menu.show { display: block; }
-        .menu-item { display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; border: none; background: transparent; color: var(--text-medium); cursor: pointer; font-size: 12px; border-radius: 6px; transition: all 0.15s; font-family: inherit; text-align: left; }
-        .menu-item:hover { background: var(--bg-hover); color: var(--accent); }
+        .menu-item { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 14px; border: none; background: transparent; color: var(--text-medium); cursor: pointer; font-size: 12px; font-weight: 500; border-radius: 8px; transition: all 0.15s; font-family: inherit; text-align: left; }
+        .menu-item:hover { background: var(--accent-light); color: var(--accent); }
         .menu-item svg { width: 14px; height: 14px; }
 
-        /* Toast */
-        .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 2000; display: flex; flex-direction: column; gap: 8px; }
-        .toast { padding: 10px 16px; border-radius: var(--radius); background: var(--bg-white); border: 1px solid var(--border); color: var(--text-dark); font-size: 12px; box-shadow: var(--shadow-md); animation: slideIn 0.3s ease; display: flex; align-items: center; gap: 6px; }
-        .toast.success { border-left: 3px solid var(--success); }
-        .toast.error { border-left: 3px solid var(--danger); }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        /* ======================== TOAST ======================== */
+        .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 2000; display: flex; flex-direction: column; gap: 10px; }
+        .toast { padding: 12px 18px; border-radius: 12px; background: var(--bg-white); border: 1px solid var(--border); color: var(--text-dark); font-size: 12px; font-weight: 500; box-shadow: var(--shadow-lg); animation: slideIn 0.35s cubic-bezier(0.4,0,0.2,1); display: flex; align-items: center; gap: 8px; }
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.error { border-left: 4px solid var(--danger); }
+        @keyframes slideIn { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-        /* Excel Feedback Table */
-        #excelTableBody input, #excelTableBody textarea { transition: all 0.15s; border-radius: 4px; }
+        /* ======================== EXCEL FEEDBACK ======================== */
+        #excelTableBody input, #excelTableBody textarea { transition: all 0.15s; border-radius: 6px; }
         #excelTableBody input:hover, #excelTableBody textarea:hover { background: var(--bg-hover) !important; }
         #excelTableBody tr { border-bottom: 1px solid var(--border); }
-        #excelTableBody tr:hover { background: var(--accent)10 !important; }
+        #excelTableBody tr:hover { background: var(--accent-light) !important; }
         #excelTableBody tr:nth-child(even) { background: var(--bg-input); }
-        #excelTableBody tr:nth-child(even):hover { background: var(--accent)10 !important; }
-        #excelTableBody td:nth-child(1) { font-weight: 600; color: var(--accent); background: var(--accent)08; }
-        #excelTableBody td:nth-child(2) { background: var(--warning)08; }
-        #excelTableBody td:nth-child(3) { color: var(--text-light); font-size: 12px; background: var(--success)08; text-align: center; }
-        #excelTableBody td:nth-child(4) { background: var(--accent)08; border-left: 3px solid var(--accent); padding-left: 10px; }
-        #excelTableBody td:nth-child(5) { background: var(--warning)08; border-left: 3px solid var(--warning); padding-left: 10px; }
+        #excelTableBody tr:nth-child(even):hover { background: var(--accent-light) !important; }
+        #excelTableBody td:nth-child(1) { font-weight: 700; color: var(--accent); background: var(--accent-light); }
+        #excelTableBody td:nth-child(2) { background: var(--warning-light); }
+        #excelTableBody td:nth-child(3) { color: var(--text-light); font-size: 12px; background: var(--success-light); text-align: center; }
+        #excelTableBody td:nth-child(4) { background: var(--accent-light); border-left: 3px solid var(--accent); padding-left: 12px; }
+        #excelTableBody td:nth-child(5) { background: var(--warning-light); border-left: 3px solid var(--warning); padding-left: 12px; }
         #excelTableBody input, #excelTableBody textarea { background: transparent; border: 1px solid transparent; color: var(--text-dark); }
         #excelTableBody input:focus, #excelTableBody textarea:focus { border-color: var(--accent); background: var(--bg-white) !important; outline: none; }
 
-        @media (max-width: 1024px) { .dash-stats { grid-template-columns: repeat(2, 1fr); } .dash-grid { grid-template-columns: 1fr; } .sidebar { width: 60px; } .sidebar-brand h1, .sidebar-brand span, .sidebar-section-title, .sidebar-link span, .sidebar-link .badge, .sidebar-user .user-info, .sidebar-footer span, .sidebar-parent .chevron { display: none; } .sidebar-link { justify-content: center; padding: 12px; border-left: none; } .sidebar-link.sub { padding-left: 12px; } .sidebar-brand { justify-content: center; padding: 16px; } .sidebar-user { justify-content: center; } .main { margin-left: 60px; } .search-box { width: 200px; } .sidebar-submenu { max-height: none !important; overflow: visible; } }
-        @media (max-width: 640px) { .sidebar { display: none; } .main { margin-left: 0; } .dash-stats { grid-template-columns: 1fr; } .detail-panel { width: 95%; max-width: none; } }
+        /* ======================== RESPONSIVE ======================== */
+        @media (max-width: 1024px) { .dash-stats { grid-template-columns: repeat(2, 1fr); } .dash-grid { grid-template-columns: 1fr; } .sidebar { width: 70px; } .sidebar-brand h1, .sidebar-brand span, .sidebar-section-title, .sidebar-link span, .sidebar-link .badge, .sidebar-user .user-info, .sidebar-footer span, .sidebar-parent .chevron { display: none; } .sidebar-link { justify-content: center; padding: 12px; border-radius: 12px; } .sidebar-link.sub { padding-left: 12px; } .sidebar-brand { justify-content: center; padding: 16px; } .sidebar-user { justify-content: center; } .main { margin-left: 70px; } .search-box { width: 200px; } .sidebar-submenu { max-height: none !important; overflow: visible; } }
+        @media (max-width: 640px) { .sidebar { display: none; } .main { margin-left: 0; } .dash-stats { grid-template-columns: 1fr; } .detail-panel { width: 95%; max-width: none; } .topbar { padding: 12px 16px; } .dashboard { padding: 16px; } .table-container { padding: 16px; } .toolbar { padding: 12px 16px; } }
 
-        .login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); display: flex; align-items: center; justify-content: center; z-index: 99999; }
-        .login-box { background: var(--bg-white); border-radius: 16px; padding: 40px; width: 380px; max-width: 90vw; box-shadow: 0 20px 60px rgba(0,0,0,0.3); text-align: center; }
-        .login-logo { width: 70px; height: 70px; background: #0ea5e9; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 24px; font-weight: 800; color: #fff; }
-        .login-box h2 { margin: 0 0 4px; font-size: 22px; color: var(--text-dark); }
-        .login-box p { margin: 0 0 24px; font-size: 13px; color: var(--text-medium); }
-        .login-field { position: relative; margin-bottom: 16px; text-align: left; }
-        .login-field label { display: block; font-size: 12px; font-weight: 600; color: var(--text-medium); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .login-field input { width: 100%; padding: 12px 14px; border: 2px solid var(--border); border-radius: 8px; font-size: 14px; background: var(--bg-input); color: var(--text-dark); outline: none; transition: border-color 0.2s; box-sizing: border-box; }
-        .login-field input:focus { border-color: #0ea5e9; }
-        .login-btn { width: 100%; padding: 12px; background: #0ea5e9; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
-        .login-btn:hover { background: #0284c7; }
-        .login-error { color: #ef4444; font-size: 13px; margin-top: 12px; display: none; }
-        .login-footer { margin-top: 20px; font-size: 11px; color: var(--text-light); }
+        /* ======================== LOGIN ======================== */
+        .login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 40%, #0f172a 100%); display: flex; align-items: center; justify-content: center; z-index: 99999; }
+        .login-overlay::before { content: ''; position: absolute; top: 20%; left: 10%; width: 300px; height: 300px; background: rgba(59,130,246,0.08); border-radius: 50%; filter: blur(60px); }
+        .login-overlay::after { content: ''; position: absolute; bottom: 20%; right: 15%; width: 250px; height: 250px; background: rgba(139,92,246,0.08); border-radius: 50%; filter: blur(60px); }
+        .login-box { background: var(--bg-white); border-radius: 20px; padding: 44px; width: 400px; max-width: 90vw; box-shadow: 0 24px 80px rgba(0,0,0,0.35); text-align: center; position: relative; z-index: 1; }
+        .login-logo { width: 76px; height: 76px; background: var(--gradient-1); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; font-size: 26px; font-weight: 800; color: #fff; box-shadow: 0 8px 24px rgba(59,130,246,0.3); }
+        .login-box h2 { margin: 0 0 6px; font-size: 24px; color: var(--text-dark); font-weight: 800; letter-spacing: -0.5px; }
+        .login-box p { margin: 0 0 28px; font-size: 13px; color: var(--text-medium); }
+        .login-field { position: relative; margin-bottom: 18px; text-align: left; }
+        .login-field label { display: block; font-size: 11px; font-weight: 700; color: var(--text-medium); margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.8px; }
+        .login-field input { width: 100%; padding: 13px 16px; border: 2px solid var(--border); border-radius: 12px; font-size: 14px; font-family: inherit; background: var(--bg-input); color: var(--text-dark); outline: none; transition: all 0.2s; box-sizing: border-box; }
+        .login-field input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-glow); }
+        .login-btn { width: 100%; padding: 14px; background: var(--gradient-1); color: #fff; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.25s; font-family: inherit; box-shadow: 0 4px 16px rgba(59,130,246,0.3); }
+        .login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,130,246,0.4); }
+        .login-error { color: var(--danger); font-size: 13px; margin-top: 14px; display: none; font-weight: 500; }
+        .login-footer { margin-top: 22px; font-size: 11px; color: var(--text-light); }
         .app-hidden { display: none !important; }
     </style>
 </head>
@@ -320,11 +349,11 @@
                 <input type="text" id="loginUser" placeholder="Tu usuario" autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()">
             </div>
             <div class="login-field">
-                <label>Contraseña</label>
-                <input type="password" id="loginPass" placeholder="Tu contraseña" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+                <label>ContraseÃ±a</label>
+                <input type="password" id="loginPass" placeholder="Tu contraseÃ±a" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
             </div>
-            <button class="login-btn" onclick="doLogin()">Iniciar Sesión</button>
-            <div class="login-error" id="loginError">Usuario o contraseña incorrectos</div>
+            <button class="login-btn" onclick="doLogin()">Iniciar SesiÃ³n</button>
+            <div class="login-error" id="loginError">Usuario o contraseÃ±a incorrectos</div>
             <div class="login-footer">STS Security &copy; 2026</div>
         </div>
     </div>
@@ -353,7 +382,7 @@
             <div class="sidebar-submenu">
                 <a class="sidebar-link sub" onclick="showView('clients');filterByService('mc')">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-                    <span>Monitoreo Cámaras</span>
+                    <span>Monitoreo CÃ¡maras</span>
                 </a>
                 <a class="sidebar-link sub" onclick="showView('clients');filterByService('ma')">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -384,7 +413,7 @@
                 <div class="theme-toggle" onclick="toggleTheme()">
                     <div class="theme-toggle-track"><div class="theme-toggle-thumb"><svg id="themeIconSun" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg id="themeIconMoon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div></div>
                 </div>
-                <span onclick="doLogout()" style="cursor:pointer;font-size:11px;color:#ef4444" title="Cerrar sesión">
+                <span onclick="doLogout()" style="cursor:pointer;font-size:11px;color:#ef4444" title="Cerrar sesiÃ³n">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                 </span>
             </div>
@@ -565,7 +594,7 @@
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th>Título</th>
+                                <th>TÃ­tulo</th>
                                 <th style="width:120px">Estado</th>
                                 <th style="width:100px">Prioridad</th>
                                 <th style="width:100px">Acciones</th>
@@ -605,15 +634,15 @@
                     <div class="form-group full"><label>Nombre de la Propiedad / Empresa / Casa</label><input type="text" id="editProperty" placeholder="Ej: Villa Celeste, Casa Nilu, Coasin..."></div>
                     <div class="form-group full"><label>Servicios</label><div class="services-checks" id="servicesChecks"><label class="service-check"><input type="checkbox" value="mc"> MC</label><label class="service-check"><input type="checkbox" value="ma"> MA</label><label class="service-check"><input type="checkbox" value="si"> SI</label></div></div>
                     <div class="form-group full"><label>Contacto</label><label class="service-check" style="margin-top:4px;"><input type="checkbox" id="editContacted"> Cliente contactado</label></div>
-                    <div class="form-group full"><label>Idioma del Cliente</label><select id="editLanguage"><option value="">Seleccionar idioma...</option><option value="Español">Español</option><option value="Inglés">Inglés</option><option value="Portugués">Portugués</option><option value="Francés">Francés</option><option value="Alemán">Alemán</option><option value="Chino (Mandarín)">Chino (Mandarín)</option><option value="Coreano">Coreano</option><option value="Japonés">Japonés</option><option value="Italiano">Italiano</option><option value="Árabe">Árabe</option><option value="Ruso">Ruso</option><option value="Español / Inglés">Español / Inglés</option><option value="Español / Portugués">Español / Portugués</option></select></div>
+                    <div class="form-group full"><label>Idioma del Cliente</label><select id="editLanguage"><option value="">Seleccionar idioma...</option><option value="EspaÃ±ol">EspaÃ±ol</option><option value="InglÃ©s">InglÃ©s</option><option value="PortuguÃ©s">PortuguÃ©s</option><option value="FrancÃ©s">FrancÃ©s</option><option value="AlemÃ¡n">AlemÃ¡n</option><option value="Chino (MandarÃ­n)">Chino (MandarÃ­n)</option><option value="Coreano">Coreano</option><option value="JaponÃ©s">JaponÃ©s</option><option value="Italiano">Italiano</option><option value="Ãrabe">Ãrabe</option><option value="Ruso">Ruso</option><option value="EspaÃ±ol / InglÃ©s">EspaÃ±ol / InglÃ©s</option><option value="EspaÃ±ol / PortuguÃ©s">EspaÃ±ol / PortuguÃ©s</option></select></div>
                     <div class="form-group full"><label>Dispositivos</label><div class="devices-editor" id="devicesEditor"></div><button class="btn-add-device" onclick="addDeviceRow()">+ Agregar dispositivo</button></div>
                     <div class="form-group full"><label>Feedback General</label><textarea id="editNotes" placeholder="Feedback general..."></textarea></div>
-                    <div class="form-group full"><label>Estado del Equipo</label><textarea id="editEquipment" placeholder="Descripción del estado..."></textarea></div>
+                    <div class="form-group full"><label>Estado del Equipo</label><textarea id="editEquipment" placeholder="DescripciÃ³n del estado..."></textarea></div>
                     <div class="form-group full"><label>Historial de Soporte</label><textarea id="editSupport" placeholder="Fallas, visitas, etc..."></textarea></div>
                     <div class="form-group full"><label>Mantenimiento</label><input type="text" id="editMaintenance" placeholder="Ej: Cada 6 meses"></div>
-                    <div class="form-group full"><label>Evaluación de Seguridad</label><textarea id="editSecurity" placeholder="Puntos ciegos, zonas desprotegidas..."></textarea></div>
-                    <div class="form-group full"><label>Oportunidad de Venta</label><textarea id="editUpsell" placeholder="Qué se le puede ofrecer..."></textarea></div>
-                    <div class="form-group full"><label>Notas Técnicas</label><textarea id="editTechnical" placeholder="Detalles técnicos importantes..."></textarea></div>
+                    <div class="form-group full"><label>EvaluaciÃ³n de Seguridad</label><textarea id="editSecurity" placeholder="Puntos ciegos, zonas desprotegidas..."></textarea></div>
+                    <div class="form-group full"><label>Oportunidad de Venta</label><textarea id="editUpsell" placeholder="QuÃ© se le puede ofrecer..."></textarea></div>
+                    <div class="form-group full"><label>Notas TÃ©cnicas</label><textarea id="editTechnical" placeholder="Detalles tÃ©cnicos importantes..."></textarea></div>
                 </div>
             </div>
             <div class="modal-footer"><button class="btn" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="saveClient()">Guardar Cambios</button></div>
@@ -639,7 +668,7 @@
             <div class="modal-body">
                 <input type="hidden" id="taskEditId">
                 <div class="form-grid">
-                    <div class="form-group full"><label>Título</label><input type="text" id="taskTitle" placeholder="Nombre de la tarea"></div>
+                    <div class="form-group full"><label>TÃ­tulo</label><input type="text" id="taskTitle" placeholder="Nombre de la tarea"></div>
                     <div class="form-group"><label>Estado</label><select id="taskStatus"><option value="Pendiente">Pendiente</option><option value="En progreso">En progreso</option><option value="Hecho">Hecho</option></select></div>
                     <div class="form-group"><label>Prioridad</label><select id="taskPriority"><option value="Baja">Baja</option><option value="Media">Media</option><option value="Alta">Alta</option></select></div>
                 </div>
@@ -651,23 +680,23 @@
     <!-- Notion Config Modal -->
     <div class="modal-overlay" id="notionConfigModal">
         <div class="modal" style="max-width:500px;">
-            <div class="modal-header"><h3>Configuración de Notion</h3><button class="modal-close" onclick="closeNotionConfig()"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+            <div class="modal-header"><h3>ConfiguraciÃ³n de Notion</h3><button class="modal-close" onclick="closeNotionConfig()"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
             <div class="modal-body">
                 <div class="form-grid">
-                    <div class="form-group full"><label>Token de Integración</label><input type="password" id="notionToken" placeholder="ntn_... o secret_..."></div>
+                    <div class="form-group full"><label>Token de IntegraciÃ³n</label><input type="password" id="notionToken" placeholder="ntn_... o secret_..."></div>
                     <div class="form-group full"><label>Database ID</label><input type="text" id="notionDatabaseId" placeholder="Ej: 38a1ca4bac5280ec9da4d07a1ca252be"></div>
                 </div>
                 <div style="margin-top:12px;padding:12px;background:var(--bg-light);border-radius:8px;font-size:12px;color:var(--text-medium)">
-                    <strong>Cómo obtener estos datos:</strong>
+                    <strong>CÃ³mo obtener estos datos:</strong>
                     <ol style="margin:8px 0 0 16px;padding:0">
                         <li>Ve a <a href="https://www.notion.so/my-integrations" target="_blank" style="color:var(--accent)">notion.so/my-integrations</a></li>
-                        <li>Crea una integración y copia el token</li>
+                        <li>Crea una integraciÃ³n y copia el token</li>
                         <li>Abre tu base de datos y copia el ID de la URL</li>
-                        <li>Comparte la base de datos con tu integración</li>
+                        <li>Comparte la base de datos con tu integraciÃ³n</li>
                     </ol>
                 </div>
             </div>
-            <div class="modal-footer"><button class="btn" onclick="closeNotionConfig()">Cancelar</button><button class="btn btn-primary" onclick="saveNotionConfig()">Guardar Configuración</button></div>
+            <div class="modal-footer"><button class="btn" onclick="closeNotionConfig()">Cancelar</button><button class="btn btn-primary" onclick="saveNotionConfig()">Guardar ConfiguraciÃ³n</button></div>
         </div>
     </div>
 
@@ -675,7 +704,7 @@
         <div class="modal" style="max-width:420px;">
             <div class="modal-header"><h3 id="subtaskModalTitle">Nueva subtarea</h3><button class="modal-close" onclick="closeSubtaskModal()"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
             <div class="modal-body">
-                <div class="form-group full"><label>Descripción</label><input type="text" id="subtaskInput" placeholder="Escribe la subtarea..." style="width:100%;padding:10px 12px;border:2px solid var(--border);border-radius:8px;font-size:14px;outline:none;" onkeydown="if(event.key==='Enter')saveSubtask()"></div>
+                <div class="form-group full"><label>DescripciÃ³n</label><input type="text" id="subtaskInput" placeholder="Escribe la subtarea..." style="width:100%;padding:10px 12px;border:2px solid var(--border);border-radius:8px;font-size:14px;outline:none;" onkeydown="if(event.key==='Enter')saveSubtask()"></div>
                 <div class="form-group full" style="margin-top:10px"><label>Estado</label>
                     <select id="subtaskStatusSelect" style="width:100%;padding:10px 12px;border:2px solid var(--border);border-radius:8px;font-size:14px;outline:none;cursor:pointer;background:var(--bg-light)">
                         <option value="Pendiente">Pendiente</option>
@@ -742,44 +771,44 @@ const defaultClients = [
     { id:"MC1", name:"HR1", property:"", services:["mc","ma"], maId:"MA10033", language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC2", name:"Plaza Premium La Cuesta", property:"", services:["mc","ma"], maId:"MA10172", language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC3", name:"HR3", property:"", services:["mc","ma"], maId:"MA10032", language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
-    { id:"MC4", name:"Roberto Turcios", property:"Residencia Turcios", services:["mc"], language:"Español", contacted:true, devices:[{name:"Cámaras",qty:"3"},{name:"UPS (por cámara)",qty:"3"},{name:"Router Mikrotik",qty:"1"},{name:"AP Omnidireccional Ruijie",qty:"1"}], notes:"No posee alarmas nuestras. Tiene alarma ADT por su cuenta.", equipment:"Equipos nuevos. Requiere revisar las micro SD.", support:"La cámara de 'Estatuas' se desconecta por falta de señal WiFi. Última visita: hace 1 mes.", maintenance:"Anual", security:"Varios puntos ciegos.", upsell:"Más cámaras (tipo PTZ) / Sistema de alarma propio", technical:"Agregar otro repetidor fuera de la casa. App: DMSS" },
-    { id:"MC5", name:"STS Escazú", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
+    { id:"MC4", name:"Roberto Turcios", property:"Residencia Turcios", services:["mc"], language:"EspaÃ±ol", contacted:true, devices:[{name:"CÃ¡maras",qty:"3"},{name:"UPS (por cÃ¡mara)",qty:"3"},{name:"Router Mikrotik",qty:"1"},{name:"AP Omnidireccional Ruijie",qty:"1"}], notes:"No posee alarmas nuestras. Tiene alarma ADT por su cuenta.", equipment:"Equipos nuevos. Requiere revisar las micro SD.", support:"La cÃ¡mara de 'Estatuas' se desconecta por falta de seÃ±al WiFi. Ãšltima visita: hace 1 mes.", maintenance:"Anual", security:"Varios puntos ciegos.", upsell:"MÃ¡s cÃ¡maras (tipo PTZ) / Sistema de alarma propio", technical:"Agregar otro repetidor fuera de la casa. App: DMSS" },
+    { id:"MC5", name:"STS EscazÃº", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC6", name:"HR6", property:"", services:["mc","ma"], maId:"MA10050", language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC7", name:"COSARATOPIAS", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC8", name:"Marco Vinicio Ruiz", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
-    { id:"MC9", name:"Villa celeste", property:"Villa Celeste", services:["mc","ma"], maId:"MA10024", language:"Español", contacted:true, devices:[{name:"Alarma DSC Power Series",qty:"21 sensores"},{name:"Cámaras 4MP",qty:"4"}], notes:"Alarma DSC descontinuada.", equipment:"Cámaras 4MP se ven bien pero sin analíticas. Alarma descontinuada.", support:"Sin fallas en el último mes.", maintenance:"No se hace mantenimiento.", security:"Bien cubierto. RIESGO: transceptora irremplazable.", upsell:"Cambio a sistema Ajax.", technical:"Administrador difícil de contactar." },
-    { id:"MC10", name:"Lomas de Brasil", property:"Lomas de Brasil", services:["mc"], language:"Español", contacted:false, devices:[], notes:"Dar seguimiento. Verificar si quieren volver a ser clientes.", equipment:"", support:"", maintenance:"Cada 6 meses.", security:"Evaluar necesidad de más cámaras.", upsell:"Consultar proceso del portón con permisos.", technical:"Ver cómo va el proceso del portón." },
-    { id:"MC11", name:"Surfers Dream House", property:"Surfers Dreams", services:["mc"], language:"Español / Inglés", contacted:true, devices:[{name:"Cámaras WiFi",qty:"6"}], notes:"Administrador: Greg (mismo que MC57).", equipment:"Inestabilidad de red por proveedor de internet.", support:"Problema del proveedor RE&COM.", maintenance:"", security:"Prioridad: hacer cámaras cableadas.", upsell:"Hacer instalación cableada / Cambiar proveedor.", technical:"Mejorar MC11 primero (cableado)." },
+    { id:"MC9", name:"Villa celeste", property:"Villa Celeste", services:["mc","ma"], maId:"MA10024", language:"EspaÃ±ol", contacted:true, devices:[{name:"Alarma DSC Power Series",qty:"21 sensores"},{name:"CÃ¡maras 4MP",qty:"4"}], notes:"Alarma DSC descontinuada.", equipment:"CÃ¡maras 4MP se ven bien pero sin analÃ­ticas. Alarma descontinuada.", support:"Sin fallas en el Ãºltimo mes.", maintenance:"No se hace mantenimiento.", security:"Bien cubierto. RIESGO: transceptora irremplazable.", upsell:"Cambio a sistema Ajax.", technical:"Administrador difÃ­cil de contactar." },
+    { id:"MC10", name:"Lomas de Brasil", property:"Lomas de Brasil", services:["mc"], language:"EspaÃ±ol", contacted:false, devices:[], notes:"Dar seguimiento. Verificar si quieren volver a ser clientes.", equipment:"", support:"", maintenance:"Cada 6 meses.", security:"Evaluar necesidad de mÃ¡s cÃ¡maras.", upsell:"Consultar proceso del portÃ³n con permisos.", technical:"Ver cÃ³mo va el proceso del portÃ³n." },
+    { id:"MC11", name:"Surfers Dream House", property:"Surfers Dreams", services:["mc"], language:"EspaÃ±ol / InglÃ©s", contacted:true, devices:[{name:"CÃ¡maras WiFi",qty:"6"}], notes:"Administrador: Greg (mismo que MC57).", equipment:"Inestabilidad de red por proveedor de internet.", support:"Problema del proveedor RE&COM.", maintenance:"", security:"Prioridad: hacer cÃ¡maras cableadas.", upsell:"Hacer instalaciÃ³n cableada / Cambiar proveedor.", technical:"Mejorar MC11 primero (cableado)." },
     { id:"MC12", name:"STS QUEPOS", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC13", name:"PUESTO 27 (Hermosa Palms)", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
-    { id:"MC14", name:"Casa Nilu", property:"Casa Nilu", services:["mc","ma"], maId:"MA10056", language:"Español", contacted:true, devices:[{name:"Cámaras",qty:"5"},{name:"Alarma DSC Power Series",qty:"21 sensores"}], notes:"Alarma DSC descontinuada.", equipment:"", support:"", maintenance:"", security:"Matas muy altas tapando cámaras de afuera.", upsell:"Cambio de alarma a sistema Ajax.", technical:"Vegetación obstruye cámaras exteriores." },
+    { id:"MC14", name:"Casa Nilu", property:"Casa Nilu", services:["mc","ma"], maId:"MA10056", language:"EspaÃ±ol", contacted:true, devices:[{name:"CÃ¡maras",qty:"5"},{name:"Alarma DSC Power Series",qty:"21 sensores"}], notes:"Alarma DSC descontinuada.", equipment:"", support:"", maintenance:"", security:"Matas muy altas tapando cÃ¡maras de afuera.", upsell:"Cambio de alarma a sistema Ajax.", technical:"VegetaciÃ³n obstruye cÃ¡maras exteriores." },
     { id:"MC15", name:"El Salto", property:"", services:["mc","ma"], maId:"MA10047", language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC16", name:"Alejandro", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC17", name:"HR7 Greg Poulin", property:"", services:["mc","ma"], maId:"MA10058", language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC18", name:"Daniela", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC19", name:"Portasol", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC20", name:"Casa Rutan", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
-    { id:"MC21", name:"Esteban Rodriguez", property:"Residencia Rodríguez", services:["mc"], language:"Español", contacted:true, devices:[{name:"Cámara en alquiler",qty:"1"}], notes:"", equipment:"", support:"", maintenance:"Tal vez en 1 año.", security:"", upsell:"", technical:"" },
+    { id:"MC21", name:"Esteban Rodriguez", property:"Residencia RodrÃ­guez", services:["mc"], language:"EspaÃ±ol", contacted:true, devices:[{name:"CÃ¡mara en alquiler",qty:"1"}], notes:"", equipment:"", support:"", maintenance:"Tal vez en 1 aÃ±o.", security:"", upsell:"", technical:"" },
     { id:"MC22", name:"Johana", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
-    { id:"MC23", name:"Jaco Dream Rentals", property:"Jaco Dreams / Vida Home", services:["mc"], language:"Español", contacted:true, devices:[{name:"Alarma Ajax",qty:"8 sensores"},{name:"Cámaras WiFi",qty:"4"}], notes:"", equipment:"Todo funcionando correctamente.", support:"Sin problemas.", maintenance:"", security:"Bien cubierto.", upsell:"No hay nada que ofrecer.", technical:"" },
+    { id:"MC23", name:"Jaco Dream Rentals", property:"Jaco Dreams / Vida Home", services:["mc"], language:"EspaÃ±ol", contacted:true, devices:[{name:"Alarma Ajax",qty:"8 sensores"},{name:"CÃ¡maras WiFi",qty:"4"}], notes:"", equipment:"Todo funcionando correctamente.", support:"Sin problemas.", maintenance:"", security:"Bien cubierto.", upsell:"No hay nada que ofrecer.", technical:"" },
     { id:"MC24", name:"", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC25", name:"Casa Avalon (Erick Easter)", property:"", services:["mc","ma"], maId:"MA10043", language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC26", name:"Villa Colorada", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
-    { id:"MC27", name:"Klaus Lote 10", property:"Klaus Lote 10", services:["mc"], language:"Español", contacted:true, devices:[{name:"Cámaras",qty:"2"}], notes:"Mismo cliente de Villa Celeste (MC9).", equipment:"", support:"", maintenance:"", security:"", upsell:"Cotizar 3 cámaras más y sistema de alarma.", technical:"Coordinar visita técnica." },
+    { id:"MC27", name:"Klaus Lote 10", property:"Klaus Lote 10", services:["mc"], language:"EspaÃ±ol", contacted:true, devices:[{name:"CÃ¡maras",qty:"2"}], notes:"Mismo cliente de Villa Celeste (MC9).", equipment:"", support:"", maintenance:"", security:"", upsell:"Cotizar 3 cÃ¡maras mÃ¡s y sistema de alarma.", technical:"Coordinar visita tÃ©cnica." },
     { id:"MC28", name:"Publimobil", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC29", name:"Fertica", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC30", name:"Hermosa Falls", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
-    { id:"MC31", name:"Coasin", property:"Coasin", services:["mc","ma"], maId:"MA10071", language:"Español", contacted:false, devices:[{name:"Alarma Crow",qty:"8 sensores"}], notes:"Tienen sus propios técnicos.", equipment:"Alarma Crow (no monitorean esa marca).", support:"", maintenance:"", security:"", upsell:"Ofertar sistema Ajax.", technical:"Tienen técnicos propios." },
+    { id:"MC31", name:"Coasin", property:"Coasin", services:["mc","ma"], maId:"MA10071", language:"EspaÃ±ol", contacted:false, devices:[{name:"Alarma Crow",qty:"8 sensores"}], notes:"Tienen sus propios tÃ©cnicos.", equipment:"Alarma Crow (no monitorean esa marca).", support:"", maintenance:"", security:"", upsell:"Ofertar sistema Ajax.", technical:"Tienen tÃ©cnicos propios." },
     { id:"MC32", name:"", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
-    { id:"MC33", name:"Ed - Casa - Coco", property:"Taller MC33", services:["mc","ma"], maId:"MA10074", language:"Español", contacted:false, devices:[], notes:"Le gustaría que volviéramos a monitorear el taller.", equipment:"Problemas con grabador (pendiente confirmar).", support:"", maintenance:"", security:"", upsell:"Reactivar monitoreo del taller.", technical:"Verificar estado del grabador." },
-    { id:"MC34", name:"Robert Coberly", property:"Robert Coberly", services:["mc"], language:"Español", contacted:false, devices:[{name:"Cámaras WiFi con baterías",qty:"4"}], notes:"Cliente de alquiler. Cambio de micro SD reciente.", equipment:"", support:"", maintenance:"", security:"Sin alarma.", upsell:"Alarma: Ajax o Dahua. NO ofrecer intercomunicador.", technical:"No mencionar intercomunicador." },
+    { id:"MC33", name:"Ed - Casa - Coco", property:"Taller MC33", services:["mc","ma"], maId:"MA10074", language:"EspaÃ±ol", contacted:false, devices:[], notes:"Le gustarÃ­a que volviÃ©ramos a monitorear el taller.", equipment:"Problemas con grabador (pendiente confirmar).", support:"", maintenance:"", security:"", upsell:"Reactivar monitoreo del taller.", technical:"Verificar estado del grabador." },
+    { id:"MC34", name:"Robert Coberly", property:"Robert Coberly", services:["mc"], language:"EspaÃ±ol", contacted:false, devices:[{name:"CÃ¡maras WiFi con baterÃ­as",qty:"4"}], notes:"Cliente de alquiler. Cambio de micro SD reciente.", equipment:"", support:"", maintenance:"", security:"Sin alarma.", upsell:"Alarma: Ajax o Dahua. NO ofrecer intercomunicador.", technical:"No mencionar intercomunicador." },
     { id:"MC35", name:"Casa Prana", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC36", name:"Casa 149 - Doug Gever", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC37", name:"Publiefecto", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
-    { id:"MC38", name:"Casa Colibrí", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
+    { id:"MC38", name:"Casa ColibrÃ­", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC39", name:"", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
-    { id:"MC40", name:"Mora y Valdez", property:"Mora y Valdez", services:["mc","ma"], maId:"MA10180", language:"Español", contacted:false, devices:[{name:"Alarma Ajax",qty:"19 sensores"},{name:"Cámaras (del cliente)",qty:"4 monitoreadas"}], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"Ofrecer sensores de ruptura de vidrios.", technical:"" },
-    { id:"MC41", name:"Ion +", property:"Ion Plus", services:["mc"], language:"Español", contacted:false, devices:[{name:"Cámaras monitoreadas",qty:"2"},{name:"Grabador propio PT",qty:"4 cámaras"}], notes:"Iba a ser MA pero no estaba satisfecho.", equipment:"", support:"", maintenance:"", security:"", upsell:"NO OFRECER NADA. Solo verificar que todo funcione.", technical:"Cliente insatisfecho anteriormente." },
+    { id:"MC40", name:"Mora y Valdez", property:"Mora y Valdez", services:["mc","ma"], maId:"MA10180", language:"EspaÃ±ol", contacted:false, devices:[{name:"Alarma Ajax",qty:"19 sensores"},{name:"CÃ¡maras (del cliente)",qty:"4 monitoreadas"}], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"Ofrecer sensores de ruptura de vidrios.", technical:"" },
+    { id:"MC41", name:"Ion +", property:"Ion Plus", services:["mc"], language:"EspaÃ±ol", contacted:false, devices:[{name:"CÃ¡maras monitoreadas",qty:"2"},{name:"Grabador propio PT",qty:"4 cÃ¡maras"}], notes:"Iba a ser MA pero no estaba satisfecho.", equipment:"", support:"", maintenance:"", security:"", upsell:"NO OFRECER NADA. Solo verificar que todo funcione.", technical:"Cliente insatisfecho anteriormente." },
     { id:"MC42", name:"", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC43", name:"Armando Cruz", property:"", services:["mc","ma"], maId:"MA10081", language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC44", name:"", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
@@ -787,7 +816,7 @@ const defaultClients = [
     { id:"MC46", name:"Dra. Agueda Romero", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC47", name:"Jardines del Morete", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC48", name:"Plaza Solo Bueno", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
-    { id:"MC49", name:"ED Construcción", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
+    { id:"MC49", name:"ED ConstrucciÃ³n", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC50", name:"Casas Bali y Octogonal", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC51", name:"Rick Smith", property:"", services:["mc","ma"], maId:"MA10085", language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC52", name:"Casa Claida", property:"", services:["mc","ma"], maId:"MA10086", language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
@@ -795,7 +824,7 @@ const defaultClients = [
     { id:"MC54", name:"", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC55", name:"Sabo Internacional", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC56", name:"Casa Anjali", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
-    { id:"MC57", name:"Casa Bendita", property:"Casa Bendita / Anjali", services:["mc"], language:"Español", contacted:false, devices:[{name:"Cámaras Hikvision",qty:"9"}], notes:"Administrador: Greg (mismo que MC11).", equipment:"Cámaras buenas. Último: formateo de contraseñas.", support:"Sin problemas.", maintenance:"", security:"Temas de privacidad para añadir cámaras.", upsell:"Podría ofrecerse Ajax o Dahua.", technical:"" },
+    { id:"MC57", name:"Casa Bendita", property:"Casa Bendita / Anjali", services:["mc"], language:"EspaÃ±ol", contacted:false, devices:[{name:"CÃ¡maras Hikvision",qty:"9"}], notes:"Administrador: Greg (mismo que MC11).", equipment:"CÃ¡maras buenas. Ãšltimo: formateo de contraseÃ±as.", support:"Sin problemas.", maintenance:"", security:"Temas de privacidad para aÃ±adir cÃ¡maras.", upsell:"PodrÃ­a ofrecerse Ajax o Dahua.", technical:"" },
     { id:"MC58", name:"Apartamentos Andros", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC59", name:"Vista Las Palmas", property:"", services:["mc","ma"], maId:"MA10171", language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC60", name:"Csaba", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
@@ -841,7 +870,7 @@ const defaultClients = [
     { id:"MA10027", name:"HR4 - Greg Poulin", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10028", name:"HR5 - Greg Poulin", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10029", name:"Casa Sulara (Antiguo Kabe International)", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
-    { id:"MA10030", name:"Casa Sueños", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
+    { id:"MA10030", name:"Casa SueÃ±os", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10031", name:"Casa Mundo", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10034", name:"Casa Lagunas (principal)", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10036", name:"Mary Pepperl", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
@@ -861,8 +890,8 @@ const defaultClients = [
     { id:"MA10054", name:"Casa Escondida", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10055", name:"Casa Escondida", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10057", name:"Hermosa Villa", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
-    { id:"MA10059", name:"Casa Bambú Principal", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
-    { id:"MA10060", name:"Casa Bambú Segundaria", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
+    { id:"MA10059", name:"Casa BambÃº Principal", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
+    { id:"MA10060", name:"Casa BambÃº Segundaria", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10061", name:"Casa Serena", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10063", name:"Hidden Valley (SPA)", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10064", name:"Cinco Lunas Principal", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
@@ -902,7 +931,7 @@ const defaultClients = [
     { id:"MA10106", name:"Rich Welch", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10107", name:"Michael Cunningham", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10108", name:"Willy Francois", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
-    { id:"MA10109", name:"Chic Fisioestética", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
+    { id:"MA10109", name:"Chic FisioestÃ©tica", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10110", name:"Villa Lyle", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10111", name:"Chiki Sanez", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10112", name:"Steve Meyer", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
@@ -927,7 +956,7 @@ const defaultClients = [
     { id:"MA10131", name:"Villa Pelicano", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10132", name:"Gestionadora de Creditos San Sebastian", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10133", name:"Hiden Village Lodge", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
-    { id:"MA10134", name:"Jacó Beach Village", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
+    { id:"MA10134", name:"JacÃ³ Beach Village", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10135", name:"Carol Brown", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10136", name:"Derek Doran", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10137", name:"Salsa Souvenirs", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
@@ -947,7 +976,7 @@ const defaultClients = [
     { id:"MA10151", name:"Dominic Laurent", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10152", name:"Andy", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10153", name:"Guillermo Sojo", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
-    { id:"MA10154", name:"Jacó Beach Village", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
+    { id:"MA10154", name:"JacÃ³ Beach Village", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10155", name:"Warren Legarie", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10156", name:"Juan Caldero", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10157", name:"Oceano Sales Office", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
@@ -955,7 +984,7 @@ const defaultClients = [
     { id:"MA10159", name:"Casa Mango", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10160", name:"Jimmy Romero", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10161", name:"Tresisa", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
-    { id:"MA10162", name:"Hotel La Mansión Inn", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
+    { id:"MA10162", name:"Hotel La MansiÃ³n Inn", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10163", name:"Casa Villa Mariana", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10164", name:"Tienda Marea", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10165", name:"Bar Los Amigos", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
@@ -963,7 +992,7 @@ const defaultClients = [
     { id:"MA10167", name:"John Williamson", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10168", name:"Stephanie Bond", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10169", name:"David Martin", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
-    { id:"MA10173", name:"Andrés Pacheco", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
+    { id:"MA10173", name:"AndrÃ©s Pacheco", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10174", name:"Casa portalon Michael Rondeau", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10175", name:"Mike Webb", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MA10176", name:"Acnur Upala Paradox", property:"", services:["ma"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
@@ -1049,10 +1078,10 @@ function renderDashboard() {
     const maCount = clients.filter(c => c.services.includes('ma') && !(c.services.includes('mc') && c.services.includes('ma'))).length;
     const siCount = clients.filter(c => c.services.includes('si')).length;
     const mcmaCount = clients.filter(c => c.services.includes('mc') && c.services.includes('ma')).length;
-    const days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+    const days = ['Domingo','Lunes','Martes','MiÃ©rcoles','Jueves','Viernes','SÃ¡bado'];
     const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
     const now = new Date();
-    document.getElementById('dashDate').textContent = `${days[now.getDay()]} ${now.getDate()} de ${months[now.getMonth()]} ${now.getFullYear()} · ${total} clientes registrados`;
+    document.getElementById('dashDate').textContent = `${days[now.getDay()]} ${now.getDate()} de ${months[now.getMonth()]} ${now.getFullYear()} Â· ${total} clientes registrados`;
     document.getElementById('dashStats').innerHTML = `
         <div class="stat-card"><div class="stat-icon blue"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="stat-value">${total}</div><div class="stat-label">Total Clientes</div></div>
         <div class="stat-card"><div class="stat-icon green"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div class="stat-value">${contacted}</div><div class="stat-label">Contactados</div></div>
@@ -1062,8 +1091,8 @@ function renderDashboard() {
     const reminders = [];
     clients.forEach(c => {
         if (c.upsell && !c.upsell.includes('NO OFRECER') && !c.upsell.includes('nada que ofrecer') && !c.upsell.includes('No hay nada'))
-            reminders.push({ dot:'info', text:`<strong>${c.name}</strong> — Oportunidad: ${c.upsell.substring(0,80)}${c.upsell.length>80?'...':''}` });
-        if (c.support) reminders.push({ dot:'warning', text:`<strong>${c.name}</strong> — Soporte: ${c.support.substring(0,80)}${c.support.length>80?'...':''}` });
+            reminders.push({ dot:'info', text:`<strong>${c.name}</strong> â€” Oportunidad: ${c.upsell.substring(0,80)}${c.upsell.length>80?'...':''}` });
+        if (c.support) reminders.push({ dot:'warning', text:`<strong>${c.name}</strong> â€” Soporte: ${c.support.substring(0,80)}${c.support.length>80?'...':''}` });
     });
     if (pending > 0) reminders.unshift({ dot:'urgent', text:`Tienes <strong>${pending} cliente${pending>1?'s':''}</strong> pendiente${pending>1?'s':''} de contactar` });
     if (reminders.length === 0) reminders.push({ dot:'info', text:'No hay recordatorios pendientes' });
@@ -1105,9 +1134,9 @@ function renderTable() {
         return `<tr>
             <td style="font-weight:600;color:var(--text-dark);font-size:12px">${idDisplay}</td>
             <td><div class="client-name-cell"><div><div class="client-name-text" onclick="openDetail(${i})" style="text-transform:uppercase">${c.name}</div><div class="client-id">${c.language||''}</div></div></div></td>
-            <td>${tags || '<span style="color:var(--text-light)">—</span>'}</td>
+            <td>${tags || '<span style="color:var(--text-light)">â€”</span>'}</td>
             <td><label class="toggle" onclick="event.stopPropagation()"><input type="checkbox" ${c.contacted?'checked':''} onchange="toggleContacted(${i},event)"><span class="slider"></span></label></td>
-            <td><span class="notes-count">${nc > 0 ? nc + ' nota' + (nc > 1 ? 's' : '') : '—'}</span></td>
+            <td><span class="notes-count">${nc > 0 ? nc + ' nota' + (nc > 1 ? 's' : '') : 'â€”'}</span></td>
             <td><div class="action-btns"><button class="action-btn" onclick="event.stopPropagation();openDetail(${i})" title="Ver"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button><button class="action-btn" onclick="event.stopPropagation();openEditModal(${i})" title="Editar"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="action-btn del" onclick="event.stopPropagation();openConfirm(${i})" title="Eliminar"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div></td>
         </tr>`;
     }).join('');
@@ -1121,7 +1150,7 @@ function openDetail(idx) {
     const c = clients[idx];
     let html = `<div class="detail-client-header">
         <div class="detail-avatar">${getInitials(c.name)}</div>
-        <div><div class="detail-client-name">${c.name}</div><div class="detail-client-id">${c.id} · ${c.property||'Sin propiedad'} ${c.contacted ? '· <span style="color:var(--success)">Contactado</span>' : '· <span style="color:var(--warning)">Pendiente</span>'}</div></div>
+        <div><div class="detail-client-name">${c.name}</div><div class="detail-client-id">${c.id} Â· ${c.property||'Sin propiedad'} ${c.contacted ? 'Â· <span style="color:var(--success)">Contactado</span>' : 'Â· <span style="color:var(--warning)">Pendiente</span>'}</div></div>
     </div>`;
     const labels={mc:'MC',ma:'MA',si:'SI'}; const colors={mc:'tag-mc',ma:'tag-ma',si:'tag-si'};
     html += `<div class="detail-grid">
@@ -1132,8 +1161,8 @@ function openDetail(idx) {
     if (c.devices && c.devices.length) html += `<div class="detail-section"><div class="detail-section-title">Dispositivos</div><table class="detail-devices">${c.devices.map(d=>`<tr><th>${d.name}</th><td>${d.qty}</td></tr>`).join('')}</table></div>`;
     if (c.equipment) html += `<div class="detail-section"><div class="detail-section-title">Estado del Equipo</div><div class="detail-section-content">${c.equipment}</div></div>`;
     if (c.support) html += `<div class="detail-section"><div class="detail-section-title">Historial de Soporte</div><div class="detail-alert warn">${c.support}</div></div>`;
-    if (c.security) html += `<div class="detail-section"><div class="detail-section-title">Evaluación de Seguridad</div><div class="detail-section-content">${c.security}</div></div>`;
-    if (c.technical) html += `<div class="detail-section"><div class="detail-section-title">Notas Técnicas</div><div class="detail-alert info">${c.technical}</div></div>`;
+    if (c.security) html += `<div class="detail-section"><div class="detail-section-title">EvaluaciÃ³n de Seguridad</div><div class="detail-section-content">${c.security}</div></div>`;
+    if (c.technical) html += `<div class="detail-section"><div class="detail-section-title">Notas TÃ©cnicas</div><div class="detail-alert info">${c.technical}</div></div>`;
     if (c.upsell) { const ns = c.upsell.includes('NO OFRECER')||c.upsell.includes('nada que ofrecer')||c.upsell.includes('No hay nada'); html += `<div class="detail-section">${ns?`<div class="detail-alert danger"><strong>NO OFRECER:</strong> ${c.upsell}</div>`:`<div class="detail-upsell"><div class="detail-upsell-title">Oportunidad de Venta</div><div class="detail-section-content">${c.upsell}</div></div>`}</div>`; }
     if (c.notes) html += `<div class="detail-section"><div class="detail-section-title">Feedback General</div><div class="detail-section-content" style="font-style:italic;color:var(--text-light)">${c.notes}</div></div>`;
     const notes = callNotes[c.id] || [];
@@ -1151,7 +1180,7 @@ function closeDetail(){document.getElementById('detailOverlay').classList.remove
 function addDetailNote(){const ta=document.getElementById('detailNoteInput');const text=ta.value.trim();if(!text||detailClientIdx<0)return;const c=clients[detailClientIdx];if(!callNotes[c.id])callNotes[c.id]=[];callNotes[c.id].push({text,time:Date.now()});saveCallNotes();ta.value='';openDetail(detailClientIdx);renderTable();if(currentView==='dashboard')renderDashboard();showToast('Feedback guardado','success');}
 function deleteDetailNote(clientIdx,noteIdx){const c=clients[clientIdx];callNotes[c.id].splice(noteIdx,1);if(callNotes[c.id].length===0)delete callNotes[c.id];saveCallNotes();openDetail(clientIdx);renderTable();if(currentView==='dashboard')renderDashboard();}
 function startEditNote(clientIdx,noteIdx){const noteEl=document.getElementById(`note-${clientIdx}-${noteIdx}`);const textDiv=noteEl.querySelector('.note-text');const originalText=textDiv.dataset.original;const editBtn=noteEl.querySelector('.ne');const delBtn=noteEl.querySelector('.nd');textDiv.innerHTML=`<textarea style="width:100%;min-height:50px;padding:6px;border:1px solid var(--accent);border-radius:4px;background:var(--bg-white);color:var(--text-dark);font-family:inherit;font-size:12px;resize:vertical;outline:none;">${originalText}</textarea>`;editBtn.innerHTML='<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Guardar';editBtn.onclick=()=>saveEditNote(clientIdx,noteIdx);delBtn.innerHTML='<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Cancelar';delBtn.onclick=()=>openDetail(detailClientIdx);noteEl.querySelector('textarea').focus();}
-function saveEditNote(clientIdx,noteIdx){const noteEl=document.getElementById(`note-${clientIdx}-${noteIdx}`);const textarea=noteEl.querySelector('textarea');const newText=textarea.value.trim();if(!newText){showToast('La nota no puede estar vacía','error');return;}callNotes[clients[clientIdx].id][noteIdx].text=newText;saveCallNotes();openDetail(clientIdx);renderTable();showToast('Feedback actualizado','success');}
+function saveEditNote(clientIdx,noteIdx){const noteEl=document.getElementById(`note-${clientIdx}-${noteIdx}`);const textarea=noteEl.querySelector('textarea');const newText=textarea.value.trim();if(!newText){showToast('La nota no puede estar vacÃ­a','error');return;}callNotes[clients[clientIdx].id][noteIdx].text=newText;saveCallNotes();openDetail(clientIdx);renderTable();showToast('Feedback actualizado','success');}
 
 function toggleContacted(idx,e){
     e.stopPropagation();
@@ -1187,11 +1216,11 @@ function addDeviceRow(name='',qty=''){const e=document.getElementById('devicesEd
 
 function saveClient(){const idx=parseInt(document.getElementById('editIndex').value);const services=[];document.querySelectorAll('#servicesChecks .service-check input:checked').forEach(el=>services.push(el.value));const devices=[];document.querySelectorAll('#devicesEditor .device-row').forEach(row=>{const inp=row.querySelectorAll('input');if(inp[0].value.trim())devices.push({name:inp[0].value.trim(),qty:inp[1].value.trim()});});const client={id:document.getElementById('editId').value.trim(),name:document.getElementById('editName').value.trim(),property:document.getElementById('editProperty').value.trim(),contacted:document.getElementById('editContacted').checked,services,devices,language:document.getElementById('editLanguage').value,notes:document.getElementById('editNotes').value.trim(),equipment:document.getElementById('editEquipment').value.trim(),support:document.getElementById('editSupport').value.trim(),maintenance:document.getElementById('editMaintenance').value.trim(),security:document.getElementById('editSecurity').value.trim(),upsell:document.getElementById('editUpsell').value.trim(),technical:document.getElementById('editTechnical').value.trim()};if(!client.id||!client.name){showToast('ID y Nombre son obligatorios','error');return;}if(idx===-1){clients.push(client);showToast('Cliente agregado','success');}else{clients[idx]=client;showToast('Cliente actualizado','success');}saveClients();closeModal();renderTable();if(currentView==='dashboard')renderDashboard();}
 
-function openConfirm(idx){deleteIndex=idx;document.getElementById('confirmText').textContent=`¿Eliminar a "${clients[idx].name}" (${clients[idx].id})?`;document.getElementById('confirmModal').classList.add('active');}
+function openConfirm(idx){deleteIndex=idx;document.getElementById('confirmText').textContent=`Â¿Eliminar a "${clients[idx].name}" (${clients[idx].id})?`;document.getElementById('confirmModal').classList.add('active');}
 function closeConfirm(){document.getElementById('confirmModal').classList.remove('active');deleteIndex=-1;}
 function confirmDelete(){if(deleteIndex>=0){const c=clients[deleteIndex];delete callNotes[c.id];saveCallNotes();clients.splice(deleteIndex,1);saveClients();renderTable();if(currentView==='dashboard')renderDashboard();showToast(`"${c.name}" eliminado`,'success');}closeConfirm();}
 
-function showToast(msg,type='success'){const c=document.getElementById('toastContainer');const t=document.createElement('div');t.className=`toast ${type}`;t.innerHTML=`${type==='success'?'✓':'✕'} ${msg}`;c.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(100%)';setTimeout(()=>t.remove(),300);},3000);}
+function showToast(msg,type='success'){const c=document.getElementById('toastContainer');const t=document.createElement('div');t.className=`toast ${type}`;t.innerHTML=`${type==='success'?'âœ“':'âœ•'} ${msg}`;c.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(100%)';setTimeout(()=>t.remove(),300);},3000);}
 
 document.getElementById('editModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 document.getElementById('confirmModal').addEventListener('click',function(e){if(e.target===this)closeConfirm();});
@@ -1209,9 +1238,9 @@ function getAllBackupData(){
     };
 }
 function exportBackup(){const data=getAllBackupData();const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`sts-backup-${new Date().toISOString().split('T')[0]}.json`;a.click();URL.revokeObjectURL(a.href);showToast('Backup exportado correctamente','success');}
-function exportExcel(){if(typeof XLSX==='undefined'){showToast('Librería Excel no cargada','error');return;}const data=[['ID','Nombre','Servicios','Idioma','Contactado','Feedback']];clients.forEach(c=>{const notes=(callNotes[c.id]||[]).map(n=>`[${formatTime(n.time)}] ${n.text}`).join('\n');const svcs=c.services.map(s=>s.toUpperCase()).join(', ');data.push([c.id,c.name,svcs,c.language||'',c.contacted?'Sí':'No',notes]);});const wb=XLSX.utils.book_new();const ws=XLSX.utils.aoa_to_sheet(data);ws['!cols']=[{wch:14},{wch:20},{wch:12},{wch:16},{wch:10},{wch:50}];XLSX.utils.book_append_sheet(wb,ws,'Clientes');const wbout=XLSX.write(wb,{bookType:'xlsx',type:'array'});const blob=new Blob([wbout],{type:'application/octet-stream'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`clientes-sts-${new Date().toISOString().split('T')[0]}.xlsx`;a.click();URL.revokeObjectURL(a.href);showToast('Archivo Excel exportado correctamente','success');}
+function exportExcel(){if(typeof XLSX==='undefined'){showToast('LibrerÃ­a Excel no cargada','error');return;}const data=[['ID','Nombre','Servicios','Idioma','Contactado','Feedback']];clients.forEach(c=>{const notes=(callNotes[c.id]||[]).map(n=>`[${formatTime(n.time)}] ${n.text}`).join('\n');const svcs=c.services.map(s=>s.toUpperCase()).join(', ');data.push([c.id,c.name,svcs,c.language||'',c.contacted?'SÃ­':'No',notes]);});const wb=XLSX.utils.book_new();const ws=XLSX.utils.aoa_to_sheet(data);ws['!cols']=[{wch:14},{wch:20},{wch:12},{wch:16},{wch:10},{wch:50}];XLSX.utils.book_append_sheet(wb,ws,'Clientes');const wbout=XLSX.write(wb,{bookType:'xlsx',type:'array'});const blob=new Blob([wbout],{type:'application/octet-stream'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`clientes-sts-${new Date().toISOString().split('T')[0]}.xlsx`;a.click();URL.revokeObjectURL(a.href);showToast('Archivo Excel exportado correctamente','success');}
 function exportNotesPDF(){let html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Feedback - STS</title><style>body{font-family:Arial,sans-serif;padding:30px;color:#333;background:#f5f5f5}h1{text-align:center;color:#1e293b;margin-bottom:5px}.sub{text-align:center;color:#666;font-size:14px;margin-bottom:30px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}.card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);page-break-inside:avoid}.card-header{background:#0f172a;color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}.card-header h2{font-size:15px;margin:0}.card-body{padding:16px}.note{padding:10px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:10px}.note-time{font-size:11px;color:#0ea5e9;font-weight:600;margin-bottom:4px}.note-text{font-size:13px;color:#444;line-height:1.6;white-space:pre-wrap}.empty{text-align:center;padding:60px 20px;color:#94a3b8}</style></head><body><h1>Feedback de Clientes - STS Security</h1><p class="sub">Generado el ${new Date().toLocaleDateString('es',{day:'2-digit',month:'long',year:'numeric'})}</p>`;let hasAnyNotes=false;const cardsHtml=clients.map(c=>{const notes=callNotes[c.id]||[];if(notes.length===0)return'';hasAnyNotes=true;return`<div class="card"><div class="card-header"><h2>${c.name}</h2><span style="font-size:12px;opacity:0.8">${c.id}</span></div><div class="card-body">${notes.map(n=>`<div class="note"><div class="note-time">${formatTime(n.time)}</div><div class="note-text">${n.text}</div></div>`).join('')}</div></div>`;}).join('');if(!hasAnyNotes)html+=`<div class="empty">No hay feedback registrado</div>`;else html+=`<div class="grid">${cardsHtml}</div>`;html+=`</body></html>`;const win=window.open('','_blank');win.document.write(html);win.document.close();setTimeout(()=>{win.print();},500);}
-function importBackup(event){const file=event.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=function(e){try{const data=JSON.parse(e.target.result);if(data.clients){clients=data.clients;saveClients();}if(data.callNotes){callNotes=data.callNotes;saveCallNotes();}if(data.subtasks){subtasks=data.subtasks;saveSubtasks();}if(data.excelFeedback){localStorage.setItem('sts_excel_feedback',JSON.stringify(data.excelFeedback));}if(data.notionToken){localStorage.setItem('notion_token',data.notionToken);}if(data.notionDatabaseId){localStorage.setItem('notion_database_id',data.notionDatabaseId);}renderTable();if(currentView==='dashboard')renderDashboard();if(currentView==='excelFeedback')renderExcelFeedback();showToast(`Backup restaurado (${data.exportDate?new Date(data.exportDate).toLocaleDateString('es'):'fecha desconocida'})`,'success');}catch(err){showToast('Archivo de backup inválido','error');}};reader.readAsText(file);event.target.value='';}
+function importBackup(event){const file=event.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=function(e){try{const data=JSON.parse(e.target.result);if(data.clients){clients=data.clients;saveClients();}if(data.callNotes){callNotes=data.callNotes;saveCallNotes();}if(data.subtasks){subtasks=data.subtasks;saveSubtasks();}if(data.excelFeedback){localStorage.setItem('sts_excel_feedback',JSON.stringify(data.excelFeedback));}if(data.notionToken){localStorage.setItem('notion_token',data.notionToken);}if(data.notionDatabaseId){localStorage.setItem('notion_database_id',data.notionDatabaseId);}renderTable();if(currentView==='dashboard')renderDashboard();if(currentView==='excelFeedback')renderExcelFeedback();showToast(`Backup restaurado (${data.exportDate?new Date(data.exportDate).toLocaleDateString('es'):'fecha desconocida'})`,'success');}catch(err){showToast('Archivo de backup invÃ¡lido','error');}};reader.readAsText(file);event.target.value='';}
 
 function toggleTheme(){
     const isDark=document.documentElement.getAttribute('data-theme')==='dark';
@@ -1227,7 +1256,7 @@ function toggleTheme(){
 })();
 
 let lastAutoBackup='';
-function autoBackup(){const now=new Date();const h=now.getHours(),m=now.getMinutes();const today=now.toISOString().split('T')[0];if(h===16&&m>=30&&lastAutoBackup!==today){lastAutoBackup=today;const data=getAllBackupData();data.auto=true;const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='sts-backup-automatico.json';a.click();URL.revokeObjectURL(a.href);showToast('Backup automático diario guardado','success');}}
+function autoBackup(){const now=new Date();const h=now.getHours(),m=now.getMinutes();const today=now.toISOString().split('T')[0];if(h===16&&m>=30&&lastAutoBackup!==today){lastAutoBackup=today;const data=getAllBackupData();data.auto=true;const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='sts-backup-automatico.json';a.click();URL.revokeObjectURL(a.href);showToast('Backup automÃ¡tico diario guardado','success');}}
 setInterval(autoBackup,60000);
 
 // Excel Feedback Data
@@ -1295,7 +1324,7 @@ function addExcelRow() {
 }
 
 function deleteExcelRow(idx) {
-    if (confirm('¿Eliminar esta fila?')) {
+    if (confirm('Â¿Eliminar esta fila?')) {
         excelFeedbackData.splice(idx, 1);
         renderExcelFeedback();
         showToast('Fila eliminada', 'success');
@@ -1309,7 +1338,7 @@ function saveExcelFeedback() {
 
 function exportExcelFeedback() {
     if (typeof XLSX === 'undefined') {
-        showToast('Librería Excel no cargada', 'error');
+        showToast('LibrerÃ­a Excel no cargada', 'error');
         return;
     }
     
@@ -1397,18 +1426,18 @@ if (excelFeedbackData.length === 0) {
     // Default data from the Excel file we read earlier
     excelFeedbackData = [
         {id: "MC04", name: "Roberto Turcios", date: "18/06/2026", feedback: "No respondio llamada, se le mando un mensaje por whatsapp, estoy a la espera", comments: "Se intento llamar hoy otra vez pero no responde"},
-        {id: "MC09/MA10024", name: "Villa Celeste", date: "19/06/2026", feedback: "Cliente solicita cotización para sistema de alarma Ajax y circuito de cámaras con analíticas avanzadas (específicamente detección humana y de movimiento) enviarla a Kevin Ballesteros por correo", comments: "Situación actual: El cliente manifestó que actualmente presenta varios problemas con el servicio de los cuales desea hablar. En este momento, la conversación se encuentra abierta y nos mantenemos a la espera de sus respuestas para proceder con la gestión."},
-        {id: "MC11", name: "Surfers Dreams", date: "19/06/2026", feedback: "Cliente manifiesta total inconformidad con el servicio de cámaras. Indica que el sistema ha fallado desde el inicio, afectando la efectividad del Monitoreo. Reporta que a pesar de múltiples visitas técnicas, el problema sigue sin resolverse. Dijo que quiere llamar a Jonathan", comments: "El cliente aclara que está muy conforme con el servicio en MC 57 - Casa Bendita (sistema preexistente). La problemática técnica e insatisfacción se concentran exclusivamente en la cuenta MC 11, cuya instalación fue realizada desde cero por nuestra empresa.\n\nManifiesta interés en cotizar/contratar seguridad con STS para una nueva propiedad. Sin embargo, se percibe dudoso e inseguro de avanzar debido a la mala experiencia actual con MC 11. Se requiere resolver el caso técnico con urgencia para recuperar la confianza del cliente y viabilizar esta nueva venta.\n\nHaremos llamada el lunes"},
-        {id: "MC14", name: "Casa Nilu", date: "19/06/2026", feedback: "El cliente se encuentra muy satisfecho y contento con el servicio de monitoreo en general; sin embargo, el sistema de alarma actual presenta fallas constantes, al punto de que actualmente mantienen la alarma apagada para evitar molestias a los inquilinos que alquilan la propiedad. Debido a esto, solicita con prontitud una propuesta formal de migración a sistemas Ajax para presentarla ante sus jefes para aprobación. Requiere que se prepare la cotización basada estrictamente en la cantidad de dispositivos y cobertura que tiene actualmente en el sitio.", comments: "Se le envió la cotización por el sistema de alarma Ajax"},
-        {id: "MC21", name: "Esteban Rodríguez", date: "19/06/2026", feedback: "El cliente (Esteban) solicita cotización para un nuevo proyecto en una finca de 3,000 metros en Heredia. Indica que la construcción/desarrollo tomará alrededor de un año, por lo que no es un requerimiento inmediato, pero desea evaluar costos con la intención de contratar la seguridad con nosotros. Se puede enviar por whatsapp", comments: "El cliente reporta un evento crítico donde un hombre tocó la puerta fuertemente, se acostó en el piso y nadie de monitoreo reportó el evento. No recuerda específicamente cuando pasó, pero ya tiene tiempo.\n\nReclama que del 16 al 26 de diciembre no hubo ningún tipo de comunicación por parte de Monitoreo. No hubo reportes diarios ni ningun otro tipo de reporte\n\nIndica que la luz de detección que tiene la cámara permaneció encendida de forma fija durante 2 días (posible desconfiguración del equipo). Añade que actualmente la luz se encuentra apagada o que al menos eso le indicaron en el grupo del cliente. Esto lo reportaron esta semana."},
-        {id: "MC23/10004", name: "Jaco Dreams Rentals / Vida Home / JWL", date: "18/06/2026", feedback: "La cliente confirma que se encuentra muy satisfecha y que todo está muy bien con los servicios de Monitoreo de Alarma (MA) y Monitoreo de Cámaras (MC). Inconformidad reportada: Su única queja radica en la modalidad de cobro. Manifestó que asumía que el pago de las mensualidades se realizaba de manera automática. Debido a esto, se sorprendió al recibir una llamada de cobro notificándole un saldo pendiente de varios meses. Solicitud del cliente: Expresa que sería de gran utilidad y un excelente beneficio si se pudiera habilitar la opción de cargos automáticos para sus mensualidades, evitando así futuros inconvenientes con el estado de su cuenta", comments: "Ya se converso con Andres al respecto"},
+        {id: "MC09/MA10024", name: "Villa Celeste", date: "19/06/2026", feedback: "Cliente solicita cotizaciÃ³n para sistema de alarma Ajax y circuito de cÃ¡maras con analÃ­ticas avanzadas (especÃ­ficamente detecciÃ³n humana y de movimiento) enviarla a Kevin Ballesteros por correo", comments: "SituaciÃ³n actual: El cliente manifestÃ³ que actualmente presenta varios problemas con el servicio de los cuales desea hablar. En este momento, la conversaciÃ³n se encuentra abierta y nos mantenemos a la espera de sus respuestas para proceder con la gestiÃ³n."},
+        {id: "MC11", name: "Surfers Dreams", date: "19/06/2026", feedback: "Cliente manifiesta total inconformidad con el servicio de cÃ¡maras. Indica que el sistema ha fallado desde el inicio, afectando la efectividad del Monitoreo. Reporta que a pesar de mÃºltiples visitas tÃ©cnicas, el problema sigue sin resolverse. Dijo que quiere llamar a Jonathan", comments: "El cliente aclara que estÃ¡ muy conforme con el servicio en MC 57 - Casa Bendita (sistema preexistente). La problemÃ¡tica tÃ©cnica e insatisfacciÃ³n se concentran exclusivamente en la cuenta MC 11, cuya instalaciÃ³n fue realizada desde cero por nuestra empresa.\n\nManifiesta interÃ©s en cotizar/contratar seguridad con STS para una nueva propiedad. Sin embargo, se percibe dudoso e inseguro de avanzar debido a la mala experiencia actual con MC 11. Se requiere resolver el caso tÃ©cnico con urgencia para recuperar la confianza del cliente y viabilizar esta nueva venta.\n\nHaremos llamada el lunes"},
+        {id: "MC14", name: "Casa Nilu", date: "19/06/2026", feedback: "El cliente se encuentra muy satisfecho y contento con el servicio de monitoreo en general; sin embargo, el sistema de alarma actual presenta fallas constantes, al punto de que actualmente mantienen la alarma apagada para evitar molestias a los inquilinos que alquilan la propiedad. Debido a esto, solicita con prontitud una propuesta formal de migraciÃ³n a sistemas Ajax para presentarla ante sus jefes para aprobaciÃ³n. Requiere que se prepare la cotizaciÃ³n basada estrictamente en la cantidad de dispositivos y cobertura que tiene actualmente en el sitio.", comments: "Se le enviÃ³ la cotizaciÃ³n por el sistema de alarma Ajax"},
+        {id: "MC21", name: "Esteban RodrÃ­guez", date: "19/06/2026", feedback: "El cliente (Esteban) solicita cotizaciÃ³n para un nuevo proyecto en una finca de 3,000 metros en Heredia. Indica que la construcciÃ³n/desarrollo tomarÃ¡ alrededor de un aÃ±o, por lo que no es un requerimiento inmediato, pero desea evaluar costos con la intenciÃ³n de contratar la seguridad con nosotros. Se puede enviar por whatsapp", comments: "El cliente reporta un evento crÃ­tico donde un hombre tocÃ³ la puerta fuertemente, se acostÃ³ en el piso y nadie de monitoreo reportÃ³ el evento. No recuerda especÃ­ficamente cuando pasÃ³, pero ya tiene tiempo.\n\nReclama que del 16 al 26 de diciembre no hubo ningÃºn tipo de comunicaciÃ³n por parte de Monitoreo. No hubo reportes diarios ni ningun otro tipo de reporte\n\nIndica que la luz de detecciÃ³n que tiene la cÃ¡mara permaneciÃ³ encendida de forma fija durante 2 dÃ­as (posible desconfiguraciÃ³n del equipo). AÃ±ade que actualmente la luz se encuentra apagada o que al menos eso le indicaron en el grupo del cliente. Esto lo reportaron esta semana."},
+        {id: "MC23/10004", name: "Jaco Dreams Rentals / Vida Home / JWL", date: "18/06/2026", feedback: "La cliente confirma que se encuentra muy satisfecha y que todo estÃ¡ muy bien con los servicios de Monitoreo de Alarma (MA) y Monitoreo de CÃ¡maras (MC). Inconformidad reportada: Su Ãºnica queja radica en la modalidad de cobro. ManifestÃ³ que asumÃ­a que el pago de las mensualidades se realizaba de manera automÃ¡tica. Debido a esto, se sorprendiÃ³ al recibir una llamada de cobro notificÃ¡ndole un saldo pendiente de varios meses. Solicitud del cliente: Expresa que serÃ­a de gran utilidad y un excelente beneficio si se pudiera habilitar la opciÃ³n de cargos automÃ¡ticos para sus mensualidades, evitando asÃ­ futuros inconvenientes con el estado de su cuenta", comments: "Ya se converso con Andres al respecto"},
         {id: "MC27", name: "Lote #10", date: "22/06/2026", feedback: "El mismo cliente de MC 09, se le recomendaron 3 camaras mas ya que solo poseen 2 en el sitio, ademas se le recomendo contratar un sistema de alarmas, pidio que se le cotize todo lo anterior", comments: "Coordinar visita tecnica para poder ver cuantas camaras mas se pueden instalar, ademas para poder ver cuantos sensores (AJAX) se pueden agregar"},
         {id: "MC57", name: "Casa Bendita", date: "18/06/2026", feedback: "Indica estar satisfecho con el servicio brindado en esta casa, no tiene queja alguna", comments: ""}
     ];
     saveExcelFeedbackData();
 }
 
-function generatePDF(){const labels={mc:'MC',ma:'MA',si:'SI'};let html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Reporte Clientes STS</title><style>body{font-family:Arial,sans-serif;padding:30px;color:#333}h1{text-align:center;color:#1e293b;margin-bottom:5px}.sub{text-align:center;color:#666;font-size:14px;margin-bottom:30px}.card{border:1px solid #ddd;border-radius:8px;margin-bottom:20px;page-break-inside:avoid}.ch{background:#0f172a;color:#fff;padding:12px 16px;border-radius:8px 8px 0 0;display:flex;justify-content:space-between}.ch h2{font-size:16px;margin:0}.cb{padding:16px}.sec{margin-bottom:10px}.st{font-size:11px;text-transform:uppercase;color:#888;font-weight:700;margin-bottom:4px}.sc{font-size:13px;color:#555;line-height:1.6}.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;margin-right:4px;background:#e0f2fe;color:#075985}table{width:100%;border-collapse:collapse;margin-top:6px;font-size:12px}th,td{padding:4px 8px;text-align:left;border-bottom:1px solid #eee}th{background:#f8fafc;color:#666}.alert{padding:8px 12px;border-radius:6px;font-size:12px;margin-top:6px;border-left:3px solid}.alert-w{background:#fef3c7;border-color:#f59e0b;color:#92400e}.alert-i{background:#e0f2fe;border-color:#0ea5e9;color:#075985}.alert-d{background:#fee2e2;border-color:#ef4444;color:#991b1b}.upsell{background:#ede9fe;border:1px solid #c4b5fd;border-radius:6px;padding:10px 12px;margin-top:8px}.ut{font-size:11px;text-transform:uppercase;color:#7c3aed;font-weight:700}.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;background:#d1fae5;color:#065f46}</style></head><body><h1>Client Report - STS Security</h1><p class="sub">Generado el ${new Date().toLocaleDateString('es',{day:'2-digit',month:'long',year:'numeric'})}</p>`;clients.forEach(c=>{html+=`<div class="card"><div class="ch"><h2>${c.name}</h2><span>${c.id} ${c.contacted?'<span class="badge">Contactado</span>':''}</span></div><div class="cb">`;html+=`<div class="sec"><div class="st">Servicios</div><div class="sc">${c.services.map(s=>`<span class="tag">${labels[s]||s}</span>`).join(' ')||'Ninguno'}</div></div>`;if(c.property)html+=`<div class="sec"><div class="st">Propiedad</div><div class="sc">${c.property}</div></div>`;if(c.language)html+=`<div class="sec"><div class="st">Idioma</div><div class="sc">${c.language}</div></div>`;if(c.devices&&c.devices.length)html+=`<div class="sec"><div class="st">Dispositivos</div><table>${c.devices.map(d=>`<tr><th>${d.name}</th><td>${d.qty}</td></tr>`).join('')}</table></div>`;if(c.equipment)html+=`<div class="sec"><div class="st">Estado del Equipo</div><div class="sc">${c.equipment}</div></div>`;if(c.support)html+=`<div class="sec"><div class="st">Historial de Soporte</div><div class="alert alert-w">${c.support}</div></div>`;if(c.maintenance)html+=`<div class="sec"><div class="st">Mantenimiento</div><div class="sc">${c.maintenance}</div></div>`;if(c.security)html+=`<div class="sec"><div class="st">Evaluación de Seguridad</div><div class="sc">${c.security}</div></div>`;if(c.technical)html+=`<div class="sec"><div class="st">Notas Técnicas</div><div class="alert alert-i">${c.technical}</div></div>`;if(c.upsell){const ns=c.upsell.includes('NO OFRECER')||c.upsell.includes('nada que ofrecer')||c.upsell.includes('No hay nada');html+=`<div class="sec">${ns?`<div class="alert alert-d"><strong>NO OFRECER:</strong> ${c.upsell}</div>`:`<div class="upsell"><div class="ut">Oportunidad de Venta</div><div style="font-size:12px;color:#555">${c.upsell}</div></div>`}</div>`;}if(c.notes)html+=`<div class="sec"><div class="st">Notas</div><div class="sc" style="font-style:italic;color:#888">${c.notes}</div></div>`;const notes=callNotes[c.id]||[];if(notes.length>0){html+=`<div class="sec"><div class="st">Feedback</div>${notes.map(n=>`<div style="padding:6px 10px;background:#f8fafc;border-radius:6px;margin-bottom:4px;font-size:12px"><div style="font-size:10px;color:#0ea5e9;font-weight:600">${formatTime(n.time)}</div><div style="color:#555;margin-top:2px;white-space:pre-wrap">${n.text}</div></div>`).join('')}</div>`;}html+=`</div></div>`;});html+=`</body></html>`;const win=window.open('','_blank');win.document.write(html);win.document.close();setTimeout(()=>{win.print();},500);}
+function generatePDF(){const labels={mc:'MC',ma:'MA',si:'SI'};let html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Reporte Clientes STS</title><style>body{font-family:Arial,sans-serif;padding:30px;color:#333}h1{text-align:center;color:#1e293b;margin-bottom:5px}.sub{text-align:center;color:#666;font-size:14px;margin-bottom:30px}.card{border:1px solid #ddd;border-radius:8px;margin-bottom:20px;page-break-inside:avoid}.ch{background:#0f172a;color:#fff;padding:12px 16px;border-radius:8px 8px 0 0;display:flex;justify-content:space-between}.ch h2{font-size:16px;margin:0}.cb{padding:16px}.sec{margin-bottom:10px}.st{font-size:11px;text-transform:uppercase;color:#888;font-weight:700;margin-bottom:4px}.sc{font-size:13px;color:#555;line-height:1.6}.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;margin-right:4px;background:#e0f2fe;color:#075985}table{width:100%;border-collapse:collapse;margin-top:6px;font-size:12px}th,td{padding:4px 8px;text-align:left;border-bottom:1px solid #eee}th{background:#f8fafc;color:#666}.alert{padding:8px 12px;border-radius:6px;font-size:12px;margin-top:6px;border-left:3px solid}.alert-w{background:#fef3c7;border-color:#f59e0b;color:#92400e}.alert-i{background:#e0f2fe;border-color:#0ea5e9;color:#075985}.alert-d{background:#fee2e2;border-color:#ef4444;color:#991b1b}.upsell{background:#ede9fe;border:1px solid #c4b5fd;border-radius:6px;padding:10px 12px;margin-top:8px}.ut{font-size:11px;text-transform:uppercase;color:#7c3aed;font-weight:700}.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;background:#d1fae5;color:#065f46}</style></head><body><h1>Client Report - STS Security</h1><p class="sub">Generado el ${new Date().toLocaleDateString('es',{day:'2-digit',month:'long',year:'numeric'})}</p>`;clients.forEach(c=>{html+=`<div class="card"><div class="ch"><h2>${c.name}</h2><span>${c.id} ${c.contacted?'<span class="badge">Contactado</span>':''}</span></div><div class="cb">`;html+=`<div class="sec"><div class="st">Servicios</div><div class="sc">${c.services.map(s=>`<span class="tag">${labels[s]||s}</span>`).join(' ')||'Ninguno'}</div></div>`;if(c.property)html+=`<div class="sec"><div class="st">Propiedad</div><div class="sc">${c.property}</div></div>`;if(c.language)html+=`<div class="sec"><div class="st">Idioma</div><div class="sc">${c.language}</div></div>`;if(c.devices&&c.devices.length)html+=`<div class="sec"><div class="st">Dispositivos</div><table>${c.devices.map(d=>`<tr><th>${d.name}</th><td>${d.qty}</td></tr>`).join('')}</table></div>`;if(c.equipment)html+=`<div class="sec"><div class="st">Estado del Equipo</div><div class="sc">${c.equipment}</div></div>`;if(c.support)html+=`<div class="sec"><div class="st">Historial de Soporte</div><div class="alert alert-w">${c.support}</div></div>`;if(c.maintenance)html+=`<div class="sec"><div class="st">Mantenimiento</div><div class="sc">${c.maintenance}</div></div>`;if(c.security)html+=`<div class="sec"><div class="st">EvaluaciÃ³n de Seguridad</div><div class="sc">${c.security}</div></div>`;if(c.technical)html+=`<div class="sec"><div class="st">Notas TÃ©cnicas</div><div class="alert alert-i">${c.technical}</div></div>`;if(c.upsell){const ns=c.upsell.includes('NO OFRECER')||c.upsell.includes('nada que ofrecer')||c.upsell.includes('No hay nada');html+=`<div class="sec">${ns?`<div class="alert alert-d"><strong>NO OFRECER:</strong> ${c.upsell}</div>`:`<div class="upsell"><div class="ut">Oportunidad de Venta</div><div style="font-size:12px;color:#555">${c.upsell}</div></div>`}</div>`;}if(c.notes)html+=`<div class="sec"><div class="st">Notas</div><div class="sc" style="font-style:italic;color:#888">${c.notes}</div></div>`;const notes=callNotes[c.id]||[];if(notes.length>0){html+=`<div class="sec"><div class="st">Feedback</div>${notes.map(n=>`<div style="padding:6px 10px;background:#f8fafc;border-radius:6px;margin-bottom:4px;font-size:12px"><div style="font-size:10px;color:#0ea5e9;font-weight:600">${formatTime(n.time)}</div><div style="color:#555;margin-top:2px;white-space:pre-wrap">${n.text}</div></div>`).join('')}</div>`;}html+=`</div></div>`;});html+=`</body></html>`;const win=window.open('','_blank');win.document.write(html);win.document.close();setTimeout(()=>{win.print();},500);}
 
 // ===== NOTION API FUNCTIONS =====
 let notionTasks = [];
@@ -1445,14 +1474,14 @@ function saveNotionConfig() {
     localStorage.setItem('notion_token', token);
     localStorage.setItem('notion_database_id', databaseId);
     closeNotionConfig();
-    showToast('Configuración guardada', 'success');
+    showToast('ConfiguraciÃ³n guardada', 'success');
     fetchNotionTasks();
 }
 
 async function fetchNotionTasks() {
     const config = getNotionConfig();
     if (!config.token || !config.databaseId) {
-        document.getElementById('tasksNoResultsText').textContent = 'Configura tu conexión a Notion';
+        document.getElementById('tasksNoResultsText').textContent = 'Configura tu conexiÃ³n a Notion';
         document.getElementById('tasksNoResults').classList.remove('hidden');
         document.getElementById('tasksTableBody').innerHTML = '';
         document.getElementById('tasksTableInfo').textContent = 'Sin configurar';
@@ -1469,7 +1498,7 @@ async function fetchNotionTasks() {
         const data = await res.json();
         notionTasks = data.results.map(page => ({
             id: page.id,
-            title: page.properties['Nombre']?.title?.[0]?.text?.content || 'Sin título',
+            title: page.properties['Nombre']?.title?.[0]?.text?.content || 'Sin tÃ­tulo',
             status: page.properties['Estado']?.rich_text?.[0]?.text?.content || 'Pendiente',
             priority: page.properties['Prioridad']?.rich_text?.[0]?.text?.content || 'Media'
         }));
@@ -1479,7 +1508,7 @@ async function fetchNotionTasks() {
         document.getElementById('tasksNoResultsText').textContent = 'Error al conectar con Notion';
         document.getElementById('tasksNoResults').classList.remove('hidden');
         document.getElementById('tasksTableBody').innerHTML = '';
-        document.getElementById('tasksTableInfo').textContent = 'Error de conexión';
+        document.getElementById('tasksTableInfo').textContent = 'Error de conexiÃ³n';
         showToast('Error al cargar tareas: ' + e.message, 'error');
     }
 }
@@ -1526,7 +1555,7 @@ function renderTasks() {
             const sOpts = statusOpts.map(s2 => `<option value="${s2}" ${s2===s.status?'selected':''}>${s2}</option>`).join('');
             rows += `<tr style="background:#f8fafc;border-left:3px solid var(--accent)">
                 <td style="padding-left:36px;font-weight:500;color:var(--text-dark)">
-                    <span style="color:var(--text-light);margin-right:6px">└</span>${s.text}
+                    <span style="color:var(--text-light);margin-right:6px">â””</span>${s.text}
                 </td>
                 <td><select style="padding:3px 6px;border-radius:8px;font-size:11px;font-weight:600;border:1px solid ${ssc}40;background:${ssc}15;color:${ssc};cursor:pointer;outline:none" onchange="updateSubtaskStatus('${t.id}',${si},this.value)">${sOpts}</select></td>
                 <td></td>
@@ -1645,7 +1674,7 @@ function editTask(id) {
 async function saveTask() {
     const config = getNotionConfig();
     if (!config.token || !config.databaseId) {
-        showToast('Configura tu conexión a Notion primero', 'error');
+        showToast('Configura tu conexiÃ³n a Notion primero', 'error');
         return;
     }
     const editId = document.getElementById('taskEditId').value;
@@ -1653,7 +1682,7 @@ async function saveTask() {
     const status = document.getElementById('taskStatus').value;
     const priority = document.getElementById('taskPriority').value;
     if (!title) {
-        showToast('El título es obligatorio', 'error');
+        showToast('El tÃ­tulo es obligatorio', 'error');
         return;
     }
     const properties = {
@@ -1712,7 +1741,7 @@ async function updateTaskStatus(id, newStatus, el) {
 }
 
 async function deleteTask(id) {
-    if (!confirm('¿Eliminar esta tarea?')) return;
+    if (!confirm('Â¿Eliminar esta tarea?')) return;
     const config = getNotionConfig();
     try {
         const res = await fetch('/api/notion?action=delete&taskId=' + id, {
