@@ -379,6 +379,68 @@
         /* ======================== RESPONSIVE ======================== */
         @media (max-width: 1024px) { .dash-categories { grid-template-columns: repeat(2, 1fr); } .stat-cards-row { grid-template-columns: repeat(2, 1fr); } .dash-grid { grid-template-columns: 1fr; } .sidebar { width: 72px; } .sidebar-brand h1, .sidebar-brand span, .sidebar-section-title, .sidebar-link span, .sidebar-link .badge, .sidebar-user .user-info, .sidebar-footer span, .sidebar-parent .chevron { display: none; } .sidebar-link { justify-content: center; padding: 13px; border-radius: 14px; } .sidebar-link.sub { padding-left: 13px; } .sidebar-brand { justify-content: center; padding: 18px; } .sidebar-user { justify-content: center; } .main { margin-left: 72px; } .search-box { width: 200px; } .sidebar-submenu { max-height: none !important; overflow: visible; } }
         @media (max-width: 640px) { .sidebar { display: none; } .main { margin-left: 0; } .dash-categories { grid-template-columns: 1fr 1fr; } .stat-cards-row { grid-template-columns: 1fr 1fr; } .clients-grid { grid-template-columns: 1fr; } .detail-panel { width: 95%; max-width: none; } .topbar { padding: 12px 16px; } .dashboard { padding: 16px; } .clients-container { padding: 16px; } .toolbar { padding: 12px 16px; } }
+
+        /* ======================== KANBAN BOARD ======================== */
+        .kanban-container { padding: 24px 32px; height: calc(100vh - 120px); overflow-x: auto; }
+        .kanban-board { display: flex; gap: 20px; min-height: 100%; align-items: flex-start; }
+        .kanban-column { flex: 1; min-width: 320px; max-width: 400px; background: var(--bg-white); border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; max-height: calc(100vh - 140px); }
+        .kanban-col-header { padding: 18px 20px 14px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+        .kanban-col-title { display: flex; align-items: center; gap: 10px; }
+        .kanban-col-title h3 { font-size: 14px; font-weight: 700; color: var(--text-dark); margin: 0; }
+        .kanban-col-count { background: var(--bg-body); color: var(--text-medium); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 8px; }
+        .kanban-col-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .kanban-col-dot.pendiente { background: var(--warning); }
+        .kanban-col-dot.progreso { background: var(--accent); }
+        .kanban-col-dot.hecho { background: var(--success); }
+        .kanban-add-btn { width: 30px; height: 30px; border-radius: 10px; border: 1.5px dashed var(--border); background: transparent; color: var(--text-light); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 18px; }
+        .kanban-add-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+        .kanban-cards { padding: 12px; flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+        .kanban-cards::-webkit-scrollbar { width: 0; }
+        .kanban-card { background: var(--bg-white); border: 1.5px solid var(--border); border-radius: 16px; padding: 16px; cursor: grab; transition: all 0.2s ease; position: relative; }
+        .kanban-card:hover { border-color: var(--accent); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+        .kanban-card.dragging { opacity: 0.5; transform: rotate(2deg); }
+        .kanban-card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+        .kanban-tag { padding: 3px 10px; border-radius: 8px; font-size: 10px; font-weight: 700; text-transform: lowercase; letter-spacing: 0.3px; }
+        .kanban-tag.tag-0 { background: #dbeafe; color: #1e40af; }
+        .kanban-tag.tag-1 { background: #dcfce7; color: #166534; }
+        .kanban-tag.tag-2 { background: #fef3c7; color: #92400e; }
+        .kanban-tag.tag-3 { background: #f3e8ff; color: #6b21a8; }
+        .kanban-tag.tag-4 { background: #ffe4e6; color: #9f1239; }
+        .kanban-tag.tag-5 { background: #e0f2fe; color: #075985; }
+        .kanban-tag.tag-6 { background: #fef9c3; color: #854d0e; }
+        .kanban-tag.tag-7 { background: #ede9fe; color: #5b21b6; }
+        .kanban-card-title { font-size: 13px; font-weight: 700; color: var(--text-dark); line-height: 1.4; margin-bottom: 8px; }
+        .kanban-card-note { font-size: 11px; color: var(--text-medium); margin-bottom: 10px; line-height: 1.4; font-style: italic; }
+        .kanban-card-subtasks { margin-bottom: 10px; }
+        .kanban-subtask { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
+        .kanban-subtask-check { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
+        .kanban-subtask-check.done { background: var(--success); border-color: var(--success); }
+        .kanban-subtask-check.done::after { content: ''; width: 6px; height: 3px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translateY(-1px); }
+        .kanban-subtask-text { font-size: 11px; color: var(--text-medium); }
+        .kanban-subtask-text.done { text-decoration: line-through; color: var(--text-light); }
+        .kanban-card-progress { margin-bottom: 12px; }
+        .kanban-progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .kanban-progress-label { font-size: 10px; color: var(--text-light); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .kanban-progress-pct { font-size: 11px; font-weight: 700; color: var(--text-dark); }
+        .kanban-progress-bar { height: 6px; background: var(--bg-body); border-radius: 3px; overflow: hidden; }
+        .kanban-progress-fill { height: 100%; border-radius: 3px; transition: width 0.3s ease; background: var(--gradient-1); }
+        .kanban-progress-fill.low { background: var(--warning); }
+        .kanban-progress-fill.mid { background: var(--accent); }
+        .kanban-progress-fill.high { background: var(--success); }
+        .kanban-card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid var(--border); }
+        .kanban-card-avatar { width: 26px; height: 26px; border-radius: 50%; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; }
+        .kanban-card-avatar svg { width: 14px; height: 14px; color: #fff; }
+        .kanban-card-actions { display: flex; gap: 4px; }
+        .kanban-card-actions button { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-white); color: var(--text-light); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .kanban-card-actions button:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .kanban-card-actions button.del:hover { background: var(--danger); border-color: var(--danger); }
+        .kanban-card-actions button svg { width: 12px; height: 12px; }
+        .kanban-drop-zone { min-height: 40px; border-radius: 12px; border: 2px dashed transparent; transition: all 0.2s; }
+        .kanban-drop-zone.active { border-color: var(--accent); background: var(--accent-light); min-height: 60px; }
+        .kanban-empty { text-align: center; padding: 32px 16px; color: var(--text-light); font-size: 12px; }
+        .kanban-empty svg { width: 36px; height: 36px; margin-bottom: 8px; opacity: 0.4; }
+        @media (max-width: 1024px) { .kanban-container { padding: 16px; } .kanban-column { min-width: 280px; } }
+        @media (max-width: 640px) { .kanban-container { padding: 12px; } .kanban-board { flex-direction: column; } .kanban-column { max-width: none; min-width: auto; } }
     </style>
 </head>
 <body>
@@ -592,57 +654,21 @@
             </div>
         </div>
 
-        <!-- Tasks View (Notion) -->
+        <!-- Tasks View (Kanban) -->
         <div id="tasksView" class="hidden">
             <div class="topbar">
                 <div class="topbar-left">
-                    <div><h2>Tareas</h2><div class="breadcrumb">STS Security / <span>Lista de Tareas (Notion)</span></div></div>
+                    <div><h2>Tareas</h2><div class="breadcrumb">STS Security / <span>Board</span></div></div>
                 </div>
                 <div class="topbar-right">
                     <button class="btn" onclick="showView('clients')">
                         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                         Volver
                     </button>
-                    <button class="btn btn-primary" onclick="openTaskModal()">
-                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                        Nueva Tarea
-                    </button>
-                    <button class="btn" onclick="openNotionConfig()">
-                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-                        Config
-                    </button>
                 </div>
             </div>
-            <div class="toolbar">
-                <div class="toolbar-left">
-                    <button class="filter-btn active" onclick="filterTasks(this,'all')">Todas <span class="count" id="taskFilterAll">0</span></button>
-                    <button class="filter-btn" onclick="filterTasks(this,'Pendiente')">Pendientes <span class="count" id="taskFilterPending">0</span></button>
-                    <button class="filter-btn" onclick="filterTasks(this,'En progreso')">En Progreso <span class="count" id="taskFilterProgress">0</span></button>
-                    <button class="filter-btn" onclick="filterTasks(this,'Hecho')">Hechas <span class="count" id="taskFilterDone">0</span></button>
-                </div>
-            </div>
-            <div class="table-container">
-                <div class="table-wrapper">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Título</th>
-                                <th style="width:120px">Estado</th>
-                                <th style="width:100px">Prioridad</th>
-                                <th style="width:100px">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tasksTableBody"></tbody>
-                    </table>
-                    <div class="no-results hidden" id="tasksNoResults">
-                        <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                        <p id="tasksNoResultsText">No hay tareas</p>
-                        <button class="btn btn-primary" onclick="openTaskModal()" style="margin-top:12px">Crear Primera Tarea</button>
-                    </div>
-                    <div class="table-footer">
-                        <span id="tasksTableInfo">Cargando tareas...</span>
-                    </div>
-                </div>
+            <div class="kanban-container">
+                <div class="kanban-board" id="kanbanBoard"></div>
             </div>
         </div>
     </main>
@@ -695,60 +721,18 @@
 
     <!-- Task Modal -->
     <div class="modal-overlay" id="taskModal">
-        <div class="modal" style="max-width:500px;">
+        <div class="modal" style="max-width:540px;">
             <div class="modal-header"><h3 id="taskModalTitle">Nueva Tarea</h3><button class="modal-close" onclick="closeTaskModal()"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
             <div class="modal-body">
                 <input type="hidden" id="taskEditId">
                 <div class="form-grid">
                     <div class="form-group full"><label>Título</label><input type="text" id="taskTitle" placeholder="Nombre de la tarea"></div>
-                    <div class="form-group"><label>Estado</label><select id="taskStatus"><option value="Pendiente">Pendiente</option><option value="En progreso">En progreso</option><option value="Hecho">Hecho</option></select></div>
-                    <div class="form-group"><label>Prioridad</label><select id="taskPriority"><option value="Baja">Baja</option><option value="Media">Media</option><option value="Alta">Alta</option></select></div>
+                    <div class="form-group full"><label>Tags (separados por coma)</label><input type="text" id="taskTags" placeholder="Ej: website, client, mobile app"></div>
+                    <div class="form-group full"><label>Nota (opcional)</label><textarea id="taskNote" placeholder="Describe la tarea..." rows="2"></textarea></div>
+                    <div class="form-group full"><label>Subtareas (una por línea)</label><textarea id="taskSubtasks" placeholder="Ej:&#10;Create user flow&#10;Make wireframe&#10;Design onboarding screens" rows="4"></textarea></div>
                 </div>
             </div>
             <div class="modal-footer"><button class="btn" onclick="closeTaskModal()">Cancelar</button><button class="btn btn-primary" onclick="saveTask()">Guardar</button></div>
-        </div>
-    </div>
-
-    <!-- Notion Config Modal -->
-    <div class="modal-overlay" id="notionConfigModal">
-        <div class="modal" style="max-width:500px;">
-            <div class="modal-header"><h3>Configuración de Notion</h3><button class="modal-close" onclick="closeNotionConfig()"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-            <div class="modal-body">
-                <div class="form-grid">
-                    <div class="form-group full"><label>Token de Integración</label><input type="password" id="notionToken" placeholder="ntn_... o secret_..."></div>
-                    <div class="form-group full"><label>Database ID</label><input type="text" id="notionDatabaseId" placeholder="Ej: 38a1ca4bac5280ec9da4d07a1ca252be"></div>
-                </div>
-                <div style="margin-top:12px;padding:12px;background:var(--bg-light);border-radius:8px;font-size:12px;color:var(--text-medium)">
-                    <strong>Cómo obtener estos datos:</strong>
-                    <ol style="margin:8px 0 0 16px;padding:0">
-                        <li>Ve a <a href="https://www.notion.so/my-integrations" target="_blank" style="color:var(--accent)">notion.so/my-integrations</a></li>
-                        <li>Crea una integración y copia el token</li>
-                        <li>Abre tu base de datos y copia el ID de la URL</li>
-                        <li>Comparte la base de datos con tu integración</li>
-                    </ol>
-                </div>
-            </div>
-            <div class="modal-footer"><button class="btn" onclick="closeNotionConfig()">Cancelar</button><button class="btn btn-primary" onclick="saveNotionConfig()">Guardar Configuración</button></div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="subtaskModal">
-        <div class="modal" style="max-width:420px;">
-            <div class="modal-header"><h3 id="subtaskModalTitle">Nueva subtarea</h3><button class="modal-close" onclick="closeSubtaskModal()"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-            <div class="modal-body">
-                <div class="form-group full"><label>Descripción</label><input type="text" id="subtaskInput" placeholder="Escribe la subtarea..." style="width:100%;padding:10px 12px;border:2px solid var(--border);border-radius:8px;font-size:14px;outline:none;" onkeydown="if(event.key==='Enter')saveSubtask()"></div>
-                <div class="form-group full" style="margin-top:10px"><label>Estado</label>
-                    <select id="subtaskStatusSelect" style="width:100%;padding:10px 12px;border:2px solid var(--border);border-radius:8px;font-size:14px;outline:none;cursor:pointer;background:var(--bg-light)">
-                        <option value="Pendiente">Pendiente</option>
-                        <option value="En progreso">En progreso</option>
-                        <option value="Hecho">Hecho</option>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" onclick="closeSubtaskModal()">Cancelar</button>
-                <button class="btn btn-primary" onclick="saveSubtask()">Agregar</button>
-            </div>
         </div>
     </div>
 
@@ -1095,7 +1079,7 @@ function showView(view) {
     if (view === 'tasks') document.querySelectorAll('.sidebar-link:not(.sub):not(.sidebar-parent)')[2].classList.add('active');
     if (view === 'dashboard') renderDashboard();
     if (view === 'excelFeedback') renderExcelFeedback();
-    if (view === 'tasks') fetchNotionTasks();
+    if (view === 'tasks') renderKanban();
 }
 
 function updateCounts() {
@@ -1268,18 +1252,16 @@ document.addEventListener('click',function(e){const menu=document.getElementById
 
 function getAllBackupData(){
     return {
-        clients, callNotes, subtasks,
+        clients, callNotes, kanbanTasks,
         excelFeedback: JSON.parse(localStorage.getItem('sts_excel_feedback')||'[]'),
-        notionToken: localStorage.getItem('notion_token')||'',
-        notionDatabaseId: localStorage.getItem('notion_database_id')||'',
         exportDate: new Date().toISOString(),
-        version: '2.0'
+        version: '3.0'
     };
 }
 function exportBackup(){const data=getAllBackupData();const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`sts-backup-${new Date().toISOString().split('T')[0]}.json`;a.click();URL.revokeObjectURL(a.href);showToast('Backup exportado correctamente','success');}
 function exportExcel(){if(typeof XLSX==='undefined'){showToast('Librería Excel no cargada','error');return;}const data=[['ID','Nombre','Servicios','Idioma','Contactado','Feedback']];clients.forEach(c=>{const notes=(callNotes[c.id]||[]).map(n=>`[${formatTime(n.time)}] ${n.text}`).join('\n');const svcs=c.services.map(s=>s.toUpperCase()).join(', ');data.push([c.id,c.name,svcs,c.language||'',c.contacted?'Sí':'No',notes]);});const wb=XLSX.utils.book_new();const ws=XLSX.utils.aoa_to_sheet(data);ws['!cols']=[{wch:14},{wch:20},{wch:12},{wch:16},{wch:10},{wch:50}];XLSX.utils.book_append_sheet(wb,ws,'Clientes');const wbout=XLSX.write(wb,{bookType:'xlsx',type:'array'});const blob=new Blob([wbout],{type:'application/octet-stream'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`clientes-sts-${new Date().toISOString().split('T')[0]}.xlsx`;a.click();URL.revokeObjectURL(a.href);showToast('Archivo Excel exportado correctamente','success');}
 function exportNotesPDF(){let html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Feedback - STS</title><style>body{font-family:Arial,sans-serif;padding:30px;color:#333;background:#f5f5f5}h1{text-align:center;color:#1e293b;margin-bottom:5px}.sub{text-align:center;color:#666;font-size:14px;margin-bottom:30px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}.card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);page-break-inside:avoid}.card-header{background:#0f172a;color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}.card-header h2{font-size:15px;margin:0}.card-body{padding:16px}.note{padding:10px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:10px}.note-time{font-size:11px;color:#0ea5e9;font-weight:600;margin-bottom:4px}.note-text{font-size:13px;color:#444;line-height:1.6;white-space:pre-wrap}.empty{text-align:center;padding:60px 20px;color:#94a3b8}</style></head><body><h1>Feedback de Clientes - STS Security</h1><p class="sub">Generado el ${new Date().toLocaleDateString('es',{day:'2-digit',month:'long',year:'numeric'})}</p>`;let hasAnyNotes=false;const cardsHtml=clients.map(c=>{const notes=callNotes[c.id]||[];if(notes.length===0)return'';hasAnyNotes=true;return`<div class="card"><div class="card-header"><h2>${c.name}</h2><span style="font-size:12px;opacity:0.8">${c.id}</span></div><div class="card-body">${notes.map(n=>`<div class="note"><div class="note-time">${formatTime(n.time)}</div><div class="note-text">${n.text}</div></div>`).join('')}</div></div>`;}).join('');if(!hasAnyNotes)html+=`<div class="empty">No hay feedback registrado</div>`;else html+=`<div class="grid">${cardsHtml}</div>`;html+=`</body></html>`;const win=window.open('','_blank');win.document.write(html);win.document.close();setTimeout(()=>{win.print();},500);}
-function importBackup(event){const file=event.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=function(e){try{const data=JSON.parse(e.target.result);if(data.clients){clients=data.clients;saveClients();}if(data.callNotes){callNotes=data.callNotes;saveCallNotes();}if(data.subtasks){subtasks=data.subtasks;saveSubtasks();}if(data.excelFeedback){localStorage.setItem('sts_excel_feedback',JSON.stringify(data.excelFeedback));}if(data.notionToken){localStorage.setItem('notion_token',data.notionToken);}if(data.notionDatabaseId){localStorage.setItem('notion_database_id',data.notionDatabaseId);}renderTable();if(currentView==='dashboard')renderDashboard();if(currentView==='excelFeedback')renderExcelFeedback();showToast(`Backup restaurado (${data.exportDate?new Date(data.exportDate).toLocaleDateString('es'):'fecha desconocida'})`,'success');}catch(err){showToast('Archivo de backup inválido','error');}};reader.readAsText(file);event.target.value='';}
+function importBackup(event){const file=event.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=function(e){try{const data=JSON.parse(e.target.result);if(data.clients){clients=data.clients;saveClients();}if(data.callNotes){callNotes=data.callNotes;saveCallNotes();}if(data.kanbanTasks){kanbanTasks=data.kanbanTasks;saveTasks();}if(data.subtasks){}if(data.excelFeedback){localStorage.setItem('sts_excel_feedback',JSON.stringify(data.excelFeedback));}renderTable();if(currentView==='dashboard')renderDashboard();if(currentView==='excelFeedback')renderExcelFeedback();if(currentView==='tasks')renderKanban();showToast(`Backup restaurado (${data.exportDate?new Date(data.exportDate).toLocaleDateString('es'):'fecha desconocida'})`,'success');}catch(err){showToast('Archivo de backup inválido','error');}};reader.readAsText(file);event.target.value='';}
 
 function toggleTheme(){
     const isDark=document.documentElement.getAttribute('data-theme')==='dark';
@@ -1486,225 +1468,134 @@ if (excelFeedbackData.length === 0) {
 function generatePDF(){const labels={mc:'MC',ma:'MA',si:'SI'};let html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Reporte Clientes STS</title><style>body{font-family:Arial,sans-serif;padding:30px;color:#333}h1{text-align:center;color:#1e293b;margin-bottom:5px}.sub{text-align:center;color:#666;font-size:14px;margin-bottom:30px}.card{border:1px solid #ddd;border-radius:8px;margin-bottom:20px;page-break-inside:avoid}.ch{background:#0f172a;color:#fff;padding:12px 16px;border-radius:8px 8px 0 0;display:flex;justify-content:space-between}.ch h2{font-size:16px;margin:0}.cb{padding:16px}.sec{margin-bottom:10px}.st{font-size:11px;text-transform:uppercase;color:#888;font-weight:700;margin-bottom:4px}.sc{font-size:13px;color:#555;line-height:1.6}.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;margin-right:4px;background:#e0f2fe;color:#075985}table{width:100%;border-collapse:collapse;margin-top:6px;font-size:12px}th,td{padding:4px 8px;text-align:left;border-bottom:1px solid #eee}th{background:#f8fafc;color:#666}.alert{padding:8px 12px;border-radius:6px;font-size:12px;margin-top:6px;border-left:3px solid}.alert-w{background:#fef3c7;border-color:#f59e0b;color:#92400e}.alert-i{background:#e0f2fe;border-color:#0ea5e9;color:#075985}.alert-d{background:#fee2e2;border-color:#ef4444;color:#991b1b}.upsell{background:#ede9fe;border:1px solid #c4b5fd;border-radius:6px;padding:10px 12px;margin-top:8px}.ut{font-size:11px;text-transform:uppercase;color:#7c3aed;font-weight:700}.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;background:#d1fae5;color:#065f46}</style></head><body><h1>Client Report - STS Security</h1><p class="sub">Generado el ${new Date().toLocaleDateString('es',{day:'2-digit',month:'long',year:'numeric'})}</p>`;clients.forEach(c=>{html+=`<div class="card"><div class="ch"><h2>${c.name}</h2><span>${c.id} ${c.contacted?'<span class="badge">Contactado</span>':''}</span></div><div class="cb">`;html+=`<div class="sec"><div class="st">Servicios</div><div class="sc">${c.services.map(s=>`<span class="tag">${labels[s]||s}</span>`).join(' ')||'Ninguno'}</div></div>`;if(c.property)html+=`<div class="sec"><div class="st">Propiedad</div><div class="sc">${c.property}</div></div>`;if(c.language)html+=`<div class="sec"><div class="st">Idioma</div><div class="sc">${c.language}</div></div>`;if(c.devices&&c.devices.length)html+=`<div class="sec"><div class="st">Dispositivos</div><table>${c.devices.map(d=>`<tr><th>${d.name}</th><td>${d.qty}</td></tr>`).join('')}</table></div>`;if(c.equipment)html+=`<div class="sec"><div class="st">Estado del Equipo</div><div class="sc">${c.equipment}</div></div>`;if(c.support)html+=`<div class="sec"><div class="st">Historial de Soporte</div><div class="alert alert-w">${c.support}</div></div>`;if(c.maintenance)html+=`<div class="sec"><div class="st">Mantenimiento</div><div class="sc">${c.maintenance}</div></div>`;if(c.security)html+=`<div class="sec"><div class="st">Evaluación de Seguridad</div><div class="sc">${c.security}</div></div>`;if(c.technical)html+=`<div class="sec"><div class="st">Notas Técnicas</div><div class="alert alert-i">${c.technical}</div></div>`;if(c.upsell){const ns=c.upsell.includes('NO OFRECER')||c.upsell.includes('nada que ofrecer')||c.upsell.includes('No hay nada');html+=`<div class="sec">${ns?`<div class="alert alert-d"><strong>NO OFRECER:</strong> ${c.upsell}</div>`:`<div class="upsell"><div class="ut">Oportunidad de Venta</div><div style="font-size:12px;color:#555">${c.upsell}</div></div>`}</div>`;}if(c.notes)html+=`<div class="sec"><div class="st">Notas</div><div class="sc" style="font-style:italic;color:#888">${c.notes}</div></div>`;const notes=callNotes[c.id]||[];if(notes.length>0){html+=`<div class="sec"><div class="st">Feedback</div>${notes.map(n=>`<div style="padding:6px 10px;background:#f8fafc;border-radius:6px;margin-bottom:4px;font-size:12px"><div style="font-size:10px;color:#0ea5e9;font-weight:600">${formatTime(n.time)}</div><div style="color:#555;margin-top:2px;white-space:pre-wrap">${n.text}</div></div>`).join('')}</div>`;}html+=`</div></div>`;});html+=`</body></html>`;const win=window.open('','_blank');win.document.write(html);win.document.close();setTimeout(()=>{win.print();},500);}
 
 // ===== NOTION API FUNCTIONS =====
-let notionTasks = [];
-let notionTaskFilter = 'all';
-let subtasks = JSON.parse(localStorage.getItem('sts_subtasks') || '{}');
-Object.keys(subtasks).forEach(k => { subtasks[k].forEach(s => { if ('done' in s) { s.status = s.done ? 'Hecho' : 'Pendiente'; delete s.done; } }); });
-function saveSubtasks(){ localStorage.setItem('sts_subtasks', JSON.stringify(subtasks)); }
+let kanbanTasks = JSON.parse(localStorage.getItem('sts_tasks') || '[]');
+function saveTasks() { localStorage.setItem('sts_tasks', JSON.stringify(kanbanTasks)); }
 
-function getNotionConfig() {
-    return {
-        token: localStorage.getItem('notion_token') || '',
-        databaseId: localStorage.getItem('notion_database_id') || ''
-    };
+function generateId() { return 'task_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6); }
+
+function getTaskProgress(task) {
+    if (!task.subtasks || task.subtasks.length === 0) return { done: 0, total: 0, pct: 0 };
+    const done = task.subtasks.filter(s => s.done).length;
+    const total = task.subtasks.length;
+    return { done, total, pct: Math.round((done / total) * 100) };
 }
 
-function openNotionConfig() {
-    const config = getNotionConfig();
-    document.getElementById('notionToken').value = config.token;
-    document.getElementById('notionDatabaseId').value = config.databaseId;
-    document.getElementById('notionConfigModal').classList.add('active');
+function renderKanban() {
+    const board = document.getElementById('kanbanBoard');
+    if (!board) return;
+    const columns = [
+        { key: 'Pendiente', label: 'Todo list', dot: 'pendiente' },
+        { key: 'En progreso', label: 'In Progress', dot: 'progreso' },
+        { key: 'Hecho', label: 'In Review', dot: 'hecho' }
+    ];
+    board.innerHTML = columns.map(col => {
+        const tasks = kanbanTasks.filter(t => t.status === col.key);
+        const cardsHtml = tasks.length === 0
+            ? `<div class="kanban-empty"><svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><p>Sin tareas</p></div>`
+            : tasks.map(t => renderKanbanCard(t)).join('');
+        return `<div class="kanban-column">
+            <div class="kanban-col-header">
+                <div class="kanban-col-title">
+                    <div class="kanban-col-dot ${col.dot}"></div>
+                    <h3>${col.label}</h3>
+                    <span class="kanban-col-count">${tasks.length}</span>
+                </div>
+                <button class="kanban-add-btn" onclick="openTaskModal(null,'${col.key}')" title="Nueva tarea">+</button>
+            </div>
+            <div class="kanban-cards" data-status="${col.key}"
+                 ondragover="event.preventDefault();this.classList.add('drag-over')"
+                 ondragleave="this.classList.remove('drag-over')"
+                 ondrop="handleDrop(event,'${col.key}');this.classList.remove('drag-over')">
+                ${cardsHtml}
+            </div>
+        </div>`;
+    }).join('');
 }
 
-function closeNotionConfig() {
-    document.getElementById('notionConfigModal').classList.remove('active');
-}
-
-function saveNotionConfig() {
-    const token = document.getElementById('notionToken').value.trim();
-    const databaseId = document.getElementById('notionDatabaseId').value.trim();
-    if (!token || !databaseId) {
-        showToast('Completa ambos campos', 'error');
-        return;
+function renderKanbanCard(task) {
+    const tags = (task.tags || []).map((tag, i) => `<span class="kanban-tag tag-${i % 8}">${tag}</span>`).join('');
+    const subs = task.subtasks || [];
+    const subtasksHtml = subs.length > 0
+        ? `<div class="kanban-card-subtasks">${subs.map((s, i) => `
+            <div class="kanban-subtask">
+                <div class="kanban-subtask-check ${s.done ? 'done' : ''}" onclick="toggleSubtaskDone('${task.id}',${i})"></div>
+                <span class="kanban-subtask-text ${s.done ? 'done' : ''}">${s.text}</span>
+            </div>`).join('')}</div>`
+        : '';
+    const prog = getTaskProgress(task);
+    let progressHtml = '';
+    if (subs.length > 0) {
+        const cls = prog.pct < 40 ? 'low' : prog.pct < 80 ? 'mid' : 'high';
+        progressHtml = `<div class="kanban-card-progress">
+            <div class="kanban-progress-header">
+                <span class="kanban-progress-label">Progress</span>
+                <span class="kanban-progress-pct">${prog.pct}%</span>
+            </div>
+            <div class="kanban-progress-bar"><div class="kanban-progress-fill ${cls}" style="width:${prog.pct}%"></div></div>
+        </div>`;
     }
-    localStorage.setItem('notion_token', token);
-    localStorage.setItem('notion_database_id', databaseId);
-    closeNotionConfig();
-    showToast('Configuración guardada', 'success');
-    fetchNotionTasks();
+    const noteHtml = task.note ? `<div class="kanban-card-note">${task.note}</div>` : '';
+    return `<div class="kanban-card" draggable="true" ondragstart="handleDragStart(event,'${task.id}')" ondragend="this.classList.remove('dragging')">
+        ${tags ? `<div class="kanban-card-tags">${tags}</div>` : ''}
+        <div class="kanban-card-title">${task.title}</div>
+        ${noteHtml}
+        ${subtasksHtml}
+        ${progressHtml}
+        <div class="kanban-card-footer">
+            <div class="kanban-card-avatar"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div class="kanban-card-actions">
+                <button onclick="editTask('${task.id}')" title="Editar"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                <button class="del" onclick="deleteTask('${task.id}')" title="Eliminar"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+            </div>
+        </div>
+    </div>`;
 }
 
-async function fetchNotionTasks() {
-    const config = getNotionConfig();
-    if (!config.token || !config.databaseId) {
-        document.getElementById('tasksNoResultsText').textContent = 'Configura tu conexión a Notion';
-        document.getElementById('tasksNoResults').classList.remove('hidden');
-        document.getElementById('tasksTableBody').innerHTML = '';
-        document.getElementById('tasksTableInfo').textContent = 'Sin configurar';
-        return;
+let draggedTaskId = null;
+function handleDragStart(e, taskId) {
+    draggedTaskId = taskId;
+    e.target.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+}
+function handleDrop(e, newStatus) {
+    e.preventDefault();
+    if (!draggedTaskId) return;
+    const task = kanbanTasks.find(t => t.id === draggedTaskId);
+    if (task) {
+        task.status = newStatus;
+        saveTasks();
+        renderKanban();
+        showToast('Tarea movida a ' + newStatus, 'success');
     }
-    document.getElementById('tasksTableInfo').textContent = 'Cargando tareas...';
-    try {
-        const res = await fetch('/api/notion?action=list', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token: config.token, databaseId: config.databaseId })
-        });
-        if (!res.ok) throw new Error(`Error ${res.status}`);
-        const data = await res.json();
-        notionTasks = data.results.map(page => ({
-            id: page.id,
-            title: page.properties['Nombre']?.title?.[0]?.text?.content || 'Sin título',
-            status: page.properties['Estado']?.rich_text?.[0]?.text?.content || 'Pendiente',
-            priority: page.properties['Prioridad']?.rich_text?.[0]?.text?.content || 'Media'
-        }));
-        renderTasks();
-    } catch (e) {
-        console.error('Error fetching Notion tasks:', e);
-        document.getElementById('tasksNoResultsText').textContent = 'Error al conectar con Notion';
-        document.getElementById('tasksNoResults').classList.remove('hidden');
-        document.getElementById('tasksTableBody').innerHTML = '';
-        document.getElementById('tasksTableInfo').textContent = 'Error de conexión';
-        showToast('Error al cargar tareas: ' + e.message, 'error');
-    }
+    draggedTaskId = null;
 }
 
-function renderTasks() {
-    const tbody = document.getElementById('tasksTableBody');
-    const noResults = document.getElementById('tasksNoResults');
-    let filtered = notionTasks;
-    if (notionTaskFilter !== 'all') {
-        filtered = notionTasks.filter(t => t.status === notionTaskFilter);
-    }
-    document.getElementById('taskFilterAll').textContent = notionTasks.length;
-    document.getElementById('taskFilterPending').textContent = notionTasks.filter(t => t.status === 'Pendiente').length;
-    document.getElementById('taskFilterProgress').textContent = notionTasks.filter(t => t.status === 'En progreso').length;
-    document.getElementById('taskFilterDone').textContent = notionTasks.filter(t => t.status === 'Hecho').length;
-    if (filtered.length === 0) {
-        tbody.innerHTML = '';
-        noResults.classList.remove('hidden');
-        document.getElementById('tasksTableInfo').textContent = 'Mostrando 0 de ' + notionTasks.length;
-        return;
-    }
-    noResults.classList.add('hidden');
-    const statusColors = { 'Pendiente': '#f59e0b', 'En progreso': '#3b82f6', 'Hecho': '#10b981' };
-    const priorityColors = { 'Alta': '#ef4444', 'Media': '#f59e0b', 'Baja': '#6b7280' };
-    const statusOpts = ['Pendiente','En progreso','Hecho'];
-    let rows = '';
-    filtered.forEach(t => {
-        const sc = statusColors[t.status] || '#6b7280';
-        const pc = priorityColors[t.priority] || '#6b7280';
-        const statusOptions = statusOpts.map(s => `<option value="${s}" ${s===t.status?'selected':''}>${s}</option>`).join('');
-        const subs = subtasks[t.id] || [];
-        rows += `<tr>
-            <td style="font-weight:500">${t.title}</td>
-            <td><select style="padding:3px 6px;border-radius:8px;font-size:11px;font-weight:600;border:1px solid ${sc}40;background:${sc}15;color:${sc};cursor:pointer;outline:none" onchange="updateTaskStatus('${t.id}',this.value,this)">${statusOptions}</select></td>
-            <td><span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600;background:${pc}20;color:${pc}">${t.priority}</span></td>
-            <td><div class="action-btns">
-                <button class="action-btn" onclick="addSubtaskPrompt('${t.id}')" title="Agregar subtarea"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-                <button class="action-btn" onclick="editTask('${t.id}')" title="Editar"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-                <button class="action-btn del" onclick="deleteTask('${t.id}')" title="Eliminar"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
-            </div></td>
-        </tr>`;
-        subs.forEach((s, si) => {
-            const ssc = statusColors[s.status] || '#6b7280';
-            const sOpts = statusOpts.map(s2 => `<option value="${s2}" ${s2===s.status?'selected':''}>${s2}</option>`).join('');
-            rows += `<tr style="background:#f8fafc;border-left:3px solid var(--accent)">
-                <td style="padding-left:36px;font-weight:500;color:var(--text-dark)">
-                    <span style="color:var(--text-light);margin-right:6px">â””</span>${s.text}
-                </td>
-                <td><select style="padding:3px 6px;border-radius:8px;font-size:11px;font-weight:600;border:1px solid ${ssc}40;background:${ssc}15;color:${ssc};cursor:pointer;outline:none" onchange="updateSubtaskStatus('${t.id}',${si},this.value)">${sOpts}</select></td>
-                <td></td>
-                <td><div class="action-btns">
-                    <button class="action-btn" onclick="editSubtask('${t.id}',${si})" title="Editar"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-                    <button class="action-btn del" onclick="deleteSubtask('${t.id}',${si})" title="Eliminar"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
-                </div></td>
-            </tr>`;
-        });
-    });
-    tbody.innerHTML = rows;
-    document.getElementById('tasksTableInfo').textContent = `Mostrando ${filtered.length} de ${notionTasks.length} tareas`;
-}
-
-let currentSubtaskParentId = null;
-let currentSubtaskEditIdx = null;
-
-function addSubtaskPrompt(taskId) {
-    currentSubtaskParentId = taskId;
-    currentSubtaskEditIdx = null;
-    document.getElementById('subtaskModalTitle').textContent = 'Nueva subtarea';
-    document.getElementById('subtaskInput').value = '';
-    document.getElementById('subtaskStatusSelect').value = 'Pendiente';
-    document.querySelector('#subtaskModal .btn-primary').textContent = 'Agregar';
-    document.getElementById('subtaskModal').classList.add('active');
-    setTimeout(() => document.getElementById('subtaskInput').focus(), 100);
-}
-
-function editSubtask(taskId, idx) {
-    const sub = subtasks[taskId]?.[idx];
-    if (!sub) return;
-    currentSubtaskParentId = taskId;
-    currentSubtaskEditIdx = idx;
-    document.getElementById('subtaskModalTitle').textContent = 'Editar subtarea';
-    document.getElementById('subtaskInput').value = sub.text;
-    document.getElementById('subtaskStatusSelect').value = sub.status || 'Pendiente';
-    document.querySelector('#subtaskModal .btn-primary').textContent = 'Guardar';
-    document.getElementById('subtaskModal').classList.add('active');
-    setTimeout(() => document.getElementById('subtaskInput').focus(), 100);
-}
-
-function closeSubtaskModal() {
-    document.getElementById('subtaskModal').classList.remove('active');
-    currentSubtaskParentId = null;
-    currentSubtaskEditIdx = null;
-}
-
-function saveSubtask() {
-    const text = document.getElementById('subtaskInput').value.trim();
-    const status = document.getElementById('subtaskStatusSelect').value;
-    if (!text || !currentSubtaskParentId) return;
-    if (!subtasks[currentSubtaskParentId]) subtasks[currentSubtaskParentId] = [];
-    if (currentSubtaskEditIdx !== null) {
-        subtasks[currentSubtaskParentId][currentSubtaskEditIdx].text = text;
-        subtasks[currentSubtaskParentId][currentSubtaskEditIdx].status = status;
-        showToast('Subtarea actualizada', 'success');
-    } else {
-        subtasks[currentSubtaskParentId].push({ text, status });
-        showToast('Subtarea agregada', 'success');
-    }
-    saveSubtasks();
-    renderTasks();
-    closeSubtaskModal();
-}
-
-function updateSubtaskStatus(taskId, idx, status) {
-    if (subtasks[taskId]) {
-        subtasks[taskId][idx].status = status;
-        saveSubtasks();
-        renderTasks();
+function toggleSubtaskDone(taskId, subIdx) {
+    const task = kanbanTasks.find(t => t.id === taskId);
+    if (task && task.subtasks[subIdx]) {
+        task.subtasks[subIdx].done = !task.subtasks[subIdx].done;
+        saveTasks();
+        renderKanban();
     }
 }
 
-function deleteSubtask(taskId, idx) {
-    if (subtasks[taskId]) {
-        subtasks[taskId].splice(idx, 1);
-        if (subtasks[taskId].length === 0) delete subtasks[taskId];
-        saveSubtasks();
-        renderTasks();
-    }
-}
-
-function filterTasks(btn, filter) {
-    document.querySelectorAll('#tasksView .filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    notionTaskFilter = filter;
-    renderTasks();
-}
-
-function openTaskModal(task = null) {
+function openTaskModal(task, defaultStatus) {
     if (task) {
         document.getElementById('taskModalTitle').textContent = 'Editar Tarea';
         document.getElementById('taskEditId').value = task.id;
         document.getElementById('taskTitle').value = task.title;
-        document.getElementById('taskStatus').value = task.status;
-        document.getElementById('taskPriority').value = task.priority;
+        document.getElementById('taskTags').value = (task.tags || []).join(', ');
+        document.getElementById('taskNote').value = task.note || '';
+        document.getElementById('taskSubtasks').value = (task.subtasks || []).map(s => s.text).join('\n');
     } else {
         document.getElementById('taskModalTitle').textContent = 'Nueva Tarea';
         document.getElementById('taskEditId').value = '';
         document.getElementById('taskTitle').value = '';
-        document.getElementById('taskStatus').value = 'Pendiente';
-        document.getElementById('taskPriority').value = 'Media';
+        document.getElementById('taskTags').value = '';
+        document.getElementById('taskNote').value = '';
+        document.getElementById('taskSubtasks').value = '';
     }
+    document.getElementById('taskModal').dataset.defaultStatus = defaultStatus || 'Pendiente';
     document.getElementById('taskModal').classList.add('active');
 }
 
@@ -1713,98 +1604,46 @@ function closeTaskModal() {
 }
 
 function editTask(id) {
-    const task = notionTasks.find(t => t.id === id);
+    const task = kanbanTasks.find(t => t.id === id);
     if (task) openTaskModal(task);
 }
 
-async function saveTask() {
-    const config = getNotionConfig();
-    if (!config.token || !config.databaseId) {
-        showToast('Configura tu conexión a Notion primero', 'error');
-        return;
-    }
+function saveTask() {
     const editId = document.getElementById('taskEditId').value;
     const title = document.getElementById('taskTitle').value.trim();
-    const status = document.getElementById('taskStatus').value;
-    const priority = document.getElementById('taskPriority').value;
-    if (!title) {
-        showToast('El título es obligatorio', 'error');
-        return;
-    }
-    const properties = {
-        'Nombre': { title: [{ text: { content: title } }] },
-        'Estado': { rich_text: [{ text: { content: status } }] },
-        'Prioridad': { rich_text: [{ text: { content: priority } }] }
-    };
-    try {
-        let res;
-        if (editId) {
-            res = await fetch('/api/notion?action=update&taskId=' + editId, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ token: config.token, databaseId: config.databaseId, body: { properties } })
-            });
-        } else {
-            res = await fetch('/api/notion?action=create', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ token: config.token, databaseId: config.databaseId, body: { parent: { database_id: config.databaseId }, properties } })
-            });
+    const tagsRaw = document.getElementById('taskTags').value.trim();
+    const note = document.getElementById('taskNote').value.trim();
+    const subtasksRaw = document.getElementById('taskSubtasks').value.trim();
+    if (!title) { showToast('El título es obligatorio', 'error'); return; }
+    const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(t => t) : [];
+    const subtasks = subtasksRaw ? subtasksRaw.split('\n').map(t => t.trim()).filter(t => t).map(text => ({ text, done: false })) : [];
+    if (editId) {
+        const task = kanbanTasks.find(t => t.id === editId);
+        if (task) {
+            task.title = title;
+            task.tags = tags;
+            task.note = note;
+            if (subtasksRaw) task.subtasks = subtasks;
         }
-        if (!res.ok) throw new Error(`Error ${res.status}`);
-        closeTaskModal();
-        showToast(editId ? 'Tarea actualizada' : 'Tarea creada', 'success');
-        fetchNotionTasks();
-    } catch (e) {
-        showToast('Error al guardar: ' + e.message, 'error');
+        showToast('Tarea actualizada', 'success');
+    } else {
+        const status = document.getElementById('taskModal').dataset.defaultStatus || 'Pendiente';
+        kanbanTasks.push({ id: generateId(), title, tags, note, subtasks, status, created: Date.now() });
+        showToast('Tarea creada', 'success');
     }
+    saveTasks();
+    closeTaskModal();
+    renderKanban();
 }
 
-async function updateTaskStatus(id, newStatus, el) {
-    const config = getNotionConfig();
-    const sc = {'Pendiente':'#f59e0b','En progreso':'#3b82f6','Hecho':'#10b981'}[newStatus] || '#6b7280';
-    el.style.color = sc;
-    el.style.background = sc + '15';
-    el.style.borderColor = sc + '40';
-    try {
-        const res = await fetch('/api/notion?action=update&taskId=' + id, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token: config.token, databaseId: config.databaseId, body: { properties: { 'Estado': { rich_text: [{ text: { content: newStatus } }] } } } })
-        });
-        if (!res.ok) throw new Error(`Error ${res.status}`);
-        const task = notionTasks.find(t => t.id === id);
-        if (task) task.status = newStatus;
-        document.getElementById('taskFilterAll').textContent = notionTasks.length;
-        document.getElementById('taskFilterPending').textContent = notionTasks.filter(t => t.status === 'Pendiente').length;
-        document.getElementById('taskFilterProgress').textContent = notionTasks.filter(t => t.status === 'En progreso').length;
-        document.getElementById('taskFilterDone').textContent = notionTasks.filter(t => t.status === 'Hecho').length;
-        showToast('Estado actualizado', 'success');
-    } catch (e) {
-        showToast('Error: ' + e.message, 'error');
-        fetchNotionTasks();
-    }
+function deleteTask(id) {
+    if (!confirm('¿Eliminar esta tarea?')) return;
+    kanbanTasks = kanbanTasks.filter(t => t.id !== id);
+    saveTasks();
+    renderKanban();
+    showToast('Tarea eliminada', 'success');
 }
 
-async function deleteTask(id) {
-    if (!confirm('Â¿Eliminar esta tarea?')) return;
-    const config = getNotionConfig();
-    try {
-        const res = await fetch('/api/notion?action=delete&taskId=' + id, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token: config.token, databaseId: config.databaseId })
-        });
-        if (!res.ok) throw new Error(`Error ${res.status}`);
-        showToast('Tarea eliminada', 'success');
-        fetchNotionTasks();
-    } catch (e) {
-        showToast('Error al eliminar: ' + e.message, 'error');
-    }
-}
-
-if(!localStorage.getItem('notion_token'))localStorage.setItem('notion_token','ntn_U7688924242bfKHMBRBuFAvqET4Gpy7nkK4cNYlDFBo92P');
-if(!localStorage.getItem('notion_database_id'))localStorage.setItem('notion_database_id','38a1ca4bac5280ec9da4d07a1ca252be');
 loadClients();renderTable();renderDashboard();autoBackup();
 </script>
 </body>
