@@ -381,7 +381,7 @@
         @media (max-width: 640px) { .sidebar { display: none; } .main { margin-left: 0; } .dash-categories { grid-template-columns: 1fr 1fr; } .stat-cards-row { grid-template-columns: 1fr 1fr; } .clients-grid { grid-template-columns: 1fr; } .detail-panel { width: 95%; max-width: none; } .topbar { padding: 12px 16px; } .dashboard { padding: 16px; } .clients-container { padding: 16px; } .toolbar { padding: 12px 16px; } }
 
         /* ======================== TIMESHEET FEEDBACK ======================== */
-        .ts-container { padding: 20px 32px; max-width: 900px; }
+        .ts-container { padding: 20px 32px; max-width: 100%; }
         .ts-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
         .ts-header h2 { font-size: 22px; font-weight: 800; color: var(--text-dark); }
         .ts-header .btn-primary { padding: 10px 22px; border-radius: 12px; font-weight: 700; font-size: 13px; }
@@ -794,6 +794,7 @@ async function doLogin() {
     const hash = await sha256(user + ':' + pass);
     if (hash === AUTH_HASH) {
         sessionStorage.setItem('sts_auth', hash);
+        localStorage.setItem('sts_user', user);
         document.getElementById('loginOverlay').style.display = 'none';
         document.getElementById('appContent').classList.remove('app-hidden');
     } else {
@@ -813,6 +814,11 @@ async function checkAuth() {
     if (hash === AUTH_HASH) {
         document.getElementById('loginOverlay').style.display = 'none';
         document.getElementById('appContent').classList.remove('app-hidden');
+    }
+    const savedUser = localStorage.getItem('sts_user');
+    if (savedUser) {
+        document.getElementById('loginUser').value = savedUser;
+        document.getElementById('loginPass').focus();
     }
 }
 
