@@ -292,9 +292,44 @@
 
         @media (max-width: 1024px) { .dash-stats { grid-template-columns: repeat(2, 1fr); } .dash-grid { grid-template-columns: 1fr; } .sidebar { width: 60px; } .sidebar-brand h1, .sidebar-brand span, .sidebar-section-title, .sidebar-link span, .sidebar-link .badge, .sidebar-user .user-info, .sidebar-footer span, .sidebar-parent .chevron { display: none; } .sidebar-link { justify-content: center; padding: 12px; border-left: none; } .sidebar-link.sub { padding-left: 12px; } .sidebar-brand { justify-content: center; padding: 16px; } .sidebar-user { justify-content: center; } .main { margin-left: 60px; } .search-box { width: 200px; } .sidebar-submenu { max-height: none !important; overflow: visible; } }
         @media (max-width: 640px) { .sidebar { display: none; } .main { margin-left: 0; } .dash-stats { grid-template-columns: 1fr; } .detail-panel { width: 95%; max-width: none; } }
+
+        .login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); display: flex; align-items: center; justify-content: center; z-index: 99999; }
+        .login-box { background: var(--bg-white); border-radius: 16px; padding: 40px; width: 380px; max-width: 90vw; box-shadow: 0 20px 60px rgba(0,0,0,0.3); text-align: center; }
+        .login-logo { width: 70px; height: 70px; background: #0ea5e9; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 24px; font-weight: 800; color: #fff; }
+        .login-box h2 { margin: 0 0 4px; font-size: 22px; color: var(--text-dark); }
+        .login-box p { margin: 0 0 24px; font-size: 13px; color: var(--text-medium); }
+        .login-field { position: relative; margin-bottom: 16px; text-align: left; }
+        .login-field label { display: block; font-size: 12px; font-weight: 600; color: var(--text-medium); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .login-field input { width: 100%; padding: 12px 14px; border: 2px solid var(--border); border-radius: 8px; font-size: 14px; background: var(--bg-input); color: var(--text-dark); outline: none; transition: border-color 0.2s; box-sizing: border-box; }
+        .login-field input:focus { border-color: #0ea5e9; }
+        .login-btn { width: 100%; padding: 12px; background: #0ea5e9; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        .login-btn:hover { background: #0284c7; }
+        .login-error { color: #ef4444; font-size: 13px; margin-top: 12px; display: none; }
+        .login-footer { margin-top: 20px; font-size: 11px; color: var(--text-light); }
+        .app-hidden { display: none !important; }
     </style>
 </head>
 <body>
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <div class="login-logo">STS</div>
+            <h2>STS Security</h2>
+            <p>Ingresa tus credenciales para acceder</p>
+            <div class="login-field">
+                <label>Usuario</label>
+                <input type="text" id="loginUser" placeholder="Tu usuario" autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()">
+            </div>
+            <div class="login-field">
+                <label>Contraseña</label>
+                <input type="password" id="loginPass" placeholder="Tu contraseña" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+            </div>
+            <button class="login-btn" onclick="doLogin()">Iniciar Sesión</button>
+            <div class="login-error" id="loginError">Usuario o contraseña incorrectos</div>
+            <div class="login-footer">STS Security &copy; 2026</div>
+        </div>
+    </div>
+
+    <div class="app-hidden" id="appContent">
     <nav class="sidebar">
         <div class="sidebar-brand">
             <div class="logo">STS</div>
@@ -345,8 +380,13 @@
         </div>
         <div class="sidebar-footer">
             <div style="display:flex;align-items:center;gap:6px"><div class="dot"></div><span>Auto-backup 4:30 PM</span></div>
-            <div class="theme-toggle" onclick="toggleTheme()">
-                <div class="theme-toggle-track"><div class="theme-toggle-thumb"><svg id="themeIconSun" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg id="themeIconMoon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div></div>
+            <div style="display:flex;align-items:center;gap:8px">
+                <div class="theme-toggle" onclick="toggleTheme()">
+                    <div class="theme-toggle-track"><div class="theme-toggle-thumb"><svg id="themeIconSun" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg id="themeIconMoon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div></div>
+                </div>
+                <span onclick="doLogout()" style="cursor:pointer;font-size:11px;color:#ef4444" title="Cerrar sesión">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                </span>
             </div>
         </div>
     </nav>
@@ -652,8 +692,51 @@
     </div>
 
     <div class="toast-container" id="toastContainer"></div>
+    </div>
 
 <script>
+const AUTH_USER = 'admin';
+const AUTH_HASH = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918';
+
+function doLogin() {
+    const user = document.getElementById('loginUser').value.trim();
+    const pass = document.getElementById('loginPass').value;
+    const errEl = document.getElementById('loginError');
+    if (!user || !pass) { errEl.style.display = 'block'; return; }
+    const hash = sha256(user + ':' + pass);
+    if (hash === AUTH_HASH) {
+        sessionStorage.setItem('sts_auth', hash);
+        document.getElementById('loginOverlay').style.display = 'none';
+        document.getElementById('appContent').classList.remove('app-hidden');
+    } else {
+        errEl.style.display = 'block';
+        document.getElementById('loginPass').value = '';
+        document.getElementById('loginPass').focus();
+    }
+}
+
+function doLogout() {
+    sessionStorage.removeItem('sts_auth');
+    location.reload();
+}
+
+function checkAuth() {
+    const hash = sessionStorage.getItem('sts_auth');
+    if (hash === AUTH_HASH) {
+        document.getElementById('loginOverlay').style.display = 'none';
+        document.getElementById('appContent').classList.remove('app-hidden');
+    }
+}
+
+function sha256(message) {
+    const msgBuffer = new TextEncoder().encode(message);
+    const hashBuffer = crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+checkAuth();
+
 const defaultClients = [
     { id:"MC0", name:"PRUEBAS", property:"", services:["mc"], language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
     { id:"MC1", name:"HR1", property:"", services:["mc","ma"], maId:"MA10033", language:"", contacted:false, devices:[], notes:"", equipment:"", support:"", maintenance:"", security:"", upsell:"", technical:"" },
