@@ -94,8 +94,8 @@
         .sidebar-parent .chevron { transition: transform 0.3s ease, opacity 0.2s; opacity: 0; pointer-events: none; }
         .sidebar:hover .sidebar-parent .chevron { opacity: 1; pointer-events: auto; }
         .sidebar-parent.open .chevron { transform: rotate(180deg); }
-        .sidebar-submenu { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
-        .sidebar-submenu.open { max-height: 300px; }
+        .sidebar-submenu { position: fixed; left: 72px; top: 0; background: #1e293b; border-radius: 14px; padding: 8px; min-width: 220px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); opacity: 0; visibility: hidden; transform: translateX(-8px); transition: opacity 0.2s, visibility 0.2s, transform 0.2s; z-index: 200; pointer-events: none; }
+        .sidebar-submenu.open { opacity: 1; visibility: visible; transform: translateX(0); pointer-events: auto; }
         .sidebar-link.sub { padding-left: 44px; font-size: 12px; }
         .sidebar-link.sub.active { background: rgba(59,130,246,0.15); color: #60a5fa; box-shadow: none; }
         .sidebar-footer { padding: 14px 10px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; gap: 10px; }
@@ -1127,25 +1127,29 @@ function toggleSubmenu(el) {
     el.nextElementSibling.classList.toggle('open');
 }
 
-// Auto-open submenu on hover when sidebar is expanded
+// Tooltip submenu on hover
 document.addEventListener('DOMContentLoaded', function() {
     const sidebar = document.querySelector('.sidebar');
     const parent = document.querySelector('.sidebar-parent');
-    const submenu = parent ? parent.nextElementSibling : null;
+    const submenu = document.querySelector('.sidebar-submenu');
     if (parent && submenu) {
         parent.addEventListener('mouseenter', function() {
-            if (sidebar.matches(':hover')) {
-                parent.classList.add('open');
-                submenu.classList.add('open');
-            }
+            const rect = parent.getBoundingClientRect();
+            submenu.style.top = rect.top + 'px';
+            submenu.classList.add('open');
+        });
+        submenu.addEventListener('mouseenter', function() {
+            submenu.classList.add('open');
         });
         parent.addEventListener('mouseleave', function() {
             setTimeout(function() {
-                if (!sidebar.matches(':hover')) {
-                    parent.classList.remove('open');
+                if (!submenu.matches(':hover')) {
                     submenu.classList.remove('open');
                 }
             }, 100);
+        });
+        submenu.addEventListener('mouseleave', function() {
+            submenu.classList.remove('open');
         });
     }
 });
@@ -1159,8 +1163,7 @@ function showView(view) {
     document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
     if (view === 'dashboard') document.querySelector('.sidebar-link:not(.sub):not(.sidebar-parent)').classList.add('active');
     if (view === 'clients') {
-        document.querySelector('.sidebar-parent').classList.add('open');
-        document.querySelector('.sidebar-submenu').classList.add('open');
+        document.querySelector('.sidebar-parent').classList.add('active');
     }
     if (view === 'excelFeedback') document.querySelectorAll('.sidebar-link:not(.sub):not(.sidebar-parent)')[1].classList.add('active');
     if (view === 'tasks') document.querySelectorAll('.sidebar-link:not(.sub):not(.sidebar-parent)')[2].classList.add('active');
