@@ -54,7 +54,7 @@ const server = http.createServer((req, res) => {
     let filePath = req.url === '/' ? '/panel-clientes.html' : req.url;
     filePath = path.join(__dirname, filePath);
     const ext = path.extname(filePath);
-    const mimeTypes = { '.html': 'text/html', '.css': 'text/css', '.js': 'application/javascript', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.ico': 'image/x-icon' };
+    const mimeTypes = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'application/javascript; charset=utf-8', '.json': 'application/json; charset=utf-8', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.ico': 'image/x-icon' };
     fs.readFile(filePath, (err, data) => {
         if (err) {
             res.writeHead(404);
