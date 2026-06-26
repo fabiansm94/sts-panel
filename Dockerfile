@@ -1,7 +1,8 @@
 FROM node:20-alpine
 WORKDIR /app
-COPY panel-clientes.html .
-COPY server.js .
-COPY api/ ./api/
+COPY package.json .
+RUN npm install --production 2>/dev/null || true
+COPY . .
 EXPOSE 3000
+HEALTHCHECK NONE
 CMD ["node", "server.js"]
