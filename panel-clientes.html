@@ -1155,11 +1155,6 @@ function renderDashboard() {
     if (activity.length === 0) activity.push({ time:Date.now(), text:'No hay actividad reciente' });
     document.getElementById('dashActivity').innerHTML = activity.slice(0,8).map(a => `<div class="activity-item"><div class="activity-dot"></div><div><div>${a.text}</div><div style="font-size:10px;color:var(--text-light);margin-top:2px">${formatTime(a.time)}</div></div></div>`).join('');
 }
-    });
-    activity.sort((a,b) => b.time - a.time);
-    if (activity.length === 0) activity.push({ time:Date.now(), text:'No hay actividad reciente' });
-    document.getElementById('dashActivity').innerHTML = activity.slice(0,8).map(a => `<div class="activity-item"><div class="activity-dot"></div><div><div>${a.text}</div><div style="font-size:10px;color:var(--text-light);margin-top:2px">${formatTime(a.time)}</div></div></div>`).join('');
-}
 
 function renderTable() {
     const tbody = document.getElementById('clientsTableBody');
