@@ -94,7 +94,7 @@
         .sidebar-parent .chevron { transition: transform 0.3s ease, opacity 0.2s; opacity: 0; pointer-events: none; }
         .sidebar:hover .sidebar-parent .chevron { opacity: 1; pointer-events: auto; }
         .sidebar-parent.open .chevron { transform: rotate(180deg); }
-        .sidebar-submenu { position: fixed; left: 72px; top: 0; background: #1e293b; border-radius: 14px; padding: 8px; min-width: 220px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); opacity: 0; visibility: hidden; transform: translateX(-8px); transition: opacity 0.2s, visibility 0.2s, transform 0.2s; z-index: 200; pointer-events: none; }
+        .sidebar-submenu { position: fixed; left: 72px; background: #1a2235; border-radius: 14px; padding: 8px; min-width: 220px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); opacity: 0; visibility: hidden; transform: translateX(-8px); transition: opacity 0.2s, visibility 0.2s, transform 0.2s; z-index: 200; pointer-events: none; border: 1px solid rgba(255,255,255,0.06); }
         .sidebar-submenu.open { opacity: 1; visibility: visible; transform: translateX(0); pointer-events: auto; }
         .sidebar-link.sub { padding-left: 44px; font-size: 12px; }
         .sidebar-link.sub.active { background: rgba(59,130,246,0.15); color: #60a5fa; box-shadow: none; }
@@ -1124,33 +1124,23 @@ function toggleSidebar() {
 
 function toggleSubmenu(el) {
     el.classList.toggle('open');
-    el.nextElementSibling.classList.toggle('open');
+    const submenu = document.querySelector('.sidebar-submenu');
+    if (submenu.classList.contains('open')) {
+        submenu.classList.remove('open');
+    } else {
+        const rect = el.getBoundingClientRect();
+        submenu.style.top = rect.top + 'px';
+        submenu.classList.add('open');
+    }
 }
 
-// Tooltip submenu on hover
-document.addEventListener('DOMContentLoaded', function() {
-    const sidebar = document.querySelector('.sidebar');
-    const parent = document.querySelector('.sidebar-parent');
+// Close submenu when clicking outside
+document.addEventListener('click', function(e) {
     const submenu = document.querySelector('.sidebar-submenu');
-    if (parent && submenu) {
-        parent.addEventListener('mouseenter', function() {
-            const rect = parent.getBoundingClientRect();
-            submenu.style.top = rect.top + 'px';
-            submenu.classList.add('open');
-        });
-        submenu.addEventListener('mouseenter', function() {
-            submenu.classList.add('open');
-        });
-        parent.addEventListener('mouseleave', function() {
-            setTimeout(function() {
-                if (!submenu.matches(':hover')) {
-                    submenu.classList.remove('open');
-                }
-            }, 100);
-        });
-        submenu.addEventListener('mouseleave', function() {
-            submenu.classList.remove('open');
-        });
+    const parent = document.querySelector('.sidebar-parent');
+    if (!parent.contains(e.target) && !submenu.contains(e.target)) {
+        submenu.classList.remove('open');
+        parent.classList.remove('open');
     }
 });
 
