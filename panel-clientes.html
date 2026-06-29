@@ -478,6 +478,14 @@
 .post-type{font-size:9px;color:inherit;opacity:0.7;font-weight:600}
 .post-content{font-size:10px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .cal-post:hover .post-content{-webkit-line-clamp:unset}
+.add-post-btn{width:22px;height:22px;border-radius:6px;border:1px dashed var(--border);background:transparent;color:var(--text-light);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;transition:all 0.15s}
+.add-post-btn:hover{background:#3b82f6;color:#fff;border-color:#3b82f6}
+.post-delete{position:absolute;top:4px;right:4px;width:18px;height:18px;border-radius:50%;border:none;background:rgba(239,68,68,0.1);color:#ef4444;cursor:pointer;font-size:12px;display:none;align-items:center;justify-content:center;line-height:1}
+.cal-post{position:relative}
+.cal-post:hover .post-delete{display:flex}
+.no-posts-hint{text-align:center;color:var(--text-light);font-size:10px;padding:8px;opacity:0.5;font-style:italic}
+.day-header{justify-content:space-between}
+.form-row{display:flex;gap:12px}
 .cal-section{margin-top:32px}
 .section-title{font-size:16px;font-weight:700;color:var(--text-dark);margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--border)}
 .cal-table{width:100%;border-collapse:collapse;font-size:13px}
@@ -697,7 +705,7 @@
         <div class="cal-header"><h3>Calendario Social Media - STS Security</h3><p>Mes Completo (4 Semanas)</p></div>
         <div class="cal-week">
             <h3 class="week-title">Semana 1</h3>
-            <div class="cal-grid">
+            <div class="cal-grid" id="calGrid1">
             <div class="cal-day"><div class="day-header"><span class="day-title">Lunes</span></div><div class="day-posts">
                 <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Educativo</span></div><div class="post-content">📚 ¿Sabías que el 70% de los robos en condominios ocurren por accesos no controlados? El control de acceso es fundamental para la seguridad de tu propiedad. En STS Security ofrecemos sistemas de control peatonal y vehicular con tecnología de punta. ¿Tu condominio tiene control de acceso? Escríbenos y te asesoramos. 📞 [teléfono] #seguridad #condominios #costarica</div></div>
                 <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel (30 seg)</span></div><div class="post-content">🎬 Video: "3 formas de mejorar la seguridad de tu condominio HOY" - Texto en pantalla con música de fondo: 1. Cámaras de alta definición 2. Control de acceso 3. Monitoreo 24/7 - CTA al final: "¿Necesitas ayuda? Link en bio"</div></div>
@@ -732,7 +740,7 @@
         </div>
         <div class="cal-week">
             <h3 class="week-title">Semana 2</h3>
-            <div class="cal-grid">
+            <div class="cal-grid" id="calGrid2">
             <div class="cal-day"><div class="day-header"><span class="day-title">Lunes</span></div><div class="day-posts">
                 <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Educativo</span></div><div class="post-content">📚 SEGURIDAD REMOTA vs GUARDA FÍSICO SEGURIDAD REMOTA: ✅ Monitoreo 24/7 ✅ Costo fijo ✅ Sin riesgos humanos ✅ Respuesta inmediata GUARDA FÍSICO: ⚠️ Cobertura limitada ⚠️ Turnos y vacaciones ⚠️ Mayor costo ¿Cuál prefieres para tu propiedad? #seguridadremota #guardafisico</div></div>
                 <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel (30 seg)</span></div><div class="post-content">🎬 "Seguridad remota vs Guarda físico" - Comparación visual lado a lado - Datos de costos - Conclusión: "La seguridad remota es más eficiente" - CTA: "Descubre más en nuestro perfil"</div></div>
@@ -767,7 +775,7 @@
         </div>
         <div class="cal-week">
             <h3 class="week-title">Semana 3</h3>
-            <div class="cal-grid">
+            <div class="cal-grid" id="calGrid3">
             <div class="cal-day"><div class="day-header"><span class="day-title">Lunes</span></div><div class="day-posts">
                 <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Educativo</span></div><div class="post-content">📚 5 ERRORES QUE COMETEN LOS CONDOMINIOS EN SEGURIDAD 1. ❌ No tener monitoreo 24/7 2. ❌ Cámaras sin mantenimiento 3. ❌ No tener protocolo de respuesta 4. ❌ Sistemas obsoletos 5. ❌ No capacitar al personal ¿Tu condominio tiene alguno? Te ayudamos a solucionarlo 📞 [teléfono]</div></div>
                 <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel (30 seg)</span></div><div class="post-content">🎬 "5 errores comunes en seguridad" - Lista rápida con texto en pantalla - Muestra errores visuales - CTA: "No cometas estos errores"</div></div>
@@ -802,7 +810,7 @@
         </div>
         <div class="cal-week">
             <h3 class="week-title">Semana 4</h3>
-            <div class="cal-grid">
+            <div class="cal-grid" id="calGrid4">
             <div class="cal-day"><div class="day-header"><span class="day-title">Lunes</span></div><div class="day-posts">
                 <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Educativo</span></div><div class="post-content">📚 ¿QUÉ ES LA PORTERÍA VIRTUAL Y CÓMO FUNCIONA? La portería virtual permite controlar el acceso a tu propiedad de forma remota: 📱 App en tu celular 📹 Video portero 🔐 Cierre eléctrico 📞 Comunicación bidireccional BENEFICIOS: ✅ Ahorro en costos ✅ Control total ✅ Registro de accesos ¿Te gustaría implementarla? Contáctanos</div></div>
                 <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel (30 seg)</span></div><div class="post-content">🎬 "¿Qué es la portería virtual?" - Explicación animada - 3 beneficios clave - CTA: "Implementa la tuya hoy"</div></div>
@@ -1013,6 +1021,24 @@
                 <div class="form-group"><label>Notas</label><textarea id="reviewNotes" class="form-control" rows="3" placeholder="Contexto de la review..."></textarea></div>
             </div>
             <div class="modal-footer"><button class="btn" onclick="closeReviewModal()">Cancelar</button><button class="btn btn-primary" onclick="saveReview()">Guardar</button></div>
+        </div>
+    </div>
+
+    <!-- Social Post Modal -->
+    <div id="socialPostModal" class="modal-overlay" onclick="if(event.target===this)closeSocialPostModal()">
+        <div class="modal" style="max-width:550px">
+            <div class="modal-header"><h3 id="socialPostModalTitle">Nuevo Post</h3><button class="modal-close" onclick="closeSocialPostModal()">&times;</button></div>
+            <div class="modal-body">
+                <input type="hidden" id="socialPostIdx" value="-1">
+                <input type="hidden" id="socialPostWeek">
+                <input type="hidden" id="socialPostDay">
+                <div class="form-row">
+                    <div class="form-group" style="flex:1"><label>Red Social</label><select id="socialPostSocial" class="form-control"><option>Facebook</option><option>Instagram</option><option>LinkedIn</option></select></div>
+                    <div class="form-group" style="flex:1"><label>Tipo</label><select id="socialPostType" class="form-control"><option>Educativo</option><option>Caso de éxito</option><option>Engagement</option><option>Promoción</option><option>Reel (30 seg)</option><option>Carrusel (5 slides)</option><option>Carrusel (4 slides)</option><option>Post foto</option><option>Stories (3)</option><option>Stories</option><option>Articulo</option><option>Post de liderazgo</option><option>Post liderazgo</option><option>Reel motivacional</option><option>Detrás de cámaras</option><option>Pregunta/Engagement</option><option>Resumen mensual</option></select></div>
+                </div>
+                <div class="form-group"><label>Contenido del Post</label><textarea id="socialPostContent" class="form-control" rows="8" placeholder="Escribe el contenido del post..."></textarea></div>
+            </div>
+            <div class="modal-footer"><button class="btn" onclick="closeSocialPostModal()">Cancelar</button><button class="btn btn-primary" onclick="saveSocialPost()">Guardar</button></div>
         </div>
     </div>
 
@@ -1377,6 +1403,7 @@ function showView(view) {
     if (view === 'dashboard') renderDashboard();
     if (view === 'excelFeedback') renderExcelFeedback();
     if (view === 'reviews') renderReviews();
+    if (view === 'social') renderSocialCalendar();
 }
 
 function updateCounts() {
@@ -1814,6 +1841,117 @@ let reviews=JSON.parse(localStorage.getItem('sts_reviews')||'[]');
 let reviewFilter='all';
 let reviewSelectedStars=5;
 function saveReviews(){localStorage.setItem('sts_reviews',JSON.stringify(reviews));}
+
+let socialPosts=JSON.parse(localStorage.getItem('sts_social_posts')||'null');
+function saveSocialPosts(){localStorage.setItem('sts_social_posts',JSON.stringify(socialPosts));}
+
+function getDefaultSocialPosts(){
+    return [
+        {week:1,day:'Lunes',social:'Facebook',type:'Educativo',content:'📚 ¿Sabías que el 70% de los robos en condominios ocurren por accesos no controlados? El control de acceso es fundamental para la seguridad de tu propiedad. En STS Security ofrecemos sistemas de control peatonal y vehicular con tecnología de punta. ¿Tu condominio tiene control de acceso? Escríbenos y te asesoramos. 📞 [teléfono] #seguridad #condominios #costarica'},
+        {week:1,day:'Lunes',social:'Instagram',type:'Reel (30 seg)',content:'🎬 Video: "3 formas de mejorar la seguridad de tu condominio HOY" - Texto en pantalla con música de fondo: 1. Cámaras de alta definición 2. Control de acceso 3. Monitoreo 24/7 - CTA al final: "¿Necesitas ayuda? Link en bio"'},
+        {week:1,day:'Lunes',social:'LinkedIn',type:'Articulo',content:'📰 Artículo: "Tendencias en seguridad inteligente para condominios en 2026" - Breve resumen de 3 tendencias: IA en cámaras, monitoreo remoto, integración de sistemas. Enlace al blog completo.'},
+        {week:1,day:'Martes',social:'Instagram',type:'Stories (3)',content:'📱 Story 1: Foto del equipo de STS trabajando - "Así comenzamos el día" / Story 2: Encuesta "¿Tu propiedad tiene monitoreo 24/7? SÍ/NO" / Story 3: Dato rápido "Las alarmas reducen los robos en un 60%"'},
+        {week:1,day:'Miércoles',social:'Facebook',type:'Caso de éxito',content:'✅ CASO DE ÉXITO: Condominio Vista del Valle, Escazú 📍 Escazú, San José 🏢 40 apartamentos INSTALAMOS: • 16 cámaras IP HD • Control de acceso vehicular y peatonal • Monitoreo remoto 24/7 RESULTADO: 0 incidentes en 6 meses. "La tranquilidad no tiene precio" - Administrador. ¿Quieres algo similar? Contáctanos 📞 [teléfono]'},
+        {week:1,day:'Miércoles',social:'Instagram',type:'Carrusel (5 slides)',content:'📱 Slide 1: "Caso de Éxito: Condominio en Escazú" / Slide 2: "ANTES: 4 cámaras antiguas, sin monitoreo" / Slide 3: "SOLUCIÓN: 16 cámaras + control de acceso + monitoreo 24/7" / Slide 4: "DESPUÉS: 0 incidentes en 6 meses" / Slide 5: "¿Quieres proteger tu condominio? Contáctanos"'},
+        {week:1,day:'Jueves',social:'Facebook',type:'Pregunta/Engagement',content:'🤔 PREGUNTA: ¿Cuántas cámaras cree que necesita un condominio de 30 apartamentos para cobertura completa? A) 8-10 cámaras B) 12-16 cámaras C) 20+ cámaras Déjenos su respuesta en los comentarios 👇'},
+        {week:1,day:'Jueves',social:'Instagram',type:'Reel (30 seg)',content:'🎬 "Error común #1 en seguridad" - Video mostrando una cámara mal ubicada - Texto: "Esta cámara no cubre nada. Así se ve una mala instalación" - Solución: "Así debería verse" (buena instalación) - CTA: "No cometas este error. Contáctanos"'},
+        {week:1,day:'Jueves',social:'LinkedIn',type:'Post de liderazgo',content:'💡 "La seguridad no es un gasto, es una inversión" - Reflexión sobre cómo las empresas que invierten en seguridad tienen menos pérdidas. Posicionar a STS como expertos.'},
+        {week:1,day:'Viernes',social:'Facebook',type:'Promoción',content:'🎯 OFERTA: Consulta de seguridad GRATIS Evaluación completa de tu sistema actual + Recomendaciones personalizadas + Cotización sin compromiso 📅 Solo este mes 📞 Llama al [teléfono]'},
+        {week:1,day:'Viernes',social:'Instagram',type:'Post foto',content:'📸 Foto de un trabajo completado - Texto: "Así queda un sistema de seguridad profesional. 📹 8 cámaras IP 🔐 Control de acceso 📱 Monitoreo desde celular ¿Listo para proteger tu propiedad? Link en bio"'},
+        {week:1,day:'Sábado',social:'Instagram',type:'Stories',content:'📱 Story 1: Foto del equipo celebrando fin de semana - "¡Buen fin de semana! Recuerda: tu seguridad no descansa" / Story 2: Dato rápido "El 80% de los robos ocurren cuando no hay nadie"'},
+        {week:1,day:'Domingo',social:'Instagram',type:'Reel motivacional',content:'🎬 Video de paisajes de Costa Rica con texto: "Tu tranquilidad es nuestra misión. 🇨🇷 STS Security - Seguridad 24/7 para tu hogar y negocio"'},
+        {week:2,day:'Lunes',social:'Facebook',type:'Educativo',content:'📚 SEGURIDAD REMOTA vs GUARDA FÍSICO SEGURIDAD REMOTA: ✅ Monitoreo 24/7 ✅ Costo fijo ✅ Sin riesgos humanos ✅ Respuesta inmediata GUARDA FÍSICO: ⚠️ Cobertura limitada ⚠️ Turnos y vacaciones ⚠️ Mayor costo ¿Cuál prefieres para tu propiedad? #seguridadremota #guardafisico'},
+        {week:2,day:'Lunes',social:'Instagram',type:'Reel (30 seg)',content:'🎬 "Seguridad remota vs Guarda físico" - Comparación visual lado a lado - Datos de costos - Conclusión: "La seguridad remota es más eficiente" - CTA: "Descubre más en nuestro perfil"'},
+        {week:2,day:'Lunes',social:'LinkedIn',type:'Articulo',content:'📰 "5 beneficios de la seguridad remota para empresas en Costa Rica" - Articulo breve sobre ventajas de monitoreo remoto vs seguridad física.'},
+        {week:2,day:'Martes',social:'Instagram',type:'Stories (3)',content:'📱 Story 1: "¿Qué es la portería virtual?" con explicación breve / Story 2: Encuesta "¿Conocías la portería virtual? SÍ/NO" / Story 3: "Te lo explicamos en 30 segundos" (video corto)'},
+        {week:2,day:'Miércoles',social:'Facebook',type:'Caso de éxito',content:'✅ CASO DE ÉXITO: Hotel en Tamarindo 📍 Tamarindo, Guanacaste 🏨 Hotel boutique INSTALAMOS: • 24 cámaras de exterior • Sistema de alarma integrado • Monitoreo remoto desde San José RESULTADO: Reducción del 90% en incidentes. ¿Necesitas seguridad para tu hotel? Contáctanos 📞 [teléfono]'},
+        {week:2,day:'Miércoles',social:'Instagram',type:'Carrusel (5 slides)',content:'📱 Slide 1: "Hotel en Tamarindo: Seguridad de nivel mundial" / Slide 2: "RETO: Hotel con múltiples puntos de acceso" / Slide 3: "SOLUCIÓN: 24 cámaras + alarma + monitoreo" / Slide 4: "RESULTADO: 90% menos incidentes" / Slide 5: "¿Tu hotel necesita esto? Contáctanos"'},
+        {week:2,day:'Jueves',social:'Facebook',type:'Engagement',content:'🤔 "¿Cuál es tu mayor preocupación de seguridad?" A) Robo de equipo B) Acceso no autorizado C) Vandalismo D) Otro Déjanos tu respuesta 👇'},
+        {week:2,day:'Jueves',social:'Instagram',type:'Reel (30 seg)',content:'🎬 "¿Qué es la portería virtual?" - Explicación visual con animación - Beneficios: control remoto, ahorro, registro - CTA: "Implementa la tuya hoy"'},
+        {week:2,day:'Viernes',social:'Facebook',type:'Promoción',content:'🎯 OFERTA: Alquiler de cámaras para construcciones 📹 Cámaras con panel solar 📱 Monitoreo desde celular 🔋 Sin electricidad 📍 Cobertura nacional Precio desde: ₡XX.XXX/mes 📞 Contáctanos'},
+        {week:2,day:'Viernes',social:'Instagram',type:'Post foto',content:'📸 Foto de cámara en construcción - Texto: "¿Tienes una construcción? Protege tu inversión con nuestras cámaras solares. ✅ Sin necesidad de electricidad ✅ Monitoreo 24/7 ✅ Resistente al clima Link en bio"'},
+        {week:2,day:'Viernes',social:'LinkedIn',type:'Post liderazgo',content:'💡 "La tecnología al servicio de la seguridad" - Reflexión sobre cómo la IA está transformando la vigilancia.'},
+        {week:2,day:'Sábado',social:'Instagram',type:'Stories',content:'📱 Story 1: "¡Feliz sábado!" / Story 2: "Recuerda: la seguridad no descansa"'},
+        {week:2,day:'Domingo',social:'Instagram',type:'Reel motivacional',content:'🎬 Video: "Domingo de reflexión: ¿Qué tan segura es tu propiedad?" - Texto sobre importancia de la seguridad - CTA: "No esperes a que sea tarde"'},
+        {week:3,day:'Lunes',social:'Facebook',type:'Educativo',content:'📚 5 ERRORES QUE COMETEN LOS CONDOMINIOS EN SEGURIDAD 1. ❌ No tener monitoreo 24/7 2. ❌ Cámaras sin mantenimiento 3. ❌ No tener protocolo de respuesta 4. ❌ Sistemas obsoletos 5. ❌ No capacitar al personal ¿Tu condominio tiene alguno? Te ayudamos a solucionarlo 📞 [teléfono]'},
+        {week:3,day:'Lunes',social:'Instagram',type:'Reel (30 seg)',content:'🎬 "5 errores comunes en seguridad" - Lista rápida con texto en pantalla - Muestra errores visuales - CTA: "No cometas estos errores"'},
+        {week:3,day:'Lunes',social:'LinkedIn',type:'Articulo',content:'📰 "Cómo elegir el sistema de seguridad adecuado para tu empresa" - Guía breve de factores a considerar.'},
+        {week:3,day:'Martes',social:'Instagram',type:'Stories (3)',content:'📱 Story 1: "¿Sabías que...?" dato sobre seguridad / Story 2: Foto de equipo trabajando / Story 3: "Hoy instalando en [ciudad]"'},
+        {week:3,day:'Miércoles',social:'Facebook',type:'Detrás de cámaras',content:'📸 ASÍ TRABAJA EL EQUIPO DE STS SECURITY Nuestros técnicos están hoy instalando un sistema de seguridad completo en un condominio en Santa Ana. 🔧 12 cámaras IP 🔐 Control de acceso 📱 Monitoreo desde celular Tu seguridad es nuestro compromiso #teamwork #seguridad'},
+        {week:3,day:'Miércoles',social:'Instagram',type:'Carrusel (4 slides)',content:'📱 Slide 1: "Detrás de cámaras: Instalación en Santa Ana" / Slide 2: Foto del equipo trabajando / Slide 3: "12 cámaras + control de acceso" / Slide 4: "Listos para proteger. ¿Y tú?"'},
+        {week:3,day:'Jueves',social:'Facebook',type:'Engagement',content:'🤔 "¿Qué prefieres para tu propiedad?" A) Cámaras WiFi (fácil instalación) B) Cámaras cableadas (más estables) C) No sé, necesito asesoría Deja tu respuesta 👇'},
+        {week:3,day:'Jueves',social:'Instagram',type:'Reel (30 seg)',content:'🎬 "Cámaras WiFi vs Cableadas" - Comparación visual - Ventajas de cada una - CTA: "¿Cuál es mejor para ti? Contáctanos"'},
+        {week:3,day:'Jueves',social:'LinkedIn',type:'Post liderazgo',content:'💡 "Invertir en seguridad es invertir en tranquilidad" - Reflexión para empresarios.'},
+        {week:3,day:'Viernes',social:'Facebook',type:'Promoción',content:'🎯 MONITOREO DE ALARMAS 24/7 ¿Tu alarma está monitoreada? Ofrecemos: ✅ Monitoreo 24/7 ✅ Respuesta inmediata ✅ Notificaciones a tu celular ✅ Integración con cámaras 📞 Contáctanos para una cotización'},
+        {week:3,day:'Viernes',social:'Instagram',type:'Post foto',content:'📸 Foto de sistema de alarma - Texto: "Tu alarma monitoreada 24/7. No dejes nada al azar. ✅ Respuesta inmediata ✅ Notificaciones en tiempo real ✅ Video verificación Link en bio"'},
+        {week:3,day:'Sábado',social:'Instagram',type:'Stories',content:'📱 Story 1: "¡Viernes de logros!" - Foto de proyecto completado / Story 2: "Gracias a la confianza de nuestros clientes"'},
+        {week:3,day:'Domingo',social:'Instagram',type:'Reel motivacional',content:'🎬 "Domingo: Un nuevo día para estar más seguros" - Mensaje positivo sobre tranquilidad - CTA: "Protege lo que más quieres"'},
+        {week:4,day:'Lunes',social:'Facebook',type:'Educativo',content:'📚 ¿QUÉ ES LA PORTERÍA VIRTUAL Y CÓMO FUNCIONA? La portería virtual permite controlar el acceso a tu propiedad de forma remota: 📱 App en tu celular 📹 Video portero 🔐 Cierre eléctrico 📞 Comunicación bidireccional BENEFICIOS: ✅ Ahorro en costos ✅ Control total ✅ Registro de accesos ¿Te gustaría implementarla? Contáctanos'},
+        {week:4,day:'Lunes',social:'Instagram',type:'Reel (30 seg)',content:'🎬 "¿Qué es la portería virtual?" - Explicación animada - 3 beneficios clave - CTA: "Implementa la tuya hoy"'},
+        {week:4,day:'Lunes',social:'LinkedIn',type:'Articulo',content:'📰 "Control de acceso inteligente: El futuro de la seguridad en condominios" - Tendencias y tecnologías.'},
+        {week:4,day:'Martes',social:'Instagram',type:'Stories (3)',content:'📱 Story 1: "¿Conoces la portería virtual?" / Story 2: Encuesta "La usarías? SÍ/NO" / Story 3: "Te mostramos cómo funciona" (video)'},
+        {week:4,day:'Miércoles',social:'Facebook',type:'Caso de éxito',content:'✅ CASO DE ÉXITO: Vacation Rental en Jacó 📍 Jacó, Puntarenas 🏖️ Casa de playa INSTALAMOS: • 6 cámaras de seguridad • Cerradura inteligente • Video portero • Monitoreo remoto RESULTADO: El propietario administra desde San José sin problemas. ¿Tienes un vacation rental? Te protegemos 📞 [teléfono]'},
+        {week:4,day:'Miércoles',social:'Instagram',type:'Carrusel (5 slides)',content:'📱 Slide 1: "Vacation Rental en Jacó: Seguridad total" / Slide 2: "RETO: Propiedad sin supervisión constante" / Slide 3: "SOLUCIÓN: 6 cámaras + cerradura inteligente + video portero" / Slide 4: "RESULTADO: Administración remota completa" / Slide 5: "¿Tu vacation rental necesita esto?"'},
+        {week:4,day:'Jueves',social:'Facebook',type:'Engagement',content:'🤔 "¿Cuánto inviertes mensualmente en seguridad?" A) Nada B) Menos de ₡50.000 C) Entre ₡50.000 - ₡100.000 D) Más de ₡100.000 Tu inversión en seguridad es una inversión en tranquilidad 💡'},
+        {week:4,day:'Jueves',social:'Instagram',type:'Reel (30 seg)',content:'🎬 "Cuánto cuesta la seguridad" - Rangos de precios según tipo de sistema - CTA: "Contáctanos para cotización personalizada"'},
+        {week:4,day:'Jueves',social:'LinkedIn',type:'Post liderazgo',content:'💡 "El ROI de la seguridad inteligente" - Datos sobre ahorro a largo plazo.'},
+        {week:4,day:'Viernes',social:'Facebook',type:'Promoción',content:'🎯 RESUMEN DEL MES: Nuestros servicios ✅ Monitoreo de Cámaras 24/7 ✅ Monitoreo de Alarmas ✅ Portería Virtual ✅ Control de Acceso ✅ Alquiler de Cámaras ¿Qué necesitas? Contáctanos 📞 [teléfono] 🌐 [sitio web]'},
+        {week:4,day:'Viernes',social:'Instagram',type:'Post foto',content:'📸 Collage de los mejores trabajos del mes - Texto: "Otro mes protegiendo Costa Rica. 🙏 Gracias a todos nuestros clientes. ¿Listo para ser el próximo? Link en bio"'},
+        {week:4,day:'Viernes',social:'LinkedIn',type:'Resumen mensual',content:'📊 "STS Security: Resumen de impacto este mes" - Número de proyectos completados, clientes satisfechos, etc.'},
+        {week:4,day:'Sábado',social:'Instagram',type:'Stories',content:'📱 Story 1: "¡Último día del mes!" / Story 2: "Gracias por acompañarnos" / Story 3: "El viene más contenido de seguridad"'},
+        {week:4,day:'Domingo',social:'Instagram',type:'Reel motivacional',content:'🎬 "Nuevo mes, nueva seguridad" - Mensaje motivacional para empezar el mes - CTA: "Este mes da el paso para proteger tu propiedad"'}
+    ];
+}
+
+function renderSocialCalendar(){
+    if(!socialPosts){socialPosts=getDefaultSocialPosts();saveSocialPosts();}
+    const days=['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+    for(let w=1;w<=4;w++){
+        const grid=document.getElementById('calGrid'+w);
+        if(!grid)continue;
+        grid.innerHTML=days.map(day=>{
+            const posts=socialPosts.filter(p=>p.week===w&&p.day===day);
+            const postsHtml=posts.length?posts.map((p,i)=>{
+                const idx=socialPosts.indexOf(p);
+                const cls=p.social==='Facebook'?'fb-post':p.social==='Instagram'?'ig-post':'li-post';
+                const badgeCls=p.social==='Facebook'?'fb':p.social==='Instagram'?'ig':'li';
+                return `<div class="cal-post ${cls}" onclick="editSocialPost(${idx})"><div class="post-meta"><span class="social-badge ${badgeCls}">${p.social}</span><span class="post-type">${p.type}</span></div><div class="post-content">${p.content}</div><button class="post-delete" onclick="event.stopPropagation();deleteSocialPost(${idx})" title="Eliminar">&times;</button></div>`;
+            }).join(''):'<div class="no-posts-hint">Sin posts</div>';
+            return `<div class="cal-day"><div class="day-header"><span class="day-title">${day}</span><button class="add-post-btn" onclick="addSocialPost('${day}',${w})" title="Agregar post">+</button></div><div class="day-posts">${postsHtml}</div></div>`;
+        }).join('');
+    }
+}
+
+function addSocialPost(day,week){
+    document.getElementById('socialPostIdx').value=-1;
+    document.getElementById('socialPostWeek').value=week;
+    document.getElementById('socialPostDay').value=day;
+    document.getElementById('socialPostSocial').value='Facebook';
+    document.getElementById('socialPostType').value='Educativo';
+    document.getElementById('socialPostContent').value='';
+    document.getElementById('socialPostModalTitle').textContent='Nuevo Post';
+    document.getElementById('socialPostModal').classList.add('active');
+}
+function editSocialPost(idx){
+    const p=socialPosts[idx];
+    document.getElementById('socialPostIdx').value=idx;
+    document.getElementById('socialPostWeek').value=p.week;
+    document.getElementById('socialPostDay').value=p.day;
+    document.getElementById('socialPostSocial').value=p.social;
+    document.getElementById('socialPostType').value=p.type;
+    document.getElementById('socialPostContent').value=p.content;
+    document.getElementById('socialPostModalTitle').textContent='Editar Post';
+    document.getElementById('socialPostModal').classList.add('active');
+}
+function closeSocialPostModal(){document.getElementById('socialPostModal').classList.remove('active');}
+function saveSocialPost(){
+    const idx=parseInt(document.getElementById('socialPostIdx').value);
+    const post={week:parseInt(document.getElementById('socialPostWeek').value),day:document.getElementById('socialPostDay').value,social:document.getElementById('socialPostSocial').value,type:document.getElementById('socialPostType').value,content:document.getElementById('socialPostContent').value.trim()};
+    if(!post.content){showToast('Escribe el contenido del post','error');return;}
+    if(idx>=0){socialPosts[idx]=post;}else{socialPosts.push(post);}
+    saveSocialPosts();closeSocialPostModal();renderSocialCalendar();showToast(idx>=0?'Post actualizado':'Post agregado','success');
+}
+function deleteSocialPost(idx){if(confirm('¿Eliminar este post?')){socialPosts.splice(idx,1);saveSocialPosts();renderSocialCalendar();showToast('Post eliminado','success');}}
 function renderReviewStats(){
     const total=reviews.length;
     const avg=total?reviews.reduce((s,r)=>s+r.stars,0)/total:0;
