@@ -503,6 +503,39 @@
         .stat-value{font-size:22px;font-weight:800;color:var(--text-dark);line-height:1}
         .stat-label{font-size:11px;color:var(--text-light);font-weight:600;margin-top:2px}
 
+        /* Comparativas */
+        .comp-tabs{display:flex;gap:4px;padding:0 32px;margin-bottom:0;background:var(--bg-white);border-bottom:1px solid var(--border)}
+        .comp-tab{padding:12px 20px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text-light);border-bottom:2px solid transparent;transition:all 0.2s}
+        .comp-tab:hover{color:var(--text-dark)}
+        .comp-tab.active{color:#3b82f6;border-bottom-color:#3b82f6}
+        .comp-panel{display:none;padding:24px 32px 32px}
+        .comp-panel.active{display:block}
+        .comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+        .comp-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all 0.2s}
+        .comp-card:hover{box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+        .comp-card-header{padding:16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+        .comp-logo{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;flex-shrink:0}
+        .comp-card-header h4{font-size:15px;font-weight:700;color:var(--text-dark);margin-bottom:2px}
+        .comp-card-header .comp-type{font-size:11px;color:var(--text-light)}
+        .comp-card-body{padding:16px}
+        .comp-stat{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)}
+        .comp-stat:last-child{border-bottom:none}
+        .comp-stat-label{font-size:12px;color:var(--text-light)}
+        .comp-stat-value{font-size:12px;font-weight:600;color:var(--text-dark)}
+        .comp-post{background:var(--bg-body);border-radius:8px;padding:12px;margin-top:8px}
+        .comp-post-date{font-size:10px;color:var(--text-light);margin-bottom:4px}
+        .comp-post-content{font-size:12px;color:var(--text-dark);line-height:1.5}
+        .comp-post-type{display:inline-block;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600;margin-top:6px}
+        .comp-post-type.edu{background:#dbeafe;color:#1d4ed8}
+        .comp-post-type.promo{background:#fef3c7;color:#92400e}
+        .comp-post-type.caso{background:#d1fae5;color:#065f46}
+        .comp-post-type.engagement{background:#ede9fe;color:#7c3aed}
+        .comp-post-type.vid{background:#fce7f3;color:#be185d}
+        .comp-add-btn{position:fixed;bottom:24px;right:24px;width:48px;height:48px;border-radius:50%;background:#3b82f6;color:#fff;border:none;font-size:24px;cursor:pointer;box-shadow:0 4px 12px rgba(59,130,246,0.4);z-index:100;display:none;align-items:center;justify-content:center}
+        .comp-panel.active ~ .comp-add-btn{display:flex}
+        .btn.del{background:transparent;border:1px solid #fecaca;color:#ef4444}
+        .btn.del:hover{background:#fef2f2}
+
     </style>
 </head>
 <body>
@@ -870,6 +903,24 @@
             <div class="hashtags">#seguridad #costarica #seguridadinteligente #camaras #alarmas #monitoreo #controldeacceso #condominios #hotel #negocio #proteccion #tranquilidad</div>
         </div>
     </div>
+    <div class="comp-tabs">
+        <div class="comp-tab active" onclick="switchCompTab('competitors')">Competidores</div>
+        <div class="comp-tab" onclick="switchCompTab('analisys')">Análisis de Contenido</div>
+    </div>
+    <div class="comp-panel active" id="compCompetitors">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+            <div><h3 style="font-size:18px;font-weight:700;color:var(--text-dark)">Competidores en Costa Rica</h3><p style="font-size:13px;color:var(--text-light)">Análisis de empresas de seguridad locales</p></div>
+            <button class="btn btn-primary" onclick="addCompetitor()">+ Agregar Competidor</button>
+        </div>
+        <div class="comp-grid" id="competitorGrid"></div>
+    </div>
+    <div class="comp-panel" id="compAnalisys">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+            <div><h3 style="font-size:18px;font-weight:700;color:var(--text-dark)">Tipos de Contenido</h3><p style="font-size:13px;color:var(--text-light)">Qué publican las empresas de seguridad en RRSS</p></div>
+            <button class="btn btn-primary" onclick="addCompPost()">+ Agregar Publicación</button>
+        </div>
+        <div class="comp-grid" id="compPostsGrid"></div>
+    </div>
 </div>
 
         <!-- Excel Feedback View -->
@@ -1039,6 +1090,15 @@
                 <div class="form-group"><label>Contenido del Post</label><textarea id="socialPostContent" class="form-control" rows="8" placeholder="Escribe el contenido del post..."></textarea></div>
             </div>
             <div class="modal-footer"><button class="btn" onclick="closeSocialPostModal()">Cancelar</button><button class="btn btn-primary" onclick="saveSocialPost()">Guardar</button></div>
+        </div>
+    </div>
+
+    <!-- Competitor Modal -->
+    <div id="compModal" class="modal-overlay" onclick="if(event.target===this)closeCompModal()">
+        <div class="modal" style="max-width:550px">
+            <div class="modal-header"><h3 id="compModalTitle">Agregar</h3><button class="modal-close" onclick="closeCompModal()">&times;</button></div>
+            <div class="modal-body" id="compModalBody"></div>
+            <div class="modal-footer"><button class="btn" onclick="closeCompModal()">Cancelar</button><button class="btn btn-primary" id="compModalSave" onclick="saveCompItem()">Guardar</button></div>
         </div>
     </div>
 
@@ -1404,6 +1464,7 @@ function showView(view) {
     if (view === 'excelFeedback') renderExcelFeedback();
     if (view === 'reviews') renderReviews();
     if (view === 'social') renderSocialCalendar();
+    if (view === 'social') renderCompetitors();
 }
 
 function updateCounts() {
@@ -2046,6 +2107,139 @@ function saveReview(){
     saveReviews();closeReviewModal();renderReviews();showToast(idx>=0?'Review actualizada':'Review guardada','success');
 }
 function deleteReview(idx){if(confirm('¿Eliminar esta review?')){reviews.splice(idx,1);saveReviews();renderReviews();showToast('Review eliminada','success');}}
+
+// ===== COMPARATIVAS =====
+let competitors=JSON.parse(localStorage.getItem('sts_competitors')||'null');
+let compPosts=JSON.parse(localStorage.getItem('sts_comp_posts')||'null');
+function saveCompetitors(){localStorage.setItem('sts_competitors',JSON.stringify(competitors));}
+function saveCompPosts(){localStorage.setItem('sts_comp_posts',JSON.stringify(compPosts));}
+
+function getDefaultCompetitors(){
+    return [
+        {name:'ADT Costa Rica',type:'Multinacional',color:'#0066cc',services:['Alarmas','Cámaras','Monitoreo 24/7','Smart Home'],fb:'ADTCR',ig:'adtcostarica',followers:'40K+ FB / 3.5K IG', strengths:'Líder mundial, tecnología Smart Security, app propia, marca reconocida', weaknesses:'Precios altos, contratos a largo plazo'},
+        {name:'Securitas Costa Rica',type:'Multinacional',color:'#e11d48',services:['Seguridad física','Seguridad electrónica','SOC','PYMES'],fb:'securitascostarica',ig:'securitascostarica',followers:'15K+ FB / 2K IG', strengths:'90+ años trayectoria, SOC propio, soluciones integrales', weaknesses:'Enfoque más corporativo, menos RRSS'},
+        {name:'G4S Costa Rica',type:'Multinacional',color:'#059669',services:['Seguridad física','Consultoría','1300+ oficiales'],fb:'G4SCostaRica',ig:'g4scr',followers:'25K+ FB / 1.5K IG', strengths:'Líder en seguridad física, 1000+ oficiales, presencia global', weaknesses:'Menor presencia digital, poco contenido educativo'},
+        {name:'GOS Seguridad',type:'Local',color:'#7c3aed',services:['Seguridad física','Video vigilancia','Control de acceso','Alarmas'],fb:'GosSeguridad',ig:'gosseguridad',followers:'5K FB / 1K IG', strengths:'Enfoque local, atención personalizada, precios competitivos', weaknesses:'Menor alcance, contenido limitado'},
+        {name:'AFOSA',type:'Local',color:'#ea580c',services:['Seguridad privada','Formación','Asesoría'],fb:'AFOSA',ig:'afosa_cr',followers:'3K FB / 500 IG', strengths:'Experiencia local, formación especializada', weaknesses:'Presencia digital baja'},
+        {name:'SeguCam',type:'Local',color:'#0891b2',services:['Cámaras','Instalación profesional'],fb:'SeguCam',ig:'segucam',followers:'2K FB / 800 IG', strengths:'Especialistas en cámaras, instalación profesional', weaknesses:'Servicio limitado solo a cámaras'}
+    ];
+}
+
+function getDefaultCompPosts(){
+    return [
+        {company:'ADT Costa Rica',date:'2026-05-11',type:'Caso de éxito',content:'🎉 En ADT celebramos un hito que refleja nuestro compromiso con la seguridad: 7 años sin accidentes registrables.'},
+        {company:'ADT Costa Rica',date:'2026-01-01',type:'Promocional',content:'Empiece el 2026 cumpliendo el propósito más importante: cuidar lo que más quiere. Con ADT, su hogar permanece protegido 24/7.'},
+        {company:'ADT Costa Rica',date:'2025-07-29',type:'Educativo',content:'Refuerce la seguridad de su negocio con los expertos: ADT. #SistemaDeSeguridad #ADTCostaRica'},
+        {company:'Securitas Costa Rica',date:'2026-03-15',type:'Educativo',content:'Securitas Connect: solución diseñada para PYMES. Cámaras inteligentes con mapas de calor y conteo de personas.'},
+        {company:'G4S Costa Rica',date:'2026-02-20',type:'Institucional',content:'Mil aplausos para nuestros verdaderos héroes, NUESTRO PERSONAL. G4S les da las gracias a todos.'},
+        {company:'GOS Seguridad',date:'2026-04-10',type:'Engagement',content:'¡Bienvenido a GOS Seguridad, donde tu tranquilidad es nuestra misión! Seguridad Residencial para condominios y residencias.'}
+    ];
+}
+
+function renderCompetitors(){
+    if(!competitors){competitors=getDefaultCompetitors();saveCompetitors();}
+    if(!compPosts){compPosts=getDefaultCompPosts();saveCompPosts();}
+    const grid=document.getElementById('competitorGrid');
+    grid.innerHTML=competitors.map((c,i)=>{
+        return `<div class="comp-card">
+            <div class="comp-card-header">
+                <div class="comp-logo" style="background:${c.color}">${c.name.split(' ').map(w=>w[0]).join('').substring(0,2)}</div>
+                <div><h4>${c.name}</h4><div class="comp-type">${c.type} · ${c.followers}</div></div>
+            </div>
+            <div class="comp-card-body">
+                <div class="comp-stat"><span class="comp-stat-label">Servicios</span><span class="comp-stat-value">${c.services.length} servicios</span></div>
+                <div class="comp-stat"><span class="comp-stat-label">Facebook</span><span class="comp-stat-value">@${c.fb}</span></div>
+                <div class="comp-stat"><span class="comp-stat-label">Instagram</span><span class="comp-stat-value">@${c.ig}</span></div>
+                <div style="margin-top:8px"><span class="comp-stat-label">Fortalezas</span><div style="font-size:12px;color:var(--text-dark);margin-top:4px;line-height:1.4">${c.strengths}</div></div>
+                <div style="margin-top:8px"><span class="comp-stat-label">Debilidades</span><div style="font-size:12px;color:var(--text-dark);margin-top:4px;line-height:1.4">${c.weaknesses}</div></div>
+                <div style="margin-top:12px;display:flex;gap:6px">
+                    <button class="btn" style="font-size:11px;padding:4px 10px" onclick="editCompetitor(${i})">Editar</button>
+                    <button class="btn del" style="font-size:11px;padding:4px 10px;color:#ef4444" onclick="deleteCompetitor(${i})">Eliminar</button>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+    renderCompPosts();
+}
+
+function renderCompPosts(){
+    const grid=document.getElementById('compPostsGrid');
+    const sorted=[...compPosts].sort((a,b)=>new Date(b.date)-new Date(a.date));
+    grid.innerHTML=sorted.map((p,i)=>{
+        const idx=compPosts.indexOf(p);
+        const typeCls=p.type==='Educativo'?'edu':p.type==='Promocional'?'promo':p.type==='Caso de éxito'?'caso':p.type==='Engagement'?'engagement':'vid';
+        return `<div class="comp-card">
+            <div class="comp-card-header">
+                <div class="comp-logo" style="background:${getCompColor(p.company)}">${p.company.split(' ').map(w=>w[0]).join('').substring(0,2)}</div>
+                <div><h4>${p.company}</h4><div class="comp-type">${p.date}</div></div>
+            </div>
+            <div class="comp-card-body">
+                <span class="comp-post-type ${typeCls}">${p.type}</span>
+                <div class="comp-post"><div class="comp-post-content">${p.content}</div></div>
+                <div style="margin-top:10px;display:flex;gap:6px">
+                    <button class="btn" style="font-size:11px;padding:4px 10px" onclick="editCompPost(${idx})">Editar</button>
+                    <button class="btn del" style="font-size:11px;padding:4px 10px;color:#ef4444" onclick="deleteCompPost(${idx})">Eliminar</button>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function getCompColor(name){const c=competitors.find(x=>x.name===name);return c?c.color:'#6b7280';}
+
+function switchCompTab(tab){
+    document.querySelectorAll('.comp-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.comp-panel').forEach(p=>p.classList.remove('active'));
+    if(tab==='competitors'){document.querySelectorAll('.comp-tab')[0].classList.add('active');document.getElementById('compCompetitors').classList.add('active');}
+    else{document.querySelectorAll('.comp-tab')[1].classList.add('active');document.getElementById('compAnalisys').classList.add('active');}
+}
+
+// Competitor CRUD
+let compEditIdx=-1;
+function addCompetitor(){compEditIdx=-1;document.getElementById('compModalTitle').textContent='Agregar Competidor';renderCompetitorForm({name:'',type:'Local',color:'#3b82f6',services:[],fb:'',ig:'',followers:'',strengths:'',weaknesses:''});document.getElementById('compModal').classList.add('active');}
+function editCompetitor(idx){compEditIdx=idx;document.getElementById('compModalTitle').textContent='Editar Competidor';renderCompetitorForm(competitors[idx]);document.getElementById('compModal').classList.add('active');}
+function renderCompetitorForm(c){
+    document.getElementById('compModalBody').innerHTML=`
+        <div class="form-group"><label>Nombre</label><input type="text" id="compName" class="form-control" value="${c.name}"></div>
+        <div class="form-row"><div class="form-group" style="flex:1"><label>Tipo</label><select id="compType" class="form-control"><option ${c.type==='Multinacional'?'selected':''}>Multinacional</option><option ${c.type==='Local'?'selected':''}>Local</option></select></div>
+        <div class="form-group" style="flex:1"><label>Color</label><input type="color" id="compColor" value="${c.color}" style="height:38px;width:100%"></div></div>
+        <div class="form-row"><div class="form-group" style="flex:1"><label>Facebook</label><input type="text" id="compFB" class="form-control" value="${c.fb}"></div>
+        <div class="form-group" style="flex:1"><label>Instagram</label><input type="text" id="compIG" class="form-control" value="${c.ig}"></div></div>
+        <div class="form-group"><label>Followers</label><input type="text" id="compFollowers" class="form-control" value="${c.followers}"></div>
+        <div class="form-group"><label>Servicios (separados por coma)</label><input type="text" id="compServices" class="form-control" value="${c.services.join(', ')}"></div>
+        <div class="form-group"><label>Fortalezas</label><textarea id="compStrengths" class="form-control" rows="2">${c.strengths}</textarea></div>
+        <div class="form-group"><label>Debilidades</label><textarea id="compWeaknesses" class="form-control" rows="2">${c.weaknesses}</textarea></div>`;
+}
+function saveCompItem(){
+    if(compEditIdx>=0){
+        competitors[compEditIdx]={name:document.getElementById('compName').value,type:document.getElementById('compType').value,color:document.getElementById('compColor').value,services:document.getElementById('compServices').value.split(',').map(s=>s.trim()).filter(Boolean),fb:document.getElementById('compFB').value,ig:document.getElementById('compIG').value,followers:document.getElementById('compFollowers').value,strengths:document.getElementById('compStrengths').value,weaknesses:document.getElementById('compWeaknesses').value};
+    }else{
+        competitors.push({name:document.getElementById('compName').value,type:document.getElementById('compType').value,color:document.getElementById('compColor').value,services:document.getElementById('compServices').value.split(',').map(s=>s.trim()).filter(Boolean),fb:document.getElementById('compFB').value,ig:document.getElementById('compIG').value,followers:document.getElementById('compFollowers').value,strengths:document.getElementById('compStrengths').value,weaknesses:document.getElementById('compWeaknesses').value});
+    }
+    saveCompetitors();closeCompModal();renderCompetitors();showToast('Competidor guardado','success');
+}
+function deleteCompetitor(idx){if(confirm('¿Eliminar este competidor?')){competitors.splice(idx,1);saveCompetitors();renderCompetitors();showToast('Competidor eliminado','success');}}
+
+// Comp Posts CRUD
+let compPostIdx=-1;
+function addCompPost(){compPostIdx=-1;document.getElementById('compModalTitle').textContent='Agregar Publicación';renderCompPostForm({company:'',date:new Date().toISOString().split('T')[0],type:'Educativo',content:''});document.getElementById('compModal').classList.add('active');}
+function editCompPost(idx){compPostIdx=idx;document.getElementById('compModalTitle').textContent='Editar Publicación';renderCompPostForm(compPosts[idx]);document.getElementById('compModal').classList.add('active');}
+function renderCompPostForm(p){
+    const compOpts=competitors.map(c=>`<option ${c.name===p.company?'selected':''}>${c.name}</option>`).join('');
+    document.getElementById('compModalBody').innerHTML=`
+        <div class="form-group"><label>Empresa</label><select id="compPostCompany" class="form-control">${compOpts}</select></div>
+        <div class="form-row"><div class="form-group" style="flex:1"><label>Fecha</label><input type="date" id="compPostDate" class="form-control" value="${p.date}"></div>
+        <div class="form-group" style="flex:1"><label>Tipo</label><select id="compPostType" class="form-control"><option ${p.type==='Educativo'?'selected':''}>Educativo</option><option ${p.type==='Promocional'?'selected':''}>Promocional</option><option ${p.type==='Caso de éxito'?'selected':''}>Caso de éxito</option><option ${p.type==='Engagement'?'selected':''}>Engagement</option><option ${p.type==='Institucional'?'selected':''}>Institucional</option><option ${p.type==='Video'?'selected':''}>Video</option></select></div></div>
+        <div class="form-group"><label>Contenido</label><textarea id="compPostContent" class="form-control" rows="4">${p.content}</textarea></div>`;
+}
+function saveCompPost(){
+    const post={company:document.getElementById('compPostCompany').value,date:document.getElementById('compPostDate').value,type:document.getElementById('compPostType').value,content:document.getElementById('compPostContent').value.trim()};
+    if(!post.content){showToast('Escribe el contenido','error');return;}
+    if(compPostIdx>=0){compPosts[compPostIdx]=post;}else{compPosts.push(post);}
+    saveCompPosts();closeCompModal();renderCompPosts();showToast('Publicación guardada','success');
+}
+function deleteCompPost(idx){if(confirm('¿Eliminar esta publicación?')){compPosts.splice(idx,1);saveCompPosts();renderCompPosts();showToast('Publicación eliminada','success');}}
+function closeCompModal(){document.getElementById('compModal').classList.remove('active');}
 
 loadClients();renderTable();renderDashboard();
 </script>
