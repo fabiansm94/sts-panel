@@ -421,6 +421,33 @@
         .ts-footer-actions { display: flex; gap: 8px; }
         @media (max-width: 640px) { .ts-container { padding: 16px; } .ts-card-top { flex-direction: column; align-items: flex-start; gap: 8px; } }
 
+        /* Reviews */
+        .reviews-grid{display:grid;gap:12px;padding:0 24px 24px}
+        .review-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;gap:16px;align-items:flex-start;transition:all 0.2s}
+        .review-card:hover{box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+        .review-client{font-weight:600;font-size:14px;color:var(--text-dark);margin-bottom:2px}
+        .review-date{font-size:11px;color:var(--text-light)}
+        .review-stars{display:flex;gap:2px;margin:4px 0}
+        .review-stars svg{width:16px;height:16px;fill:#fbbf24;stroke:#fbbf24}
+        .review-stars svg.empty{fill:none;stroke:#d1d5db}
+        .review-type{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600;margin-top:4px}
+        .review-type.post-visita{background:#dbeafe;color:#1d4ed8}
+        .review-type.espontanea{background:#d1fae5;color:#065f46}
+        .review-type.solicitada{background:#fef3c7;color:#92400e}
+        .review-notes{font-size:12px;color:var(--text-light);margin-top:6px;line-height:1.4}
+        .review-actions{margin-left:auto;display:flex;gap:6px;flex-shrink:0}
+        .star-selector{display:flex;gap:4px}
+        .star-selector svg{width:28px;height:28px;cursor:pointer;stroke:#d1d5db;fill:none;transition:all 0.15s}
+        .star-selector svg.active{fill:#fbbf24;stroke:#fbbf24}
+        .star-selector svg:hover{transform:scale(1.1)}
+        .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:24px 32px 0}
+        .stat-card{background:var(--bg-white);border:1px solid var(--border);border-radius:16px;padding:18px;display:flex;align-items:center;gap:14px}
+        .stat-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .stat-icon svg{width:22px;height:22px}
+        .stat-info{display:flex;flex-direction:column}
+        .stat-value{font-size:22px;font-weight:800;color:var(--text-dark);line-height:1}
+        .stat-label{font-size:11px;color:var(--text-light);font-weight:600;margin-top:2px}
+
     </style>
 </head>
 <body>
@@ -486,6 +513,10 @@
             <a class="sidebar-link" onclick="showView('excelFeedback')">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><rect x="8" y="12" width="8" height="6" rx="1"/></svg>
                 <span>Feedback</span>
+            </a>
+            <a class="sidebar-link" onclick="showView('reviews')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span>Reviews</span>
             </a>
 
         </div>
@@ -574,6 +605,35 @@
                     <p>No se encontraron clientes</p>
                 </div>
                 <div class="table-footer"><span id="tableInfo">Mostrando 0 de 0</span></div>
+            </div>
+        </div>
+
+        <!-- Reviews View -->
+        <div id="reviewsView" class="hidden">
+            <div class="topbar">
+                <div class="topbar-left">
+                    <div><h2>Google Reviews</h2><div class="breadcrumb">STS Security / <span>Reviews</span></div></div>
+                </div>
+                <div class="topbar-right">
+                    <button class="btn btn-primary" onclick="openAddReviewModal()">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Nueva Review
+                    </button>
+                </div>
+            </div>
+            <div class="stats-row" id="reviewStats"></div>
+            <div class="toolbar">
+                <div class="toolbar-left">
+                    <button class="filter-btn active" onclick="filterReviews('all',this)">Todas</button>
+                    <button class="filter-btn" onclick="filterReviews('post-visita',this)">Post-Visita</button>
+                    <button class="filter-btn" onclick="filterReviews('espontanea',this)">Espontánea</button>
+                    <button class="filter-btn" onclick="filterReviews('solicitada',this)">Solicitada</button>
+                </div>
+            </div>
+            <div id="reviewsList" class="reviews-grid"></div>
+            <div id="noReviews" class="hidden" style="text-align:center;padding:40px;color:var(--text-light)">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:48px;height:48px;margin-bottom:12px;opacity:0.3"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <div>No hay reviews registradas</div>
             </div>
         </div>
 
@@ -706,6 +766,26 @@
                 </div>
             </div>
             <div class="modal-footer"><button class="btn" onclick="closeEditExcelModal()">Cancelar</button><button class="btn btn-primary" onclick="saveEditExcelRow()">Guardar</button></div>
+        </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div id="reviewModal" class="modal-overlay" onclick="if(event.target===this)closeReviewModal()">
+        <div class="modal" style="max-width:500px">
+            <div class="modal-header"><h3 id="reviewModalTitle">Nueva Review</h3><button class="modal-close" onclick="closeReviewModal()">&times;</button></div>
+            <div class="modal-body">
+                <input type="hidden" id="reviewEditIndex" value="-1">
+                <div class="form-group"><label>Cliente</label><select id="reviewClient" class="form-control"></select></div>
+                <div class="form-group"><label>Fecha</label><input type="date" id="reviewDate" class="form-control"></div>
+                <div class="form-group"><label>Estrellas</label><div id="reviewStars" class="star-selector"></div></div>
+                <div class="form-group"><label>Tipo</label><select id="reviewType" class="form-control">
+                    <option value="post-visita">Post-Visita Técnica</option>
+                    <option value="espontanea">Espontánea</option>
+                    <option value="solicitada">Solicitada</option>
+                </select></div>
+                <div class="form-group"><label>Notas</label><textarea id="reviewNotes" class="form-control" rows="3" placeholder="Contexto de la review..."></textarea></div>
+            </div>
+            <div class="modal-footer"><button class="btn" onclick="closeReviewModal()">Cancelar</button><button class="btn btn-primary" onclick="saveReview()">Guardar</button></div>
         </div>
     </div>
 
@@ -1057,14 +1137,17 @@ function showView(view) {
     document.getElementById('dashboardView').classList.toggle('hidden', view !== 'dashboard');
     document.getElementById('clientsView').classList.toggle('hidden', view !== 'clients');
     document.getElementById('excelFeedbackView').classList.toggle('hidden', view !== 'excelFeedback');
+    document.getElementById('reviewsView').classList.toggle('hidden', view !== 'reviews');
     document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
     if (view === 'dashboard') document.querySelector('.sidebar-link:not(.sub):not(.sidebar-parent)').classList.add('active');
     if (view === 'clients') {
         document.querySelector('.sidebar-parent').classList.add('active');
     }
     if (view === 'excelFeedback') document.querySelectorAll('.sidebar-link:not(.sub):not(.sidebar-parent)')[1].classList.add('active');
+    if (view === 'reviews') document.querySelectorAll('.sidebar-link:not(.sub):not(.sidebar-parent)')[2].classList.add('active');
     if (view === 'dashboard') renderDashboard();
     if (view === 'excelFeedback') renderExcelFeedback();
+    if (view === 'reviews') renderReviews();
 }
 
 function updateCounts() {
@@ -1264,12 +1347,13 @@ function showToast(msg,type='success'){const c=document.getElementById('toastCon
 
 document.getElementById('editModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 document.getElementById('confirmModal').addEventListener('click',function(e){if(e.target===this)closeConfirm();});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeModal();closeConfirm();closeDetail();closeMenu();}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeModal();closeConfirm();closeDetail();closeMenu();closeReviewModal();}});
 document.addEventListener('click',function(e){const menu=document.getElementById('dropdownMenu');const btn=document.getElementById('menuBtn');if(menu&&!menu.contains(e.target)&&!btn.contains(e.target))menu.classList.remove('show');});
 
 function getAllBackupData(){
     return {
         clients, callNotes,
+        reviews: JSON.parse(localStorage.getItem('sts_reviews')||'[]'),
         excelFeedback: JSON.parse(localStorage.getItem('sts_excel_feedback')||'[]'),
         exportDate: new Date().toISOString(),
         version: '3.0'
@@ -1278,7 +1362,7 @@ function getAllBackupData(){
 function exportBackup(){const data=getAllBackupData();const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`sts-backup-${new Date().toISOString().split('T')[0]}.json`;a.click();URL.revokeObjectURL(a.href);showToast('Backup exportado correctamente','success');}
 function exportExcel(){if(typeof XLSX==='undefined'){showToast('Librería Excel no cargada','error');return;}const data=[['ID','Nombre','Servicios','Idioma','Contactado','Feedback']];clients.forEach(c=>{const notes=(callNotes[c.id]||[]).map(n=>`[${formatTime(n.time)}] ${n.text}`).join('\n');const svcs=c.services.map(s=>s.toUpperCase()).join(', ');data.push([c.id,c.name,svcs,c.language||'',c.contacted?'Sí':'No',notes]);});const wb=XLSX.utils.book_new();const ws=XLSX.utils.aoa_to_sheet(data);ws['!cols']=[{wch:14},{wch:20},{wch:12},{wch:16},{wch:10},{wch:50}];XLSX.utils.book_append_sheet(wb,ws,'Clientes');const wbout=XLSX.write(wb,{bookType:'xlsx',type:'array'});const blob=new Blob([wbout],{type:'application/octet-stream'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`clientes-sts-${new Date().toISOString().split('T')[0]}.xlsx`;a.click();URL.revokeObjectURL(a.href);showToast('Archivo Excel exportado correctamente','success');}
 function exportNotesPDF(){let html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Feedback - STS</title><style>body{font-family:Arial,sans-serif;padding:30px;color:#333;background:#f5f5f5}h1{text-align:center;color:#1e293b;margin-bottom:5px}.sub{text-align:center;color:#666;font-size:14px;margin-bottom:30px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}.card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);page-break-inside:avoid}.card-header{background:#0f172a;color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}.card-header h2{font-size:15px;margin:0}.card-body{padding:16px}.note{padding:10px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:10px}.note-time{font-size:11px;color:#0ea5e9;font-weight:600;margin-bottom:4px}.note-text{font-size:13px;color:#444;line-height:1.6;white-space:pre-wrap}.empty{text-align:center;padding:60px 20px;color:#94a3b8}</style></head><body><h1>Feedback de Clientes - STS Security</h1><p class="sub">Generado el ${new Date().toLocaleDateString('es',{day:'2-digit',month:'long',year:'numeric'})}</p>`;let hasAnyNotes=false;const cardsHtml=clients.map(c=>{const notes=callNotes[c.id]||[];if(notes.length===0)return'';hasAnyNotes=true;return`<div class="card"><div class="card-header"><h2>${c.name}</h2><span style="font-size:12px;opacity:0.8">${c.id}</span></div><div class="card-body">${notes.map(n=>`<div class="note"><div class="note-time">${formatTime(n.time)}</div><div class="note-text">${n.text}</div></div>`).join('')}</div></div>`;}).join('');if(!hasAnyNotes)html+=`<div class="empty">No hay feedback registrado</div>`;else html+=`<div class="grid">${cardsHtml}</div>`;html+=`</body></html>`;const win=window.open('','_blank');win.document.write(html);win.document.close();setTimeout(()=>{win.print();},500);}
-function importBackup(event){const file=event.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=function(e){try{const data=JSON.parse(e.target.result);if(data.clients){clients=data.clients;saveClients();}if(data.callNotes){callNotes=data.callNotes;saveCallNotes();}if(data.excelFeedback){localStorage.setItem('sts_excel_feedback',JSON.stringify(data.excelFeedback));}renderTable();if(currentView==='dashboard')renderDashboard();if(currentView==='excelFeedback')renderExcelFeedback();showToast(`Backup restaurado (${data.exportDate?new Date(data.exportDate).toLocaleDateString('es'):'fecha desconocida'})`,'success');}catch(err){showToast('Archivo de backup inválido','error');}};reader.readAsText(file);event.target.value='';}
+function importBackup(event){const file=event.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=function(e){try{const data=JSON.parse(e.target.result);if(data.clients){clients=data.clients;saveClients();}if(data.callNotes){callNotes=data.callNotes;saveCallNotes();}if(data.reviews){reviews=data.reviews;saveReviews();}if(data.excelFeedback){localStorage.setItem('sts_excel_feedback',JSON.stringify(data.excelFeedback));}renderTable();if(currentView==='dashboard')renderDashboard();if(currentView==='excelFeedback')renderExcelFeedback();if(currentView==='reviews')renderReviews();showToast(`Backup restaurado (${data.exportDate?new Date(data.exportDate).toLocaleDateString('es'):'fecha desconocida'})`,'success');}catch(err){showToast('Archivo de backup inválido','error');}};reader.readAsText(file);event.target.value='';}
 
 function changeLogo(e) {
     const file = e.target.files[0];
@@ -1495,6 +1579,91 @@ if (excelFeedbackData.length === 0) {
 function generatePDF(){const labels={mc:'MC',ma:'MA',si:'SI'};let html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Reporte Clientes STS</title><style>body{font-family:Arial,sans-serif;padding:30px;color:#333}h1{text-align:center;color:#1e293b;margin-bottom:5px}.sub{text-align:center;color:#666;font-size:14px;margin-bottom:30px}.card{border:1px solid #ddd;border-radius:8px;margin-bottom:20px;page-break-inside:avoid}.ch{background:#0f172a;color:#fff;padding:12px 16px;border-radius:8px 8px 0 0;display:flex;justify-content:space-between}.ch h2{font-size:16px;margin:0}.cb{padding:16px}.sec{margin-bottom:10px}.st{font-size:11px;text-transform:uppercase;color:#888;font-weight:700;margin-bottom:4px}.sc{font-size:13px;color:#555;line-height:1.6}.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;margin-right:4px;background:#e0f2fe;color:#075985}table{width:100%;border-collapse:collapse;margin-top:6px;font-size:12px}th,td{padding:4px 8px;text-align:left;border-bottom:1px solid #eee}th{background:#f8fafc;color:#666}.alert{padding:8px 12px;border-radius:6px;font-size:12px;margin-top:6px;border-left:3px solid}.alert-w{background:#fef3c7;border-color:#f59e0b;color:#92400e}.alert-i{background:#e0f2fe;border-color:#0ea5e9;color:#075985}.alert-d{background:#fee2e2;border-color:#ef4444;color:#991b1b}.upsell{background:#ede9fe;border:1px solid #c4b5fd;border-radius:6px;padding:10px 12px;margin-top:8px}.ut{font-size:11px;text-transform:uppercase;color:#7c3aed;font-weight:700}.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;background:#d1fae5;color:#065f46}</style></head><body><h1>Client Report - STS Security</h1><p class="sub">Generado el ${new Date().toLocaleDateString('es',{day:'2-digit',month:'long',year:'numeric'})}</p>`;clients.forEach(c=>{html+=`<div class="card"><div class="ch"><h2>${c.name}</h2><span>${c.id} ${c.contacted?'<span class="badge">Contactado</span>':''}</span></div><div class="cb">`;html+=`<div class="sec"><div class="st">Servicios</div><div class="sc">${c.services.map(s=>`<span class="tag">${labels[s]||s}</span>`).join(' ')||'Ninguno'}</div></div>`;if(c.property)html+=`<div class="sec"><div class="st">Propiedad</div><div class="sc">${c.property}</div></div>`;if(c.language)html+=`<div class="sec"><div class="st">Idioma</div><div class="sc">${c.language}</div></div>`;if(c.devices&&c.devices.length)html+=`<div class="sec"><div class="st">Dispositivos</div><table>${c.devices.map(d=>`<tr><th>${d.name}</th><td>${d.qty}</td></tr>`).join('')}</table></div>`;if(c.serviceType)html+=`<div class="sec"><div class="st">Estado del Equipo</div><div class="sc">${c.serviceType}</div></div>`;if(c.recentIssues)html+=`<div class="sec"><div class="st">Historial de Soporte</div><div class="alert alert-w">${c.recentIssues}</div></div>`;if(c.lastMaintenance||c.nextMaintenance)html+=`<div class="sec"><div class="st">Mantenimiento</div><div class="sc">${c.lastMaintenance?'Último: '+c.lastMaintenance:''} ${c.nextMaintenance?'Próximo: '+c.nextMaintenance:''}</div></div>`;if(c.blindSpots)html+=`<div class="sec"><div class="st">Evaluación de Seguridad</div><div class="sc">${c.blindSpots}</div></div>`;if(c.techNotes)html+=`<div class="sec"><div class="st">Notas Técnicas</div><div class="alert alert-i">${c.techNotes}</div></div>`;if(c.upsellOpportunity){const ns=c.upsellOpportunity.includes('NO OFRECER')||c.upsellOpportunity.includes('nada que ofrecer')||c.upsellOpportunity.includes('No hay nada');html+=`<div class="sec">${ns?`<div class="alert alert-d"><strong>NO OFRECER:</strong> ${c.upsellOpportunity}</div>`:`<div class="upsell"><div class="ut">Oportunidad de Venta</div><div style="font-size:12px;color:#555">${c.upsellOpportunity}</div></div>`}</div>`;}if(c.notes)html+=`<div class="sec"><div class="st">Notas</div><div class="sc" style="font-style:italic;color:#888">${c.notes}</div></div>`;const notes=callNotes[c.id]||[];if(notes.length>0){html+=`<div class="sec"><div class="st">Feedback</div>${notes.map(n=>`<div style="padding:6px 10px;background:#f8fafc;border-radius:6px;margin-bottom:4px;font-size:12px"><div style="font-size:10px;color:#0ea5e9;font-weight:600">${formatTime(n.time)}</div><div style="color:#555;margin-top:2px;white-space:pre-wrap">${n.text}</div></div>`).join('')}</div>`;}html+=`</div></div>`;});html+=`</body></html>`;const win=window.open('','_blank');win.document.write(html);win.document.close();setTimeout(()=>{win.print();},500);}
 
 
+
+// ===== REVIEWS =====
+let reviews=JSON.parse(localStorage.getItem('sts_reviews')||'[]');
+let reviewFilter='all';
+let reviewSelectedStars=5;
+function saveReviews(){localStorage.setItem('sts_reviews',JSON.stringify(reviews));}
+function renderReviewStats(){
+    const total=reviews.length;
+    const avg=total?reviews.reduce((s,r)=>s+r.stars,0)/total:0;
+    const now=new Date();
+    const thisMonth=reviews.filter(r=>{const d=new Date(r.date);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();}).length;
+    const postVisita=reviews.filter(r=>r.type==='post-visita').length;
+    document.getElementById('reviewStats').innerHTML=`
+        <div class="stat-card"><div class="stat-icon" style="background:#dbeafe;color:#2563eb"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div class="stat-info"><div class="stat-value">${total}</div><div class="stat-label">Total Reviews</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:#fef3c7;color:#d97706"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div class="stat-info"><div class="stat-value">${avg.toFixed(1)}</div><div class="stat-label">Promedio Estrellas</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:#d1fae5;color:#059669"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div class="stat-info"><div class="stat-value">${thisMonth}</div><div class="stat-label">Este Mes</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:#ede9fe;color:#7c3aed"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg></div><div class="stat-info"><div class="stat-value">${postVisita}</div><div class="stat-label">Post-Visita</div></div></div>`;
+}
+function renderReviews(){
+    renderReviewStats();
+    const list=document.getElementById('reviewsList');
+    const noR=document.getElementById('noReviews');
+    let filtered=reviews.filter(r=>{if(reviewFilter!=='all'&&r.type!==reviewFilter)return false;return true;});
+    filtered.sort((a,b)=>new Date(b.date)-new Date(a.date));
+    if(!filtered.length){list.innerHTML='';noR.classList.remove('hidden');return;}
+    noR.classList.add('hidden');
+    list.innerHTML=filtered.map((r,i)=>{
+        const idx=reviews.indexOf(r);
+        const stars=Array(5).fill(0).map((_,j)=>`<svg viewBox="0 0 24 24" class="${j<r.stars?'':'empty'}"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`).join('');
+        const typeLabel={'post-visita':'Post-Visita Técnica','espontanea':'Espontánea','solicitada':'Solicitada'}[r.type]||r.type;
+        return `<div class="review-card">
+            <div style="flex:1;min-width:0">
+                <div class="review-client">${r.clientName||r.clientId}</div>
+                <div class="review-date">${new Date(r.date).toLocaleDateString('es',{day:'2-digit',month:'short',year:'numeric'})}</div>
+                <div class="review-stars">${stars}</div>
+                <span class="review-type ${r.type}">${typeLabel}</span>
+                ${r.notes?`<div class="review-notes">${r.notes}</div>`:''}
+            </div>
+            <div class="review-actions">
+                <button class="action-btn" onclick="openEditReviewModal(${idx})" title="Editar"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                <button class="action-btn del" onclick="deleteReview(${idx})" title="Eliminar"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+            </div>
+        </div>`;
+    }).join('');
+}
+function filterReviews(type,btn){reviewFilter=type;document.querySelectorAll('#reviewsView .filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderReviews();}
+function openAddReviewModal(){
+    document.getElementById('reviewEditIndex').value=-1;
+    document.getElementById('reviewModalTitle').textContent='Nueva Review';
+    const sel=document.getElementById('reviewClient');
+    sel.innerHTML=clients.map(c=>`<option value="${c.id}">${c.name} (${c.id})</option>`).join('');
+    document.getElementById('reviewDate').value=new Date().toISOString().split('T')[0];
+    document.getElementById('reviewType').value='post-visita';
+    document.getElementById('reviewNotes').value='';
+    reviewSelectedStars=5;
+    renderStarSelector();
+    document.getElementById('reviewModal').classList.add('active');
+}
+function openEditReviewModal(idx){
+    const r=reviews[idx];
+    document.getElementById('reviewEditIndex').value=idx;
+    document.getElementById('reviewModalTitle').textContent='Editar Review';
+    const sel=document.getElementById('reviewClient');
+    sel.innerHTML=clients.map(c=>`<option value="${c.id}" ${c.id===r.clientId?'selected':''}>${c.name} (${c.id})</option>`).join('');
+    document.getElementById('reviewDate').value=r.date;
+    document.getElementById('reviewType').value=r.type;
+    document.getElementById('reviewNotes').value=r.notes||'';
+    reviewSelectedStars=r.stars;
+    renderStarSelector();
+    document.getElementById('reviewModal').classList.add('active');
+}
+function closeReviewModal(){document.getElementById('reviewModal').classList.remove('active');}
+function renderStarSelector(){
+    document.getElementById('reviewStars').innerHTML=Array(5).fill(0).map((_,i)=>`<svg viewBox="0 0 24 24" class="${i<reviewSelectedStars?'active':''}" onclick="reviewSelectedStars=${i+1};renderStarSelector()"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`).join('');
+}
+function saveReview(){
+    const idx=parseInt(document.getElementById('reviewEditIndex').value);
+    const clientId=document.getElementById('reviewClient').value;
+    const client=clients.find(c=>c.id===clientId);
+    const review={clientId,date:document.getElementById('reviewDate').value,stars:reviewSelectedStars,type:document.getElementById('reviewType').value,notes:document.getElementById('reviewNotes').value.trim(),clientName:client?client.name:clientId};
+    if(!review.date){showToast('Selecciona una fecha','error');return;}
+    if(idx>=0){reviews[idx]=review;}else{reviews.push(review);}
+    saveReviews();closeReviewModal();renderReviews();showToast(idx>=0?'Review actualizada':'Review guardada','success');
+}
+function deleteReview(idx){if(confirm('¿Eliminar esta review?')){reviews.splice(idx,1);saveReviews();renderReviews();showToast('Review eliminada','success');}}
 
 loadClients();renderTable();renderDashboard();
 </script>
