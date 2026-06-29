@@ -440,6 +440,13 @@
         .star-selector svg{width:28px;height:28px;cursor:pointer;stroke:#d1d5db;fill:none;transition:all 0.15s}
         .star-selector svg.active{fill:#fbbf24;stroke:#fbbf24}
         .star-selector svg:hover{transform:scale(1.1)}
+.autocomplete-dropdown{position:absolute;top:100%;left:0;right:0;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;max-height:160px;overflow-y:auto;z-index:1000;box-shadow:0 4px 12px rgba(0,0,0,0.12)}
+.autocomplete-item{padding:8px 12px;cursor:pointer;font-size:13px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+.autocomplete-item:last-child{border-bottom:none}
+.autocomplete-item:hover{background:var(--bg-body)}
+.autocomplete-item .ac-name{font-weight:600;color:var(--text-dark)}
+.autocomplete-item .ac-id{font-size:11px;color:var(--text-light)}
+.autocomplete-item.selected{background:#eff6ff;color:#3b82f6}
         .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:24px 32px 0}
         .stat-card{background:var(--bg-white);border:1px solid var(--border);border-radius:16px;padding:18px;display:flex;align-items:center;gap:14px}
         .stat-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -775,7 +782,7 @@
             <div class="modal-header"><h3 id="reviewModalTitle">Nueva Review</h3><button class="modal-close" onclick="closeReviewModal()">&times;</button></div>
             <div class="modal-body">
                 <input type="hidden" id="reviewEditIndex" value="-1">
-                <div class="form-group"><label>Cliente</label><select id="reviewClient" class="form-control"></select></div>
+                <div class="form-group"><label>Cliente</label><div style="position:relative"><input type="text" id="reviewClient" class="form-control" placeholder="Escribe nombre o ID..." autocomplete="off" oninput="searchReviewClient()" onfocus="searchReviewClient()"><div id="reviewClientDropdown" class="autocomplete-dropdown hidden"></div></div><input type="hidden" id="reviewClientId" value=""></div>
                 <div class="form-group"><label>Fecha</label><input type="date" id="reviewDate" class="form-control"></div>
                 <div class="form-group"><label>Estrellas</label><div id="reviewStars" class="star-selector"></div></div>
                 <div class="form-group"><label>Tipo</label><select id="reviewType" class="form-control">
@@ -1628,37 +1635,52 @@ function filterReviews(type,btn){reviewFilter=type;document.querySelectorAll('#r
 function openAddReviewModal(){
     document.getElementById('reviewEditIndex').value=-1;
     document.getElementById('reviewModalTitle').textContent='Nueva Review';
-    const sel=document.getElementById('reviewClient');
-    sel.innerHTML=clients.map(c=>`<option value="${c.id}">${c.name} (${c.id})</option>`).join('');
+    document.getElementById('reviewClient').value='';
+    document.getElementById('reviewClientId').value='';
     document.getElementById('reviewDate').value=new Date().toISOString().split('T')[0];
     document.getElementById('reviewType').value='post-visita';
     document.getElementById('reviewNotes').value='';
     reviewSelectedStars=5;
     renderStarSelector();
-    document.getElementById('reviewModal').classList.add('active');
+    document.getElementById('reviewModal').classList.add('hidden');
 }
 function openEditReviewModal(idx){
     const r=reviews[idx];
     document.getElementById('reviewEditIndex').value=idx;
     document.getElementById('reviewModalTitle').textContent='Editar Review';
-    const sel=document.getElementById('reviewClient');
-    sel.innerHTML=clients.map(c=>`<option value="${c.id}" ${c.id===r.clientId?'selected':''}>${c.name} (${c.id})</option>`).join('');
+    document.getElementById('reviewClient').value=r.clientName||r.clientId;
+    document.getElementById('reviewClientId').value=r.clientId;
     document.getElementById('reviewDate').value=r.date;
     document.getElementById('reviewType').value=r.type;
     document.getElementById('reviewNotes').value=r.notes||'';
     reviewSelectedStars=r.stars;
     renderStarSelector();
-    document.getElementById('reviewModal').classList.add('active');
+    document.getElementById('reviewModal').classList.remove('hidden');
 }
-function closeReviewModal(){document.getElementById('reviewModal').classList.remove('active');}
+function closeReviewModal(){document.getElementById('reviewModal').classList.add('hidden');document.getElementById('reviewClientDropdown').classList.add('hidden');}
+function searchReviewClient(){
+    const input=document.getElementById('reviewClient');
+    const dropdown=document.getElementById('reviewClientDropdown');
+    const q=input.value.toLowerCase().trim();
+    if(!q){dropdown.classList.add('hidden');return;}
+    const matches=clients.filter(c=>c.name.toLowerCase().includes(q)||c.id.toLowerCase().includes(q)).slice(0,8);
+    if(!matches.length){dropdown.classList.add('hidden');return;}
+    dropdown.innerHTML=matches.map(c=>`<div class="autocomplete-item" onclick="selectReviewClient('${c.id}','${c.name.replace(/'/g,"\\'")}')"><span class="ac-name">${c.name}</span><span class="ac-id">${c.id}</span></div>`).join('');
+    dropdown.classList.remove('hidden');
+}
+function selectReviewClient(id,name){
+    document.getElementById('reviewClient').value=name;
+    document.getElementById('reviewClientId').value=id;
+    document.getElementById('reviewClientDropdown').classList.add('hidden');
+}
 function renderStarSelector(){
     document.getElementById('reviewStars').innerHTML=Array(5).fill(0).map((_,i)=>`<svg viewBox="0 0 24 24" class="${i<reviewSelectedStars?'active':''}" onclick="reviewSelectedStars=${i+1};renderStarSelector()"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`).join('');
 }
 function saveReview(){
     const idx=parseInt(document.getElementById('reviewEditIndex').value);
-    const clientId=document.getElementById('reviewClient').value;
+    const clientId=document.getElementById('reviewClientId').value||document.getElementById('reviewClient').value;
     const client=clients.find(c=>c.id===clientId);
-    const review={clientId,date:document.getElementById('reviewDate').value,stars:reviewSelectedStars,type:document.getElementById('reviewType').value,notes:document.getElementById('reviewNotes').value.trim(),clientName:client?client.name:clientId};
+    const review={clientId,date:document.getElementById('reviewDate').value,stars:reviewSelectedStars,type:document.getElementById('reviewType').value,notes:document.getElementById('reviewNotes').value.trim(),clientName:client?client.name:document.getElementById('reviewClient').value};
     if(!review.date){showToast('Selecciona una fecha','error');return;}
     if(idx>=0){reviews[idx]=review;}else{reviews.push(review);}
     saveReviews();closeReviewModal();renderReviews();showToast(idx>=0?'Review actualizada':'Review guardada','success');
