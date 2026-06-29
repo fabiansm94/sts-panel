@@ -440,13 +440,16 @@
         .star-selector svg{width:28px;height:28px;cursor:pointer;stroke:#d1d5db;fill:none;transition:all 0.15s}
         .star-selector svg.active{fill:#fbbf24;stroke:#fbbf24}
         .star-selector svg:hover{transform:scale(1.1)}
-.autocomplete-dropdown{position:absolute;top:100%;left:0;right:0;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;max-height:160px;overflow-y:auto;z-index:1000;box-shadow:0 4px 12px rgba(0,0,0,0.12)}
-.autocomplete-item{padding:8px 12px;cursor:pointer;font-size:13px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
-.autocomplete-item:last-child{border-bottom:none}
-.autocomplete-item:hover{background:var(--bg-body)}
-.autocomplete-item .ac-name{font-weight:600;color:var(--text-dark)}
-.autocomplete-item .ac-id{font-size:11px;color:var(--text-light)}
-.autocomplete-item.selected{background:#eff6ff;color:#3b82f6}
+.autocomplete-dropdown{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #d1d5db;border-radius:8px;max-height:160px;overflow-y:auto;z-index:1100;box-shadow:0 4px 16px rgba(0,0,0,0.2)}
+[data-theme="dark"] .autocomplete-dropdown{background:#1e293b;border-color:#334155}
+.autocomplete-dropdown .autocomplete-item{padding:8px 12px;cursor:pointer;font-size:13px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e5e7eb;color:#1f2937}
+[data-theme="dark"] .autocomplete-dropdown .autocomplete-item{border-bottom-color:#334155;color:#e2e8f0}
+.autocomplete-dropdown .autocomplete-item:last-child{border-bottom:none}
+.autocomplete-dropdown .autocomplete-item:hover{background:#f3f4f6}
+[data-theme="dark"] .autocomplete-dropdown .autocomplete-item:hover{background:#334155}
+.autocomplete-dropdown .autocomplete-item .ac-name{font-weight:600;color:#1f2937}
+[data-theme="dark"] .autocomplete-dropdown .autocomplete-item .ac-name{color:#e2e8f0}
+.autocomplete-dropdown .autocomplete-item .ac-id{font-size:11px;color:#6b7280}
         .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:24px 32px 0}
         .stat-card{background:var(--bg-white);border:1px solid var(--border);border-radius:16px;padding:18px;display:flex;align-items:center;gap:14px}
         .stat-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
