@@ -450,6 +450,32 @@
 .autocomplete-dropdown .autocomplete-item .ac-name{font-weight:600;color:#1f2937}
 [data-theme="dark"] .autocomplete-dropdown .autocomplete-item .ac-name{color:#e2e8f0}
 .autocomplete-dropdown .autocomplete-item .ac-id{font-size:11px;color:#6b7280}
+.social-calendar{padding:24px 32px 32px}
+.cal-header{margin-bottom:24px}
+.cal-header h3{font-size:20px;font-weight:700;color:var(--text-dark);margin-bottom:4px}
+.cal-header p{font-size:13px;color:var(--text-light)}
+.cal-week{margin-bottom:32px}
+.week-title{font-size:16px;font-weight:700;color:var(--text-dark);padding:10px 16px;background:var(--bg-body);border-radius:8px;margin-bottom:16px;border-left:4px solid #3b82f6}
+.cal-day{margin-bottom:16px}
+.day-title{font-size:14px;font-weight:700;color:var(--text-dark);padding:8px 12px;background:var(--bg-white);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px}
+.cal-posts{display:flex;flex-direction:column;gap:8px;padding-left:8px}
+.cal-post{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;transition:all 0.2s}
+.cal-post:hover{box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.cal-post.no-post{opacity:0.5;border-style:dashed}
+.post-meta{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.social-badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.3px}
+.social-badge.fb{background:#dbeafe;color:#1d4ed8}
+.social-badge.ig{background:#fce7f3;color:#be185d}
+.social-badge.li{background:#e0e7ff;color:#3730a3}
+.post-type{font-size:11px;color:var(--text-light);font-weight:600}
+.post-content{font-size:12px;color:var(--text-dark);line-height:1.6;white-space:pre-line}
+.cal-section{margin-top:32px}
+.section-title{font-size:16px;font-weight:700;color:var(--text-dark);margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--border)}
+.cal-table{width:100%;border-collapse:collapse;font-size:13px}
+.cal-table th,.cal-table td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+.cal-table th{background:var(--bg-body);color:var(--text-light);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.3px}
+.cal-table td{color:var(--text-dark)}
+.hashtags{font-size:13px;color:var(--text-dark);line-height:1.8;word-spacing:4px}
         .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:24px 32px 0;margin-bottom:24px}
         .stat-card{background:var(--bg-white);border:1px solid var(--border);border-radius:16px;padding:20px;display:flex;align-items:center;gap:14px}
         .stat-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -527,6 +553,10 @@
             <a class="sidebar-link" onclick="showView('reviews')">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                 <span>Reviews</span>
+            </a>
+            <a class="sidebar-link" onclick="showView('social')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                <span>Social Media</span>
             </a>
 
         </div>
@@ -646,6 +676,174 @@
                 <div>No hay reviews registradas</div>
             </div>
         </div>
+<div id="socialView" class="hidden">
+    <div class="topbar">
+        <div class="topbar-left">
+            <div><h2>Manejo de Redes Sociales</h2><div class="breadcrumb">STS Security / <span>Social Media</span></div></div>
+        </div>
+    </div>
+    <div class="social-calendar">
+        <div class="cal-header"><h3>Calendario Social Media - STS Security</h3><p>Mes Completo (4 Semanas)</p></div>
+        <div class="cal-week">
+            <h3 class="week-title">Semana 1</h3>
+            <div class="cal-day"><h4 class="day-title">Lunes</h4><div class="cal-posts">
+                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Educativo</span></div><div class="post-content">📚 ¿Sabías que el 70% de los robos en condominios ocurren por accesos no controlados? El control de acceso es fundamental para la seguridad de tu propiedad. En STS Security ofrecemos sistemas de control peatonal y vehicular con tecnología de punta. ¿Tu condominio tiene control de acceso? Escríbenos y te asesoramos. 📞 [teléfono] #seguridad #condominios #costarica</div></div>
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel (30 seg)</span></div><div class="post-content">🎬 Video: "3 formas de mejorar la seguridad de tu condominio HOY" - Texto en pantalla con música de fondo: 1. Cámaras de alta definición 2. Control de acceso 3. Monitoreo 24/7 - CTA al final: "¿Necesitas ayuda? Link en bio"</div></div>
+                <div class="cal-post li-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span><span class="post-type">Articulo</span></div><div class="post-content">📰 Artículo: "Tendencias en seguridad inteligente para condominios en 2026" - Breve resumen de 3 tendencias: IA en cámaras, monitoreo remoto, integración de sistemas. Enlace al blog completo.</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Martes</h4><div class="cal-posts">
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Stories (3)</span></div><div class="post-content">📱 Story 1: Foto del equipo de STS trabajando - "Así comenzamos el día" / Story 2: Encuesta "¿Tu propiedad tiene monitoreo 24/7? SÍ/NO" / Story 3: Dato rápido "Las alarmas reducen los robos en un 60%"</div></div>
+                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge fb">Facebook</span> <span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Miércoles</h4><div class="cal-posts">
+                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Caso de éxito</span></div><div class="post-content">✅ CASO DE ÉXITO: Condominio Vista del Valle, Escazú 📍 Escazú, San José 🏢 40 apartamentos INSTALAMOS: • 16 cámaras IP HD • Control de acceso vehicular y peatonal • Monitoreo remoto 24/7 RESULTADO: 0 incidentes en 6 meses. "La tranquilidad no tiene precio" - Administrador. ¿Quieres algo similar? Contáctanos 📞 [teléfono]</div></div>
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Carrusel (5 slides)</span></div><div class="post-content">📱 Slide 1: "Caso de Éxito: Condominio en Escazú" / Slide 2: "ANTES: 4 cámaras antiguas, sin monitoreo" / Slide 3: "SOLUCIÓN: 16 cámaras + control de acceso + monitoreo 24/7" / Slide 4: "DESPUÉS: 0 incidentes en 6 meses" / Slide 5: "¿Quieres proteger tu condominio? Contáctanos"</div></div>
+                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Jueves</h4><div class="cal-posts">
+                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Pregunta/Engagement</span></div><div class="post-content">🤔 PREGUNTA: ¿Cuántas cámaras cree que necesita un condominio de 30 apartamentos para cobertura completa? A) 8-10 cámaras B) 12-16 cámaras C) 20+ cámaras Déjenos su respuesta en los comentarios 👇</div></div>
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel (30 seg)</span></div><div class="post-content">🎬 "Error común #1 en seguridad" - Video mostrando una cámara mal ubicada - Texto: "Esta cámara no cubre nada. Así se ve una mala instalación" - Solución: "Así debería verse" (buena instalación) - CTA: "No cometas este error. Contáctanos"</div></div>
+                <div class="cal-post li-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span><span class="post-type">Post de liderazgo</span></div><div class="post-content">💡 "La seguridad no es un gasto, es una inversión" - Reflexión sobre cómo las empresas que invierten en seguridad tienen menos pérdidas. Posicionar a STS como expertos.</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Viernes</h4><div class="cal-posts">
+                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Promoción</span></div><div class="post-content">🎯 OFERTA: Consulta de seguridad GRATIS Evaluación completa de tu sistema actual + Recomendaciones personalizadas + Cotización sin compromiso 📅 Solo este mes 📞 Llama al [teléfono]</div></div>
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Post foto</span></div><div class="post-content">📸 Foto de un trabajo completado - Texto: "Así queda un sistema de seguridad profesional. 📹 8 cámaras IP 🔐 Control de acceso 📱 Monitoreo desde celular ¿Listo para proteger tu propiedad? Link en bio"</div></div>
+                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Sábado</h4><div class="cal-posts">
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Stories</span></div><div class="post-content">📱 Story 1: Foto del equipo celebrando fin de semana - "¡Buen fin de semana! Recuerda: tu seguridad no descansa" / Story 2: Dato rápido "El 80% de los robos ocurren cuando no hay nadie"</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Domingo</h4><div class="cal-posts">
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel motivacional</span></div><div class="post-content">🎬 Video de paisajes de Costa Rica con texto: "Tu tranquilidad es nuestra misión. 🇨🇷 STS Security - Seguridad 24/7 para tu hogar y negocio"</div></div>
+            </div></div>
+        </div>
+        <div class="cal-week">
+            <h3 class="week-title">Semana 2</h3>
+            <div class="cal-day"><h4 class="day-title">Lunes</h4><div class="cal-posts">
+                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Educativo</span></div><div class="post-content">📚 SEGURIDAD REMOTA vs GUARDA FÍSICO SEGURIDAD REMOTA: ✅ Monitoreo 24/7 ✅ Costo fijo ✅ Sin riesgos humanos ✅ Respuesta inmediata GUARDA FÍSICO: ⚠️ Cobertura limitada ⚠️ Turnos y vacaciones ⚠️ Mayor costo ¿Cuál prefieres para tu propiedad? #seguridadremota #guardafisico</div></div>
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel (30 seg)</span></div><div class="post-content">🎬 "Seguridad remota vs Guarda físico" - Comparación visual lado a lado - Datos de costos - Conclusión: "La seguridad remota es más eficiente" - CTA: "Descubre más en nuestro perfil"</div></div>
+                <div class="cal-post li-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span><span class="post-type">Articulo</span></div><div class="post-content">📰 "5 beneficios de la seguridad remota para empresas en Costa Rica" - Articulo breve sobre ventajas de monitoreo remoto vs seguridad física.</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Martes</h4><div class="cal-posts">
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Stories (3)</span></div><div class="post-content">📱 Story 1: "¿Qué es la portería virtual?" con explicación breve / Story 2: Encuesta "¿Conocías la portería virtual? SÍ/NO" / Story 3: "Te lo explicamos en 30 segundos" (video corto)</div></div>
+                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge fb">Facebook</span> <span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Miércoles</h4><div class="cal-posts">
+                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Caso de éxito</span></div><div class="post-content">✅ CASO DE ÉXITO: Hotel en Tamarindo 📍 Tamarindo, Guanacaste 🏨 Hotel boutique INSTALAMOS: • 24 cámaras de exterior • Sistema de alarma integrado • Monitoreo remoto desde San José RESULTADO: Reducción del 90% en incidentes. ¿Necesitas seguridad para tu hotel? Contáctanos 📞 [teléfono]</div></div>
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Carrusel (5 slides)</span></div><div class="post-content">📱 Slide 1: "Hotel en Tamarindo: Seguridad de nivel mundial" / Slide 2: "RETO: Hotel con múltiples puntos de acceso" / Slide 3: "SOLUCIÓN: 24 cámaras + alarma + monitoreo" / Slide 4: "RESULTADO: 90% menos incidentes" / Slide 5: "¿Tu hotel necesita esto? Contáctanos"</div></div>
+                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Jueves</h4><div class="cal-posts">
+                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Engagement</span></div><div class="post-content">🤔 "¿Cuál es tu mayor preocupación de seguridad?" A) Robo de equipo B) Acceso no autorizado C) Vandalismo D) Otro Déjanos tu respuesta 👇</div></div>
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel (30 seg)</span></div><div class="post-content">🎬 "¿Qué es la portería virtual?" - Explicación visual con animación - Beneficios: control remoto, ahorro, registro - CTA: "Implementa la tuya hoy"</div></div>
+                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Viernes</h4><div class="cal-posts">
+                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Promoción</span></div><div class="post-content">🎯 OFERTA: Alquiler de cámaras para construcciones 📹 Cámaras con panel solar 📱 Monitoreo desde celular 🔋 Sin electricidad 📍 Cobertura nacional Precio desde: ₡XX.XXX/mes 📞 Contáctanos</div></div>
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Post foto</span></div><div class="post-content">📸 Foto de cámara en construcción - Texto: "¿Tienes una construcción? Protege tu inversión con nuestras cámaras solares. ✅ Sin necesidad de electricidad ✅ Monitoreo 24/7 ✅ Resistente al clima Link en bio"</div></div>
+                <div class="cal-post li-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span><span class="post-type">Post liderazgo</span></div><div class="post-content">💡 "La tecnología al servicio de la seguridad" - Reflexión sobre cómo la IA está transformando la vigilancia.</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Sábado</h4><div class="cal-posts">
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Stories</span></div><div class="post-content">📱 Story 1: "¡Feliz sábado!" / Story 2: "Recuerda: la seguridad no descansa"</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Domingo</h4><div class="cal-posts">
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel motivacional</span></div><div class="post-content">🎬 Video: "Domingo de reflexión: ¿Qué tan segura es tu propiedad?" - Texto sobre importancia de la seguridad - CTA: "No esperes a que sea tarde"</div></div>
+            </div></div>
+        </div>
+        <div class="cal-week">
+            <h3 class="week-title">Semana 3</h3>
+            <div class="cal-day"><h4 class="day-title">Lunes</h4><div class="cal-posts">
+                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Educativo</span></div><div class="post-content">📚 5 ERRORES QUE COMETEN LOS CONDOMINIOS EN SEGURIDAD 1. ❌ No tener monitoreo 24/7 2. ❌ Cámaras sin mantenimiento 3. ❌ No tener protocolo de respuesta 4. ❌ Sistemas obsoletos 5. ❌ No capacitar al personal ¿Tu condominio tiene alguno? Te ayudamos a solucionarlo 📞 [teléfono]</div></div>
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel (30 seg)</span></div><div class="post-content">🎬 "5 errores comunes en seguridad" - Lista rápida con texto en pantalla - Muestra errores visuales - CTA: "No cometas estos errores"</div></div>
+                <div class="cal-post li-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span><span class="post-type">Articulo</span></div><div class="post-content">📰 "Cómo elegir el sistema de seguridad adecuado para tu empresa" - Guía breve de factores a considerar.</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Martes</h4><div class="cal-posts">
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Stories (3)</span></div><div class="post-content">📱 Story 1: "¿Sabías que...?" dato sobre seguridad / Story 2: Foto de equipo trabajando / Story 3: "Hoy instalando en [ciudad]"</div></div>
+                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge fb">Facebook</span> <span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Miércoles</h4><div class="cal-posts">
+                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Detrás de cámaras</span></div><div class="post-content">📸 ASÍ TRABAJA EL EQUIPO DE STS SECURITY Nuestros técnicos están hoy instalando un sistema de seguridad completo en un condominio en Santa Ana. 🔧 12 cámaras IP 🔐 Control de acceso 📱 Monitoreo desde celular Tu seguridad es nuestro compromiso #teamwork #seguridad</div></div>
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Carrusel (4 slides)</span></div><div class="post-content">📱 Slide 1: "Detrás de cámaras: Instalación en Santa Ana" / Slide 2: Foto del equipo trabajando / Slide 3: "12 cámaras + control de acceso" / Slide 4: "Listos para proteger. ¿Y tú?"</div></div>
+                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Jueves</h4><div class="cal-posts">
+                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Engagement</span></div><div class="post-content">🤔 "¿Qué prefieres para tu propiedad?" A) Cámaras WiFi (fácil instalación) B) Cámaras cableadas (más estables) C) No sé, necesito asesoría Deja tu respuesta 👇</div></div>
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel (30 seg)</span></div><div class="post-content">🎬 "Cámaras WiFi vs Cableadas" - Comparación visual - Ventajas de cada una - CTA: "¿Cuál es mejor para ti? Contáctanos"</div></div>
+                <div class="cal-post li-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span><span class="post-type">Post liderazgo</span></div><div class="post-content">💡 "Invertir en seguridad es invertir en tranquilidad" - Reflexión para empresarios.</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Viernes</h4><div class="cal-posts">
+                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Promoción</span></div><div class="post-content">🎯 MONITOREO DE ALARMAS 24/7 ¿Tu alarma está monitoreada? Ofrecemos: ✅ Monitoreo 24/7 ✅ Respuesta inmediata ✅ Notificaciones a tu celular ✅ Integración con cámaras 📞 Contáctanos para una cotización</div></div>
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Post foto</span></div><div class="post-content">📸 Foto de sistema de alarma - Texto: "Tu alarma monitoreada 24/7. No dejes nada al azar. ✅ Respuesta inmediata ✅ Notificaciones en tiempo real ✅ Video verificación Link en bio"</div></div>
+                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Sábado</h4><div class="cal-posts">
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Stories</span></div><div class="post-content">📱 Story 1: "¡Viernes de logros!" - Foto de proyecto completado / Story 2: "Gracias a la confianza de nuestros clientes"</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Domingo</h4><div class="cal-posts">
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel motivacional</span></div><div class="post-content">🎬 "Domingo: Un nuevo día para estar más seguros" - Mensaje positivo sobre tranquilidad - CTA: "Protege lo que más quieres"</div></div>
+            </div></div>
+        </div>
+        <div class="cal-week">
+            <h3 class="week-title">Semana 4</h3>
+            <div class="cal-day"><h4 class="day-title">Lunes</h4><div class="cal-posts">
+                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Educativo</span></div><div class="post-content">📚 ¿QUÉ ES LA PORTERÍA VIRTUAL Y CÓMO FUNCIONA? La portería virtual permite controlar el acceso a tu propiedad de forma remota: 📱 App en tu celular 📹 Video portero 🔐 Cierre eléctrico 📞 Comunicación bidireccional BENEFICIOS: ✅ Ahorro en costos ✅ Control total ✅ Registro de accesos ¿Te gustaría implementarla? Contáctanos</div></div>
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel (30 seg)</span></div><div class="post-content">🎬 "¿Qué es la portería virtual?" - Explicación animada - 3 beneficios clave - CTA: "Implementa la tuya hoy"</div></div>
+                <div class="cal-post li-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span><span class="post-type">Articulo</span></div><div class="post-content">📰 "Control de acceso inteligente: El futuro de la seguridad en condominios" - Tendencias y tecnologías.</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Martes</h4><div class="cal-posts">
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Stories (3)</span></div><div class="post-content">📱 Story 1: "¿Conoces la portería virtual?" / Story 2: Encuesta "La usarías? SÍ/NO" / Story 3: "Te mostramos cómo funciona" (video)</div></div>
+                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge fb">Facebook</span> <span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Miércoles</h4><div class="cal-posts">
+                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Caso de éxito</span></div><div class="post-content">✅ CASO DE ÉXITO: Vacation Rental en Jacó 📍 Jacó, Puntarenas 🏖️ Casa de playa INSTALAMOS: • 6 cámaras de seguridad • Cerradura inteligente • Video portero • Monitoreo remoto RESULTADO: El propietario administra desde San José sin problemas. ¿Tienes un vacation rental? Te protegemos 📞 [teléfono]</div></div>
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Carrusel (5 slides)</span></div><div class="post-content">📱 Slide 1: "Vacation Rental en Jacó: Seguridad total" / Slide 2: "RETO: Propiedad sin supervisión constante" / Slide 3: "SOLUCIÓN: 6 cámaras + cerradura inteligente + video portero" / Slide 4: "RESULTADO: Administración remota completa" / Slide 5: "¿Tu vacation rental necesita esto?"</div></div>
+                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Jueves</h4><div class="cal-posts">
+                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Engagement</span></div><div class="post-content">🤔 "¿Cuánto inviertes mensualmente en seguridad?" A) Nada B) Menos de ₡50.000 C) Entre ₡50.000 - ₡100.000 D) Más de ₡100.000 Tu inversión en seguridad es una inversión en tranquilidad 💡</div></div>
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel (30 seg)</span></div><div class="post-content">🎬 "Cuánto cuesta la seguridad" - Rangos de precios según tipo de sistema - CTA: "Contáctanos para cotización personalizada"</div></div>
+                <div class="cal-post li-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span><span class="post-type">Post liderazgo</span></div><div class="post-content">💡 "El ROI de la seguridad inteligente" - Datos sobre ahorro a largo plazo.</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Viernes</h4><div class="cal-posts">
+                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Promoción</span></div><div class="post-content">🎯 RESUMEN DEL MES: Nuestros servicios ✅ Monitoreo de Cámaras 24/7 ✅ Monitoreo de Alarmas ✅ Portería Virtual ✅ Control de Acceso ✅ Alquiler de Cámaras ¿Qué necesitas? Contáctanos 📞 [teléfono] 🌐 [sitio web]</div></div>
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Post foto</span></div><div class="post-content">📸 Collage de los mejores trabajos del mes - Texto: "Otro mes protegiendo Costa Rica. 🙏 Gracias a todos nuestros clientes. ¿Listo para ser el próximo? Link en bio"</div></div>
+                <div class="cal-post li-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span><span class="post-type">Resumen mensual</span></div><div class="post-content">📊 "STS Security: Resumen de impacto este mes" - Número de proyectos completados, clientes satisfechos, etc.</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Sábado</h4><div class="cal-posts">
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Stories</span></div><div class="post-content">📱 Story 1: "¡Último día del mes!" / Story 2: "Gracias por acompañarnos" / Story 3: "El viene más contenido de seguridad"</div></div>
+            </div></div>
+            <div class="cal-day"><h4 class="day-title">Domingo</h4><div class="cal-posts">
+                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel motivacional</span></div><div class="post-content">🎬 "Nuevo mes, nueva seguridad" - Mensaje motivacional para empezar el mes - CTA: "Este mes da el paso para proteger tu propiedad"</div></div>
+            </div></div>
+        </div>
+        <div class="cal-section">
+            <h3 class="section-title">Resumen del Calendario</h3>
+            <table class="cal-table">
+                <thead><tr><th>Red Social</th><th>Posts/semana</th><th>Tipo principal</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="social-badge fb">Facebook</span></td><td>4-5 posts</td><td>Educativo, Casos de éxito, Engagement, Promocional</td></tr>
+                    <tr><td><span class="social-badge ig">Instagram</span></td><td>5-7 posts + Stories</td><td>Reels, Carruseles, Fotos, Stories</td></tr>
+                    <tr><td><span class="social-badge li">LinkedIn</span></td><td>2-3 posts</td><td>Artículos, Liderazgo, Noticias industria</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="cal-section">
+            <h3 class="section-title">Horarios Recomendados (Costa Rica)</h3>
+            <table class="cal-table">
+                <thead><tr><th>Red Social</th><th>Horario ideal</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="social-badge fb">Facebook</span></td><td>11:00 AM - 2:00 PM</td></tr>
+                    <tr><td><span class="social-badge ig">Instagram</span></td><td>9:00 AM - 1:00 PM / 5:00 PM - 7:00 PM</td></tr>
+                    <tr><td><span class="social-badge li">LinkedIn</span></td><td>8:00 AM - 11:00 AM</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="cal-section">
+            <h3 class="section-title">Hashtags Principales (usar en cada post)</h3>
+            <div class="hashtags">#seguridad #costarica #seguridadinteligente #camaras #alarmas #monitoreo #controldeacceso #condominios #hotel #negocio #proteccion #tranquilidad</div>
+        </div>
+    </div>
+</div>
 
         <!-- Excel Feedback View -->
         <div id="excelFeedbackView" class="hidden">
@@ -1148,6 +1346,7 @@ function showView(view) {
     document.getElementById('clientsView').classList.toggle('hidden', view !== 'clients');
     document.getElementById('excelFeedbackView').classList.toggle('hidden', view !== 'excelFeedback');
     document.getElementById('reviewsView').classList.toggle('hidden', view !== 'reviews');
+    document.getElementById('socialView').classList.toggle('hidden', view !== 'social');
     document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
     if (view === 'dashboard') document.querySelector('.sidebar-link:not(.sub):not(.sidebar-parent)').classList.add('active');
     if (view === 'clients') {
@@ -1155,6 +1354,7 @@ function showView(view) {
     }
     if (view === 'excelFeedback') document.querySelectorAll('.sidebar-link:not(.sub):not(.sidebar-parent)')[1].classList.add('active');
     if (view === 'reviews') document.querySelectorAll('.sidebar-link:not(.sub):not(.sidebar-parent)')[2].classList.add('active');
+    if (view === 'social') document.querySelectorAll('.sidebar-link:not(.sub):not(.sidebar-parent)')[3].classList.add('active');
     if (view === 'dashboard') renderDashboard();
     if (view === 'excelFeedback') renderExcelFeedback();
     if (view === 'reviews') renderReviews();
