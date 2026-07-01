@@ -87,7 +87,7 @@
         .sidebar-parent { cursor: pointer; }
         .sidebar-parent .chevron { transition: transform 0.3s ease; margin-left: auto; }
         .sidebar-parent.open .chevron { transform: rotate(180deg); }
-        .sidebar-submenu { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+        .sidebar-submenu { max-height: 300px; overflow: hidden; transition: max-height 0.35s ease; }
         .sidebar-submenu.open { max-height: 300px; }
         .sidebar-link.sub { padding-left: 44px; font-size: 12px; }
         .sidebar-link.sub.active { background: rgba(59,130,246,0.1); color: #3b82f6; }
@@ -648,12 +648,12 @@
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                 <span>Inicio</span>
             </a>
-            <a class="sidebar-link sidebar-parent" onclick="toggleSubmenu(this)">
+            <a class="sidebar-link sidebar-parent open" onclick="toggleSubmenu(this)">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 <span>Clientes</span><span class="badge" id="sidebarCount">13</span>
                 <svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:14px;height:14px"><polyline points="6 9 12 15 18 9"/></svg>
             </a>
-            <div class="sidebar-submenu">
+            <div class="sidebar-submenu open">
                 <a class="sidebar-link sub" onclick="showView('clients');filterByService('mc')">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
                     <span>Monitoreo Cámaras</span>
@@ -1651,16 +1651,6 @@ function toggleSubmenu(el) {
     el.classList.toggle('open');
     el.nextElementSibling.classList.toggle('open');
 }
-
-// Close submenu when clicking outside
-document.addEventListener('click', function(e) {
-    const submenu = document.querySelector('.sidebar-submenu');
-    const parent = document.querySelector('.sidebar-parent');
-    if (!parent.contains(e.target) && !submenu.contains(e.target)) {
-        submenu.classList.remove('open');
-        parent.classList.remove('open');
-    }
-});
 
 let previewMedia = [];
 
