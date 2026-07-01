@@ -1750,6 +1750,7 @@ function setReelMedia(containerId, placeholderId, media) {
 }
 
 function updatePreview() {
+    try {
     const text = document.getElementById('previewText').value;
     const pageName = document.getElementById('previewPageName').value || 'STS Security';
     const initials = pageName.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
@@ -1760,52 +1761,52 @@ function updatePreview() {
     const igUsername = pageName.toLowerCase().replace(/\s+/g, '_');
 
     // === FACEBOOK POST ===
-    document.getElementById('fbAvatar').textContent = initials;
-    document.getElementById('fbName').textContent = pageName;
+    const fbAv = document.getElementById('fbAvatar'); if(fbAv) fbAv.textContent = initials;
+    const fbNm = document.getElementById('fbName'); if(fbNm) fbNm.textContent = pageName;
     const fbContent = document.getElementById('fbContent');
     const fbImages = document.getElementById('fbImages');
-    if (text.trim()) { fbContent.style.display = 'block'; fbContent.textContent = text; } else { fbContent.style.display = 'none'; }
-    if (videos.length > 0) {
-        fbImages.style.display = 'block'; fbImages.innerHTML = `<video src="${videos[0].src}" controls style="width:100%;max-height:400px;object-fit:contain;background:#000"></video>`;
-    } else if (images.length === 1) {
-        fbImages.style.display = 'block'; fbImages.className = 'fb-images single'; fbImages.innerHTML = `<img src="${images[0].src}" />`;
-    } else if (images.length > 1) {
-        fbImages.style.display = 'grid'; fbImages.className = 'fb-images multi'; fbImages.innerHTML = images.map(img => `<img src="${img.src}" />`).join('');
-    } else { fbImages.style.display = 'none'; fbImages.innerHTML = ''; }
+    if (fbContent) { if (text.trim()) { fbContent.style.display = 'block'; fbContent.textContent = text; } else { fbContent.style.display = 'none'; } }
+    if (fbImages) {
+        if (videos.length > 0) { fbImages.style.display = 'block'; fbImages.innerHTML = `<video src="${videos[0].src}" controls style="width:100%;max-height:400px;object-fit:contain;background:#000"></video>`; }
+        else if (images.length === 1) { fbImages.style.display = 'block'; fbImages.className = 'fb-images single'; fbImages.innerHTML = `<img src="${images[0].src}" />`; }
+        else if (images.length > 1) { fbImages.style.display = 'grid'; fbImages.className = 'fb-images multi'; fbImages.innerHTML = images.map(img => `<img src="${img.src}" />`).join(''); }
+        else { fbImages.style.display = 'none'; fbImages.innerHTML = ''; }
+    }
 
     // === FACEBOOK REEL ===
-    document.getElementById('fbReelAvatar').textContent = initials;
-    document.getElementById('fbReelName').textContent = pageName;
-    document.getElementById('fbReelCaption').textContent = text;
+    const fbRA = document.getElementById('fbReelAvatar'); if(fbRA) fbRA.textContent = initials;
+    const fbRN = document.getElementById('fbReelName'); if(fbRN) fbRN.textContent = pageName;
+    const fbRC = document.getElementById('fbReelCaption'); if(fbRC) fbRC.textContent = text;
     setReelMedia('fbReelMock', 'fbReelPlaceholder', firstMedia);
     const fbMusic = document.getElementById('fbReelMusic');
     const fbMusicText = document.getElementById('fbReelMusicText');
-    if (music) { fbMusic.style.display = 'flex'; fbMusicText.textContent = music; } else { fbMusic.style.display = 'none'; }
+    if (fbMusic) { if (music) { fbMusic.style.display = 'flex'; fbMusicText.textContent = music; } else { fbMusic.style.display = 'none'; } }
 
     // === INSTAGRAM POST ===
-    document.getElementById('igAvatar').textContent = initials;
-    document.getElementById('igName').textContent = igUsername;
-    document.getElementById('igUser').textContent = igUsername;
+    const igAv = document.getElementById('igAvatar'); if(igAv) igAv.textContent = initials;
+    const igNm = document.getElementById('igName'); if(igNm) igNm.textContent = igUsername;
+    const igUsr = document.getElementById('igUser'); if(igUsr) igUsr.textContent = igUsername;
     const igImages = document.getElementById('igImages');
     const igCaption = document.getElementById('igCaption');
-    if (videos.length > 0) {
-        igImages.style.display = 'flex'; igImages.innerHTML = `<video src="${videos[0].src}" controls style="width:100%;max-height:480px;object-fit:contain"></video>`;
-    } else if (images.length > 0) {
-        igImages.style.display = 'flex';
-        if (images.length === 1) { igImages.innerHTML = `<img src="${images[0].src}" />`; }
-        else { igImages.innerHTML = `<div class="ig-carousel" id="igCarousel">${images.map(img => `<img src="${img.src}" />`).join('')}</div><div class="ig-carousel-dots">${images.map((_, i) => `<div class="ig-dot${i === 0 ? ' active' : ''}"></div>`).join('')}</div>`; }
-    } else { igImages.style.display = 'none'; igImages.innerHTML = ''; }
-    if (text.trim()) { igCaption.style.display = 'block'; igCaption.innerHTML = `<span class="ig-user">${igUsername}</span> ${text}`; }
-    else { igCaption.style.display = 'none'; }
+    if (igImages) {
+        if (videos.length > 0) { igImages.style.display = 'flex'; igImages.innerHTML = `<video src="${videos[0].src}" controls style="width:100%;max-height:480px;object-fit:contain"></video>`; }
+        else if (images.length > 0) {
+            igImages.style.display = 'flex';
+            if (images.length === 1) { igImages.innerHTML = `<img src="${images[0].src}" />`; }
+            else { igImages.innerHTML = `<div class="ig-carousel">${images.map(img => `<img src="${img.src}" />`).join('')}</div><div class="ig-carousel-dots">${images.map((_, i) => `<div class="ig-dot${i === 0 ? ' active' : ''}"></div>`).join('')}</div>`; }
+        } else { igImages.style.display = 'none'; igImages.innerHTML = ''; }
+    }
+    if (igCaption) { if (text.trim()) { igCaption.style.display = 'block'; igCaption.innerHTML = `<span class="ig-user">${igUsername}</span> ${text}`; } else { igCaption.style.display = 'none'; } }
 
     // === INSTAGRAM REEL ===
-    document.getElementById('igReelAvatar').textContent = initials;
-    document.getElementById('igReelName').textContent = igUsername;
-    document.getElementById('igReelCaption').textContent = text;
+    const igRA = document.getElementById('igReelAvatar'); if(igRA) igRA.textContent = initials;
+    const igRN = document.getElementById('igReelName'); if(igRN) igRN.textContent = igUsername;
+    const igRC = document.getElementById('igReelCaption'); if(igRC) igRC.textContent = text;
     setReelMedia('igReelMock', 'igReelPlaceholder', firstMedia);
     const igMusic = document.getElementById('igReelMusic');
     const igMusicText = document.getElementById('igReelMusicText');
-    if (music) { igMusic.style.display = 'flex'; igMusicText.textContent = music; } else { igMusic.style.display = 'none'; }
+    if (igMusic) { if (music) { igMusic.style.display = 'flex'; igMusicText.textContent = music; } else { igMusic.style.display = 'none'; } }
+    } catch(e) { console.error('updatePreview error:', e); }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
