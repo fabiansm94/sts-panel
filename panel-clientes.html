@@ -985,32 +985,6 @@
     </div>
 
     <div id="socialPreviewPanel" class="social-panel">
-        <div class="preview-editor" style="margin-bottom:24px">
-            <h4>✏️ Crear Publicación</h4>
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
-                <div class="preview-field" style="margin-bottom:0">
-                    <label>Nombre de la página/perfil</label>
-                    <input type="text" id="previewPageName" value="STS Security" />
-                </div>
-                <div class="preview-field" style="margin-bottom:0">
-                    <label>Texto / Caption</label>
-                    <textarea id="previewText" rows="2" placeholder="Escribe tu publicación aquí..."></textarea>
-                </div>
-                <div class="preview-field" style="margin-bottom:0">
-                    <label>Texto de la música (Reels)</label>
-                    <input type="text" id="previewMusic" placeholder="Nombre de la canción o audio" />
-                </div>
-            </div>
-            <div class="preview-field" style="margin-top:12px;margin-bottom:0">
-                <label>Imágenes / Videos</label>
-                <div class="preview-media-upload" onclick="document.getElementById('previewMediaInput').click()">
-                    📎 Haz clic para agregar archivos (imágenes y videos)
-                    <input type="file" id="previewMediaInput" multiple accept="image/*,video/*" onchange="previewAddMedia(this)" />
-                </div>
-                <div class="preview-media-grid" id="previewMediaGrid"></div>
-            </div>
-        </div>
-
         <div class="prev-tabs" style="padding:0;margin:0 0 20px;background:none;border:none">
             <div class="prev-tab active" onclick="switchPrevPlatform('facebook',this)">📘 Facebook</div>
             <div class="prev-tab" onclick="switchPrevPlatform('instagram',this)">📷 Instagram</div>
@@ -1018,65 +992,90 @@
 
         <!-- Facebook Panel -->
         <div id="prevFacebookPanel" class="prev-panel active">
-            <div style="display:grid;grid-template-columns:auto auto;gap:32px;align-items:start">
-                <div>
-                    <div style="text-align:center;margin-bottom:12px;font-weight:700;color:var(--text-dark);font-size:14px">📘 Post de Facebook</div>
-                    <div id="fbMock" class="fb-post-mock">
-                        <div class="fb-header">
-                            <div class="fb-avatar" id="fbAvatar">ST</div>
-                            <div>
-                                <div class="fb-name" id="fbName">STS Security</div>
-                                <div class="fb-time">Ahora · 🌍</div>
-                            </div>
+            <div style="display:grid;grid-template-columns:380px 1fr;gap:32px;align-items:start">
+                <div class="preview-editor">
+                    <h4>✏️ Publicación Facebook</h4>
+                    <div class="preview-field">
+                        <label>Nombre de la página</label>
+                        <input type="text" id="fbPageName" value="STS Security" />
+                    </div>
+                    <div class="preview-field">
+                        <label>Texto / Caption</label>
+                        <textarea id="fbText" rows="2" placeholder="Escribe tu publicación aquí..."></textarea>
+                    </div>
+                    <div class="preview-field">
+                        <label>Texto de la música (Reels)</label>
+                        <input type="text" id="fbMusic" placeholder="Nombre de la canción o audio" />
+                    </div>
+                    <div class="preview-field">
+                        <label>Imágenes / Videos</label>
+                        <div class="preview-media-upload" onclick="document.getElementById('fbMediaInput').click()">
+                            📎 Haz clic para agregar archivos
+                            <input type="file" id="fbMediaInput" multiple accept="image/*,video/*" onchange="previewAddMedia('fb',this)" />
                         </div>
-                        <div class="fb-content" id="fbContent" style="display:none"></div>
-                        <div class="fb-images" id="fbImages" style="display:none"></div>
-                        <div class="fb-actions">
-                            <div class="fb-action">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
-                                Me gusta
+                        <div class="preview-media-grid" id="fbMediaGrid"></div>
+                    </div>
+                </div>
+                <div style="display:grid;grid-template-columns:auto auto;gap:32px;align-items:start">
+                    <div>
+                        <div style="text-align:center;margin-bottom:12px;font-weight:700;color:var(--text-dark);font-size:14px">📘 Post de Facebook</div>
+                        <div id="fbMock" class="fb-post-mock">
+                            <div class="fb-header">
+                                <div class="fb-avatar" id="fbAvatar">ST</div>
+                                <div>
+                                    <div class="fb-name" id="fbName">STS Security</div>
+                                    <div class="fb-time">Ahora · 🌍</div>
+                                </div>
                             </div>
-                            <div class="fb-action">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                                Comentar
-                            </div>
-                            <div class="fb-action">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-                                Compartir
+                            <div class="fb-content" id="fbContent" style="display:none"></div>
+                            <div class="fb-images" id="fbImages" style="display:none"></div>
+                            <div class="fb-actions">
+                                <div class="fb-action">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+                                    Me gusta
+                                </div>
+                                <div class="fb-action">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    Comentar
+                                </div>
+                                <div class="fb-action">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                                    Compartir
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div>
-                    <div style="text-align:center;margin-bottom:12px;font-weight:700;color:var(--text-dark);font-size:14px">🎬 Reel de Facebook</div>
-                    <div id="fbReelMock" class="reel-mock-fb">
-                        <div class="reel-placeholder" id="fbReelPlaceholder">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                            <span>Sube un video o imagen</span>
-                            <small>Formato vertical (9:16) recomendado</small>
-                        </div>
-                        <div class="reel-actions">
-                            <div class="reel-action-btn">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                                Me gusta
+                    <div>
+                        <div style="text-align:center;margin-bottom:12px;font-weight:700;color:var(--text-dark);font-size:14px">🎬 Reel de Facebook</div>
+                        <div id="fbReelMock" class="reel-mock-fb">
+                            <div class="reel-placeholder" id="fbReelPlaceholder">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                <span>Sube un video o imagen</span>
+                                <small>Formato vertical (9:16) recomendado</small>
                             </div>
-                            <div class="reel-action-btn">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                                Comentar
+                            <div class="reel-actions">
+                                <div class="reel-action-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                                    Me gusta
+                                </div>
+                                <div class="reel-action-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    Comentar
+                                </div>
+                                <div class="reel-action-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                                    Compartir
+                                </div>
                             </div>
-                            <div class="reel-action-btn">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-                                Compartir
+                            <div class="reel-overlay">
+                                <div class="reel-page">
+                                    <div class="reel-page-avatar" id="fbReelAvatar">ST</div>
+                                    <span class="reel-page-name" id="fbReelName">STS Security</span>
+                                    <span class="reel-page-follow">Seguir</span>
+                                </div>
+                                <div class="reel-caption" id="fbReelCaption"></div>
+                                <div class="reel-music" id="fbReelMusic" style="display:none">🎵 <span id="fbReelMusicText"></span></div>
                             </div>
-                        </div>
-                        <div class="reel-overlay">
-                            <div class="reel-page">
-                                <div class="reel-page-avatar" id="fbReelAvatar">ST</div>
-                                <span class="reel-page-name" id="fbReelName">STS Security</span>
-                                <span class="reel-page-follow">Seguir</span>
-                            </div>
-                            <div class="reel-caption" id="fbReelCaption"></div>
-                            <div class="reel-music" id="fbReelMusic" style="display:none">🎵 <span id="fbReelMusicText"></span></div>
                         </div>
                     </div>
                 </div>
@@ -1085,60 +1084,85 @@
 
         <!-- Instagram Panel -->
         <div id="prevInstagramPanel" class="prev-panel">
-            <div style="display:grid;grid-template-columns:auto auto;gap:32px;align-items:start">
-                <div>
-                    <div style="text-align:center;margin-bottom:12px;font-weight:700;color:var(--text-dark);font-size:14px">📷 Post de Instagram</div>
-                    <div id="igMock" class="ig-post-mock">
-                        <div class="ig-header">
-                            <div class="ig-avatar" id="igAvatar">ST</div>
-                            <div class="ig-name" id="igName">sts_security</div>
-                            <div class="ig-more">•••</div>
+            <div style="display:grid;grid-template-columns:380px 1fr;gap:32px;align-items:start">
+                <div class="preview-editor">
+                    <h4>✏️ Publicación Instagram</h4>
+                    <div class="preview-field">
+                        <label>Nombre de la página</label>
+                        <input type="text" id="igPageName" value="STS Security" />
+                    </div>
+                    <div class="preview-field">
+                        <label>Texto / Caption</label>
+                        <textarea id="igText" rows="2" placeholder="Escribe tu publicación aquí..."></textarea>
+                    </div>
+                    <div class="preview-field">
+                        <label>Texto de la música (Reels)</label>
+                        <input type="text" id="igMusic" placeholder="Nombre de la canción o audio" />
+                    </div>
+                    <div class="preview-field">
+                        <label>Imágenes / Videos</label>
+                        <div class="preview-media-upload" onclick="document.getElementById('igMediaInput').click()">
+                            📎 Haz clic para agregar archivos (múltiples para carrusel)
+                            <input type="file" id="igMediaInput" multiple accept="image/*,video/*" onchange="previewAddMedia('ig',this)" />
                         </div>
-                        <div class="ig-images" id="igImages" style="display:none"></div>
-                        <div class="ig-actions">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                            <svg class="ig-bookmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-                        </div>
-                        <div class="ig-likes">0 Me gusta</div>
-                        <div class="ig-caption" id="igCaption" style="display:none"><span class="ig-user" id="igUser">sts_security</span> </div>
-                        <div class="ig-time">AHORA</div>
+                        <div class="preview-media-grid" id="igMediaGrid"></div>
                     </div>
                 </div>
-                <div>
-                    <div style="text-align:center;margin-bottom:12px;font-weight:700;color:var(--text-dark);font-size:14px">🎬 Reel de Instagram</div>
-                    <div id="igReelMock" class="reel-mock-ig">
-                        <div class="reel-placeholder" id="igReelPlaceholder">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                            <span>Sube un video o imagen</span>
-                            <small>Formato vertical (9:16) recomendado</small>
+                <div style="display:grid;grid-template-columns:auto auto;gap:32px;align-items:start">
+                    <div>
+                        <div style="text-align:center;margin-bottom:12px;font-weight:700;color:var(--text-dark);font-size:14px">📷 Post de Instagram</div>
+                        <div id="igMock" class="ig-post-mock">
+                            <div class="ig-header">
+                                <div class="ig-avatar" id="igAvatar">ST</div>
+                                <div class="ig-name" id="igName">sts_security</div>
+                                <div class="ig-more">•••</div>
+                            </div>
+                            <div class="ig-images" id="igImages" style="display:none"></div>
+                            <div class="ig-actions">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                                <svg class="ig-bookmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                            </div>
+                            <div class="ig-likes">0 Me gusta</div>
+                            <div class="ig-caption" id="igCaption" style="display:none"><span class="ig-user" id="igUser">sts_security</span> </div>
+                            <div class="ig-time">AHORA</div>
                         </div>
-                        <div class="reel-actions">
-                            <div class="reel-action-btn">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                                1,247
+                    </div>
+                    <div>
+                        <div style="text-align:center;margin-bottom:12px;font-weight:700;color:var(--text-dark);font-size:14px">🎬 Reel de Instagram</div>
+                        <div id="igReelMock" class="reel-mock-ig">
+                            <div class="reel-placeholder" id="igReelPlaceholder">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                <span>Sube un video o imagen</span>
+                                <small>Formato vertical (9:16) recomendado</small>
                             </div>
-                            <div class="reel-action-btn">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                                Comentar
+                            <div class="reel-actions">
+                                <div class="reel-action-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                                    1,247
+                                </div>
+                                <div class="reel-action-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    Comentar
+                                </div>
+                                <div class="reel-action-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                                    Enviar
+                                </div>
+                                <div class="reel-action-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                                </div>
                             </div>
-                            <div class="reel-action-btn">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                                Enviar
+                            <div class="reel-overlay">
+                                <div class="reel-page">
+                                    <div class="reel-page-avatar" id="igReelAvatar">ST</div>
+                                    <span class="reel-page-name" id="igReelName">sts_security</span>
+                                    <span class="reel-page-follow">Seguir</span>
+                                </div>
+                                <div class="reel-caption" id="igReelCaption"></div>
+                                <div class="reel-music" id="igReelMusic" style="display:none">🎵 <span id="igReelMusicText"></span> <span style="margin-left:4px">♪</span></div>
                             </div>
-                            <div class="reel-action-btn">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
-                            </div>
-                        </div>
-                        <div class="reel-overlay">
-                            <div class="reel-page">
-                                <div class="reel-page-avatar" id="igReelAvatar">ST</div>
-                                <span class="reel-page-name" id="igReelName">sts_security</span>
-                                <span class="reel-page-follow">Seguir</span>
-                            </div>
-                            <div class="reel-caption" id="igReelCaption"></div>
-                            <div class="reel-music" id="igReelMusic" style="display:none">🎵 <span id="igReelMusicText"></span> <span style="margin-left:4px">♪</span></div>
                         </div>
                     </div>
                 </div>
@@ -1647,7 +1671,8 @@ function toggleSubmenu(el) {
     el.nextElementSibling.classList.toggle('open');
 }
 
-let previewMedia = [];
+let fbMedia = [];
+let igMedia = [];
 
 function switchSocialTab(tab) {
     document.querySelectorAll('.social-tab').forEach(t => t.classList.remove('active'));
@@ -1658,7 +1683,8 @@ function switchSocialTab(tab) {
     } else {
         document.querySelectorAll('.social-tab')[1].classList.add('active');
         document.getElementById('socialPreviewPanel').classList.add('active');
-        updatePreview();
+        updateFBPreview();
+        updateIGPreview();
     }
 }
 
@@ -1667,137 +1693,151 @@ function switchPrevPlatform(platform, el) {
     el.classList.add('active');
     document.getElementById('prevFacebookPanel').classList.toggle('active', platform === 'facebook');
     document.getElementById('prevInstagramPanel').classList.toggle('active', platform === 'instagram');
-    updatePreview();
 }
 
-function previewAddMedia(input) {
+function previewAddMedia(platform, input) {
+    const arr = platform === 'fb' ? fbMedia : igMedia;
     const files = Array.from(input.files);
     files.forEach(file => {
         const reader = new FileReader();
         reader.onload = e => {
-            previewMedia.push({ type: file.type.startsWith('video/') ? 'video' : 'image', src: e.target.result, name: file.name });
-            renderPreviewMedia();
-            updatePreview();
+            arr.push({ type: file.type.startsWith('video/') ? 'video' : 'image', src: e.target.result, name: file.name });
+            renderMediaGrid(platform);
+            if (platform === 'fb') updateFBPreview(); else updateIGPreview();
         };
         reader.readAsDataURL(file);
     });
     input.value = '';
 }
 
-function renderPreviewMedia() {
-    const grid = document.getElementById('previewMediaGrid');
-    grid.innerHTML = previewMedia.map((m, i) => `
+function renderMediaGrid(platform) {
+    const arr = platform === 'fb' ? fbMedia : igMedia;
+    const gridId = platform === 'fb' ? 'fbMediaGrid' : 'igMediaGrid';
+    const grid = document.getElementById(gridId);
+    grid.innerHTML = arr.map((m, i) => `
         <div class="preview-media-wrap">
             ${m.type === 'video'
                 ? `<video src="${m.src}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:2px solid var(--border)"></video>`
                 : `<img src="${m.src}" class="preview-media-thumb" />`}
-            <button class="preview-media-remove" onclick="previewRemoveMedia(${i})">✕</button>
+            <button class="preview-media-remove" onclick="previewRemoveMedia('${platform}',${i})">✕</button>
         </div>
     `).join('');
 }
 
-function previewRemoveMedia(idx) {
-    previewMedia.splice(idx, 1);
-    renderPreviewMedia();
-    updatePreview();
+function previewRemoveMedia(platform, idx) {
+    const arr = platform === 'fb' ? fbMedia : igMedia;
+    arr.splice(idx, 1);
+    renderMediaGrid(platform);
+    if (platform === 'fb') updateFBPreview(); else updateIGPreview();
 }
 
 function setReelMedia(containerId, placeholderId, media) {
     try {
-    const mock = document.getElementById(containerId);
-    if (!mock) return;
-    const ph = document.getElementById(placeholderId);
-    const existing = mock.querySelector('video.reel-video, img.reel-video');
-    if (media) {
-        if (ph) ph.style.display = 'none';
-        if (existing) existing.remove();
-        if (media.type === 'video') {
-            const vid = document.createElement('video');
-            vid.src = media.src; vid.autoplay = true; vid.loop = true; vid.muted = true;
-            vid.style.cssText = 'width:100%;height:100%;object-fit:cover';
-            vid.className = 'reel-video';
-            const actions = mock.querySelector('.reel-actions');
-            if (actions) mock.insertBefore(vid, actions);
-            else mock.prepend(vid);
+        const mock = document.getElementById(containerId);
+        if (!mock) return;
+        const ph = document.getElementById(placeholderId);
+        const existing = mock.querySelector('video.reel-video, img.reel-video');
+        if (media) {
+            if (ph) ph.style.display = 'none';
+            if (existing) existing.remove();
+            if (media.type === 'video') {
+                const vid = document.createElement('video');
+                vid.src = media.src; vid.autoplay = true; vid.loop = true; vid.muted = true;
+                vid.style.cssText = 'width:100%;height:100%;object-fit:cover';
+                vid.className = 'reel-video';
+                const actions = mock.querySelector('.reel-actions');
+                if (actions) mock.insertBefore(vid, actions); else mock.prepend(vid);
+            } else {
+                const img = document.createElement('img');
+                img.src = media.src; img.className = 'reel-video';
+                img.style.cssText = 'width:100%;height:100%;object-fit:cover';
+                const actions = mock.querySelector('.reel-actions');
+                if (actions) mock.insertBefore(img, actions); else mock.prepend(img);
+            }
         } else {
-            const img = document.createElement('img');
-            img.src = media.src; img.className = 'reel-video';
-            img.style.cssText = 'width:100%;height:100%;object-fit:cover';
-            const actions = mock.querySelector('.reel-actions');
-            if (actions) mock.insertBefore(img, actions);
-            else mock.prepend(img);
+            if (ph) ph.style.display = 'flex';
+            if (existing) existing.remove();
         }
-    } else {
-        if (ph) ph.style.display = 'flex';
-        if (existing) existing.remove();
-    }
     } catch(e) { console.warn('setReelMedia error:', e); }
 }
 
-function updatePreview() {
+function updateFBPreview() {
     try {
-    const text = document.getElementById('previewText').value;
-    const pageName = document.getElementById('previewPageName').value || 'STS Security';
-    const initials = pageName.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
-    const images = previewMedia.filter(m => m.type === 'image');
-    const videos = previewMedia.filter(m => m.type === 'video');
-    const firstMedia = previewMedia.length > 0 ? previewMedia[0] : null;
-    const music = (document.getElementById('previewMusic')?.value || '').trim();
-    const igUsername = pageName.toLowerCase().replace(/\s+/g, '_');
+        const text = document.getElementById('fbText').value;
+        const pageName = document.getElementById('fbPageName').value || 'STS Security';
+        const initials = pageName.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+        const images = fbMedia.filter(m => m.type === 'image');
+        const videos = fbMedia.filter(m => m.type === 'video');
+        const firstMedia = fbMedia.length > 0 ? fbMedia[0] : null;
+        const music = (document.getElementById('fbMusic')?.value || '').trim();
 
-    // === FACEBOOK POST ===
-    const fbAv = document.getElementById('fbAvatar'); if(fbAv) fbAv.textContent = initials;
-    const fbNm = document.getElementById('fbName'); if(fbNm) fbNm.textContent = pageName;
-    const fbContent = document.getElementById('fbContent');
-    const fbImages = document.getElementById('fbImages');
-    if (fbContent) { if (text.trim()) { fbContent.style.display = 'block'; fbContent.textContent = text; } else { fbContent.style.display = 'none'; } }
-    if (fbImages) {
-        if (videos.length > 0) { fbImages.style.display = 'block'; fbImages.innerHTML = `<video src="${videos[0].src}" controls style="width:100%;max-height:400px;object-fit:contain;background:#000"></video>`; }
-        else if (images.length === 1) { fbImages.style.display = 'block'; fbImages.className = 'fb-images single'; fbImages.innerHTML = `<img src="${images[0].src}" />`; }
-        else if (images.length > 1) { fbImages.style.display = 'grid'; fbImages.className = 'fb-images multi'; fbImages.innerHTML = images.map(img => `<img src="${img.src}" />`).join(''); }
-        else { fbImages.style.display = 'none'; fbImages.innerHTML = ''; }
-    }
+        const fbAv = document.getElementById('fbAvatar'); if(fbAv) fbAv.textContent = initials;
+        const fbNm = document.getElementById('fbName'); if(fbNm) fbNm.textContent = pageName;
+        const fbContent = document.getElementById('fbContent');
+        const fbImages = document.getElementById('fbImages');
+        if (fbContent) { if (text.trim()) { fbContent.style.display = 'block'; fbContent.textContent = text; } else { fbContent.style.display = 'none'; } }
+        if (fbImages) {
+            if (videos.length > 0) { fbImages.style.display = 'block'; fbImages.innerHTML = `<video src="${videos[0].src}" controls style="width:100%;max-height:400px;object-fit:contain;background:#000"></video>`; }
+            else if (images.length === 1) { fbImages.style.display = 'block'; fbImages.className = 'fb-images single'; fbImages.innerHTML = `<img src="${images[0].src}" />`; }
+            else if (images.length > 1) { fbImages.style.display = 'grid'; fbImages.className = 'fb-images multi'; fbImages.innerHTML = images.map(img => `<img src="${img.src}" />`).join(''); }
+            else { fbImages.style.display = 'none'; fbImages.innerHTML = ''; }
+        }
 
-    // === FACEBOOK REEL ===
-    const fbRA = document.getElementById('fbReelAvatar'); if(fbRA) fbRA.textContent = initials;
-    const fbRN = document.getElementById('fbReelName'); if(fbRN) fbRN.textContent = pageName;
-    const fbRC = document.getElementById('fbReelCaption'); if(fbRC) fbRC.textContent = text;
-    setReelMedia('fbReelMock', 'fbReelPlaceholder', firstMedia);
-    const fbMusic = document.getElementById('fbReelMusic');
-    const fbMusicText = document.getElementById('fbReelMusicText');
-    if (fbMusic) { if (music) { fbMusic.style.display = 'flex'; fbMusicText.textContent = music; } else { fbMusic.style.display = 'none'; } }
+        const fbRA = document.getElementById('fbReelAvatar'); if(fbRA) fbRA.textContent = initials;
+        const fbRN = document.getElementById('fbReelName'); if(fbRN) fbRN.textContent = pageName;
+        const fbRC = document.getElementById('fbReelCaption'); if(fbRC) fbRC.textContent = text;
+        setReelMedia('fbReelMock', 'fbReelPlaceholder', firstMedia);
+        const fbMusic = document.getElementById('fbReelMusic');
+        const fbMusicText = document.getElementById('fbReelMusicText');
+        if (fbMusic) { if (music) { fbMusic.style.display = 'flex'; fbMusicText.textContent = music; } else { fbMusic.style.display = 'none'; } }
+    } catch(e) { console.error('updateFBPreview error:', e); }
+}
 
-    // === INSTAGRAM POST ===
-    const igAv = document.getElementById('igAvatar'); if(igAv) igAv.textContent = initials;
-    const igNm = document.getElementById('igName'); if(igNm) igNm.textContent = igUsername;
-    const igUsr = document.getElementById('igUser'); if(igUsr) igUsr.textContent = igUsername;
-    const igImages = document.getElementById('igImages');
-    const igCaption = document.getElementById('igCaption');
-    if (igImages) {
-        if (videos.length > 0) { igImages.style.display = 'flex'; igImages.innerHTML = `<video src="${videos[0].src}" controls style="width:100%;max-height:480px;object-fit:contain"></video>`; }
-        else if (images.length > 0) {
-            igImages.style.display = 'flex';
-            if (images.length === 1) { igImages.innerHTML = `<img src="${images[0].src}" />`; }
-            else { igImages.innerHTML = `<div class="ig-carousel">${images.map(img => `<img src="${img.src}" />`).join('')}</div><div class="ig-carousel-dots">${images.map((_, i) => `<div class="ig-dot${i === 0 ? ' active' : ''}"></div>`).join('')}</div>`; }
-        } else { igImages.style.display = 'none'; igImages.innerHTML = ''; }
-    }
-    if (igCaption) { if (text.trim()) { igCaption.style.display = 'block'; igCaption.innerHTML = `<span class="ig-user">${igUsername}</span> ${text}`; } else { igCaption.style.display = 'none'; } }
+function updateIGPreview() {
+    try {
+        const text = document.getElementById('igText').value;
+        const pageName = document.getElementById('igPageName').value || 'STS Security';
+        const initials = pageName.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+        const images = igMedia.filter(m => m.type === 'image');
+        const videos = igMedia.filter(m => m.type === 'video');
+        const firstMedia = igMedia.length > 0 ? igMedia[0] : null;
+        const music = (document.getElementById('igMusic')?.value || '').trim();
+        const igUsername = pageName.toLowerCase().replace(/\s+/g, '_');
 
-    // === INSTAGRAM REEL ===
-    const igRA = document.getElementById('igReelAvatar'); if(igRA) igRA.textContent = initials;
-    const igRN = document.getElementById('igReelName'); if(igRN) igRN.textContent = igUsername;
-    const igRC = document.getElementById('igReelCaption'); if(igRC) igRC.textContent = text;
-    setReelMedia('igReelMock', 'igReelPlaceholder', firstMedia);
-    const igMusic = document.getElementById('igReelMusic');
-    const igMusicText = document.getElementById('igReelMusicText');
-    if (igMusic) { if (music) { igMusic.style.display = 'flex'; igMusicText.textContent = music; } else { igMusic.style.display = 'none'; } }
-    } catch(e) { console.error('updatePreview error:', e); }
+        const igAv = document.getElementById('igAvatar'); if(igAv) igAv.textContent = initials;
+        const igNm = document.getElementById('igName'); if(igNm) igNm.textContent = igUsername;
+        const igUsr = document.getElementById('igUser'); if(igUsr) igUsr.textContent = igUsername;
+        const igImages = document.getElementById('igImages');
+        const igCaption = document.getElementById('igCaption');
+        if (igImages) {
+            if (videos.length > 0) { igImages.style.display = 'flex'; igImages.innerHTML = `<video src="${videos[0].src}" controls style="width:100%;max-height:480px;object-fit:contain"></video>`; }
+            else if (images.length > 0) {
+                igImages.style.display = 'flex';
+                if (images.length === 1) { igImages.innerHTML = `<img src="${images[0].src}" />`; }
+                else { igImages.innerHTML = `<div class="ig-carousel">${images.map(img => `<img src="${img.src}" />`).join('')}</div><div class="ig-carousel-dots">${images.map((_, i) => `<div class="ig-dot${i === 0 ? ' active' : ''}"></div>`).join('')}</div>`; }
+            } else { igImages.style.display = 'none'; igImages.innerHTML = ''; }
+        }
+        if (igCaption) { if (text.trim()) { igCaption.style.display = 'block'; igCaption.innerHTML = `<span class="ig-user">${igUsername}</span> ${text}`; } else { igCaption.style.display = 'none'; } }
+
+        const igRA = document.getElementById('igReelAvatar'); if(igRA) igRA.textContent = initials;
+        const igRN = document.getElementById('igReelName'); if(igRN) igRN.textContent = igUsername;
+        const igRC = document.getElementById('igReelCaption'); if(igRC) igRC.textContent = text;
+        setReelMedia('igReelMock', 'igReelPlaceholder', firstMedia);
+        const igMusic = document.getElementById('igReelMusic');
+        const igMusicText = document.getElementById('igReelMusicText');
+        if (igMusic) { if (music) { igMusic.style.display = 'flex'; igMusicText.textContent = music; } else { igMusic.style.display = 'none'; } }
+    } catch(e) { console.error('updateIGPreview error:', e); }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('previewText').addEventListener('input', updatePreview);
-    document.getElementById('previewPageName').addEventListener('input', updatePreview);
-    document.getElementById('previewMusic').addEventListener('input', updatePreview);
+    ['fbText','fbPageName','fbMusic'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', updateFBPreview);
+    });
+    ['igText','igPageName','igMusic'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', updateIGPreview);
+    });
 });
 
 function showView(view) {
