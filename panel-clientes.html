@@ -538,10 +538,15 @@
 .ig-more{margin-left:auto;color:#262626;font-size:18px;cursor:pointer}
 .ig-images{position:relative;background:#000;display:flex;align-items:center;justify-content:center;max-height:480px;overflow:hidden}
 .ig-images img{width:100%;display:block}
-.ig-carousel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:0}
-.ig-carousel img{scroll-snap-align:start;flex-shrink:0;width:100%}
-.ig-carousel-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:4px}
-.ig-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.5)}
+.ig-carousel{position:relative;overflow:hidden;width:100%}
+.ig-carousel-track{display:flex;transition:transform 0.3s ease;width:100%}
+.ig-carousel-track img{flex-shrink:0;width:100%;object-fit:cover}
+.ig-carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.85);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5;box-shadow:0 2px 6px rgba(0,0,0,0.3);font-size:14px;color:#333;transition:opacity 0.2s}
+.ig-carousel-arrow:hover{background:#fff}
+.ig-carousel-arrow.prev{left:8px}
+.ig-carousel-arrow.next{right:8px}
+.ig-carousel-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:4px;z-index:5}
+.ig-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.5);transition:background 0.2s}
 .ig-dot.active{background:#fff}
 .ig-actions{display:flex;padding:8px 12px;gap:12px}
 .ig-actions svg{width:24px;height:24px;cursor:pointer;color:#262626}
@@ -1812,9 +1817,13 @@ function updateIGPreview() {
         if (igImages) {
             if (videos.length > 0) { igImages.style.display = 'flex'; igImages.innerHTML = `<video src="${videos[0].src}" controls style="width:100%;max-height:480px;object-fit:contain"></video>`; }
             else if (images.length > 0) {
-                igImages.style.display = 'flex';
-                if (images.length === 1) { igImages.innerHTML = `<img src="${images[0].src}" />`; }
-                else { igImages.innerHTML = `<div class="ig-carousel">${images.map(img => `<img src="${img.src}" />`).join('')}</div><div class="ig-carousel-dots">${images.map((_, i) => `<div class="ig-dot${i === 0 ? ' active' : ''}"></div>`).join('')}</div>`; }
+                igImages.style.display = 'block';
+                if (images.length === 1) { igImages.innerHTML = `<img src="${images[0].src}" style="width:100%;display:block" />`; }
+                else {
+                    igImages.style.position = 'relative';
+                    igImages.innerHTML = `<div class="ig-carousel" id="igCarousel"><div class="ig-carousel-track" id="igTrack">${images.map(img => `<img src="${img.src}" />`).join('')}</div><button class="ig-carousel-arrow prev" onclick="igCarouselNav(-1)">‹</button><button class="ig-carousel-arrow next" onclick="igCarouselNav(1)">›</button></div><div class="ig-carousel-dots">${images.map((_, i) => `<div class="ig-dot${i === 0 ? ' active' : ''}" onclick="igCarouselGo(${i})"></div>`).join('')}</div>`;
+                    igCarouselIdx = 0;
+                }
             } else { igImages.style.display = 'none'; igImages.innerHTML = ''; }
         }
         if (igCaption) { if (text.trim()) { igCaption.style.display = 'block'; igCaption.innerHTML = `<span class="ig-user">${igUsername}</span> ${text}`; } else { igCaption.style.display = 'none'; } }
@@ -1827,6 +1836,25 @@ function updateIGPreview() {
         const igMusicText = document.getElementById('igReelMusicText');
         if (igMusic) { if (music) { igMusic.style.display = 'flex'; igMusicText.textContent = music; } else { igMusic.style.display = 'none'; } }
     } catch(e) { console.error('updateIGPreview error:', e); }
+}
+
+let igCarouselIdx = 0;
+function igCarouselNav(dir) {
+    const track = document.getElementById('igTrack');
+    const dots = document.querySelectorAll('#igImages .ig-dot');
+    if (!track || dots.length === 0) return;
+    const total = dots.length;
+    igCarouselIdx = Math.max(0, Math.min(total - 1, igCarouselIdx + dir));
+    track.style.transform = `translateX(-${igCarouselIdx * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === igCarouselIdx));
+}
+function igCarouselGo(idx) {
+    const track = document.getElementById('igTrack');
+    const dots = document.querySelectorAll('#igImages .ig-dot');
+    if (!track) return;
+    igCarouselIdx = idx;
+    track.style.transform = `translateX(-${igCarouselIdx * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === igCarouselIdx));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
