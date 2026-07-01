@@ -1682,6 +1682,7 @@ function switchPrevPlatform(platform, el) {
     el.classList.add('active');
     document.getElementById('prevFacebookPanel').classList.toggle('active', platform === 'facebook');
     document.getElementById('prevInstagramPanel').classList.toggle('active', platform === 'instagram');
+    updatePreview();
 }
 
 function previewAddMedia(input) {
@@ -1717,35 +1718,35 @@ function previewRemoveMedia(idx) {
 }
 
 function setReelMedia(containerId, placeholderId, media) {
+    try {
     const mock = document.getElementById(containerId);
+    if (!mock) return;
     const ph = document.getElementById(placeholderId);
-    const existing = mock.querySelector('video, img.reel-video');
+    const existing = mock.querySelector('video.reel-video, img.reel-video');
     if (media) {
         if (ph) ph.style.display = 'none';
-        if (existing) {
-            if (existing.tagName === 'VIDEO') { existing.src = media.src; }
-            else { const v = mock.querySelector('video'); if (v) v.remove(); }
-        }
+        if (existing) existing.remove();
         if (media.type === 'video') {
-            if (existing && existing.tagName === 'VIDEO') { existing.src = media.src; }
-            else {
-                const vid = document.createElement('video');
-                vid.src = media.src; vid.autoplay = true; vid.loop = true; vid.muted = true;
-                vid.style.cssText = 'width:100%;height:100%;object-fit:cover';
-                vid.className = 'reel-video';
-                mock.insertBefore(vid, mock.querySelector('.reel-actions'));
-            }
+            const vid = document.createElement('video');
+            vid.src = media.src; vid.autoplay = true; vid.loop = true; vid.muted = true;
+            vid.style.cssText = 'width:100%;height:100%;object-fit:cover';
+            vid.className = 'reel-video';
+            const actions = mock.querySelector('.reel-actions');
+            if (actions) mock.insertBefore(vid, actions);
+            else mock.prepend(vid);
         } else {
-            if (existing) existing.remove();
             const img = document.createElement('img');
             img.src = media.src; img.className = 'reel-video';
             img.style.cssText = 'width:100%;height:100%;object-fit:cover';
-            mock.insertBefore(img, mock.querySelector('.reel-actions'));
+            const actions = mock.querySelector('.reel-actions');
+            if (actions) mock.insertBefore(img, actions);
+            else mock.prepend(img);
         }
     } else {
         if (ph) ph.style.display = 'flex';
         if (existing) existing.remove();
     }
+    } catch(e) { console.warn('setReelMedia error:', e); }
 }
 
 function updatePreview() {
