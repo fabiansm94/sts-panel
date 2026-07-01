@@ -66,8 +66,8 @@
         /* ======================== SIDEBAR ======================== */
         .sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 240px; background: var(--bg-card); z-index: 100; display: flex; flex-direction: column; border-right: 1px solid var(--border); padding: 20px 12px; border-radius: 0 20px 20px 0; box-shadow: 4px 0 24px rgba(0,0,0,0.06); }
         .sidebar-brand { display: flex; align-items: center; gap: 12px; padding: 8px 12px 20px; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
-.sidebar-brand .logo { width: 180px; height: 180px; border-radius: 50%; overflow: hidden; flex-shrink: 0; cursor: pointer; position: relative; background: #fff; border: 4px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
-.sidebar-brand .logo img { width: 180px; height: 180px; object-fit: cover; object-position: center center; display: block; }
+.sidebar-brand .logo { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; flex-shrink: 0; cursor: pointer; position: relative; background: #fff; border: 3px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+.sidebar-brand .logo img { width: 48px; height: 48px; object-fit: cover; object-position: center center; display: block; }
         .sidebar-brand .logo:hover::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.3); border-radius: 50%; }
         .sidebar-brand .logo:hover .logo-edit-icon { opacity: 1; }
         .logo-edit-icon { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s; z-index: 2; }
@@ -2053,10 +2053,25 @@ function changeLogo(e) {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = function(ev) {
-        const dataUrl = ev.target.result;
-        document.getElementById('sidebarLogoImg').src = dataUrl;
-        localStorage.setItem('sts_logo', dataUrl);
-        showToast('Logo actualizado', 'success');
+        const img = new Image();
+        img.onload = function() {
+            const size = 48;
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            const scale = Math.max(size / img.width, size / img.height);
+            const sw = size / scale;
+            const sh = size / scale;
+            const sx = (img.width - sw) / 2;
+            const sy = (img.height - sh) / 2;
+            ctx.drawImage(img, sx, sy, sw, sh, 0, 0, size, size);
+            const resized = canvas.toDataURL('image/png');
+            document.getElementById('sidebarLogoImg').src = resized;
+            localStorage.setItem('sts_logo', resized);
+            showToast('Logo actualizado', 'success');
+        };
+        img.src = ev.target.result;
     };
     reader.readAsDataURL(file);
     e.target.value = '';
