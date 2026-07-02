@@ -516,11 +516,19 @@
 
             /* Preview mobile */
             .preview-editor{padding:12px !important}
-            #prevFacebookPanel > div,#prevInstagramPanel > div,#prevLinkedinPanel > div{grid-template-columns:1fr !important}
-            .fb-post-mock,.ig-post-mock,.li-post-mock{max-width:100%}
+            #prevFacebookPanel > div,#prevInstagramPanel > div,#prevLinkedinPanel > div{grid-template-columns:1fr !important;gap:16px !important}
+            #prevFacebookPanel .preview-editor,#prevInstagramPanel .preview-editor,#prevLinkedinPanel .preview-editor{order:1}
+            #prevFacebookPanel > div > div:last-child,#prevInstagramPanel > div > div:last-child,#prevLinkedinPanel > div > div:last-child{order:2;display:flex !important;flex-direction:column !important;gap:24px !important;align-items:center}
+            .fb-post-mock,.ig-post-mock,.li-post-mock{max-width:100%;width:100% !important}
             .reel-mock-fb,.reel-mock-ig{width:100%;max-width:280px;margin:0 auto}
             .prev-tabs{flex-wrap:wrap;gap:3px}
             .prev-tab{padding:6px 10px;font-size:11px}
+            .preview-editor{padding:12px !important}
+            .preview-editor h4{font-size:14px !important;margin-bottom:12px}
+            .preview-field{margin-bottom:10px}
+            .preview-field label{font-size:11px !important;margin-bottom:3px}
+            .preview-field input,.preview-field textarea{font-size:16px !important;padding:10px !important;border-radius:10px !important}
+            .preview-media-upload{font-size:12px !important;padding:12px !important;border-radius:10px !important}
 
             /* Social mobile */
             .cal-grid{grid-template-columns:1fr !important}
