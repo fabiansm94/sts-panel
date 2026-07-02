@@ -377,76 +377,144 @@
         .app-hidden { display: none !important; }
 
         /* ======================== RESPONSIVE ======================== */
-        .hamburger{display:none;position:fixed;top:12px;left:12px;z-index:200;width:40px;height:40px;border-radius:10px;background:var(--bg-card);border:1px solid var(--border);cursor:pointer;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
-        .hamburger svg{width:22px;height:22px;color:var(--text-dark)}
+        .hamburger{display:none}
         .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:99}
+        .bottom-nav{display:none}
+
+        /* ======================== TABLET ======================== */
         @media (max-width: 1024px) { .dash-categories { grid-template-columns: repeat(2, 1fr); } .stat-cards-row { grid-template-columns: repeat(2, 1fr); } .dash-grid { grid-template-columns: 1fr; } .sidebar { width: 60px; padding: 16px 8px; border-radius: 0; } .sidebar-brand { padding: 4px 8px 12px; border-bottom: none; justify-content: center; } .sidebar-brand .logo { width: 36px; height: 36px; } .brand-text, .sidebar-section-title, .sidebar-link span, .sidebar-link .badge, .sidebar-link .chevron { display: none !important; } .sidebar-link { justify-content: center; padding: 10px; } .sidebar-submenu { display: none !important; } .sidebar-footer { justify-content: center; padding: 8px; } .logout-btn span { display: none; } .main { margin-left: 60px !important; } .search-box { width: 200px; } }
+
+        /* ======================== MOBILE ======================== */
         @media (max-width: 768px) {
-            .hamburger{display:flex}
-            .sidebar{transform:translateX(-100%);transition:transform 0.3s ease;width:260px;padding:20px 16px;border-radius:0 20px 20px 0;z-index:150}
-            .sidebar.open{transform:translateX(0)}
-            .sidebar.open ~ .sidebar-overlay{display:block}
-            .sidebar-brand{padding:8px 12px 20px;border-bottom:1px solid var(--border);justify-content:flex-start}
-            .sidebar-brand .logo{width:44px;height:44px}
-            .brand-text,.sidebar-section-title,.sidebar-link span,.sidebar-link .badge,.sidebar-link .chevron{display:block !important}
-            .sidebar-link{justify-content:flex-start;padding:10px 14px}
-            .sidebar-submenu{display:block !important;max-height:300px}
-            .sidebar-footer{justify-content:flex-start;padding:12px}
-            .logout-btn span{display:inline}
-            .main{margin-left:0 !important;padding-top:56px}
-            .topbar{padding:12px 16px 12px 60px}
-            .topbar h2{font-size:16px}
-            .dashboard{padding:16px 12px}
-            .stat-cards-row{grid-template-columns:1fr 1fr;gap:10px}
-            .stat-card{padding:14px 12px}
-            .stat-card h3{font-size:20px}
-            .stat-card p{font-size:11px}
-            .dash-categories{grid-template-columns:1fr 1fr;gap:10px}
-            .cat-card{padding:14px 12px}
-            .cat-card h3{font-size:13px}
-            .cat-card p{font-size:11px}
-            .clients-container{padding:12px}
-            .toolbar{flex-direction:column;gap:10px;padding:12px}
+            /* Bottom Nav */
+            .bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;height:64px;background:var(--bg-white);border-top:1px solid var(--border);z-index:200;align-items:center;justify-content:space-around;padding:0 8px;box-shadow:0 -4px 20px rgba(0,0,0,0.08)}
+            .bottom-nav .nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 12px;border-radius:12px;cursor:pointer;transition:all 0.2s;color:var(--text-light);font-size:10px;font-weight:600;border:none;background:none}
+            .bottom-nav .nav-item.active{color:#f59e0b}
+            .bottom-nav .nav-item svg{width:22px;height:22px}
+            .bottom-nav .nav-fab{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(245,158,11,0.4);margin-top:-20px;transition:transform 0.2s}
+            .bottom-nav .nav-fab:active{transform:scale(0.92)}
+
+            /* Hide sidebar + topbar + hamburger on mobile */
+            .sidebar{display:none !important}
+            .hamburger{display:none}
+            .main{margin-left:0 !important;padding-top:0 !important;padding-bottom:72px !important}
+
+            /* Topbar mobile */
+            .topbar{padding:12px 16px !important;position:relative !important;top:auto !important;background:linear-gradient(135deg,#0f2d42 0%,#1a4a5e 100%) !important;border-radius:0 0 24px 24px !important;margin-bottom:0 !important}
+            .topbar h2{color:#fff !important;font-size:18px !important;font-weight:800 !important}
+            .topbar .breadcrumb{color:rgba(255,255,255,0.7) !important;font-size:11px !important}
+            .topbar-right{gap:8px}
+            .topbar-right .search-box{background:rgba(255,255,255,0.15) !important;border:1px solid rgba(255,255,255,0.2) !important;width:100% !important}
+            .topbar-right .search-box input{color:#fff !important}
+            .topbar-right .search-box input::placeholder{color:rgba(255,255,255,0.6) !important}
+            .topbar-right .search-box svg{color:rgba(255,255,255,0.7) !important}
+            .topbar-right .btn{background:rgba(255,255,255,0.15) !important;color:#fff !important;border:1px solid rgba(255,255,255,0.2) !important}
+
+            /* Dashboard mobile */
+            .dashboard{padding:16px 16px 24px !important}
+            .dash-welcome{background:linear-gradient(135deg,#0f2d42 0%,#1a4a5e 50%,#0d3b54 100%) !important;border-radius:20px !important;padding:24px 20px !important;margin-bottom:20px !important;position:relative;overflow:hidden}
+            .dash-welcome::before{content:'';position:absolute;top:-40%;right:-20%;width:200px;height:200px;background:rgba(245,158,11,0.15);border-radius:50%}
+            .dash-welcome::after{content:'';position:absolute;bottom:-30%;right:5%;width:140px;height:140px;background:rgba(59,130,246,0.1);border-radius:50%}
+            .dash-welcome h2{font-size:20px !important;font-weight:800 !important;color:#fff;margin-bottom:4px}
+            .dash-welcome p{font-size:12px !important;color:rgba(255,255,255,0.8)}
+
+            /* Progress circle in welcome */
+            .dash-progress-wrap{display:flex;align-items:center;gap:16px;margin-top:16px}
+            .dash-progress-ring{position:relative;width:64px;height:64px;flex-shrink:0}
+            .dash-progress-ring svg{transform:rotate(-90deg)}
+            .dash-progress-ring circle{fill:none;stroke-width:6}
+            .dash-progress-ring .ring-bg{stroke:rgba(255,255,255,0.15)}
+            .dash-progress-ring .ring-fill{stroke:#f59e0b;stroke-linecap:round;transition:stroke-dashoffset 0.8s ease}
+            .dash-progress-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:800}
+            .dash-progress-info{color:#fff}
+            .dash-progress-info .prog-label{font-size:12px;opacity:0.8}
+            .dash-progress-info .prog-val{font-size:18px;font-weight:800}
+
+            /* Category cards mobile */
+            .dash-categories{display:grid !important;grid-template-columns:1fr 1fr !important;gap:12px !important;margin-bottom:20px}
+            .cat-card{background:var(--bg-white) !important;border:1px solid var(--border) !important;border-radius:16px !important;padding:16px 12px !important;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+            .cat-card:active{transform:scale(0.96)}
+            .cat-icon{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center}
+            .cat-icon svg{width:22px;height:22px}
+            .cat-label{font-size:13px !important;font-weight:700;color:var(--text-dark)}
+            .cat-count{font-size:22px !important;font-weight:800;color:var(--text-dark)}
+
+            /* Stat mini cards mobile */
+            .stat-cards-row{grid-template-columns:1fr 1fr !important;gap:10px !important;margin-bottom:20px}
+            .stat-mini{border-radius:14px !important;padding:14px !important;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+            .stat-mini-val{font-size:22px !important}
+            .stat-mini-label{font-size:11px !important}
+
+            /* Dash grid mobile */
+            .dash-grid{gap:12px !important}
+            .dash-card{border-radius:16px !important;border:1px solid var(--border) !important;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+            .dash-card-header{padding:14px 16px !important}
+            .dash-card-body{padding:14px 16px !important;max-height:240px !important}
+
+            /* Client cards mobile */
+            .clients-container{padding:16px 16px 24px !important}
+            .toolbar{flex-direction:column;gap:10px;padding:12px !important}
             .toolbar .search-box{width:100%}
             .toolbar-filters{width:100%;overflow-x:auto;flex-wrap:nowrap}
-            .clients-grid{grid-template-columns:1fr !important;gap:12px}
-            .client-card{padding:14px}
-            .modal-content{width:95% !important;max-width:none !important;max-height:90vh;margin:5vh auto;border-radius:16px}
-            .modal-body{padding:16px !important;max-height:70vh;overflow-y:auto}
+            .clients-grid{grid-template-columns:1fr !important;gap:14px !important}
+            .client-card{border-radius:18px !important;padding:0 !important;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.06);border:1px solid var(--border) !important;transition:all 0.2s}
+            .client-card:active{transform:scale(0.98);box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+            .card-header-bar{padding:14px 16px 10px !important}
+            .card-id{font-size:13px !important;font-weight:700}
+            .card-body{padding:0 16px 14px !important}
+            .card-name{font-size:15px !important;font-weight:800;margin-bottom:6px !important}
+            .card-services{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+            .card-service-pill{padding:4px 10px !important;border-radius:8px !important;font-size:10px !important;font-weight:700}
+
+            /* Modal bottom sheet mobile */
+            .modal-content{width:100% !important;max-width:none !important;max-height:85vh !important;margin:0 !important;border-radius:20px 20px 0 0 !important;position:fixed !important;bottom:0 !important;top:auto !important;animation:slideUp 0.3s ease}
+            @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+            .modal-body{padding:20px 16px !important;max-height:75vh !important;overflow-y:auto;-webkit-overflow-scrolling:touch}
             .modal-body .form-grid{grid-template-columns:1fr !important}
-            .ts-container{padding:12px}
-            .ts-header{flex-direction:column;gap:10px}
-            .ts-header h2{font-size:16px}
-            .ts-list{gap:10px}
-            .ts-card{padding:12px}
-            .detail-panel{width:95%;max-width:none;top:5vh;border-radius:16px}
-            .detail-header{padding:14px 16px}
-            .detail-body{padding:16px}
+            .modal-body input,.modal-body textarea,.modal-body select{font-size:16px !important;padding:14px !important;border-radius:12px !important}
+
+            /* Detail panel mobile */
+            .detail-panel{width:100% !important;max-width:none !important;top:0 !important;border-radius:0 !important;height:100vh !important;animation:slideUp 0.3s ease}
+            .detail-header{padding:16px !important;border-radius:0 !important}
+            .detail-body{padding:16px !important;max-height:calc(100vh - 80px) !important;overflow-y:auto;-webkit-overflow-scrolling:touch}
             .detail-body .form-grid{grid-template-columns:1fr !important}
+            .detail-body input,.detail-body textarea,.detail-body select{font-size:16px !important;padding:14px !important}
+
+            /* Timesheet mobile */
+            .ts-container{padding:16px 16px 24px !important}
+            .ts-header{flex-direction:column;gap:10px}
+            .ts-header h2{font-size:18px}
+            .ts-list{gap:10px}
+            .ts-card{border-radius:16px !important;padding:14px !important;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+
+            /* Preview mobile */
             .preview-editor{padding:16px !important}
             #prevFacebookPanel > div,#prevInstagramPanel > div,#prevLinkedinPanel > div{grid-template-columns:1fr !important}
             .fb-post-mock,.ig-post-mock,.li-post-mock{max-width:100%}
             .reel-mock-fb,.reel-mock-ig{width:100%;max-width:320px;margin:0 auto}
             .prev-tabs{flex-wrap:wrap;gap:4px}
             .prev-tab{padding:8px 12px;font-size:12px}
+
+            /* Social mobile */
             .cal-grid{grid-template-columns:1fr !important}
             .cal-post{font-size:11px;padding:8px}
             .social-tab{padding:10px 14px;font-size:12px}
-            .login-logo{width:60px;height:60px;font-size:20px}
-            .login-box{width:90%;padding:24px 20px}
-            .login-box h2{font-size:18px}
+
+            /* Login mobile */
+            .login-logo{width:64px !important;height:64px !important;font-size:22px !important}
+            .login-box{width:90%;padding:28px 24px !important;border-radius:20px !important}
+            .login-box h2{font-size:20px}
         }
+
         @media (max-width: 480px) {
-            .stat-cards-row{grid-template-columns:1fr}
-            .dash-categories{grid-template-columns:1fr}
-            .topbar-left div h2{font-size:14px}
-            .topbar-left div .breadcrumb{font-size:10px}
-            .client-card{padding:12px}
-            .client-card h3{font-size:13px}
-            .client-card p{font-size:11px}
-            .modal-body{padding:12px !important}
-            .modal-body input,.modal-body textarea,.modal-body select{font-size:14px;padding:12px}
-            .detail-body input,.detail-body textarea,.detail-body select{font-size:14px;padding:12px}
+            .dash-welcome{padding:20px 16px !important}
+            .dash-welcome h2{font-size:18px !important}
+            .cat-card{padding:14px 10px !important}
+            .cat-count{font-size:20px !important}
+            .stat-mini-val{font-size:20px !important}
+            .client-card{border-radius:16px !important}
+            .card-name{font-size:14px !important}
+            .modal-content{border-radius:16px 16px 0 0 !important}
         }
 
         /* ======================== QUILL EDITOR IN MODAL ======================== */
@@ -797,6 +865,28 @@
                 </span>
             </div>
         </nav>
+
+    <nav class="bottom-nav" id="bottomNav">
+        <button class="nav-item active" onclick="mobileNav('dashboard')" data-view="dashboard">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Inicio
+        </button>
+        <button class="nav-item" onclick="mobileNav('clients')" data-view="clients">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Clientes
+        </button>
+        <button class="nav-fab" onclick="openAddModal()" title="Nuevo Cliente">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <button class="nav-item" onclick="mobileNav('excelFeedback')" data-view="excelFeedback">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            Feedback
+        </button>
+        <button class="nav-item" onclick="mobileNav('social')" data-view="social">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            Social
+        </button>
+    </nav>
 
     <main class="main">
         <!-- Dashboard View -->
@@ -2051,11 +2141,21 @@ function toggleMobileSidebar() {
     ov.style.display = sb.classList.contains('open') ? 'block' : 'none';
 }
 
+function mobileNav(view) {
+    showView(view);
+    document.querySelectorAll('.bottom-nav .nav-item').forEach(n => n.classList.remove('active'));
+    const btn = document.querySelector(`.bottom-nav .nav-item[data-view="${view}"]`);
+    if (btn) btn.classList.add('active');
+}
+
 function showView(view) {
     currentView = view;
     const sb = document.getElementById('mainSidebar');
     const ov = document.getElementById('sidebarOverlay');
     if (sb && sb.classList.contains('open')) { sb.classList.remove('open'); ov.style.display = 'none'; }
+    document.querySelectorAll('.bottom-nav .nav-item').forEach(n => n.classList.remove('active'));
+    const btn = document.querySelector(`.bottom-nav .nav-item[data-view="${view}"]`);
+    if (btn) btn.classList.add('active');
     document.getElementById('dashboardView').classList.toggle('hidden', view !== 'dashboard');
     document.getElementById('clientsView').classList.toggle('hidden', view !== 'clients');
     document.getElementById('excelFeedbackView').classList.toggle('hidden', view !== 'excelFeedback');
@@ -2097,8 +2197,24 @@ function renderDashboard() {
     const days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
     const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
     const now = new Date();
+    const pct = total > 0 ? Math.round((contacted / total) * 100) : 0;
+    const circumference = 2 * Math.PI * 26;
+    const offset = circumference - (pct / 100) * circumference;
     document.getElementById('dashDate').textContent = `${days[now.getDay()]} ${now.getDate()} de ${months[now.getMonth()]} ${now.getFullYear()} · ${total} clientes registrados`;
     document.getElementById('dashStats').innerHTML = `
+        <div class="dash-progress-wrap">
+            <div class="dash-progress-ring">
+                <svg width="64" height="64" viewBox="0 0 64 64">
+                    <circle class="ring-bg" cx="32" cy="32" r="26"/>
+                    <circle class="ring-fill" cx="32" cy="32" r="26" stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"/>
+                </svg>
+                <div class="dash-progress-text">${pct}%</div>
+            </div>
+            <div class="dash-progress-info">
+                <div class="prog-label">Contactados</div>
+                <div class="prog-val">${contacted} de ${total}</div>
+            </div>
+        </div>
         <div class="dash-categories">
             <div class="cat-card" onclick="showView('clients');filterByService('mc')"><div class="cat-icon cat-mc"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div><div class="cat-label">MC</div><div class="cat-count">${mcCount}</div></div>
             <div class="cat-card" onclick="showView('clients');filterByService('ma')"><div class="cat-icon cat-ma"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="cat-label">MA</div><div class="cat-count">${maCount}</div></div>
