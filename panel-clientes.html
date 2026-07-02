@@ -425,6 +425,8 @@
             .topbar-right .btn{background:rgba(255,255,255,0.15) !important;color:#fff !important;border:1px solid rgba(255,255,255,0.2) !important;padding:6px 10px !important;font-size:11px !important;border-radius:10px !important}
             .topbar-right .btn svg{width:14px !important;height:14px !important}
             .topbar-right .btn span{display:none}
+            .mobile-theme-btn{width:36px !important;height:36px !important;padding:0 !important;display:flex !important;align-items:center;justify-content:center;border-radius:10px !important;flex-shrink:0}
+            [data-theme="dark"] .mobile-theme-btn{background:rgba(255,255,255,0.2) !important}
 
             /* Dashboard mobile */
             .dashboard{padding:12px 14px 20px !important}
@@ -946,6 +948,10 @@
                             <button class="menu-item" onclick="document.getElementById('importFile').click();toggleMenu()"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Restaurar Backup</button>
                         </div>
                     </div>
+                    <button class="btn mobile-theme-btn" onclick="toggleTheme()" title="Cambiar tema">
+                        <svg class="mobile-sun-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                        <svg class="mobile-moon-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </button>
                 </div>
             </div>
             <div class="dashboard">
@@ -2473,11 +2479,22 @@ function toggleTheme(){
     localStorage.setItem('sts_theme',isDark?'light':'dark');
     document.getElementById('themeIconSun').style.display=isDark?'block':'none';
     document.getElementById('themeIconMoon').style.display=isDark?'none':'block';
+    const mSun=document.querySelector('.mobile-sun-icon');
+    const mMoon=document.querySelector('.mobile-moon-icon');
+    if(mSun)mSun.style.display=isDark?'block':'none';
+    if(mMoon)mMoon.style.display=isDark?'none':'block';
 }
 (function(){
     const saved=localStorage.getItem('sts_theme')||'light';
     document.documentElement.setAttribute('data-theme',saved);
-    if(saved==='dark'){document.getElementById('themeIconSun').style.display='none';document.getElementById('themeIconMoon').style.display='block';}
+    if(saved==='dark'){
+        document.getElementById('themeIconSun').style.display='none';
+        document.getElementById('themeIconMoon').style.display='block';
+        const mSun=document.querySelector('.mobile-sun-icon');
+        const mMoon=document.querySelector('.mobile-moon-icon');
+        if(mSun)mSun.style.display='none';
+        if(mMoon)mMoon.style.display='block';
+    }
 })();
 (function(){
     document.querySelector('.sidebar').classList.add('collapsed');
