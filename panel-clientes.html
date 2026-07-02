@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STS Security - Panel de Clientes</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="STS Security">
+    <meta name="description" content="Panel de gestión de clientes STS Security">
     <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
@@ -2639,6 +2645,9 @@ function saveReview(){
 function deleteReview(idx){if(confirm('¿Eliminar esta review?')){reviews.splice(idx,1);saveReviews();renderReviews();showToast('Review eliminada','success');}}
 
 loadClients();renderTable();renderDashboard();
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js').catch(() => {});
+}
 </script>
 </body>
 </html>
