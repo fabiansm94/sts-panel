@@ -2263,24 +2263,8 @@ function renderDashboard() {
     const days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
     const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
     const now = new Date();
-    const pct = total > 0 ? Math.round((contacted / total) * 100) : 0;
-    const circumference = 2 * Math.PI * 26;
-    const offset = circumference - (pct / 100) * circumference;
     document.getElementById('dashDate').textContent = `${days[now.getDay()]} ${now.getDate()} de ${months[now.getMonth()]} ${now.getFullYear()} · ${total} clientes registrados`;
     document.getElementById('dashStats').innerHTML = `
-        <div class="dash-progress-wrap">
-            <div class="dash-progress-ring">
-                <svg width="64" height="64" viewBox="0 0 64 64">
-                    <circle class="ring-bg" cx="32" cy="32" r="26"/>
-                    <circle class="ring-fill" cx="32" cy="32" r="26" stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"/>
-                </svg>
-                <div class="dash-progress-text">${pct}%</div>
-            </div>
-            <div class="dash-progress-info">
-                <div class="prog-label">Contactados</div>
-                <div class="prog-val">${contacted} de ${total}</div>
-            </div>
-        </div>
         <div class="dash-categories">
             <div class="cat-card" onclick="showView('clients');filterByService('mc')"><div class="cat-icon cat-mc"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div><div class="cat-label">MC</div><div class="cat-count">${mcCount}</div></div>
             <div class="cat-card" onclick="showView('clients');filterByService('ma')"><div class="cat-icon cat-ma"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="cat-label">MA</div><div class="cat-count">${maCount}</div></div>
