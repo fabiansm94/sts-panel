@@ -471,6 +471,15 @@
             .dash-card-body{padding:12px 14px !important;max-height:200px !important}
 
             /* Client cards mobile */
+            .mobile-svc-bar{display:flex;gap:6px;padding:8px 14px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+            .mobile-svc-bar::-webkit-scrollbar{display:none}
+            .svc-btn{display:flex;align-items:center;gap:4px;padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--bg-white);color:var(--text-medium);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all 0.2s;flex-shrink:0}
+            .svc-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+            .svc-btn .svc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+            .svc-btn .svc-dot.mc{background:#3b82f6}
+            .svc-btn .svc-dot.ma{background:#10b981}
+            .svc-btn .svc-dot.si{background:#8b5cf6}
+            .svc-btn .svc-dot.mcma{background:#f59e0b}
             .clients-container{padding:12px 14px 20px !important}
             .toolbar{flex-direction:column;gap:8px;padding:10px !important}
             .toolbar .search-box{width:100%}
@@ -997,6 +1006,13 @@
                     <button class="filter-btn" onclick="setFilter(this,'pending')">Pendientes <span class="count" id="filterPending">0</span></button>
                     <button class="filter-btn" onclick="setFilter(this,'contacted')">Contactados <span class="count" id="filterContacted">0</span></button>
                 </div>
+            </div>
+            <div class="mobile-svc-bar">
+                <button class="svc-btn active" onclick="mobileSvcFilter(this,'all')" data-svc="all">Todos</button>
+                <button class="svc-btn" onclick="mobileSvcFilter(this,'mc')" data-svc="mc"><span class="svc-dot mc"></span>MC</button>
+                <button class="svc-btn" onclick="mobileSvcFilter(this,'ma')" data-svc="ma"><span class="svc-dot ma"></span>MA</button>
+                <button class="svc-btn" onclick="mobileSvcFilter(this,'si')" data-svc="si"><span class="svc-dot si"></span>SI</button>
+                <button class="svc-btn" onclick="mobileSvcFilter(this,'mcma')" data-svc="mcma"><span class="svc-dot mcma"></span>MC+MA</button>
             </div>
             <div class="clients-container">
                 <div class="clients-grid" id="clientsTableBody"></div>
@@ -2189,6 +2205,12 @@ function mobileNav(view) {
     document.querySelectorAll('.bottom-nav .nav-item').forEach(n => n.classList.remove('active'));
     const btn = document.querySelector(`.bottom-nav .nav-item[data-view="${view}"]`);
     if (btn) btn.classList.add('active');
+}
+
+function mobileSvcFilter(btn, svc) {
+    document.querySelectorAll('.svc-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filterByService(svc);
 }
 
 function showView(view) {
