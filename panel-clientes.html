@@ -1653,7 +1653,7 @@ async function doLogin() {
     if (!user || !pass) { errEl.style.display = 'block'; return; }
     const hash = await sha256(user + ':' + pass);
     if (hash === AUTH_HASH) {
-        sessionStorage.setItem('sts_auth', hash);
+        localStorage.setItem('sts_auth', hash);
         localStorage.setItem('sts_user', user);
         document.getElementById('loginOverlay').style.display = 'none';
         document.getElementById('appContent').classList.remove('app-hidden');
@@ -1665,12 +1665,12 @@ async function doLogin() {
 }
 
 function doLogout() {
-    sessionStorage.removeItem('sts_auth');
+    localStorage.removeItem('sts_auth');
     location.reload();
 }
 
 async function checkAuth() {
-    const hash = sessionStorage.getItem('sts_auth');
+    const hash = localStorage.getItem('sts_auth');
     if (hash === AUTH_HASH) {
         document.getElementById('loginOverlay').style.display = 'none';
         document.getElementById('appContent').classList.remove('app-hidden');
