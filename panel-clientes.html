@@ -2767,23 +2767,25 @@ function generatePDF(){const labels={mc:'MC',ma:'MA',si:'SI'};let html=`<!DOCTYP
 
 // ===== REVIEWS =====
 let reviews=JSON.parse(localStorage.getItem('sts_reviews')||'[]');
-if(reviews.length===0){
-    reviews=[
-        {id:1,name:"Jaime Boyle",stars:5,text:"STS is a professional and reliable security company. They are responsive and have great communication skills.",date:"2026-06-26"},
-        {id:2,name:"Jonathan Salazar",stars:5,text:"",date:"2026-06-25"},
-        {id:3,name:"Michael M",stars:5,text:"A massive thank you to STS Security Company for keeping our neighborhood in Alajuela safe! They are always vigilant, courteous, and quick to respond to any resident concerns. Their professional demeanor truly sets a high standard for neighborhood security. We are very grateful for their dedication. Highly recommend!!",date:"2026-06-24"},
-        {id:4,name:"Francisco Fava",stars:5,text:"",date:"2026-06-20"},
-        {id:5,name:"Angelica Minguet",stars:5,text:"Prestan un excelente servicio!",date:"2026-06-19"},
-        {id:6,name:"Laura Echeverria",stars:5,text:"Excelente servicio y personal muy amable",date:"2026-06-12"},
-        {id:7,name:"Lorenzo",stars:5,text:"",date:"2026-06-12"},
-        {id:8,name:"Ire Picado",stars:5,text:"",date:"2026-06-12"},
-        {id:9,name:"Fressy Stettler",stars:5,text:"Muy responsables y siempre me han respondido con prioridad mis preguntas.",date:"2026-06-12"},
-        {id:10,name:"Kimberly",stars:5,text:"",date:"2026-06-05"},
-        {id:11,name:"Amber Ishikawa",stars:5,text:"STS provided a professional and thorough installation process. Their team was in great communication, it is a robust system, and the team set us up and trained us on the technology/app. Thank you so much!",date:"2026-06-05"},
-        {id:12,name:"Michael R",stars:5,text:"We have used STS Security to monitor and protect our home in Costa Rica, and we could not be happier with their service. Their team is professional, reliable, and always there when we need them.",date:"2026-06-05"},
-        {id:13,name:"Francisco Durán",stars:5,text:"buen servicio",date:"2026-05-29"}
-    ];
+const defaultReviews=[
+    {id:1,name:"Jaime Boyle",stars:5,text:"STS is a professional and reliable security company. They are responsive and have great communication skills.",date:"2026-06-26"},
+    {id:2,name:"Jonathan Salazar",stars:5,text:"",date:"2026-06-25"},
+    {id:3,name:"Michael M",stars:5,text:"A massive thank you to STS Security Company for keeping our neighborhood in Alajuela safe! They are always vigilant, courteous, and quick to respond to any resident concerns. Their professional demeanor truly sets a high standard for neighborhood security. We are very grateful for their dedication. Highly recommend!!",date:"2026-06-24"},
+    {id:4,name:"Francisco Fava",stars:5,text:"",date:"2026-06-20"},
+    {id:5,name:"Angelica Minguet",stars:5,text:"Prestan un excelente servicio!",date:"2026-06-19"},
+    {id:6,name:"Laura Echeverria",stars:5,text:"Excelente servicio y personal muy amable",date:"2026-06-12"},
+    {id:7,name:"Lorenzo",stars:5,text:"",date:"2026-06-12"},
+    {id:8,name:"Ire Picado",stars:5,text:"",date:"2026-06-12"},
+    {id:9,name:"Fressy Stettler",stars:5,text:"Muy responsables y siempre me han respondido con prioridad mis preguntas.",date:"2026-06-12"},
+    {id:10,name:"Kimberly",stars:5,text:"",date:"2026-06-05"},
+    {id:11,name:"Amber Ishikawa",stars:5,text:"STS provided a professional and thorough installation process. Their team was in great communication, it is a robust system, and the team set us up and trained us on the technology/app. Thank you so much!",date:"2026-06-05"},
+    {id:12,name:"Michael R",stars:5,text:"We have used STS Security to monitor and protect our home in Costa Rica, and we could not be happier with their service. Their team is professional, reliable, and always there when we need them.",date:"2026-06-05"},
+    {id:13,name:"Francisco Durán",stars:5,text:"buen servicio",date:"2026-05-29"}
+];
+if(!localStorage.getItem('sts_reviews_seeded')){
+    reviews=defaultReviews;
     saveReviews();
+    localStorage.setItem('sts_reviews_seeded','1');
 }
 let reviewFilter='all';
 let reviewSelectedStars=5;
