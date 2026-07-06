@@ -777,32 +777,79 @@
 .blog-fp-view-content code{background:var(--bg-card);padding:2px 7px;border-radius:4px;font-size:13px;border:1px solid var(--border)}
 .blog-fp-view-content a{color:var(--accent);text-decoration:underline}
 .blog-fp-view-content .ql-video{width:100%;aspect-ratio:16/9;border-radius:8px;margin:14px 0}
-/* Blog Edit Mode */
+/* Blog Edit Mode - WordPress Style */
 .blog-fp-edit{max-width:850px;margin:0 auto;padding:24px}
-.blog-fp-edit-meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px}
-.blog-fp-edit-meta .form-group{margin-bottom:0}
+.blog-fp-edit-meta{margin-bottom:16px}
+.blog-fp-edit-meta .form-group{margin-bottom:12px}
 .blog-fp-edit-meta label{display:block;font-size:11px;font-weight:600;color:var(--text-medium);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px}
 .blog-fp-edit-meta input,.blog-fp-edit-meta select{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg-input);color:var(--text-dark);box-sizing:border-box}
 .blog-fp-edit-meta input:focus,.blog-fp-edit-meta select:focus{outline:none;border-color:var(--accent)}
-#blogspotQuillEditor{border-radius:10px;overflow:hidden;border:1.5px solid var(--border);background:var(--bg-input)}
-#blogspotQuillEditor .ql-toolbar{border:none;border-bottom:1px solid var(--border);background:var(--bg-body);border-radius:10px 10px 0 0;padding:8px 12px;flex-wrap:wrap}
-#blogspotQuillEditor .ql-toolbar .ql-formats{margin-right:10px}
-#blogspotQuillEditor .ql-toolbar button{width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:6px}
-#blogspotQuillEditor .ql-toolbar button:hover{background:var(--bg-card)}
-#blogspotQuillEditor .ql-toolbar button.ql-active{background:rgba(26,82,118,0.1);color:var(--accent)}
-#blogspotQuillEditor .ql-toolbar .ql-picker{height:30px;display:flex;align-items:center}
-#blogspotQuillEditor .ql-toolbar .ql-picker-label{border-radius:6px;border:1px solid transparent;padding:2px 8px;font-size:12px}
-#blogspotQuillEditor .ql-toolbar .ql-picker-label:hover{background:var(--bg-card)}
-#blogspotQuillEditor .ql-container{border:none;font-family:'Inter',system-ui,sans-serif;font-size:15px}
-#blogspotQuillEditor .ql-editor{min-height:400px;color:var(--text-dark);line-height:1.8;padding:20px 24px}
-#blogspotQuillEditor .ql-editor.ql-blank::before{color:var(--text-light);font-style:normal}
-[data-theme="dark"] #blogspotQuillEditor .ql-toolbar .ql-stroke{stroke:var(--text-medium)}
-[data-theme="dark"] #blogspotQuillEditor .ql-toolbar .ql-fill{fill:var(--text-medium)}
-[data-theme="dark"] #blogspotQuillEditor .ql-toolbar button:hover .ql-stroke{stroke:var(--accent)}
-[data-theme="dark"] #blogspotQuillEditor .ql-toolbar .ql-picker{color:var(--text-medium)}
+/* WordPress-style Quill Editor */
+#blogspotQuillEditor{border-radius:8px;overflow:hidden;border:1px solid var(--border);background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+#blogspotQuillEditor .ql-toolbar{border:none;border-bottom:1px solid #e2e8f0;background:#fff;padding:6px 10px;display:flex;flex-wrap:wrap;gap:2px;align-items:center}
+#blogspotQuillEditor .ql-toolbar .ql-formats{display:flex;align-items:center;gap:1px;padding:0 6px;border-right:1px solid #e8e8e8;margin-right:4px}
+#blogspotQuillEditor .ql-toolbar .ql-formats:last-child{border-right:none}
+#blogspotQuillEditor .ql-toolbar button{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:4px;border:none;background:none;cursor:pointer;color:#444;transition:all 0.1s}
+#blogspotQuillEditor .ql-toolbar button:hover{background:#f0f0f0}
+#blogspotQuillEditor .ql-toolbar button.ql-active{background:#e8f0fe;color:#1a5276}
+#blogspotQuillEditor .ql-toolbar button svg{width:16px;height:16px}
+#blogspotQuillEditor .ql-toolbar .ql-picker{height:28px;display:flex;align-items:center}
+#blogspotQuillEditor .ql-toolbar .ql-picker-label{border:1px solid transparent;border-radius:4px;padding:2px 6px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:4px;height:28px;color:#444}
+#blogspotQuillEditor .ql-toolbar .ql-picker-label:hover{background:#f0f0f0;border-color:#ddd}
+#blogspotQuillEditor .ql-toolbar .ql-picker-label svg{width:12px;height:12px}
+#blogspotQuillEditor .ql-toolbar .ql-active .ql-picker-label{color:#1a5276;background:#e8f0fe}
+#blogspotQuillEditor .ql-toolbar .ql-picker-options{background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);padding:4px;z-index:100}
+#blogspotQuillEditor .ql-toolbar .ql-picker-item{padding:4px 8px;border-radius:4px;font-size:12px;cursor:pointer}
+#blogspotQuillEditor .ql-toolbar .ql-picker-item:hover{background:#f0f0f0}
+#blogspotQuillEditor .ql-toolbar .ql-picker-item.ql-selected{color:#1a5276;background:#e8f0fe}
+#blogspotQuillEditor .ql-container{border:none;font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.7}
+#blogspotQuillEditor .ql-editor{min-height:450px;color:#1e293b;padding:24px 32px;max-width:850px;margin:0 auto}
+#blogspotQuillEditor .ql-editor.ql-blank::before{color:#94a3b8;font-style:normal;font-size:16px}
+#blogspotQuillEditor .ql-editor h1{font-size:2em;font-weight:700;margin:0.5em 0;color:#0f172a}
+#blogspotQuillEditor .ql-editor h2{font-size:1.5em;font-weight:700;margin:0.4em 0;color:#0f172a}
+#blogspotQuillEditor .ql-editor h3{font-size:1.25em;font-weight:600;margin:0.3em 0;color:#0f172a}
+#blogspotQuillEditor .ql-editor p{margin:0 0 0.8em}
+#blogspotQuillEditor .ql-editor blockquote{border-left:4px solid #1a5276;padding:12px 16px;margin:12px 0;background:#f8fafc;border-radius:0 6px 6px 0;color:#475569;font-style:italic}
+#blogspotQuillEditor .ql-editor pre.ql-syntax{background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;font-family:'Fira Code','Consolas',monospace;font-size:13px;line-height:1.5;overflow-x:auto}
+#blogspotQuillEditor .ql-editor code{background:#f1f5f9;padding:2px 5px;border-radius:3px;font-family:'Fira Code',monospace;font-size:0.9em;color:#e11d48}
+#blogspotQuillEditor .ql-editor a{color:#1a5276;text-decoration:underline}
+#blogspotQuillEditor .ql-editor ul,#blogspotQuillEditor .ql-editor ol{padding-left:24px;margin:8px 0}
+#blogspotQuillEditor .ql-editor li{margin-bottom:4px}
+/* Quill font size custom classes */
+#blogspotQuillEditor .ql-editor .ql-size-8{font-size:8px}
+#blogspotQuillEditor .ql-editor .ql-size-9{font-size:9px}
+#blogspotQuillEditor .ql-editor .ql-size-10{font-size:10px}
+#blogspotQuillEditor .ql-editor .ql-size-11{font-size:11px}
+#blogspotQuillEditor .ql-editor .ql-size-12{font-size:12px}
+#blogspotQuillEditor .ql-editor .ql-size-14{font-size:14px}
+#blogspotQuillEditor .ql-editor .ql-size-16{font-size:16px}
+#blogspotQuillEditor .ql-editor .ql-size-18{font-size:18px}
+#blogspotQuillEditor .ql-editor .ql-size-20{font-size:20px}
+#blogspotQuillEditor .ql-editor .ql-size-24{font-size:24px}
+#blogspotQuillEditor .ql-editor .ql-size-28{font-size:28px}
+#blogspotQuillEditor .ql-editor .ql-size-32{font-size:32px}
+#blogspotQuillEditor .ql-editor .ql-size-36{font-size:36px}
+#blogspotQuillEditor .ql-editor .ql-size-48{font-size:48px}
+#blogspotQuillEditor .ql-editor .ql-size-60{font-size:60px}
+#blogspotQuillEditor .ql-editor .ql-size-72{font-size:72px}
+.ql-font-aptos .ql-editor{font-family:'Aptos','Inter',system-ui,sans-serif}
+.ql-font-georgia .ql-editor{font-family:'Georgia',serif}
+.ql-font-courier .ql-editor{font-family:'Courier New',monospace}
+.ql-font-verdana .ql-editor{font-family:'Verdana',sans-serif}
+.ql-font-arial .ql-editor{font-family:'Arial',sans-serif}
+[data-theme="dark"] #blogspotQuillEditor{background:var(--bg-input);border-color:var(--border)}
+[data-theme="dark"] #blogspotQuillEditor .ql-toolbar{background:var(--bg-body);border-bottom-color:var(--border)}
+[data-theme="dark"] #blogspotQuillEditor .ql-toolbar .ql-formats{border-right-color:var(--border)}
+[data-theme="dark"] #blogspotQuillEditor .ql-toolbar button{color:var(--text-medium)}
+[data-theme="dark"] #blogspotQuillEditor .ql-toolbar button:hover{background:var(--bg-card)}
+[data-theme="dark"] #blogspotQuillEditor .ql-toolbar button.ql-active{background:rgba(26,82,118,0.15);color:var(--accent)}
+[data-theme="dark"] #blogspotQuillEditor .ql-toolbar .ql-picker-label{color:var(--text-medium)}
+[data-theme="dark"] #blogspotQuillEditor .ql-toolbar .ql-picker-label:hover{background:var(--bg-card);border-color:var(--border)}
 [data-theme="dark"] #blogspotQuillEditor .ql-toolbar .ql-picker-options{background:var(--bg-white);border-color:var(--border)}
-[data-theme="dark"] #blogspotQuillEditor .ql-toolbar button.ql-active .ql-stroke{stroke:var(--accent)}
-[data-theme="dark"] #blogspotQuillEditor .ql-toolbar button.ql-active .ql-fill{fill:var(--accent)}
+[data-theme="dark"] #blogspotQuillEditor .ql-editor{color:var(--text-dark)}
+[data-theme="dark"] #blogspotQuillEditor .ql-editor blockquote{background:var(--bg-card);color:var(--text-medium)}
+[data-theme="dark"] #blogspotQuillEditor .ql-editor pre.ql-syntax{background:#0d1117;color:#c9d1d9}
+[data-theme="dark"] #blogspotQuillEditor .ql-editor code{background:var(--bg-card);color:#f87171}
 .blog-fp-edit-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;padding-top:18px;border-top:1px solid var(--border)}
 .preview-container{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
 @media(max-width:900px){.preview-container{grid-template-columns:1fr}}
@@ -3058,6 +3105,7 @@ function deleteSocialPost(idx){if(confirm('¿Eliminar este post?')){socialPosts.
 
 // ===== BLOGSPOTS =====
 let blogspots=JSON.parse(localStorage.getItem('sts_blogspots')||'[]');
+const blogQuillConfig={theme:'snow',placeholder:'Escribe tu contenido aquí...',modules:{toolbar:[[{header:[1,2,3,4,5,6,false]}],[{font:[false,'Arial','Georgia','Courier New','Verdana','Aptos']}],[{size:['8','9','10','11','12','14','16','18','20','24','28','32','36','48','60','72',false]}],['bold','italic','underline','strike',[{color:[]},{background:[]}],[{script:'sub'},{script:'super'}]],['blockquote','code-block','link','image','video'],[{align:[]},{direction:'rtl'}],[{list:'ordered'},{list:'bullet'},{list:'check'}],[{indent:'-1'},{indent:'+1'}],['clean']]}};
 let blogspotQuill=null;
 let currentBlogspotIdx=-1;
 function saveBlogspots(){localStorage.setItem('sts_blogspots',JSON.stringify(blogspots));}
@@ -3133,7 +3181,7 @@ function toggleBlogEdit(){
         editBtn.textContent='Vista Previa';
         setTimeout(()=>{
             if(!blogspotQuill){
-                blogspotQuill=new Quill('#blogspotQuillEditor',{theme:'snow',placeholder:'Escribe tu contenido aquí...',modules:{toolbar:[[{header:[1,2,3,4,5,6,false]}],[{font:[]},{size:['small',false,'large','huge']}],['bold','italic','underline','strike',[{color:[]},{background:[]}],[{script:'sub'},{script:'super'}]],['blockquote','code-block'],[{align:[]},{direction:'rtl'}],[{list:'ordered'},{list:'bullet'},{list:'check'}],[{indent:'-1'},{indent:'+1'}],['link','image','video'],['clean']]}});
+                blogspotQuill=new Quill('#blogspotQuillEditor',blogQuillConfig);
                 blogspotQuill.on('text-change',function(){});
             }
             if(currentBlogspotIdx>=0){blogspotQuill.root.innerHTML=blogspots[currentBlogspotIdx].content||'';}
@@ -3190,7 +3238,7 @@ function openBlogspotEditor(idx){
     document.getElementById('blogspotEditor').classList.add('active');
     setTimeout(()=>{
         if(!blogspotQuill){
-            blogspotQuill=new Quill('#blogspotQuillEditor',{theme:'snow',placeholder:'Escribe tu contenido aquí...',modules:{toolbar:[[{header:[1,2,3,4,5,6,false]}],[{font:[]},{size:['small',false,'large','huge']}],['bold','italic','underline','strike',[{color:[]},{background:[]}],[{script:'sub'},{script:'super'}]],['blockquote','code-block'],[{align:[]},{direction:'rtl'}],[{list:'ordered'},{list:'bullet'},{list:'check'}],[{indent:'-1'},{indent:'+1'}],['link','image','video'],['clean']]}});
+            blogspotQuill=new Quill('#blogspotQuillEditor',blogQuillConfig);
         }
         if(isEdit){blogspotQuill.root.innerHTML=blogspots[idx].content||'';}
         else{blogspotQuill.root.innerHTML='';}
@@ -3217,7 +3265,7 @@ function openNewBlogspotFullpage(){
     document.getElementById('blogspotFullpage').classList.add('active');
     setTimeout(()=>{
         if(!blogspotQuill){
-            blogspotQuill=new Quill('#blogspotQuillEditor',{theme:'snow',placeholder:'Escribe tu contenido aquí...',modules:{toolbar:[[{header:[1,2,3,4,5,6,false]}],[{font:[]},{size:['small',false,'large','huge']}],['bold','italic','underline','strike',[{color:[]},{background:[]}],[{script:'sub'},{script:'super'}]],['blockquote','code-block'],[{align:[]},{direction:'rtl'}],[{list:'ordered'},{list:'bullet'},{list:'check'}],[{indent:'-1'},{indent:'+1'}],['link','image','video'],['clean']]}});
+            blogspotQuill=new Quill('#blogspotQuillEditor',blogQuillConfig);
         }
         blogspotQuill.root.innerHTML='';
     },100);
