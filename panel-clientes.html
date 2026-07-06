@@ -279,6 +279,37 @@
         .btn-send { width: 40px; height: 40px; border-radius: 12px; background: var(--accent); color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; box-shadow: 0 2px 8px rgba(26,82,118,0.25); }
         .btn-send:hover { background: var(--accent-hover); transform: translateY(-1px); }
 
+        /* ======================== FALSE ALARMS ======================== */
+        .false-alarms-section{background:var(--bg-input);border-radius:14px;padding:16px !important;border:1px solid var(--border)}
+        .false-alarm-input-row{display:flex;gap:8px;margin:10px 0;flex-wrap:wrap}
+        .false-alarm-input-row input{flex:1;min-width:120px;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;background:var(--bg-white);color:var(--text-dark);outline:none}
+        .false-alarm-input-row input:focus{border-color:var(--accent)}
+        .false-alarm-input-row select{padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:11px;background:var(--bg-white);color:var(--text-dark);cursor:pointer;outline:none}
+        .false-alarm-summary{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+        .fa-badge{display:inline-flex;align-items:center;gap:3px;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700}
+        .fa-badge.sensor{background:rgba(239,68,68,0.1);color:#ef4444}
+        .fa-badge.humano{background:rgba(245,158,11,0.1);color:#f59e0b}
+        .fa-badge.mascota{background:rgba(168,85,247,0.1);color:#a855f7}
+        .fa-badge.equipo{background:rgba(26,82,118,0.1);color:#1a5276}
+        .fa-badge.otro{background:rgba(107,114,128,0.1);color:#6b7280}
+        .false-alarm-list{margin-top:8px}
+        .false-alarm-entry{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg-white);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;transition:all 0.15s}
+        .false-alarm-entry:hover{box-shadow:var(--shadow-xs)}
+        .fa-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .fa-icon svg{width:14px;height:14px}
+        .fa-icon.sensor{background:rgba(239,68,68,0.1);color:#ef4444}
+        .fa-icon.humano{background:rgba(245,158,11,0.1);color:#f59e0b}
+        .fa-icon.mascota{background:rgba(168,85,247,0.1);color:#a855f7}
+        .fa-icon.equipo{background:rgba(26,82,118,0.1);color:#1a5276}
+        .fa-icon.otro{background:rgba(107,114,128,0.1);color:#6b7280}
+        .fa-details{flex:1;min-width:0}
+        .fa-reason{font-size:12px;font-weight:600;color:var(--text-dark);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .fa-meta{font-size:10px;color:var(--text-light);margin-top:2px}
+        .fa-type-label{font-weight:700;text-transform:capitalize}
+        .fa-delete{width:24px;height:24px;border-radius:6px;border:none;background:rgba(239,68,68,0.08);color:#ef4444;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;opacity:0;transition:opacity 0.15s}
+        .fa-delete svg{width:12px;height:12px}
+        .false-alarm-entry:hover .fa-delete{opacity:1}
+
         /* ======================== MODAL ======================== */
         .modal-overlay { position: fixed; inset: 0; background: var(--overlay); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
         .modal-overlay.active { opacity: 1; visibility: visible; }
@@ -1954,7 +1985,7 @@ const defaultClients = [
 
 let clients=[], callNotes={}, currentFilter='all', currentSearch='', deleteIndex=-1, detailClientIdx=-1, serviceFilter=null, currentView='dashboard';
 
-function loadClients(){const v=localStorage.getItem('sts_clients_version');if(v!=='4.0'){localStorage.setItem('sts_clients',JSON.stringify(defaultClients));localStorage.setItem('sts_clients_version','4.0');clients=[...defaultClients];}else{const s=localStorage.getItem('sts_clients');try{clients=s?JSON.parse(s):[...defaultClients];}catch(e){clients=[...defaultClients];}}const n=localStorage.getItem('sts_call_notes');try{callNotes=n?JSON.parse(n):{};}catch(e){callNotes={};}}
+function loadClients(){const v=localStorage.getItem('sts_clients_version');if(v!=='4.0'){localStorage.setItem('sts_clients',JSON.stringify(defaultClients));localStorage.setItem('sts_clients_version','4.0');clients=[...defaultClients];}else{const s=localStorage.getItem('sts_clients');try{clients=s?JSON.parse(s):[...defaultClients];}catch(e){clients=[...defaultClients];}}clients.forEach(c=>{if(!c.falseAlarms)c.falseAlarms=[];});const n=localStorage.getItem('sts_call_notes');try{callNotes=n?JSON.parse(n):{};}catch(e){callNotes={};}}
 function saveClients(){localStorage.setItem('sts_clients',JSON.stringify(clients));}
 function saveCallNotes(){localStorage.setItem('sts_call_notes',JSON.stringify(callNotes));}
 function getInitials(n){return n.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();}
@@ -2379,6 +2410,37 @@ function openDetail(idx) {
     });
     if (c.notes) html += `<div class="detail-section"><div class="detail-section-title">Feedback General</div><div class="detail-section-content" style="font-style:italic;color:var(--text-light)">${c.notes}</div></div>`;
     if (c.comments) html += `<div class="detail-section"><div class="detail-section-title">Comentarios</div><div class="detail-alert info">${c.comments}</div></div>`;
+    if (c.services.includes('ma')) {
+        const fa = c.falseAlarms || [];
+        html += `<div class="detail-section false-alarms-section">
+            <div class="detail-section-title">Alarmas Falsas (${fa.length})</div>
+            <div class="false-alarm-input-row">
+                <input type="text" id="falseAlarmInput" placeholder="Motivo de la alarma falsa..." onkeydown="if(event.key==='Enter')addFalseAlarm(${idx})">
+                <select id="falseAlarmType">
+                    <option value=".sensor">Sensor</option>
+                    <option value="humano">Humano</option>
+                    <option value="mascota">Mascota</option>
+                    <option value="equipo">Equipo</option>
+                    <option value="otro">Otro</option>
+                </select>
+                <button class="btn btn-primary" onclick="addFalseAlarm(${idx})" style="padding:8px 14px;font-size:12px;border-radius:8px">+ Registrar</button>
+            </div>
+            <div class="false-alarm-summary">
+                <span class="fa-badge sensor">Sensor: ${fa.filter(a=>a.type==='sensor').length}</span>
+                <span class="fa-badge humano">Humano: ${fa.filter(a=>a.type==='humano').length}</span>
+                <span class="fa-badge mascota">Mascota: ${fa.filter(a=>a.type==='mascota').length}</span>
+                <span class="fa-badge equipo">Equipo: ${fa.filter(a=>a.type==='equipo').length}</span>
+                <span class="fa-badge otro">Otro: ${fa.filter(a=>a.type==='otro').length}</span>
+            </div>
+            <div class="false-alarm-list">
+                ${fa.length > 0 ? fa.slice().reverse().map((a,i)=>{const ri=fa.indexOf(a);return `<div class="false-alarm-entry">
+                    <div class="fa-icon ${a.type}"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+                    <div class="fa-details"><div class="fa-reason">${escapeHtml(a.reason)}</div><div class="fa-meta"><span class="fa-type-label">${a.type}</span> · ${formatTime(a.time)}</div></div>
+                    <button class="fa-delete" onclick="deleteFalseAlarm(${idx},${ri})"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+                </div>`;}).join('') : '<div class="no-notes">Sin alarmas falsas registradas</div>'}
+            </div>
+        </div>`;
+    }
     const notes = callNotes[c.id] || [];
     html += `<div class="notes-section"><h4><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Feedback (${notes.length})</h4>`;
     if (notes.length > 0) { html += notes.map((n,i)=>`<div class="note-entry" id="note-${idx}-${i}"><div class="note-time">${formatTime(n.time)}</div><div class="note-text" data-original="${escapeHtml(n.text)}">${escapeHtml(n.text)}</div><div class="note-actions"><button class="ne" onclick="startEditNote(${idx},${i})"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Editar</button><button class="nd" onclick="deleteDetailNote(${idx},${i})"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Eliminar</button></div></div>`).reverse().join(''); }
@@ -2395,6 +2457,27 @@ function addDetailNote(){const ta=document.getElementById('detailNoteInput');con
 function deleteDetailNote(clientIdx,noteIdx){const c=clients[clientIdx];callNotes[c.id].splice(noteIdx,1);if(callNotes[c.id].length===0)delete callNotes[c.id];saveCallNotes();openDetail(clientIdx);renderTable();if(currentView==='dashboard')renderDashboard();}
 function startEditNote(clientIdx,noteIdx){const noteEl=document.getElementById(`note-${clientIdx}-${noteIdx}`);const textDiv=noteEl.querySelector('.note-text');const originalText=textDiv.dataset.original;const editBtn=noteEl.querySelector('.ne');const delBtn=noteEl.querySelector('.nd');textDiv.innerHTML=`<textarea style="width:100%;min-height:50px;padding:6px;border:1px solid var(--accent);border-radius:4px;background:var(--bg-white);color:var(--text-dark);font-family:inherit;font-size:12px;resize:vertical;outline:none;">${originalText}</textarea>`;editBtn.innerHTML='<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Guardar';editBtn.onclick=()=>saveEditNote(clientIdx,noteIdx);delBtn.innerHTML='<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Cancelar';delBtn.onclick=()=>openDetail(detailClientIdx);noteEl.querySelector('textarea').focus();}
 function saveEditNote(clientIdx,noteIdx){const noteEl=document.getElementById(`note-${clientIdx}-${noteIdx}`);const textarea=noteEl.querySelector('textarea');const newText=textarea.value.trim();if(!newText){showToast('La nota no puede estar vacía','error');return;}callNotes[clients[clientIdx].id][noteIdx].text=newText;saveCallNotes();openDetail(clientIdx);renderTable();showToast('Feedback actualizado','success');}
+
+function addFalseAlarm(idx){
+    const input=document.getElementById('falseAlarmInput');
+    const type=document.getElementById('falseAlarmType');
+    const reason=input.value.trim();
+    if(!reason){showToast('Ingresa el motivo','error');return;}
+    if(!clients[idx].falseAlarms)clients[idx].falseAlarms=[];
+    clients[idx].falseAlarms.push({reason,type:type.value,time:Date.now()});
+    saveClients();
+    input.value='';
+    openDetail(idx);
+    renderTable();
+    showToast('Alarma falsa registrada','success');
+}
+function deleteFalseAlarm(idx,alarmIdx){
+    clients[idx].falseAlarms.splice(alarmIdx,1);
+    saveClients();
+    openDetail(idx);
+    renderTable();
+    showToast('Alarma falsa eliminada','success');
+}
 
 function toggleContacted(idx,e){
     e.stopPropagation();
