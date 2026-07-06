@@ -287,21 +287,15 @@
         .false-alarm-input-row select{padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:11px;background:var(--bg-white);color:var(--text-dark);cursor:pointer;outline:none}
         .false-alarm-summary{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
         .fa-badge{display:inline-flex;align-items:center;gap:3px;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700}
-        .fa-badge.sensor{background:rgba(239,68,68,0.1);color:#ef4444}
-        .fa-badge.humano{background:rgba(245,158,11,0.1);color:#f59e0b}
-        .fa-badge.mascota{background:rgba(168,85,247,0.1);color:#a855f7}
-        .fa-badge.equipo{background:rgba(26,82,118,0.1);color:#1a5276}
-        .fa-badge.otro{background:rgba(107,114,128,0.1);color:#6b7280}
+        .fa-badge.falso{background:rgba(239,68,68,0.1);color:#ef4444}
+        .fa-badge.real{background:rgba(16,185,129,0.1);color:#10b981}
         .false-alarm-list{margin-top:8px}
         .false-alarm-entry{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg-white);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;transition:all 0.15s}
         .false-alarm-entry:hover{box-shadow:var(--shadow-xs)}
         .fa-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
         .fa-icon svg{width:14px;height:14px}
+        .fa-icon.falso{background:rgba(239,68,68,0.1);color:#ef4444}
         .fa-icon.real{background:rgba(16,185,129,0.1);color:#10b981}
-        .fa-icon.humano{background:rgba(245,158,11,0.1);color:#f59e0b}
-        .fa-icon.mascota{background:rgba(168,85,247,0.1);color:#a855f7}
-        .fa-icon.equipo{background:rgba(26,82,118,0.1);color:#1a5276}
-        .fa-icon.otro{background:rgba(107,114,128,0.1);color:#6b7280}
         .fa-details{flex:1;min-width:0}
         .fa-reason{font-size:12px;font-weight:600;color:var(--text-dark);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
         .fa-meta{font-size:10px;color:var(--text-light);margin-top:2px}
@@ -2417,20 +2411,14 @@ function openDetail(idx) {
             <div class="false-alarm-input-row">
                 <input type="text" id="falseAlarmInput" placeholder="Motivo de la alarma falsa..." onkeydown="if(event.key==='Enter')addFalseAlarm(${idx})">
                 <select id="falseAlarmType">
+                    <option value="falso">Falso</option>
                     <option value="real">Real</option>
-                    <option value="humano">Humano</option>
-                    <option value="mascota">Mascota</option>
-                    <option value="equipo">Equipo</option>
-                    <option value="otro">Otro</option>
                 </select>
                 <button class="btn btn-primary" onclick="addFalseAlarm(${idx})" style="padding:8px 14px;font-size:12px;border-radius:8px">+ Registrar</button>
             </div>
             <div class="false-alarm-summary">
-                <span class="fa-badge real">Real: ${fa.filter(a=>a.type==='real').length}</span>
-                <span class="fa-badge humano">Humano: ${fa.filter(a=>a.type==='humano').length}</span>
-                <span class="fa-badge mascota">Mascota: ${fa.filter(a=>a.type==='mascota').length}</span>
-                <span class="fa-badge equipo">Equipo: ${fa.filter(a=>a.type==='equipo').length}</span>
-                <span class="fa-badge otro">Otro: ${fa.filter(a=>a.type==='otro').length}</span>
+                <span class="fa-badge falso">Falsas: ${fa.filter(a=>a.type==='falso').length}</span>
+                <span class="fa-badge real">Reales: ${fa.filter(a=>a.type==='real').length}</span>
             </div>
             <div class="false-alarm-list">
                 ${fa.length > 0 ? fa.slice().reverse().map((a,i)=>{const ri=fa.indexOf(a);return `<div class="false-alarm-entry">
