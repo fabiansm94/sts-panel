@@ -584,6 +584,10 @@
             #blogspotViewer .modal,#blogspotEditor .modal{width:95% !important;max-height:95vh !important}
             .blog-viewer-title{font-size:18px !important}
             .blog-viewer-content{padding:0 16px 16px !important}
+            .blog-fp-view{padding:20px 16px !important}
+            .blog-fp-view-title{font-size:22px !important}
+            .blog-fp-edit{padding:16px !important}
+            .blog-fp-edit-meta{grid-template-columns:1fr !important}
         }
 
         @media (max-width: 1024px) and (min-width: 769px) {
@@ -748,41 +752,58 @@
 .blogspot-actions .action-btn{padding:5px;border-radius:6px;background:none;border:none;cursor:pointer;color:var(--text-light);transition:all 0.15s}
 .blogspot-actions .action-btn:hover{background:var(--bg-card);color:var(--accent)}
 .blogspot-actions .action-btn.del:hover{color:#ef4444}
-/* Blog Viewer */
-#blogspotViewer .modal{max-width:750px;max-height:90vh;border-radius:16px}
-.blog-viewer-header{padding:24px 28px 0}
-.blog-viewer-tag{display:inline-block;padding:3px 12px;border-radius:20px;font-size:11px;font-weight:700;margin-bottom:10px}
-.blog-viewer-title{font-size:22px;font-weight:800;color:var(--text-dark);line-height:1.3;margin-bottom:8px}
-.blog-viewer-meta{font-size:12px;color:var(--text-light);display:flex;gap:12px;align-items:center;margin-bottom:16px}
-.blog-viewer-content{padding:0 28px 24px;font-size:14px;line-height:1.8;color:var(--text-dark);max-height:55vh;overflow-y:auto}
-.blog-viewer-content h1,.blog-viewer-content h2,.blog-viewer-content h3{margin:16px 0 8px;color:var(--text-dark)}
-.blog-viewer-content p{margin-bottom:12px}
-.blog-viewer-content ul,.blog-viewer-content ol{margin:8px 0 8px 20px}
-.blog-viewer-content blockquote{border-left:3px solid var(--accent);padding:8px 16px;margin:12px 0;background:var(--bg-body);border-radius:0 8px 8px 0;font-style:italic;color:var(--text-light)}
-.blog-viewer-content pre{background:var(--bg-body);padding:12px;border-radius:8px;font-family:monospace;font-size:12px;overflow-x:auto;margin:12px 0}
-.blog-viewer-content img{max-width:100%;border-radius:8px;margin:12px 0}
-.blog-viewer-content code{background:var(--bg-body);padding:2px 6px;border-radius:4px;font-size:13px}
-.blog-viewer-footer{padding:16px 28px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px}
-/* Blog Editor */
-#blogspotEditor .modal{max-width:800px;max-height:92vh;border-radius:16px}
-.blog-editor-header{padding:20px 24px 0;display:flex;justify-content:space-between;align-items:center}
-.blog-editor-header h3{margin:0;font-size:18px;color:var(--text-dark)}
-.blog-editor-body{padding:16px 24px 20px}
-.blog-editor-body .form-group{margin-bottom:14px}
-.blog-editor-body label{display:block;font-size:12px;font-weight:600;color:var(--text-medium);margin-bottom:4px}
-.blog-editor-body input,.blog-editor-body select{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;background:var(--bg-input);color:var(--text-dark);box-sizing:border-box}
-.blog-editor-body input:focus,.blog-editor-body select:focus{outline:none;border-color:var(--accent)}
+/* Blog Full Page */
+.blogspot-fullpage{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:1000;background:var(--bg-body);overflow-y:auto}
+.blogspot-fullpage.active{display:block}
+.blog-fp-topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:var(--bg-white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+.blog-fp-topbar h3{margin:0;font-size:16px;color:var(--text-dark)}
+.blog-fp-topbar-actions{display:flex;gap:8px;align-items:center}
+.blog-fp-back{display:flex;align-items:center;gap:6px;cursor:pointer;padding:6px 12px;border-radius:8px;font-size:13px;font-weight:600;color:var(--text-medium);transition:all 0.15s;background:none;border:none}
+.blog-fp-back:hover{background:var(--bg-body);color:var(--text-dark)}
+.blog-fp-view{max-width:780px;margin:0 auto;padding:32px 24px}
+.blog-fp-view-tag{display:inline-block;padding:3px 12px;border-radius:20px;font-size:11px;font-weight:700;margin-bottom:12px}
+.blog-fp-view-title{font-size:28px;font-weight:800;color:var(--text-dark);line-height:1.25;margin-bottom:8px}
+.blog-fp-view-meta{font-size:12px;color:var(--text-light);display:flex;gap:12px;align-items:center;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.blog-fp-view-content{font-size:15px;line-height:1.85;color:var(--text-dark)}
+.blog-fp-view-content h1{font-size:24px;margin:24px 0 12px;font-weight:700}
+.blog-fp-view-content h2{font-size:20px;margin:20px 0 10px;font-weight:700}
+.blog-fp-view-content h3{font-size:17px;margin:16px 0 8px;font-weight:700}
+.blog-fp-view-content p{margin-bottom:14px}
+.blog-fp-view-content ul,.blog-fp-view-content ol{margin:10px 0 10px 24px}
+.blog-fp-view-content li{margin-bottom:4px}
+.blog-fp-view-content blockquote{border-left:4px solid var(--accent);padding:10px 18px;margin:14px 0;background:var(--bg-card);border-radius:0 8px 8px 0;font-style:italic;color:var(--text-medium)}
+.blog-fp-view-content pre{background:var(--bg-card);padding:14px;border-radius:8px;font-family:'Fira Code',monospace;font-size:13px;overflow-x:auto;margin:14px 0;border:1px solid var(--border)}
+.blog-fp-view-content img{max-width:100%;border-radius:8px;margin:14px 0}
+.blog-fp-view-content code{background:var(--bg-card);padding:2px 7px;border-radius:4px;font-size:13px;border:1px solid var(--border)}
+.blog-fp-view-content a{color:var(--accent);text-decoration:underline}
+.blog-fp-view-content .ql-video{width:100%;aspect-ratio:16/9;border-radius:8px;margin:14px 0}
+/* Blog Edit Mode */
+.blog-fp-edit{max-width:850px;margin:0 auto;padding:24px}
+.blog-fp-edit-meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px}
+.blog-fp-edit-meta .form-group{margin-bottom:0}
+.blog-fp-edit-meta label{display:block;font-size:11px;font-weight:600;color:var(--text-medium);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px}
+.blog-fp-edit-meta input,.blog-fp-edit-meta select{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg-input);color:var(--text-dark);box-sizing:border-box}
+.blog-fp-edit-meta input:focus,.blog-fp-edit-meta select:focus{outline:none;border-color:var(--accent)}
 #blogspotQuillEditor{border-radius:10px;overflow:hidden;border:1.5px solid var(--border);background:var(--bg-input)}
-#blogspotQuillEditor .ql-toolbar{border:none;border-bottom:1px solid var(--border);background:var(--bg-body);border-radius:10px 10px 0 0}
-#blogspotQuillEditor .ql-container{border:none;font-family:'Inter',system-ui,sans-serif;font-size:14px}
-#blogspotQuillEditor .ql-editor{min-height:250px;color:var(--text-dark);line-height:1.7}
+#blogspotQuillEditor .ql-toolbar{border:none;border-bottom:1px solid var(--border);background:var(--bg-body);border-radius:10px 10px 0 0;padding:8px 12px;flex-wrap:wrap}
+#blogspotQuillEditor .ql-toolbar .ql-formats{margin-right:10px}
+#blogspotQuillEditor .ql-toolbar button{width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:6px}
+#blogspotQuillEditor .ql-toolbar button:hover{background:var(--bg-card)}
+#blogspotQuillEditor .ql-toolbar button.ql-active{background:rgba(26,82,118,0.1);color:var(--accent)}
+#blogspotQuillEditor .ql-toolbar .ql-picker{height:30px;display:flex;align-items:center}
+#blogspotQuillEditor .ql-toolbar .ql-picker-label{border-radius:6px;border:1px solid transparent;padding:2px 8px;font-size:12px}
+#blogspotQuillEditor .ql-toolbar .ql-picker-label:hover{background:var(--bg-card)}
+#blogspotQuillEditor .ql-container{border:none;font-family:'Inter',system-ui,sans-serif;font-size:15px}
+#blogspotQuillEditor .ql-editor{min-height:400px;color:var(--text-dark);line-height:1.8;padding:20px 24px}
 #blogspotQuillEditor .ql-editor.ql-blank::before{color:var(--text-light);font-style:normal}
 [data-theme="dark"] #blogspotQuillEditor .ql-toolbar .ql-stroke{stroke:var(--text-medium)}
 [data-theme="dark"] #blogspotQuillEditor .ql-toolbar .ql-fill{fill:var(--text-medium)}
 [data-theme="dark"] #blogspotQuillEditor .ql-toolbar button:hover .ql-stroke{stroke:var(--accent)}
 [data-theme="dark"] #blogspotQuillEditor .ql-toolbar .ql-picker{color:var(--text-medium)}
 [data-theme="dark"] #blogspotQuillEditor .ql-toolbar .ql-picker-options{background:var(--bg-white);border-color:var(--border)}
-.blog-editor-footer{padding:12px 24px 20px;display:flex;justify-content:flex-end;gap:8px}
+[data-theme="dark"] #blogspotQuillEditor .ql-toolbar button.ql-active .ql-stroke{stroke:var(--accent)}
+[data-theme="dark"] #blogspotQuillEditor .ql-toolbar button.ql-active .ql-fill{fill:var(--accent)}
+.blog-fp-edit-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;padding-top:18px;border-top:1px solid var(--border)}
 .preview-container{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
 @media(max-width:900px){.preview-container{grid-template-columns:1fr}}
 .preview-editor{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px}
@@ -1562,7 +1583,7 @@
                 <h3 style="margin:0;color:var(--text-dark)">📝 Mis Ideas de Blog</h3>
                 <p style="margin:4px 0 0;font-size:12px;color:var(--text-light)">Gestiona y organiza tus ideas para publicaciones</p>
             </div>
-            <button class="btn btn-primary" onclick="openBlogspotEditor()">+ Nuevo Blogspot</button>
+            <button class="btn btn-primary" onclick="openNewBlogspotFullpage()">+ Nuevo Blogspot</button>
         </div>
         <div id="blogspotsList" class="blogspots-grid"></div>
         <div id="noBlogspots" class="hidden" style="text-align:center;padding:60px 20px;color:var(--text-light)">
@@ -1739,58 +1760,57 @@
     </div>
 
 
-    <!-- Blogspot Viewer -->
-    <div id="blogspotViewer" class="modal-overlay" onclick="if(event.target===this)closeBlogspotViewer()">
-        <div class="modal">
-            <div class="blog-viewer-header">
-                <span class="blog-viewer-tag" id="viewerTag"></span>
-                <h2 class="blog-viewer-title" id="viewerTitle"></h2>
-                <div class="blog-viewer-meta">
-                    <span id="viewerDate"></span>
-                    <span>·</span>
-                    <span id="viewerWordCount"></span>
-                </div>
-            </div>
-            <div class="blog-viewer-content" id="viewerContent"></div>
-            <div class="blog-viewer-footer">
-                <button class="btn" onclick="closeBlogspotViewer()">Cerrar</button>
-                <button class="btn" id="viewerEditBtn" onclick="">Editar</button>
+    <!-- Blogspot Full Page -->
+    <div id="blogspotFullpage" class="blogspot-fullpage">
+        <div class="blog-fp-topbar">
+            <button class="blog-fp-back" onclick="closeBlogspotFullpage()">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Volver
+            </button>
+            <h3 id="blogFpTitle">Blogspot</h3>
+            <div class="blog-fp-topbar-actions">
+                <button class="btn" id="blogFpDeleteBtn" onclick="deleteBlogspotFromPage()" style="color:#ef4444">Eliminar</button>
+                <button class="btn btn-primary" id="blogFpEditBtn" onclick="toggleBlogEdit()">Editar</button>
             </div>
         </div>
-    </div>
 
-    <!-- Blogspot Editor -->
-    <div id="blogspotEditor" class="modal-overlay" onclick="if(event.target===this)closeBlogspotEditor()">
-        <div class="modal">
-            <div class="blog-editor-header">
-                <h3 id="blogspotEditorTitle">Nuevo Blogspot</h3>
-                <button class="modal-close" onclick="closeBlogspotEditor()">&times;</button>
+        <!-- View Mode -->
+        <div id="blogFpView" class="blog-fp-view">
+            <span class="blog-fp-view-tag" id="blogFpViewTag"></span>
+            <h1 class="blog-fp-view-title" id="blogFpViewTitle"></h1>
+            <div class="blog-fp-view-meta">
+                <span id="blogFpViewDate"></span>
+                <span>·</span>
+                <span id="blogFpViewCategory"></span>
+                <span>·</span>
+                <span id="blogFpViewWords"></span>
             </div>
-            <div class="blog-editor-body">
-                <input type="hidden" id="blogspotEditIndex" value="-1">
-                <div class="form-group"><label>Título</label><input type="text" id="blogspotTitle" placeholder="Título del blog..."></div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-                    <div class="form-group"><label>Etiqueta</label><select id="blogspotTag">
-                        <option value="Idea">💡 Idea</option>
-                        <option value="Borrador">📝 Borrador</option>
-                        <option value="Publicado">✅ Publicado</option>
-                        <option value="Pendiente">⏳ Pendiente</option>
-                    </select></div>
-                    <div class="form-group"><label>Categoría</label><select id="blogspotCategory">
-                        <option value="General">General</option>
-                        <option value="Seguridad">Seguridad</option>
-                        <option value="Tecnología">Tecnología</option>
-                        <option value="Consejos">Consejos</option>
-                        <option value="Noticias">Noticias</option>
-                        <option value="Casos de Éxito">Casos de Éxito</option>
-                    </select></div>
-                </div>
-                <div class="form-group"><label>Contenido</label><div id="blogspotQuillEditor" style="height:280px"></div></div>
+            <div class="blog-fp-view-content" id="blogFpViewContent"></div>
+        </div>
+
+        <!-- Edit Mode -->
+        <div id="blogFpEdit" class="blog-fp-edit" style="display:none">
+            <div class="blog-fp-edit-meta">
+                <div class="form-group" style="grid-column:1/3"><label>Título</label><input type="text" id="blogspotTitle" placeholder="Título del blog..."></div>
+                <div class="form-group"><label>Etiqueta</label><select id="blogspotTag">
+                    <option value="Idea">Idea</option>
+                    <option value="Borrador">Borrador</option>
+                    <option value="Publicado">Publicado</option>
+                    <option value="Pendiente">Pendiente</option>
+                </select></div>
+                <div class="form-group"><label>Categoría</label><select id="blogspotCategory">
+                    <option value="General">General</option>
+                    <option value="Seguridad">Seguridad</option>
+                    <option value="Tecnología">Tecnología</option>
+                    <option value="Consejos">Consejos</option>
+                    <option value="Noticias">Noticias</option>
+                    <option value="Casos de Éxito">Casos de Éxito</option>
+                </select></div>
             </div>
-            <div class="blog-editor-footer">
-                <button class="btn" onclick="closeBlogspotEditor()">Cancelar</button>
-                <button class="btn" onclick="previewBlogspot()">Vista Previa</button>
-                <button class="btn btn-primary" onclick="saveBlogspot()">Guardar</button>
+            <div id="blogspotQuillEditor" style="height:450px"></div>
+            <div class="blog-fp-edit-actions">
+                <button class="btn" onclick="toggleBlogEdit()">Cancelar</button>
+                <button class="btn btn-primary" onclick="saveBlogspotFromPage()">Guardar Cambios</button>
             </div>
         </div>
     </div>
@@ -3039,6 +3059,7 @@ function deleteSocialPost(idx){if(confirm('¿Eliminar este post?')){socialPosts.
 // ===== BLOGSPOTS =====
 let blogspots=JSON.parse(localStorage.getItem('sts_blogspots')||'[]');
 let blogspotQuill=null;
+let currentBlogspotIdx=-1;
 function saveBlogspots(){localStorage.setItem('sts_blogspots',JSON.stringify(blogspots));}
 
 function stripHtml(html){const tmp=document.createElement('div');tmp.innerHTML=html;return tmp.textContent||tmp.innerText||'';}
@@ -3053,7 +3074,7 @@ function renderBlogspots(){
         const excerpt=stripHtml(b.content).substring(0,150);
         const tagClass=(b.tag||'idea').toLowerCase();
         const category=b.category||'General';
-        return `<div class="blogspot-card" onclick="openBlogspotViewer(${i})">
+        return `<div class="blogspot-card" onclick="openBlogspotFullpage(${i})">
             <div class="blogspot-banner">
                 <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 <span class="blogspot-tag-badge ${tagClass}">${b.tag}</span>
@@ -3067,29 +3088,90 @@ function renderBlogspots(){
                     <span class="blogspot-date">${new Date(b.date).toLocaleDateString('es',{day:'2-digit',month:'short',year:'numeric'})}</span>
                     <span style="font-size:10px;color:var(--text-light);background:var(--bg-body);padding:1px 6px;border-radius:4px">${category}</span>
                 </div>
-                <div class="blogspot-actions" onclick="event.stopPropagation()">
-                    <button class="action-btn" onclick="event.stopPropagation();openBlogspotEditor(${i})" title="Editar"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-                    <button class="action-btn del" onclick="event.stopPropagation();deleteBlogspot(${i})" title="Eliminar"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:14px;height:14px"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
-                </div>
             </div>
         </div>`;
     }).join('');
 }
 
-function openBlogspotViewer(idx){
+function openBlogspotFullpage(idx){
+    currentBlogspotIdx=idx;
     const b=blogspots[idx];
     const tagClass=(b.tag||'idea').toLowerCase();
-    document.getElementById('viewerTag').className='blog-viewer-tag blogspot-tag-badge '+tagClass;
-    document.getElementById('viewerTag').textContent=b.tag;
-    document.getElementById('viewerTitle').textContent=b.title;
-    document.getElementById('viewerDate').textContent=new Date(b.date).toLocaleDateString('es',{day:'2-digit',month:'long',year:'numeric'});
+    document.getElementById('blogFpTitle').textContent=b.title;
+    document.getElementById('blogFpViewTag').className='blog-fp-view-tag blogspot-tag-badge '+tagClass;
+    document.getElementById('blogFpViewTag').textContent=b.tag;
+    document.getElementById('blogFpViewTitle').textContent=b.title;
+    document.getElementById('blogFpViewDate').textContent=new Date(b.date).toLocaleDateString('es',{day:'2-digit',month:'long',year:'numeric'});
+    document.getElementById('blogFpViewCategory').textContent=b.category||'General';
     const wordCount=stripHtml(b.content).trim().split(/\s+/).filter(w=>w).length;
-    document.getElementById('viewerWordCount').textContent=wordCount+' palabras';
-    document.getElementById('viewerContent').innerHTML=b.content;
-    document.getElementById('viewerEditBtn').setAttribute('onclick','closeBlogspotViewer();openBlogspotEditor('+idx+')');
-    document.getElementById('blogspotViewer').classList.add('active');
+    document.getElementById('blogFpViewWords').textContent=wordCount+' palabras';
+    document.getElementById('blogFpViewContent').innerHTML=b.content;
+    document.getElementById('blogFpView').style.display='block';
+    document.getElementById('blogFpEdit').style.display='none';
+    document.getElementById('blogFpEditBtn').textContent='Editar';
+    document.getElementById('blogspotFullpage').classList.add('active');
 }
-function closeBlogspotViewer(){document.getElementById('blogspotViewer').classList.remove('active');}
+function closeBlogspotFullpage(){
+    document.getElementById('blogspotFullpage').classList.remove('active');
+    currentBlogspotIdx=-1;
+    if(blogspotQuill){blogspotQuill.root.innerHTML='';}
+}
+
+function toggleBlogEdit(){
+    const viewDiv=document.getElementById('blogFpView');
+    const editDiv=document.getElementById('blogFpEdit');
+    const editBtn=document.getElementById('blogFpEditBtn');
+    if(editDiv.style.display==='none'){
+        if(currentBlogspotIdx>=0){
+            const b=blogspots[currentBlogspotIdx];
+            document.getElementById('blogspotTitle').value=b.title;
+            document.getElementById('blogspotTag').value=b.tag;
+            document.getElementById('blogspotCategory').value=b.category||'General';
+        }
+        viewDiv.style.display='none';
+        editDiv.style.display='block';
+        editBtn.textContent='Vista Previa';
+        setTimeout(()=>{
+            if(!blogspotQuill){
+                blogspotQuill=new Quill('#blogspotQuillEditor',{theme:'snow',placeholder:'Escribe tu contenido aquí...',modules:{toolbar:[[{header:[1,2,3,4,5,6,false]}],[{font:[]},{size:['small',false,'large','huge']}],['bold','italic','underline','strike',[{color:[]},{background:[]}],[{script:'sub'},{script:'super'}]],['blockquote','code-block'],[{align:[]},{direction:'rtl'}],[{list:'ordered'},{list:'bullet'},{list:'check'}],[{indent:'-1'},{indent:'+1'}],['link','image','video'],['clean']]}});
+                blogspotQuill.on('text-change',function(){});
+            }
+            if(currentBlogspotIdx>=0){blogspotQuill.root.innerHTML=blogspots[currentBlogspotIdx].content||'';}
+        },100);
+    }else{
+        viewDiv.style.display='block';
+        editDiv.style.display='none';
+        editBtn.textContent='Editar';
+    }
+}
+
+function saveBlogspotFromPage(){
+    if(currentBlogspotIdx===-1){
+        saveNewBlogspotFromPage();
+        return;
+    }
+    const title=document.getElementById('blogspotTitle').value.trim();
+    const content=blogspotQuill?blogspotQuill.root.innerHTML:'';
+    const tag=document.getElementById('blogspotTag').value;
+    const category=document.getElementById('blogspotCategory').value;
+    if(!title){showToast('Escribe un título','error');return;}
+    if(!content||blogspotQuill.getText().trim()===''){showToast('Escribe el contenido','error');return;}
+    blogspots[currentBlogspotIdx]={...blogspots[currentBlogspotIdx],title,content,tag,category};
+    saveBlogspots();
+    toggleBlogEdit();
+    openBlogspotFullpage(currentBlogspotIdx);
+    renderBlogspots();
+    showToast('Blogspot actualizado','success');
+}
+
+function deleteBlogspotFromPage(){
+    if(!confirm('¿Eliminar este blogspot?'))return;
+    blogspots.splice(currentBlogspotIdx,1);
+    saveBlogspots();
+    closeBlogspotFullpage();
+    renderBlogspots();
+    showToast('Blogspot eliminado','success');
+}
 
 function openBlogspotEditor(idx){
     const isEdit=idx!==undefined&&idx>=0;
@@ -3108,7 +3190,7 @@ function openBlogspotEditor(idx){
     document.getElementById('blogspotEditor').classList.add('active');
     setTimeout(()=>{
         if(!blogspotQuill){
-            blogspotQuill=new Quill('#blogspotQuillEditor',{theme:'snow',placeholder:'Escribe tu contenido aquí...',modules:{toolbar:[[{header:[1,2,3,false]}],['bold','italic','underline','strike'],[{color:[]},{background:[]}],[{list:'ordered'},{list:'bullet'}],['blockquote','code-block'],['link','image'],['clean']]}});
+            blogspotQuill=new Quill('#blogspotQuillEditor',{theme:'snow',placeholder:'Escribe tu contenido aquí...',modules:{toolbar:[[{header:[1,2,3,4,5,6,false]}],[{font:[]},{size:['small',false,'large','huge']}],['bold','italic','underline','strike',[{color:[]},{background:[]}],[{script:'sub'},{script:'super'}]],['blockquote','code-block'],[{align:[]},{direction:'rtl'}],[{list:'ordered'},{list:'bullet'},{list:'check'}],[{indent:'-1'},{indent:'+1'}],['link','image','video'],['clean']]}});
         }
         if(isEdit){blogspotQuill.root.innerHTML=blogspots[idx].content||'';}
         else{blogspotQuill.root.innerHTML='';}
@@ -3116,21 +3198,43 @@ function openBlogspotEditor(idx){
 }
 function closeBlogspotEditor(){document.getElementById('blogspotEditor').classList.remove('active');}
 
-function previewBlogspot(){
-    const title=document.getElementById('blogspotTitle').value.trim()||'Sin título';
+function openNewBlogspotFullpage(){
+    currentBlogspotIdx=-1;
+    document.getElementById('blogFpTitle').textContent='Nuevo Blogspot';
+    document.getElementById('blogFpViewTag').className='blog-fp-view-tag blogspot-tag-badge idea';
+    document.getElementById('blogFpViewTag').textContent='Idea';
+    document.getElementById('blogFpViewTitle').textContent='';
+    document.getElementById('blogFpViewDate').textContent=new Date().toLocaleDateString('es',{day:'2-digit',month:'long',year:'numeric'});
+    document.getElementById('blogFpViewCategory').textContent='General';
+    document.getElementById('blogFpViewWords').textContent='0 palabras';
+    document.getElementById('blogFpViewContent').innerHTML='';
+    document.getElementById('blogspotTitle').value='';
+    document.getElementById('blogspotTag').value='Idea';
+    document.getElementById('blogspotCategory').value='General';
+    document.getElementById('blogFpView').style.display='none';
+    document.getElementById('blogFpEdit').style.display='block';
+    document.getElementById('blogFpEditBtn').textContent='Vista Previa';
+    document.getElementById('blogspotFullpage').classList.add('active');
+    setTimeout(()=>{
+        if(!blogspotQuill){
+            blogspotQuill=new Quill('#blogspotQuillEditor',{theme:'snow',placeholder:'Escribe tu contenido aquí...',modules:{toolbar:[[{header:[1,2,3,4,5,6,false]}],[{font:[]},{size:['small',false,'large','huge']}],['bold','italic','underline','strike',[{color:[]},{background:[]}],[{script:'sub'},{script:'super'}]],['blockquote','code-block'],[{align:[]},{direction:'rtl'}],[{list:'ordered'},{list:'bullet'},{list:'check'}],[{indent:'-1'},{indent:'+1'}],['link','image','video'],['clean']]}});
+        }
+        blogspotQuill.root.innerHTML='';
+    },100);
+}
+
+function saveNewBlogspotFromPage(){
+    const title=document.getElementById('blogspotTitle').value.trim();
     const content=blogspotQuill?blogspotQuill.root.innerHTML:'';
     const tag=document.getElementById('blogspotTag').value;
-    const tagClass=tag.toLowerCase();
-    const wordCount=stripHtml(content).trim().split(/\s+/).filter(w=>w).length;
-    document.getElementById('viewerTag').className='blog-viewer-tag blogspot-tag-badge '+tagClass;
-    document.getElementById('viewerTag').textContent=tag;
-    document.getElementById('viewerTitle').textContent=title;
-    document.getElementById('viewerDate').textContent=new Date().toLocaleDateString('es',{day:'2-digit',month:'long',year:'numeric'});
-    document.getElementById('viewerWordCount').textContent=wordCount+' palabras';
-    document.getElementById('viewerContent').innerHTML=content||'<p style="color:var(--text-light);font-style:italic">Sin contenido aún...</p>';
-    document.getElementById('viewerEditBtn').setAttribute('onclick','closeBlogspotViewer()');
-    document.getElementById('blogspotEditor').classList.remove('active');
-    document.getElementById('blogspotViewer').classList.add('active');
+    const category=document.getElementById('blogspotCategory').value;
+    if(!title){showToast('Escribe un título','error');return;}
+    if(!content||blogspotQuill.getText().trim()===''){showToast('Escribe el contenido','error');return;}
+    blogspots.push({id:Date.now(),title,content,tag,category,date:new Date().toISOString()});
+    saveBlogspots();
+    closeBlogspotFullpage();
+    renderBlogspots();
+    showToast('Blogspot creado','success');
 }
 
 function saveBlogspot(){
