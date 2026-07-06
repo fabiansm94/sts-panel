@@ -580,10 +580,12 @@
             .login-box input{font-size:16px !important;padding:12px !important;border-radius:10px !important}
             .reviews-grid{grid-template-columns:1fr !important;padding:12px 16px 16px !important}
             .review-card{padding:12px !important;min-height:auto !important}
+            .blogspots-grid{grid-template-columns:1fr !important}
         }
 
         @media (max-width: 1024px) and (min-width: 769px) {
             .reviews-grid{grid-template-columns:repeat(2,1fr) !important}
+            .blogspots-grid{grid-template-columns:repeat(2,1fr) !important}
         }
 
         @media (max-width: 480px) {
@@ -724,6 +726,16 @@
 .social-tab.active{color:#1a5276;border-bottom-color:#1a5276}
 .social-panel{display:none;padding:24px 32px 32px}
 .social-panel.active{display:block}
+.blogspots-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.blogspot-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:8px;transition:all 0.2s;cursor:pointer}
+.blogspot-card:hover{box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.blogspot-title{font-weight:700;font-size:14px;color:var(--text-dark);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.blogspot-excerpt{font-size:12px;color:var(--text-light);line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:1}
+.blogspot-footer{display:flex;justify-content:space-between;align-items:center;margin-top:auto}
+.blogspot-date{font-size:10px;color:var(--text-light)}
+.blogspot-tag{display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(26,82,118,0.1);color:#1a5276}
+.blogspot-actions{display:flex;gap:4px}
+.blogspot-actions .action-btn{padding:4px;border-radius:4px}
 .preview-container{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
 @media(max-width:900px){.preview-container{grid-template-columns:1fr}}
 .preview-editor{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px}
@@ -1085,6 +1097,7 @@
     <div class="social-tabs">
         <div class="social-tab active" onclick="switchSocialTab('calendar')">📅 Calendario</div>
         <div class="social-tab" onclick="switchSocialTab('preview')">👁 Vista Previa</div>
+        <div class="social-tab" onclick="switchSocialTab('blogspots')">📝 Blogspots</div>
     </div>
     <div id="socialCalendarPanel" class="social-panel active">
     <div class="social-calendar">
@@ -1496,8 +1509,19 @@
         </div>
     </div>
 
+    <div id="socialBlogspotsPanel" class="social-panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+            <h3 style="margin:0;color:var(--text-dark)">📝 Mis Ideas de Blog</h3>
+            <button class="btn btn-primary" onclick="openBlogspotModal()">+ Nuevo Blogspot</button>
+        </div>
+        <div id="blogspotsList" class="blogspots-grid"></div>
+        <div id="noBlogspots" class="hidden" style="text-align:center;padding:40px;color:var(--text-light)">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="width:48px;height:48px;margin:0 auto 12px;display:block;opacity:0.3"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+            <p>No hay blogspots aún. ¡Agrega tu primera idea!</p>
+        </div>
+    </div>
+
 </div>
-        <div id="excelFeedbackView" class="hidden">
             <div class="topbar">
                 <div class="topbar-left">
                     <div><h2>Feedback</h2><div class="breadcrumb">STS Security / <span>Feedback</span></div></div>
@@ -1661,6 +1685,25 @@
         </div>
     </div>
 
+
+    <!-- Blogspot Modal -->
+    <div id="blogspotModal" class="modal-overlay" onclick="if(event.target===this)closeBlogspotModal()">
+        <div class="modal" style="max-width:550px">
+            <div class="modal-header"><h3 id="blogspotModalTitle">Nuevo Blogspot</h3><button class="modal-close" onclick="closeBlogspotModal()">&times;</button></div>
+            <div class="modal-body">
+                <input type="hidden" id="blogspotEditIndex" value="-1">
+                <div class="form-group"><label>Título</label><input type="text" id="blogspotTitle" class="form-control" placeholder="Título del blog..."></div>
+                <div class="form-group"><label>Contenido / Idea</label><textarea id="blogspotContent" class="form-control" rows="6" placeholder="Escribe tu idea o borrador del blog..."></textarea></div>
+                <div class="form-group"><label>Etiqueta</label><select id="blogspotTag" class="form-control">
+                    <option value="Idea">Idea</option>
+                    <option value="Borrador">Borrador</option>
+                    <option value="Publicado">Publicado</option>
+                    <option value="Pendiente">Pendiente</option>
+                </select></div>
+            </div>
+            <div class="modal-footer"><button class="btn" onclick="closeBlogspotModal()">Cancelar</button><button class="btn btn-primary" onclick="saveBlogspot()">Guardar</button></div>
+        </div>
+    </div>
 
     <div class="toast-container" id="toastContainer"></div>
     </div>
@@ -2005,11 +2048,15 @@ function switchSocialTab(tab) {
     if (tab === 'calendar') {
         document.querySelectorAll('.social-tab')[0].classList.add('active');
         document.getElementById('socialCalendarPanel').classList.add('active');
-    } else {
+    } else if (tab === 'preview') {
         document.querySelectorAll('.social-tab')[1].classList.add('active');
         document.getElementById('socialPreviewPanel').classList.add('active');
         updateFBPreview();
         updateIGPreview();
+    } else if (tab === 'blogspots') {
+        document.querySelectorAll('.social-tab')[2].classList.add('active');
+        document.getElementById('socialBlogspotsPanel').classList.add('active');
+        renderBlogspots();
     }
 }
 
@@ -2898,6 +2945,66 @@ function saveSocialPost(){
     saveSocialPosts();closeSocialPostModal();renderSocialCalendar();showToast(idx>=0?'Post actualizado':'Post agregado','success');
 }
 function deleteSocialPost(idx){if(confirm('¿Eliminar este post?')){socialPosts.splice(idx,1);saveSocialPosts();renderSocialCalendar();showToast('Post eliminado','success');}}
+
+// ===== BLOGSPOTS =====
+let blogspots=JSON.parse(localStorage.getItem('sts_blogspots')||'[]');
+function saveBlogspots(){localStorage.setItem('sts_blogspots',JSON.stringify(blogspots));}
+
+function renderBlogspots(){
+    const list=document.getElementById('blogspotsList');
+    const noB=document.getElementById('noBlogspots');
+    if(!blogspots.length){list.innerHTML='';noB.classList.remove('hidden');return;}
+    noB.classList.add('hidden');
+    blogspots.sort((a,b)=>new Date(b.date)-new Date(a.date));
+    list.innerHTML=blogspots.map((b,i)=>{
+        return `<div class="blogspot-card" onclick="openBlogspotModal(${i})">
+            <div class="blogspot-title">${escapeHtml(b.title)}</div>
+            <div class="blogspot-excerpt">${escapeHtml(b.content)}</div>
+            <div class="blogspot-footer">
+                <span class="blogspot-tag">${b.tag}</span>
+                <span class="blogspot-date">${new Date(b.date).toLocaleDateString('es',{day:'2-digit',month:'short',year:'numeric'})}</span>
+            </div>
+            <div class="blogspot-actions" onclick="event.stopPropagation()">
+                <button class="action-btn" onclick="openBlogspotModal(${i})" title="Editar"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                <button class="action-btn del" onclick="deleteBlogspot(${i})" title="Eliminar"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function openBlogspotModal(idx){
+    document.getElementById('blogspotEditIndex').value=idx!==undefined?idx:-1;
+    document.getElementById('blogspotModalTitle').textContent=idx!==undefined?'Editar Blogspot':'Nuevo Blogspot';
+    if(idx!==undefined){
+        document.getElementById('blogspotTitle').value=blogspots[idx].title;
+        document.getElementById('blogspotContent').value=blogspots[idx].content;
+        document.getElementById('blogspotTag').value=blogspots[idx].tag;
+    }else{
+        document.getElementById('blogspotTitle').value='';
+        document.getElementById('blogspotContent').value='';
+        document.getElementById('blogspotTag').value='Idea';
+    }
+    document.getElementById('blogspotModal').classList.add('active');
+}
+
+function closeBlogspotModal(){document.getElementById('blogspotModal').classList.remove('active');}
+
+function saveBlogspot(){
+    const title=document.getElementById('blogspotTitle').value.trim();
+    const content=document.getElementById('blogspotContent').value.trim();
+    const tag=document.getElementById('blogspotTag').value;
+    const idx=parseInt(document.getElementById('blogspotEditIndex').value);
+    if(!title){showToast('Escribe un título','error');return;}
+    if(idx>=0){
+        blogspots[idx]={...blogspots[idx],title,content,tag};
+    }else{
+        blogspots.push({id:Date.now(),title,content,tag,date:new Date().toISOString()});
+    }
+    saveBlogspots();closeBlogspotModal();renderBlogspots();showToast(idx>=0?'Blogspot actualizado':'Blogspot agregado','success');
+}
+
+function deleteBlogspot(idx){if(confirm('¿Eliminar este blogspot?')){blogspots.splice(idx,1);saveBlogspots();renderBlogspots();showToast('Blogspot eliminado','success');}}
+
 function renderReviews(){
     const list=document.getElementById('reviewsList');
     const noR=document.getElementById('noReviews');
