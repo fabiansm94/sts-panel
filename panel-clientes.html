@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -11,6 +11,8 @@
     <meta name="apple-mobile-web-app-title" content="STS Security">
     <meta name="description" content="Panel de gestión de clientes STS Security">
     <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1007,6 +1009,86 @@
         .stat-value{font-size:22px;font-weight:800;color:var(--text-dark);line-height:1}
         .stat-label{font-size:11px;color:var(--text-light);font-weight:600;margin-top:2px}
 
+        .new-calendar-section{margin-bottom:40px}
+        .new-cal-header{background:linear-gradient(135deg,var(--navy,#2d3145) 0%,#1e2233 100%);border-radius:12px 12px 0 0;padding:20px 28px;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden}
+        .new-cal-header::after{content:'';position:absolute;top:0;right:0;width:200px;height:100%;background:linear-gradient(135deg,transparent 0%,rgba(61,156,210,0.12) 100%)}
+        .new-cal-header-left{display:flex;align-items:center;gap:14px;z-index:1}
+        .new-cal-header-left svg{width:36px;height:36px;fill:#fff;flex-shrink:0}
+        .new-cal-header-left h3{color:#fff;font-size:1.1rem;font-weight:700;margin:0}
+        .new-cal-header-left p{color:rgba(255,255,255,0.7);font-size:0.82rem;margin:2px 0 0;font-weight:500}
+        .new-cal-header-right{color:#fff;text-align:right;z-index:1}
+        .new-cal-header-right .month{font-size:1.05rem;font-weight:700}
+        .new-cal-header-right .count{font-size:0.78rem;color:rgba(255,255,255,0.65);margin-top:2px}
+        .new-cal-table-wrap{background:var(--bg-card,#fff);border-radius:0 0 12px 12px;box-shadow:0 4px 20px rgba(0,0,0,0.08);overflow:hidden;margin-bottom:4px}
+        .new-cal-table{width:100%;border-collapse:collapse}
+        .new-cal-table thead th{background:linear-gradient(180deg,#f9fafb 0%,#f3f4f6 100%);padding:12px 16px;text-align:left;font-size:0.72rem;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:0.5px;border-bottom:2px solid #e5e7eb}
+        .new-cal-table tbody tr{border-bottom:1px solid #e5e7eb;transition:all 0.2s ease}
+        .new-cal-table tbody tr:hover{background:rgba(61,156,210,0.06)}
+        .new-cal-table tbody tr:last-child{border-bottom:none}
+        .new-cal-table tbody td{padding:14px 16px;vertical-align:top}
+        .nc-week-cell{background:linear-gradient(135deg,#2d3145 0%,#1e2233 100%);color:#fff;font-weight:700;font-size:0.82rem;text-align:center;width:70px}
+        .nc-week-cell.linkedin{background:linear-gradient(135deg,#0a66c2 0%,#004182 100%)}
+        .nc-week-cell.instagram{background:linear-gradient(135deg,#833ab4 0%,#6b2fa0 100%)}
+        .nc-week-cell.facebook{background:linear-gradient(135deg,#1877f2 0%,#0d5bbd 100%)}
+        .new-cal-table tbody tr:hover .nc-week-cell{background:linear-gradient(135deg,#3d9cd2 0%,#2a7aab 100%)}
+        .new-cal-table tbody tr:hover .nc-week-cell.linkedin{background:linear-gradient(135deg,#0077b5 0%,#0a66c2 100%)}
+        .new-cal-table tbody tr:hover .nc-week-cell.instagram{background:linear-gradient(135deg,#a855f7 0%,#833ab4 100%)}
+        .new-cal-table tbody tr:hover .nc-week-cell.facebook{background:linear-gradient(135deg,#4267B2 0%,#1877f2 100%)}
+        .nc-date-cell{font-weight:700;color:#111827;white-space:nowrap}
+        .nc-date-cell .day{font-size:1.15rem;color:#2d3145}
+        .nc-date-cell .weekday{font-size:0.75rem;color:#6b7280;font-weight:500}
+        .nc-type-badge{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:0.72rem;font-weight:600;white-space:nowrap}
+        .nc-type-badge::before{content:'';width:6px;height:6px;border-radius:50%}
+        .nc-topic-cell{font-weight:600;color:#111827;line-height:1.45;max-width:300px}
+        .nc-obj-cell{color:#374151;font-size:0.85rem;line-height:1.45;max-width:240px}
+        .nc-format-cell{display:inline-flex;align-items:center;gap:5px;background:#2d3145;color:#fff;padding:6px 14px;border-radius:7px;font-size:0.72rem;font-weight:600;white-space:nowrap}
+        .nc-separator td{padding:0;background:#f3f4f6}
+        .nc-separator .sep-content{display:flex;align-items:center;gap:12px;padding:10px 16px}
+        .nc-separator .sep-label{color:#fff;padding:6px 16px;border-radius:20px;font-weight:700;font-size:0.82rem;white-space:nowrap}
+        .nc-separator .sep-dates{color:#6b7280;font-size:0.8rem}
+        .nc-footer-stats{display:flex;justify-content:space-around;padding:18px 28px;background:linear-gradient(180deg,#f9fafb 0%,#fff 100%);border-top:2px solid #e5e7eb;border-radius:0 0 12px 12px}
+        .nc-footer-stat{text-align:center}
+        .nc-footer-stat .num{font-size:1.5rem;font-weight:800;color:#3d9cd2}
+        .nc-footer-stat .lbl{font-size:0.72rem;color:#6b7280;margin-top:2px}
+        .nc-badge-perspectiva{background:#ede9fe;color:#6d28d9}.nc-badge-perspectiva::before{background:#6d28d9}
+        .nc-badge-educacion{background:#d1fae5;color:#047857}.nc-badge-educacion::before{background:#047857}
+        .nc-badge-innovacion{background:#fef3c7;color:#b45309}.nc-badge-innovacion::before{background:#b45309}
+        .nc-badge-riesgo{background:#fee2e2;color:#b91c1c}.nc-badge-riesgo::before{background:#b91c1c}
+        .nc-badge-estrategica{background:#e0e7ff;color:#4338ca}.nc-badge-estrategica::before{background:#4338ca}
+        .nc-badge-cultura{background:#fce7f3;color:#be185d}.nc-badge-cultura::before{background:#be185d}
+        .nc-badge-liderazgo{background:#f3f4f6;color:#2d3145}.nc-badge-liderazgo::before{background:#2d3145}
+        .nc-badge-experiencia{background:#ccfbf1;color:#0f766e}.nc-badge-experiencia::before{background:#0f766e}
+        .nc-badge-tendencias{background:#dbeafe;color:#1d4ed8}.nc-badge-tendencias::before{background:#1d4ed8}
+        .nc-badge-opinion{background:#ffedd5;color:#c2410c}.nc-badge-opinion::before{background:#c2410c}
+        .nc-badge-marca{background:#fee2e2;color:#dc2626}.nc-badge-marca::before{background:#dc2626}
+        .nc-badge-branding{background:#fce7f3;color:#be185d}.nc-badge-branding::before{background:#be185d}
+        .nc-badge-sector{background:#dbeafe;color:#1d4ed8}.nc-badge-sector::before{background:#1d4ed8}
+        .nc-badge-institucional{background:#e0e7ff;color:#4338ca}.nc-badge-institucional::before{background:#4338ca}
+        .nc-badge-fb-img{background:#dbeafe;color:#1d4ed8}.nc-badge-fb-img::before{background:#1d4ed8}
+        .nc-badge-fb-video{background:#fee2e2;color:#dc2626}.nc-badge-fb-video::before{background:#dc2626}
+        .nc-badge-fb-info{background:#d1fae5;color:#047857}.nc-badge-fb-info::before{background:#047857}
+        .nc-badge-fb-caso{background:#fef3c7;color:#b45309}.nc-badge-fb-caso::before{background:#b45309}
+        .nc-badge-fb-consejos{background:#ede9fe;color:#6d28d9}.nc-badge-fb-consejos::before{background:#6d28d9}
+        .nc-badge-fb-testimonio{background:#ccfbf1;color:#0f766e}.nc-badge-fb-testimonio::before{background:#0f766e}
+        .nc-badge-fb-pregunta{background:#fce7f3;color:#be185d}.nc-badge-fb-pregunta::before{background:#be185d}
+        .nc-badge-fb-cta{background:#f3f4f6;color:#2d3145}.nc-badge-fb-cta::before{background:#2d3145}
+        .nc-badge-conciencia{background:#fee2e2;color:#b91c1c}.nc-badge-conciencia::before{background:#b91c1c}
+        .nc-badge-confianza{background:#d1fae5;color:#047857}.nc-badge-confianza::before{background:#047857}
+        .nc-badge-valor{background:#ede9fe;color:#6d28d9}.nc-badge-valor::before{background:#6d28d9}
+        .nc-badge-autoridad{background:#dbeafe;color:#1d4ed8}.nc-badge-autoridad::before{background:#1d4ed8}
+        .nc-badge-engagement{background:#fce7f3;color:#be185d}.nc-badge-engagement::before{background:#be185d}
+        .nc-badge-conversion{background:#fef3c7;color:#b45309}.nc-badge-conversion::before{background:#b45309}
+        .new-cal-download{display:flex;gap:10px;margin-top:16px}
+        .new-cal-download .dl-btn{background:linear-gradient(135deg,#3d9cd2 0%,#2a7aab 100%);color:#fff;border:none;padding:10px 18px;border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s;font-family:inherit}
+        .new-cal-download .dl-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(61,156,210,0.35)}
+        .new-cal-download .dl-btn.pdf{background:linear-gradient(135deg,#dc2626 0%,#b91c1c 100%)}
+        .new-cal-download .dl-btn.excel{background:linear-gradient(135deg,#16a34a 0%,#15803d 100%)}
+        [contenteditable="true"]{outline:none;cursor:text;border-radius:3px;transition:background 0.2s,box-shadow 0.2s}
+        [contenteditable="true"]:hover{background:rgba(61,156,210,0.08)}
+        [contenteditable="true"]:focus{background:rgba(61,156,210,0.12);box-shadow:0 0 0 2px rgba(61,156,210,0.25)}
+        @media(max-width:1200px){.new-cal-table-wrap{overflow-x:auto}.new-cal-table{min-width:900px}}
+        @media(max-width:768px){.cal-grid{grid-template-columns:repeat(4,1fr)}}
+        @media(max-width:480px){.cal-grid{grid-template-columns:repeat(2,1fr)}.new-cal-header{flex-direction:column;gap:12px;text-align:center}.new-cal-header-right{text-align:center}}
 
     </style>
 </head>
@@ -1241,172 +1323,126 @@
     </div>
     <div id="socialCalendarPanel" class="social-panel active">
     <div class="social-calendar">
-        <div class="cal-header"><h3>Calendario Social Media - STS Security</h3><p>Mes Completo (4 Semanas)</p></div>
-        <div class="cal-week">
-            <h3 class="week-title">Semana 1</h3>
-            <div class="cal-grid" id="calGrid1">
-            <div class="cal-day"><div class="day-header"><span class="day-title">Lunes</span></div><div class="day-posts">
-                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Educativo</span></div><div class="post-content">📚 ¿Sabías que el 70% de los robos en condominios ocurren por accesos no controlados? El control de acceso es fundamental para la seguridad de tu propiedad. En STS Security ofrecemos sistemas de control peatonal y vehicular con tecnología de punta. ¿Tu condominio tiene control de acceso? Escríbenos y te asesoramos. 📞 [teléfono] #seguridad #condominios #costarica</div></div>
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel (30 seg)</span></div><div class="post-content">🎬 Video: "3 formas de mejorar la seguridad de tu condominio HOY" - Texto en pantalla con música de fondo: 1. Cámaras de alta definición 2. Control de acceso 3. Monitoreo 24/7 - CTA al final: "¿Necesitas ayuda? Link en bio"</div></div>
-                <div class="cal-post li-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span><span class="post-type">Articulo</span></div><div class="post-content">📰 Artículo: "Tendencias en seguridad inteligente para condominios en 2026" - Breve resumen de 3 tendencias: IA en cámaras, monitoreo remoto, integración de sistemas. Enlace al blog completo.</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Martes</span></div><div class="day-posts">
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Stories (3)</span></div><div class="post-content">📱 Story 1: Foto del equipo de STS trabajando - "Así comenzamos el día" / Story 2: Encuesta "¿Tu propiedad tiene monitoreo 24/7? SÍ/NO" / Story 3: Dato rápido "Las alarmas reducen los robos en un 60%"</div></div>
-                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge fb">Facebook</span> <span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Miércoles</span></div><div class="day-posts">
-                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Caso de éxito</span></div><div class="post-content">✅ CASO DE ÉXITO: Condominio Vista del Valle, Escazú 📍 Escazú, San José 🏢 40 apartamentos INSTALAMOS: • 16 cámaras IP HD • Control de acceso vehicular y peatonal • Monitoreo remoto 24/7 RESULTADO: 0 incidentes en 6 meses. "La tranquilidad no tiene precio" - Administrador. ¿Quieres algo similar? Contáctanos 📞 [teléfono]</div></div>
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Carrusel (5 slides)</span></div><div class="post-content">📱 Slide 1: "Caso de Éxito: Condominio en Escazú" / Slide 2: "ANTES: 4 cámaras antiguas, sin monitoreo" / Slide 3: "SOLUCIÓN: 16 cámaras + control de acceso + monitoreo 24/7" / Slide 4: "DESPUÉS: 0 incidentes en 6 meses" / Slide 5: "¿Quieres proteger tu condominio? Contáctanos"</div></div>
-                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Jueves</span></div><div class="day-posts">
-                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Pregunta/Engagement</span></div><div class="post-content">🤔 PREGUNTA: ¿Cuántas cámaras cree que necesita un condominio de 30 apartamentos para cobertura completa? A) 8-10 cámaras B) 12-16 cámaras C) 20+ cámaras Déjenos su respuesta en los comentarios 👇</div></div>
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel (30 seg)</span></div><div class="post-content">🎬 "Error común #1 en seguridad" - Video mostrando una cámara mal ubicada - Texto: "Esta cámara no cubre nada. Así se ve una mala instalación" - Solución: "Así debería verse" (buena instalación) - CTA: "No cometas este error. Contáctanos"</div></div>
-                <div class="cal-post li-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span><span class="post-type">Post de liderazgo</span></div><div class="post-content">💡 "La seguridad no es un gasto, es una inversión" - Reflexión sobre cómo las empresas que invierten en seguridad tienen menos pérdidas. Posicionar a STS como expertos.</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Viernes</span></div><div class="day-posts">
-                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Promoción</span></div><div class="post-content">🎯 OFERTA: Consulta de seguridad GRATIS Evaluación completa de tu sistema actual + Recomendaciones personalizadas + Cotización sin compromiso 📅 Solo este mes 📞 Llama al [teléfono]</div></div>
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Post foto</span></div><div class="post-content">📸 Foto de un trabajo completado - Texto: "Así queda un sistema de seguridad profesional. 📹 8 cámaras IP 🔐 Control de acceso 📱 Monitoreo desde celular ¿Listo para proteger tu propiedad? Link en bio"</div></div>
-                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Sábado</span></div><div class="day-posts">
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Stories</span></div><div class="post-content">📱 Story 1: Foto del equipo celebrando fin de semana - "¡Buen fin de semana! Recuerda: tu seguridad no descansa" / Story 2: Dato rápido "El 80% de los robos ocurren cuando no hay nadie"</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Domingo</span></div><div class="day-posts">
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel motivacional</span></div><div class="post-content">🎬 Video de paisajes de Costa Rica con texto: "Tu tranquilidad es nuestra misión. 🇨🇷 STS Security - Seguridad 24/7 para tu hogar y negocio"</div></div>
-            </div></div>
+        <div class="new-calendar-section">
+            <div class="new-cal-header" style="background:linear-gradient(135deg,#0a66c2 0%,#004182 100%)">
+                <div class="new-cal-header-left">
+                    <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    <div>
+                        <h3>Calendario de Contenido</h3>
+                        <p>Estrategia Marketing Digital LinkedIn</p>
+                    </div>
+                </div>
+                <div class="new-cal-header-right">
+                    <div class="month">Julio - Agosto 2026</div>
+                    <div class="count">12 publicaciones programadas</div>
+                </div>
+            </div>
+            <div class="new-cal-table-wrap">
+                <table class="new-cal-table">
+                    <thead><tr><th>Semana</th><th>Fecha</th><th>Tipo de contenido</th><th>Tema</th><th>Objetivo</th><th>Formato</th></tr></thead>
+                    <tbody>
+                        <tr class="nc-separator"><td colspan="6"><div class="sep-content"><span class="sep-label" style="background:linear-gradient(135deg,#0a66c2 0%,#004182 100%)">Semana 1</span><span class="sep-dates">13 - 17 de Julio, 2026</span></div></td></tr>
+                        <tr><td class="nc-week-cell linkedin">S1</td><td class="nc-date-cell"><div class="day">13</div><div class="weekday">Lunes</div></td><td><span class="nc-type-badge nc-badge-perspectiva" contenteditable="true">Perspectiva STS</span></td><td class="nc-topic-cell" contenteditable="true">La seguridad empresarial ya no se trata solamente de proteger, sino de anticipar</td><td class="nc-obj-cell" contenteditable="true">Presentar la visión de STS sobre la evolución de la seguridad</td><td><span class="nc-format-cell" contenteditable="true">Post texto + imagen corporativa</span></td></tr>
+                        <tr><td class="nc-week-cell linkedin">S1</td><td class="nc-date-cell"><div class="day">15</div><div class="weekday">Miércoles</div></td><td><span class="nc-type-badge nc-badge-educacion" contenteditable="true">Educación</span></td><td class="nc-topic-cell" contenteditable="true">5 errores que pueden debilitar el control de acceso de una organización</td><td class="nc-obj-cell" contenteditable="true">Demostrar conocimiento y generar valor</td><td><span class="nc-format-cell" contenteditable="true">Imagen corporativa</span></td></tr>
+                        <tr><td class="nc-week-cell linkedin">S1</td><td class="nc-date-cell"><div class="day">17</div><div class="weekday">Viernes</div></td><td><span class="nc-type-badge nc-badge-innovacion" contenteditable="true">Innovación</span></td><td class="nc-topic-cell" contenteditable="true">De cámaras tradicionales a inteligencia aplicada: la evolución de la videovigilancia</td><td class="nc-obj-cell" contenteditable="true">Introducir la importancia de la analítica y tecnología</td><td><span class="nc-format-cell" contenteditable="true">Imagen corporativa</span></td></tr>
+                        <tr class="nc-separator"><td colspan="6"><div class="sep-content"><span class="sep-label" style="background:linear-gradient(135deg,#0a66c2 0%,#004182 100%)">Semana 2</span><span class="sep-dates">20 - 24 de Julio, 2026</span></div></td></tr>
+                        <tr><td class="nc-week-cell linkedin">S2</td><td class="nc-date-cell"><div class="day">20</div><div class="weekday">Lunes</div></td><td><span class="nc-type-badge nc-badge-riesgo" contenteditable="true">Gestión de riesgo</span></td><td class="nc-topic-cell" contenteditable="true">¿Su empresa está comprando seguridad o solamente equipos?</td><td class="nc-obj-cell" contenteditable="true">Cambiar la percepción de inversión en seguridad</td><td><span class="nc-format-cell" contenteditable="true">Post de opinión</span></td></tr>
+                        <tr><td class="nc-week-cell linkedin">S2</td><td class="nc-date-cell"><div class="day">22</div><div class="weekday">Miércoles</div></td><td><span class="nc-type-badge nc-badge-estrategica" contenteditable="true">Solución estratégica</span></td><td class="nc-topic-cell" contenteditable="true">La transformación del control de accesos en condominios modernos</td><td class="nc-obj-cell" contenteditable="true">Posicionar Portería Virtual como una evolución operativa</td><td><span class="nc-format-cell" contenteditable="true">Imagen corporativa</span></td></tr>
+                        <tr><td class="nc-week-cell linkedin">S2</td><td class="nc-date-cell"><div class="day">24</div><div class="weekday">Viernes</div></td><td><span class="nc-type-badge nc-badge-cultura" contenteditable="true">Cultura empresarial</span></td><td class="nc-topic-cell" contenteditable="true">La tecnología no reemplaza una estrategia de seguridad: la fortalece</td><td class="nc-obj-cell" contenteditable="true">Humanizar la marca y generar conversación</td><td><span class="nc-format-cell" contenteditable="true">Imagen + reflexión</span></td></tr>
+                        <tr class="nc-separator"><td colspan="6"><div class="sep-content"><span class="sep-label" style="background:linear-gradient(135deg,#0a66c2 0%,#004182 100%)">Semana 3</span><span class="sep-dates">27 - 31 de Julio, 2026</span></div></td></tr>
+                        <tr><td class="nc-week-cell linkedin">S3</td><td class="nc-date-cell"><div class="day">27</div><div class="weekday">Lunes</div></td><td><span class="nc-type-badge nc-badge-liderazgo" contenteditable="true">Liderazgo STS</span></td><td class="nc-topic-cell" contenteditable="true">El futuro de la seguridad será integrado: personas, procesos y tecnología</td><td class="nc-obj-cell" contenteditable="true">Posicionar a STS como referente estratégico</td><td><span class="nc-format-cell" contenteditable="true">Post largo LinkedIn</span></td></tr>
+                        <tr><td class="nc-week-cell linkedin">S3</td><td class="nc-date-cell"><div class="day">29</div><div class="weekday">Miércoles</div></td><td><span class="nc-type-badge nc-badge-educacion" contenteditable="true">Educación empresarial</span></td><td class="nc-topic-cell" contenteditable="true">Qué debe evaluar una empresa antes de invertir en videovigilancia</td><td class="nc-obj-cell" contenteditable="true">Hablarle a gerentes y tomadores de decisión</td><td><span class="nc-format-cell" contenteditable="true">Imagen corporativa</span></td></tr>
+                        <tr><td class="nc-week-cell linkedin">S3</td><td class="nc-date-cell"><div class="day">31</div><div class="weekday">Viernes</div></td><td><span class="nc-type-badge nc-badge-experiencia" contenteditable="true">Experiencia STS</span></td><td class="nc-topic-cell" contenteditable="true">Lo que hemos aprendido implementando soluciones de seguridad</td><td class="nc-obj-cell" contenteditable="true">Construir confianza mediante experiencia</td><td><span class="nc-format-cell" contenteditable="true">Storytelling</span></td></tr>
+                        <tr class="nc-separator"><td colspan="6"><div class="sep-content"><span class="sep-label" style="background:linear-gradient(135deg,#0a66c2 0%,#004182 100%)">Semana 4</span><span class="sep-dates">3 - 7 de Agosto, 2026</span></div></td></tr>
+                        <tr><td class="nc-week-cell linkedin">S4</td><td class="nc-date-cell"><div class="day">3</div><div class="weekday">Lunes</div></td><td><span class="nc-type-badge nc-badge-tendencias" contenteditable="true">Tendencias</span></td><td class="nc-topic-cell" contenteditable="true">3 tendencias que están transformando la seguridad electrónica</td><td class="nc-obj-cell" contenteditable="true">Mostrar innovación y visión de futuro</td><td><span class="nc-format-cell" contenteditable="true">Imagen corporativa</span></td></tr>
+                        <tr><td class="nc-week-cell linkedin">S4</td><td class="nc-date-cell"><div class="day">5</div><div class="weekday">Miércoles</div></td><td><span class="nc-type-badge nc-badge-opinion" contenteditable="true">Opinión</span></td><td class="nc-topic-cell" contenteditable="true">Más tecnología no siempre significa más seguridad</td><td class="nc-obj-cell" contenteditable="true">Generar debate profesional</td><td><span class="nc-format-cell" contenteditable="true">Post reflexión</span></td></tr>
+                        <tr><td class="nc-week-cell linkedin">S4</td><td class="nc-date-cell"><div class="day">7</div><div class="weekday">Viernes</div></td><td><span class="nc-type-badge nc-badge-marca" contenteditable="true">Marca STS</span></td><td class="nc-topic-cell" contenteditable="true">La seguridad como aliado estratégico del negocio</td><td class="nc-obj-cell" contenteditable="true">Cerrar ciclo reforzando posicionamiento</td><td><span class="nc-format-cell" contenteditable="true">Imagen institucional</span></td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="cal-week">
-            <h3 class="week-title">Semana 2</h3>
-            <div class="cal-grid" id="calGrid2">
-            <div class="cal-day"><div class="day-header"><span class="day-title">Lunes</span></div><div class="day-posts">
-                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Educativo</span></div><div class="post-content">📚 SEGURIDAD REMOTA vs GUARDA FÍSICO SEGURIDAD REMOTA: ✅ Monitoreo 24/7 ✅ Costo fijo ✅ Sin riesgos humanos ✅ Respuesta inmediata GUARDA FÍSICO: ⚠️ Cobertura limitada ⚠️ Turnos y vacaciones ⚠️ Mayor costo ¿Cuál prefieres para tu propiedad? #seguridadremota #guardafisico</div></div>
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel (30 seg)</span></div><div class="post-content">🎬 "Seguridad remota vs Guarda físico" - Comparación visual lado a lado - Datos de costos - Conclusión: "La seguridad remota es más eficiente" - CTA: "Descubre más en nuestro perfil"</div></div>
-                <div class="cal-post li-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span><span class="post-type">Articulo</span></div><div class="post-content">📰 "5 beneficios de la seguridad remota para empresas en Costa Rica" - Articulo breve sobre ventajas de monitoreo remoto vs seguridad física.</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Martes</span></div><div class="day-posts">
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Stories (3)</span></div><div class="post-content">📱 Story 1: "¿Qué es la portería virtual?" con explicación breve / Story 2: Encuesta "¿Conocías la portería virtual? SÍ/NO" / Story 3: "Te lo explicamos en 30 segundos" (video corto)</div></div>
-                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge fb">Facebook</span> <span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Miércoles</span></div><div class="day-posts">
-                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Caso de éxito</span></div><div class="post-content">✅ CASO DE ÉXITO: Hotel en Tamarindo 📍 Tamarindo, Guanacaste 🏨 Hotel boutique INSTALAMOS: • 24 cámaras de exterior • Sistema de alarma integrado • Monitoreo remoto desde San José RESULTADO: Reducción del 90% en incidentes. ¿Necesitas seguridad para tu hotel? Contáctanos 📞 [teléfono]</div></div>
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Carrusel (5 slides)</span></div><div class="post-content">📱 Slide 1: "Hotel en Tamarindo: Seguridad de nivel mundial" / Slide 2: "RETO: Hotel con múltiples puntos de acceso" / Slide 3: "SOLUCIÓN: 24 cámaras + alarma + monitoreo" / Slide 4: "RESULTADO: 90% menos incidentes" / Slide 5: "¿Tu hotel necesita esto? Contáctanos"</div></div>
-                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Jueves</span></div><div class="day-posts">
-                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Engagement</span></div><div class="post-content">🤔 "¿Cuál es tu mayor preocupación de seguridad?" A) Robo de equipo B) Acceso no autorizado C) Vandalismo D) Otro Déjanos tu respuesta 👇</div></div>
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel (30 seg)</span></div><div class="post-content">🎬 "¿Qué es la portería virtual?" - Explicación visual con animación - Beneficios: control remoto, ahorro, registro - CTA: "Implementa la tuya hoy"</div></div>
-                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Viernes</span></div><div class="day-posts">
-                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Promoción</span></div><div class="post-content">🎯 OFERTA: Alquiler de cámaras para construcciones 📹 Cámaras con panel solar 📱 Monitoreo desde celular 🔋 Sin electricidad 📍 Cobertura nacional Precio desde: ₡XX.XXX/mes 📞 Contáctanos</div></div>
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Post foto</span></div><div class="post-content">📸 Foto de cámara en construcción - Texto: "¿Tienes una construcción? Protege tu inversión con nuestras cámaras solares. ✅ Sin necesidad de electricidad ✅ Monitoreo 24/7 ✅ Resistente al clima Link en bio"</div></div>
-                <div class="cal-post li-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span><span class="post-type">Post liderazgo</span></div><div class="post-content">💡 "La tecnología al servicio de la seguridad" - Reflexión sobre cómo la IA está transformando la vigilancia.</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Sábado</span></div><div class="day-posts">
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Stories</span></div><div class="post-content">📱 Story 1: "¡Feliz sábado!" / Story 2: "Recuerda: la seguridad no descansa"</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Domingo</span></div><div class="day-posts">
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel motivacional</span></div><div class="post-content">🎬 Video: "Domingo de reflexión: ¿Qué tan segura es tu propiedad?" - Texto sobre importancia de la seguridad - CTA: "No esperes a que sea tarde"</div></div>
-            </div></div>
+
+        <div class="new-calendar-section" style="margin-top:36px">
+            <div class="new-cal-header" style="background:linear-gradient(135deg,#833ab4 0%,#fd1d1d 50%,#fcb045 100%)">
+                <div class="new-cal-header-left">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    <div>
+                        <h3>Calendario de Contenido</h3>
+                        <p>Estrategia Marketing Digital Instagram</p>
+                    </div>
+                </div>
+                <div class="new-cal-header-right">
+                    <div class="month">Julio - Agosto 2026</div>
+                    <div class="count">12 publicaciones programadas</div>
+                </div>
+            </div>
+            <div class="new-cal-table-wrap">
+                <table class="new-cal-table">
+                    <thead><tr><th>Semana</th><th>Fecha</th><th>Tipo</th><th>Tema</th><th>Texto del diseño</th><th>Concepto visual (IA)</th><th>Objetivo</th></tr></thead>
+                    <tbody>
+                        <tr class="nc-separator"><td colspan="7"><div class="sep-content"><span class="sep-label" style="background:linear-gradient(135deg,#833ab4 0%,#fd1d1d 50%,#fcb045 100%)">Semana 1</span><span class="sep-dates">13 - 17 de Julio, 2026</span></div></td></tr>
+                        <tr><td class="nc-week-cell instagram">S1</td><td class="nc-date-cell"><div class="day">13</div><div class="weekday">Lunes</div></td><td><span class="nc-type-badge nc-badge-branding" contenteditable="true">Branding</span></td><td class="nc-topic-cell" contenteditable="true">La tranquilidad comienza en casa</td><td class="nc-topic-cell" style="font-style:italic;color:#374151" contenteditable="true">"La tranquilidad también se protege."</td><td class="nc-obj-cell" contenteditable="true">Familia llegando a su hogar al atardecer, con una cámara discretamente integrada en la fachada.</td><td class="nc-obj-cell" contenteditable="true">Generar conexión emocional y reforzar el valor de la seguridad en el hogar.</td></tr>
+                        <tr><td class="nc-week-cell instagram">S1</td><td class="nc-date-cell"><div class="day">15</div><div class="weekday">Miércoles</div></td><td><span class="nc-type-badge nc-badge-educacion" contenteditable="true">Educativo</span></td><td class="nc-topic-cell" contenteditable="true">Monitoreo vs. solo grabación</td><td class="nc-topic-cell" style="font-style:italic;color:#374151" contenteditable="true">"¿Tus cámaras realmente protegen?"</td><td class="nc-obj-cell" contenteditable="true">Dueño de un negocio revisando las cámaras desde su celular antes de salir del local.</td><td class="nc-obj-cell" contenteditable="true">Explicar el beneficio del monitoreo activo frente a la simple grabación.</td></tr>
+                        <tr><td class="nc-week-cell instagram">S1</td><td class="nc-date-cell"><div class="day">17</div><div class="weekday">Viernes</div></td><td><span class="nc-type-badge nc-badge-estrategica" contenteditable="true">Solución STS</span></td><td class="nc-topic-cell" contenteditable="true">Monitoreo 24/7</td><td class="nc-topic-cell" style="font-style:italic;color:#374151" contenteditable="true">"Siempre atentos."</td><td class="nc-obj-cell" contenteditable="true">Centro de monitoreo moderno con operadores trabajando y múltiples pantallas visibles.</td><td class="nc-obj-cell" contenteditable="true">Comunicar la capacidad de respuesta continua de STS.</td></tr>
+                        <tr class="nc-separator"><td colspan="7"><div class="sep-content"><span class="sep-label" style="background:linear-gradient(135deg,#833ab4 0%,#fd1d1d 50%,#fcb045 100%)">Semana 2</span><span class="sep-dates">20 - 24 de Julio, 2026</span></div></td></tr>
+                        <tr><td class="nc-week-cell instagram">S2</td><td class="nc-date-cell"><div class="day">20</div><div class="weekday">Lunes</div></td><td><span class="nc-type-badge nc-badge-educacion" contenteditable="true">Educativo</span></td><td class="nc-topic-cell" contenteditable="true">Seguridad para comercios</td><td class="nc-topic-cell" style="font-style:italic;color:#374151" contenteditable="true">"Cierra tu negocio, no tu tranquilidad."</td><td class="nc-obj-cell" contenteditable="true">Comerciante cerrando su local mientras verifica el estado del sistema desde su teléfono.</td><td class="nc-obj-cell" contenteditable="true">Mostrar cómo la tecnología brinda tranquilidad al finalizar la jornada.</td></tr>
+                        <tr><td class="nc-week-cell instagram">S2</td><td class="nc-date-cell"><div class="day">22</div><div class="weekday">Miércoles</div></td><td><span class="nc-type-badge nc-badge-sector" contenteditable="true">Sector específico</span></td><td class="nc-topic-cell" contenteditable="true">Condominios</td><td class="nc-topic-cell" style="font-style:italic;color:#374151" contenteditable="true">"Seguridad para disfrutar cada espacio."</td><td class="nc-obj-cell" contenteditable="true">Familia caminando por un condominio moderno con cámaras integradas de forma natural.</td><td class="nc-obj-cell" contenteditable="true">Posicionar a STS como aliado de condominios y residenciales.</td></tr>
+                        <tr><td class="nc-week-cell instagram">S2</td><td class="nc-date-cell"><div class="day">24</div><div class="weekday">Viernes</div></td><td><span class="nc-type-badge nc-badge-estrategica" contenteditable="true">Solución STS</span></td><td class="nc-topic-cell" contenteditable="true">Construcción</td><td class="nc-topic-cell" style="font-style:italic;color:#374151" contenteditable="true">"Tu proyecto protegido las 24 horas."</td><td class="nc-obj-cell" contenteditable="true">Ingeniero supervisando una obra desde una tablet mientras cámaras monitorean el perímetro.</td><td class="nc-obj-cell" contenteditable="true">Mostrar la aplicación de STS en proyectos de construcción.</td></tr>
+                        <tr class="nc-separator"><td colspan="7"><div class="sep-content"><span class="sep-label" style="background:linear-gradient(135deg,#833ab4 0%,#fd1d1d 50%,#fcb045 100%)">Semana 3</span><span class="sep-dates">27 - 31 de Julio, 2026</span></div></td></tr>
+                        <tr><td class="nc-week-cell instagram">S3</td><td class="nc-date-cell"><div class="day">27</div><div class="weekday">Lunes</div></td><td><span class="nc-type-badge nc-badge-branding" contenteditable="true">Branding</span></td><td class="nc-topic-cell" contenteditable="true">Negocios protegidos</td><td class="nc-topic-cell" style="font-style:italic;color:#374151" contenteditable="true">"Mientras tú descansas, nosotros vigilamos."</td><td class="nc-obj-cell" contenteditable="true">Vista nocturna de un comercio cerrado con iluminación cálida y sensación de seguridad.</td><td class="nc-obj-cell" contenteditable="true">Asociar la marca con respaldo permanente y confianza.</td></tr>
+                        <tr><td class="nc-week-cell instagram">S3</td><td class="nc-date-cell"><div class="day">29</div><div class="weekday">Miércoles</div></td><td><span class="nc-type-badge nc-badge-educacion" contenteditable="true">Educativo</span></td><td class="nc-topic-cell" contenteditable="true">Prevención</td><td class="nc-topic-cell" style="font-style:italic;color:#374151" contenteditable="true">"La prevención marca la diferencia."</td><td class="nc-obj-cell" contenteditable="true">Empresaria recibiendo una alerta de seguridad en su celular mientras trabaja desde su oficina.</td><td class="nc-obj-cell" contenteditable="true">Educar sobre la importancia de actuar antes de que ocurra un incidente.</td></tr>
+                        <tr><td class="nc-week-cell instagram">S3</td><td class="nc-date-cell"><div class="day">31</div><div class="weekday">Viernes</div></td><td><span class="nc-type-badge nc-badge-institucional" contenteditable="true">Institucional</span></td><td class="nc-topic-cell" contenteditable="true">STS protege diferentes entornos</td><td class="nc-topic-cell" style="font-style:italic;color:#374151" contenteditable="true">"Protegemos lo que más valoras."</td><td class="nc-obj-cell" contenteditable="true">Imagen dividida con una casa, un negocio y una obra de construcción, unidas por un concepto visual de protección.</td><td class="nc-obj-cell" contenteditable="true">Reforzar el posicionamiento integral de STS.</td></tr>
+                        <tr class="nc-separator"><td colspan="7"><div class="sep-content"><span class="sep-label" style="background:linear-gradient(135deg,#833ab4 0%,#fd1d1d 50%,#fcb045 100%)">Semana 4</span><span class="sep-dates">3 - 7 de Agosto, 2026</span></div></td></tr>
+                        <tr><td class="nc-week-cell instagram">S4</td><td class="nc-date-cell"><div class="day">3</div><div class="weekday">Lunes</div></td><td><span class="nc-type-badge nc-badge-educacion" contenteditable="true">Educativo</span></td><td class="nc-topic-cell" contenteditable="true">Falsas alarmas</td><td class="nc-topic-cell" style="font-style:italic;color:#374151" contenteditable="true">"Cada alerta merece atención."</td><td class="nc-obj-cell" contenteditable="true">Operador verificando una alerta desde el centro de monitoreo antes de escalar la respuesta.</td><td class="nc-obj-cell" contenteditable="true">Explicar el valor de la verificación y la reducción de falsas alarmas.</td></tr>
+                        <tr><td class="nc-week-cell instagram">S4</td><td class="nc-date-cell"><div class="day">5</div><div class="weekday">Miércoles</div></td><td><span class="nc-type-badge nc-badge-sector" contenteditable="true">Sector específico</span></td><td class="nc-topic-cell" contenteditable="true">Airbnb y alquileres vacacionales</td><td class="nc-topic-cell" style="font-style:italic;color:#374151" contenteditable="true">"Protege tu propiedad, incluso cuando no estás."</td><td class="nc-obj-cell" contenteditable="true">Propietario revisando desde su celular una propiedad de alquiler mientras unos huéspedes ingresan.</td><td class="nc-obj-cell" contenteditable="true">Dirigirse a propietarios de Airbnb y alquileres vacacionales.</td></tr>
+                        <tr><td class="nc-week-cell instagram">S4</td><td class="nc-date-cell"><div class="day">7</div><div class="weekday">Viernes</div></td><td><span class="nc-type-badge nc-badge-branding" contenteditable="true">Branding / Confianza</span></td><td class="nc-topic-cell" contenteditable="true">Seguridad que acompaña tu día</td><td class="nc-topic-cell" style="font-style:italic;color:#374151" contenteditable="true">"Más que tecnología, tranquilidad."</td><td class="nc-obj-cell" contenteditable="true">Familia desayunando mientras un padre consulta desde su celular que todo está protegido. Ambiente cálido y natural.</td><td class="nc-obj-cell" contenteditable="true">Cerrar el ciclo reforzando que STS protege personas, no solo instalaciones.</td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="cal-week">
-            <h3 class="week-title">Semana 3</h3>
-            <div class="cal-grid" id="calGrid3">
-            <div class="cal-day"><div class="day-header"><span class="day-title">Lunes</span></div><div class="day-posts">
-                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Educativo</span></div><div class="post-content">📚 5 ERRORES QUE COMETEN LOS CONDOMINIOS EN SEGURIDAD 1. ❌ No tener monitoreo 24/7 2. ❌ Cámaras sin mantenimiento 3. ❌ No tener protocolo de respuesta 4. ❌ Sistemas obsoletos 5. ❌ No capacitar al personal ¿Tu condominio tiene alguno? Te ayudamos a solucionarlo 📞 [teléfono]</div></div>
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel (30 seg)</span></div><div class="post-content">🎬 "5 errores comunes en seguridad" - Lista rápida con texto en pantalla - Muestra errores visuales - CTA: "No cometas estos errores"</div></div>
-                <div class="cal-post li-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span><span class="post-type">Articulo</span></div><div class="post-content">📰 "Cómo elegir el sistema de seguridad adecuado para tu empresa" - Guía breve de factores a considerar.</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Martes</span></div><div class="day-posts">
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Stories (3)</span></div><div class="post-content">📱 Story 1: "¿Sabías que...?" dato sobre seguridad / Story 2: Foto de equipo trabajando / Story 3: "Hoy instalando en [ciudad]"</div></div>
-                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge fb">Facebook</span> <span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Miércoles</span></div><div class="day-posts">
-                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Detrás de cámaras</span></div><div class="post-content">📸 ASÍ TRABAJA EL EQUIPO DE STS SECURITY Nuestros técnicos están hoy instalando un sistema de seguridad completo en un condominio en Santa Ana. 🔧 12 cámaras IP 🔐 Control de acceso 📱 Monitoreo desde celular Tu seguridad es nuestro compromiso #teamwork #seguridad</div></div>
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Carrusel (4 slides)</span></div><div class="post-content">📱 Slide 1: "Detrás de cámaras: Instalación en Santa Ana" / Slide 2: Foto del equipo trabajando / Slide 3: "12 cámaras + control de acceso" / Slide 4: "Listos para proteger. ¿Y tú?"</div></div>
-                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Jueves</span></div><div class="day-posts">
-                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Engagement</span></div><div class="post-content">🤔 "¿Qué prefieres para tu propiedad?" A) Cámaras WiFi (fácil instalación) B) Cámaras cableadas (más estables) C) No sé, necesito asesoría Deja tu respuesta 👇</div></div>
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel (30 seg)</span></div><div class="post-content">🎬 "Cámaras WiFi vs Cableadas" - Comparación visual - Ventajas de cada una - CTA: "¿Cuál es mejor para ti? Contáctanos"</div></div>
-                <div class="cal-post li-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span><span class="post-type">Post liderazgo</span></div><div class="post-content">💡 "Invertir en seguridad es invertir en tranquilidad" - Reflexión para empresarios.</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Viernes</span></div><div class="day-posts">
-                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Promoción</span></div><div class="post-content">🎯 MONITOREO DE ALARMAS 24/7 ¿Tu alarma está monitoreada? Ofrecemos: ✅ Monitoreo 24/7 ✅ Respuesta inmediata ✅ Notificaciones a tu celular ✅ Integración con cámaras 📞 Contáctanos para una cotización</div></div>
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Post foto</span></div><div class="post-content">📸 Foto de sistema de alarma - Texto: "Tu alarma monitoreada 24/7. No dejes nada al azar. ✅ Respuesta inmediata ✅ Notificaciones en tiempo real ✅ Video verificación Link en bio"</div></div>
-                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Sábado</span></div><div class="day-posts">
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Stories</span></div><div class="post-content">📱 Story 1: "¡Viernes de logros!" - Foto de proyecto completado / Story 2: "Gracias a la confianza de nuestros clientes"</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Domingo</span></div><div class="day-posts">
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel motivacional</span></div><div class="post-content">🎬 "Domingo: Un nuevo día para estar más seguros" - Mensaje positivo sobre tranquilidad - CTA: "Protege lo que más quieres"</div></div>
-            </div></div>
+
+        <div class="new-calendar-section" style="margin-top:36px">
+            <div class="new-cal-header" style="background:linear-gradient(135deg,#1877f2 0%,#0d5bbd 100%)">
+                <div class="new-cal-header-left">
+                    <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    <div>
+                        <h3>Calendario de Contenido</h3>
+                        <p>Estrategia Marketing Digital Facebook</p>
+                    </div>
+                </div>
+                <div class="new-cal-header-right">
+                    <div class="month">Julio - Agosto 2026</div>
+                    <div class="count">12 publicaciones programadas</div>
+                </div>
+            </div>
+            <div class="new-cal-table-wrap">
+                <table class="new-cal-table">
+                    <thead><tr><th>Semana</th><th>Fecha</th><th>Tipo</th><th>Tema</th><th>Objetivo</th></tr></thead>
+                    <tbody>
+                        <tr class="nc-separator"><td colspan="5"><div class="sep-content"><span class="sep-label" style="background:linear-gradient(135deg,#1877f2 0%,#0d5bbd 100%)">Semana 1</span><span class="sep-dates">13 - 17 de Julio, 2026</span></div></td></tr>
+                        <tr><td class="nc-week-cell facebook">S1</td><td class="nc-date-cell"><div class="day">13</div><div class="weekday">Lunes</div></td><td><span class="nc-type-badge nc-badge-fb-img" contenteditable="true">Imagen + texto</span></td><td class="nc-topic-cell" contenteditable="true">¿Su empresa realmente está protegida? 5 señales de alerta que muchos ignoran.</td><td><span class="nc-type-badge nc-badge-conciencia" contenteditable="true">Conciencia</span></td></tr>
+                        <tr><td class="nc-week-cell facebook">S1</td><td class="nc-date-cell"><div class="day">15</div><div class="weekday">Miércoles</div></td><td><span class="nc-type-badge nc-badge-fb-img" contenteditable="true">Imagen</span></td><td class="nc-topic-cell" contenteditable="true">Error común: instalar cámaras sin una estrategia de seguridad.</td><td><span class="nc-type-badge nc-badge-educacion" contenteditable="true">Educación</span></td></tr>
+                        <tr><td class="nc-week-cell facebook">S1</td><td class="nc-date-cell"><div class="day">17</div><div class="weekday">Viernes</div></td><td><span class="nc-type-badge nc-badge-fb-caso" contenteditable="true">Caso de uso</span></td><td class="nc-topic-cell" contenteditable="true">Cómo un sistema bien diseñado ayuda a prevenir pérdidas antes de que ocurran.</td><td><span class="nc-type-badge nc-badge-confianza" contenteditable="true">Confianza</span></td></tr>
+                        <tr class="nc-separator"><td colspan="5"><div class="sep-content"><span class="sep-label" style="background:linear-gradient(135deg,#1877f2 0%,#0d5bbd 100%)">Semana 2</span><span class="sep-dates">20 - 24 de Julio, 2026</span></div></td></tr>
+                        <tr><td class="nc-week-cell facebook">S2</td><td class="nc-date-cell"><div class="day">20</div><div class="weekday">Lunes</div></td><td><span class="nc-type-badge nc-badge-fb-consejos" contenteditable="true">Imagen + consejos</span></td><td class="nc-topic-cell" contenteditable="true">5 recomendaciones para mejorar la seguridad de una empresa sin hacer una gran inversión.</td><td><span class="nc-type-badge nc-badge-valor" contenteditable="true">Valor</span></td></tr>
+                        <tr><td class="nc-week-cell facebook">S2</td><td class="nc-date-cell"><div class="day">22</div><div class="weekday">Miércoles</div></td><td><span class="nc-type-badge nc-badge-fb-video" contenteditable="true">Video corto (30-45 s)</span></td><td class="nc-topic-cell" contenteditable="true">¿Qué hace realmente un sistema de control de acceso?</td><td><span class="nc-type-badge nc-badge-educacion" contenteditable="true">Educación</span></td></tr>
+                        <tr><td class="nc-week-cell facebook">S2</td><td class="nc-date-cell"><div class="day">24</div><div class="weekday">Viernes</div></td><td><span class="nc-type-badge nc-badge-fb-img" contenteditable="true">Imagen</span></td><td class="nc-topic-cell" contenteditable="true">¿Qué buscar al elegir una empresa de seguridad electrónica?</td><td><span class="nc-type-badge nc-badge-autoridad" contenteditable="true">Autoridad</span></td></tr>
+                        <tr class="nc-separator"><td colspan="5"><div class="sep-content"><span class="sep-label" style="background:linear-gradient(135deg,#1877f2 0%,#0d5bbd 100%)">Semana 3</span><span class="sep-dates">27 - 31 de Julio, 2026</span></div></td></tr>
+                        <tr><td class="nc-week-cell facebook">S3</td><td class="nc-date-cell"><div class="day">27</div><div class="weekday">Lunes</div></td><td><span class="nc-type-badge nc-badge-fb-info" contenteditable="true">Infografía</span></td><td class="nc-topic-cell" contenteditable="true">Los puntos vulnerables más comunes en una empresa.</td><td><span class="nc-type-badge nc-badge-conciencia" contenteditable="true">Conciencia</span></td></tr>
+                        <tr><td class="nc-week-cell facebook">S3</td><td class="nc-date-cell"><div class="day">29</div><div class="weekday">Miércoles</div></td><td><span class="nc-type-badge nc-badge-fb-img" contenteditable="true">Imagen</span></td><td class="nc-topic-cell" contenteditable="true">¿Vale la pena integrar cámaras, alarma y control de acceso?</td><td><span class="nc-type-badge nc-badge-educacion" contenteditable="true">Educación</span></td></tr>
+                        <tr><td class="nc-week-cell facebook">S3</td><td class="nc-date-cell"><div class="day">31</div><div class="weekday">Viernes</div></td><td><span class="nc-type-badge nc-badge-fb-testimonio" contenteditable="true">Testimonio o historia</span></td><td class="nc-topic-cell" contenteditable="true">Cómo la tecnología ayuda a proteger colaboradores y activos.</td><td><span class="nc-type-badge nc-badge-confianza" contenteditable="true">Confianza</span></td></tr>
+                        <tr class="nc-separator"><td colspan="5"><div class="sep-content"><span class="sep-label" style="background:linear-gradient(135deg,#1877f2 0%,#0d5bbd 100%)">Semana 4</span><span class="sep-dates">3 - 7 de Agosto, 2026</span></div></td></tr>
+                        <tr><td class="nc-week-cell facebook">S4</td><td class="nc-date-cell"><div class="day">3</div><div class="weekday">Lunes</div></td><td><span class="nc-type-badge nc-badge-fb-img" contenteditable="true">Imagen</span></td><td class="nc-topic-cell" contenteditable="true">La seguridad no es un gasto, es una inversión para la continuidad del negocio.</td><td><span class="nc-type-badge nc-badge-branding" contenteditable="true">Branding</span></td></tr>
+                        <tr><td class="nc-week-cell facebook">S4</td><td class="nc-date-cell"><div class="day">5</div><div class="weekday">Miércoles</div></td><td><span class="nc-type-badge nc-badge-fb-pregunta" contenteditable="true">Pregunta a la comunidad</span></td><td class="nc-topic-cell" contenteditable="true">¿Cuál considera que es el mayor riesgo de seguridad para una empresa actualmente?</td><td><span class="nc-type-badge nc-badge-engagement" contenteditable="true">Engagement</span></td></tr>
+                        <tr><td class="nc-week-cell facebook">S4</td><td class="nc-date-cell"><div class="day">7</div><div class="weekday">Viernes</div></td><td><span class="nc-type-badge nc-badge-fb-cta" contenteditable="true">Imagen + CTA</span></td><td class="nc-topic-cell" contenteditable="true">Agenda una asesoría con STS Security y conozca cómo fortalecer la seguridad de su empresa.</td><td><span class="nc-type-badge nc-badge-conversion" contenteditable="true">Conversión</span></td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="cal-week">
-            <h3 class="week-title">Semana 4</h3>
-            <div class="cal-grid" id="calGrid4">
-            <div class="cal-day"><div class="day-header"><span class="day-title">Lunes</span></div><div class="day-posts">
-                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Educativo</span></div><div class="post-content">📚 ¿QUÉ ES LA PORTERÍA VIRTUAL Y CÓMO FUNCIONA? La portería virtual permite controlar el acceso a tu propiedad de forma remota: 📱 App en tu celular 📹 Video portero 🔐 Cierre eléctrico 📞 Comunicación bidireccional BENEFICIOS: ✅ Ahorro en costos ✅ Control total ✅ Registro de accesos ¿Te gustaría implementarla? Contáctanos</div></div>
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel (30 seg)</span></div><div class="post-content">🎬 "¿Qué es la portería virtual?" - Explicación animada - 3 beneficios clave - CTA: "Implementa la tuya hoy"</div></div>
-                <div class="cal-post li-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span><span class="post-type">Articulo</span></div><div class="post-content">📰 "Control de acceso inteligente: El futuro de la seguridad en condominios" - Tendencias y tecnologías.</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Martes</span></div><div class="day-posts">
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Stories (3)</span></div><div class="post-content">📱 Story 1: "¿Conoces la portería virtual?" / Story 2: Encuesta "La usarías? SÍ/NO" / Story 3: "Te mostramos cómo funciona" (video)</div></div>
-                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge fb">Facebook</span> <span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Miércoles</span></div><div class="day-posts">
-                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Caso de éxito</span></div><div class="post-content">✅ CASO DE ÉXITO: Vacation Rental en Jacó 📍 Jacó, Puntarenas 🏖️ Casa de playa INSTALAMOS: • 6 cámaras de seguridad • Cerradura inteligente • Video portero • Monitoreo remoto RESULTADO: El propietario administra desde San José sin problemas. ¿Tienes un vacation rental? Te protegemos 📞 [teléfono]</div></div>
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Carrusel (5 slides)</span></div><div class="post-content">📱 Slide 1: "Vacation Rental en Jacó: Seguridad total" / Slide 2: "RETO: Propiedad sin supervisión constante" / Slide 3: "SOLUCIÓN: 6 cámaras + cerradura inteligente + video portero" / Slide 4: "RESULTADO: Administración remota completa" / Slide 5: "¿Tu vacation rental necesita esto?"</div></div>
-                <div class="cal-post no-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span></div><div class="post-content">(No publicar)</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Jueves</span></div><div class="day-posts">
-                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Engagement</span></div><div class="post-content">🤔 "¿Cuánto inviertes mensualmente en seguridad?" A) Nada B) Menos de ₡50.000 C) Entre ₡50.000 - ₡100.000 D) Más de ₡100.000 Tu inversión en seguridad es una inversión en tranquilidad 💡</div></div>
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel (30 seg)</span></div><div class="post-content">🎬 "Cuánto cuesta la seguridad" - Rangos de precios según tipo de sistema - CTA: "Contáctanos para cotización personalizada"</div></div>
-                <div class="cal-post li-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span><span class="post-type">Post liderazgo</span></div><div class="post-content">💡 "El ROI de la seguridad inteligente" - Datos sobre ahorro a largo plazo.</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Viernes</span></div><div class="day-posts">
-                <div class="cal-post fb-post"><div class="post-meta"><span class="social-badge fb">Facebook</span><span class="post-type">Promoción</span></div><div class="post-content">🎯 RESUMEN DEL MES: Nuestros servicios ✅ Monitoreo de Cámaras 24/7 ✅ Monitoreo de Alarmas ✅ Portería Virtual ✅ Control de Acceso ✅ Alquiler de Cámaras ¿Qué necesitas? Contáctanos 📞 [teléfono] 🌐 [sitio web]</div></div>
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Post foto</span></div><div class="post-content">📸 Collage de los mejores trabajos del mes - Texto: "Otro mes protegiendo Costa Rica. 🙏 Gracias a todos nuestros clientes. ¿Listo para ser el próximo? Link en bio"</div></div>
-                <div class="cal-post li-post"><div class="post-meta"><span class="social-badge li">LinkedIn</span><span class="post-type">Resumen mensual</span></div><div class="post-content">📊 "STS Security: Resumen de impacto este mes" - Número de proyectos completados, clientes satisfechos, etc.</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Sábado</span></div><div class="day-posts">
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Stories</span></div><div class="post-content">📱 Story 1: "¡Último día del mes!" / Story 2: "Gracias por acompañarnos" / Story 3: "El viene más contenido de seguridad"</div></div>
-            </div></div>
-            <div class="cal-day"><div class="day-header"><span class="day-title">Domingo</span></div><div class="day-posts">
-                <div class="cal-post ig-post"><div class="post-meta"><span class="social-badge ig">Instagram</span><span class="post-type">Reel motivacional</span></div><div class="post-content">🎬 "Nuevo mes, nueva seguridad" - Mensaje motivacional para empezar el mes - CTA: "Este mes da el paso para proteger tu propiedad"</div></div>
-            </div></div>
-            </div>
-        </div>
-        <div class="cal-section">
-            <h3 class="section-title">Resumen del Calendario</h3>
-            <table class="cal-table">
-                <thead><tr><th>Red Social</th><th>Posts/semana</th><th>Tipo principal</th></tr></thead>
-                <tbody>
-                    <tr><td><span class="social-badge fb">Facebook</span></td><td>4-5 posts</td><td>Educativo, Casos de éxito, Engagement, Promocional</td></tr>
-                    <tr><td><span class="social-badge ig">Instagram</span></td><td>5-7 posts + Stories</td><td>Reels, Carruseles, Fotos, Stories</td></tr>
-                    <tr><td><span class="social-badge li">LinkedIn</span></td><td>2-3 posts</td><td>Artículos, Liderazgo, Noticias industria</td></tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="cal-section">
-            <h3 class="section-title">Horarios Recomendados (Costa Rica)</h3>
-            <table class="cal-table">
-                <thead><tr><th>Red Social</th><th>Horario ideal</th></tr></thead>
-                <tbody>
-                    <tr><td><span class="social-badge fb">Facebook</span></td><td>11:00 AM - 2:00 PM</td></tr>
-                    <tr><td><span class="social-badge ig">Instagram</span></td><td>9:00 AM - 1:00 PM / 5:00 PM - 7:00 PM</td></tr>
-                    <tr><td><span class="social-badge li">LinkedIn</span></td><td>8:00 AM - 11:00 AM</td></tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="cal-section">
-            <h3 class="section-title">Hashtags Principales (usar en cada post)</h3>
-            <div class="hashtags">#seguridad #costarica #seguridadinteligente #camaras #alarmas #monitoreo #controldeacceso #condominios #hotel #negocio #proteccion #tranquilidad</div>
+
+        <div class="new-cal-download" style="justify-content:center">
+            <button class="dl-btn pdf" onclick="downloadNewPDF()"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>Descargar PDF</button>
+            <button class="dl-btn excel" onclick="downloadNewExcel()"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>Descargar Excel</button>
         </div>
     </div>
     </div>
@@ -3411,6 +3447,28 @@ function saveReview(){
 function deleteReview(idx){if(confirm('¿Eliminar esta review?')){reviews.splice(idx,1);saveReviews();renderReviews();showToast('Review eliminada','success');}}
 
 loadClients();renderTable();renderDashboard();
+
+async function downloadNewPDF(){
+    if(typeof html2canvas==='undefined'||typeof jspdf==='undefined'){showToast('Librerías de PDF no cargadas','error');return;}
+    const btn=document.querySelector('.dl-btn.pdf');btn.textContent='Generando...';
+    try{const{jsPDF}=window.jspdf;const pdf=new jsPDF('l','mm','a4');const pw=pdf.internal.pageSize.getWidth();const ph=pdf.internal.pageSize.getHeight();
+    const sections=document.querySelectorAll('.new-calendar-section');
+    let first=true;
+    for(const sec of sections){const canvas=await html2canvas(sec,{scale:2,useCORS:true,backgroundColor:'#f9fafb'});const img=canvas.toDataURL('image/png');const ratio=Math.min((pw-20)/canvas.width,(ph-20)/canvas.height);const w=canvas.width*ratio;const h=canvas.height*ratio;if(!first)pdf.addPage();pdf.addImage(img,'PNG',(pw-w)/2,10,w,h);first=false;}
+    pdf.save('Calendario-Contenido-STS-2026.pdf');showToast('PDF descargado','success');}catch(e){showToast('Error al generar PDF','error');}
+    btn.innerHTML='<svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>Descargar PDF';
+}
+function downloadNewExcel(){
+    if(typeof XLSX==='undefined'){showToast('Librería Excel no cargada','error');return;}
+    const wb=XLSX.utils.book_new();
+    const tables=document.querySelectorAll('.new-cal-table');
+    const names=['LinkedIn','Instagram','Facebook'];
+    tables.forEach((t,i)=>{const rows=[];const hdr=[];t.querySelectorAll('thead th').forEach(th=>hdr.push(th.textContent.trim()));rows.push(hdr);
+    t.querySelectorAll('tbody tr:not(.nc-separator)').forEach(tr=>{const row=[];tr.querySelectorAll('td').forEach(td=>{const badge=td.querySelector('.nc-type-badge,.nc-format-cell');if(badge)row.push(badge.textContent.trim());else if(td.classList.contains('nc-week-cell'))row.push(td.textContent.trim());else if(td.classList.contains('nc-date-cell')){const d=td.querySelector('.day')?.textContent.trim()||'';const w=td.querySelector('.weekday')?.textContent.trim()||'';row.push(d+' '+w);}else row.push(td.textContent.trim());});if(row.length>0)rows.push(row);});
+    const ws=XLSX.utils.aoa_to_sheet(rows);XLSX.utils.book_append_sheet(wb,ws,names[i]);});
+    XLSX.writeFile(wb,'Calendario-Contenido-STS-2026.xlsx');showToast('Excel descargado','success');
+}
+
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/service-worker.js').catch(() => {});
 }
