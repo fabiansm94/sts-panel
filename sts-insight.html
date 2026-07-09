@@ -554,7 +554,30 @@ function deleteLinkedinPost(i){if(confirm('Eliminar esta publicacion?')){linkedi
 /* FACEBOOK EDITOR */
 function openFacebookEditor(idx){
 var isNew=idx===-1;
-var p=isNew?{text:'',objective:'',cta:'',status:'Pendiente',time:'Ahora',imageBg:'linear-gradient(135deg,#0a2a5c,#0a1a3c)',imageEmoji:'Post',engagement:'0 likes':facebookPosts[idx].engagement;
+var p=isNew?{text:'',objective:'',cta:'',status:'Pendiente',time:'Ahora',imageBg:'linear-gradient(135deg,#0a2a5c,#0a1a3c)',imageEmoji:'Post',engagement:'0 likes'}:facebookPosts[idx];
+var h='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;"><h2 style="font-size:1.2rem;font-weight:700;">'+(isNew?'Nuevo Post Facebook':'Editar Post Facebook')+'</h2><button class="btn btn-ghost btn-sm" onclick="closeEditor()">Cerrar</button></div>';
+h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">';
+h+='<div>';
+h+='<div class="editor-field"><label>Texto del post</label><textarea id="fbEdText" style="min-height:150px;" placeholder="Escribe tu publicacion...">'+escH(p.text)+'</textarea></div>';
+h+='<div class="editor-field"><label>Objetivo</label><input type="text" id="fbEdObjective" value="'+escH(p.objective)+'" placeholder="Objetivo del post"></div>';
+h+='<div class="editor-field"><label>CTA</label><input type="text" id="fbEdCta" value="'+escH(p.cta)+'" placeholder="Call to action"></div>';
+h+='<div class="editor-field"><label>Estado</label><select id="fbEdStatus"><option value="Pendiente"'+(p.status==='Pendiente'?' selected':'')+'>Pendiente</option><option value="Aprobado"'+(p.status==='Aprobado'?' selected':'')+'>Aprobado</option><option value="Requiere Cambios"'+(p.status==='Requiere Cambios'?' selected':'')+'>Requiere Cambios</option></select></div>';
+h+='</div><div>';
+h+='<div style="background:#1877f2;border-radius:12px;padding:1rem;max-width:400px;margin:0 auto;">';
+h+='<div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem;"><div style="width:40px;height:40px;border-radius:50%;background:#1877f2;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.7rem;">STS</div><div><div style="font-weight:600;font-size:.85rem;color:#fff;">STS Security</div><div style="font-size:.7rem;color:rgba(255,255,255,.7);">Ahora · 🌐</div></div></div>';
+h+='<div id="fbPreviewText" style="font-size:.85rem;color:#e4e6eb;line-height:1.5;margin-bottom:.75rem;min-height:60px;">'+escH(p.text)+'</div>';
+h+='<div style="background:#242526;border-radius:8px;padding:.5rem;margin-bottom:.75rem;text-align:center;color:#b0b3b8;font-size:.8rem;">Imagen del post</div>';
+h+='<div style="display:flex;justify-content:space-around;border-top:1px solid #3e4042;padding-top:.5rem;">';
+h+='<span style="color:#b0b3b8;font-size:.8rem;">👍 Me gusta</span>';
+h+='<span style="color:#b0b3b8;font-size:.8rem;">💬 Comentar</span>';
+h+='<span style="color:#b0b3b8;font-size:.8rem;">↗ Compartir</span>';
+h+='</div></div></div></div>';
+h+='<div class="editor-actions"><button class="btn btn-ghost" onclick="closeEditor()">Cancelar</button><button class="btn btn-primary" onclick="saveFacebookEditor('+idx+')">Guardar Post</button></div>';
+openEditor(h);
+}
+function saveFacebookEditor(idx){
+var isNew=idx===-1;
+var obj={text:document.getElementById('fbEdText').value,objective:document.getElementById('fbEdObjective').value,cta:document.getElementById('fbEdCta').value,status:document.getElementById('fbEdStatus').value,time:'Ahora',imageBg:'linear-gradient(135deg,#0a2a5c,#0a1a3c)',imageEmoji:'Post',engagement:'0 likes'};
 if(isNew){facebookPosts.push(obj)}else{facebookPosts[idx]=obj}
 saveK('sts_insight_facebook',facebookPosts);closeEditor();renderFacebook();showToast(isNew?'Post creado':'Post actualizado');
 }
