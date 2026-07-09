@@ -211,26 +211,43 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .color-opt:hover,.color-opt.active{border-color:var(--text-primary);transform:scale(1.1)}
 .date-select{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.4rem .75rem;color:var(--text-primary);font-family:inherit;font-size:.85rem}
 .date-select option{background:var(--bg-card)}
+/* Full-screen blog editor */
+.blog-editor-overlay{position:fixed;inset:0;background:var(--bg-primary);z-index:5000;display:none;flex-direction:column;overflow:hidden}
+.blog-editor-overlay.active{display:flex}
+.blog-editor-topbar{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1.5rem;border-bottom:1px solid var(--border);background:var(--bg-card);flex-shrink:0}
+.blog-editor-body{display:flex;flex:1;overflow:hidden}
+.blog-editor-main{flex:1;overflow-y:auto;padding:2rem 3rem;max-width:800px;margin:0 auto;width:100%}
+.blog-editor-sidebar{width:280px;border-left:1px solid var(--border);background:var(--bg-card);padding:1.5rem;overflow-y:auto;flex-shrink:0}
+.blog-title-input{width:100%;border:none;background:none;font-size:2rem;font-weight:800;color:var(--text-primary);outline:none;padding:1rem 0;font-family:inherit;line-height:1.3}
+.blog-title-input::placeholder{color:var(--text-muted)}
+.blog-content-editor{min-height:500px;outline:none;font-size:1rem;line-height:1.8;color:var(--text-secondary);padding:1rem 0}
+.blog-content-editor:empty::before{content:attr(data-placeholder);color:var(--text-muted)}
+.blog-toolbar{position:sticky;top:0;background:var(--bg-primary);border-bottom:1px solid var(--border);padding:.5rem 0;margin:0 -3rem;padding-left:3rem;padding-right:3rem;z-index:1}
+.blog-toolbar button{background:none;border:1px solid transparent;color:var(--text-secondary);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:.8rem;font-weight:600;transition:all .15s}
+.blog-toolbar button:hover{background:var(--bg-card);border-color:var(--border);color:var(--text-primary)}
+.blog-toolbar .tb-sep{width:1px;height:20px;background:var(--border);margin:0 4px;display:inline-block}
+
+/* Blog article page */
+.blog-article-page{max-width:800px;margin:0 auto;padding:2rem}
+.blog-article-page h1{font-size:2.2rem;font-weight:800;line-height:1.2;margin-bottom:1rem}
+.blog-article-meta{display:flex;gap:1.5rem;color:var(--text-muted);font-size:.85rem;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.blog-article-body h2{font-size:1.4rem;font-weight:700;margin:2.5rem 0 1rem;color:var(--text-primary)}
+.blog-article-body h3{font-size:1.15rem;font-weight:600;margin:2rem 0 .75rem;color:var(--text-primary)}
+.blog-article-body p{color:var(--text-secondary);line-height:1.9;margin-bottom:1.25rem;font-size:1rem}
+.blog-article-body ul,.blog-article-body ol{padding-left:1.5rem;margin-bottom:1.25rem}
+.blog-article-body li{color:var(--text-secondary);line-height:1.8;margin-bottom:.5rem}
+.blog-article-body blockquote{border-left:3px solid var(--accent);padding:1rem 1.5rem;background:rgba(10,102,194,.06);border-radius:0 8px 8px 0;margin:1.5rem 0;font-style:italic;color:var(--text-secondary)}
+.blog-toc{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:2rem}
+.blog-toc h4{font-size:.85rem;font-weight:600;margin-bottom:.75rem;color:var(--text-primary)}
+.blog-toc a{display:block;padding:.3rem 0;color:var(--text-secondary);text-decoration:none;font-size:.85rem;transition:color .15s}
+.blog-toc a:hover{color:var(--accent)}
+.blog-related{margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.blog-related h3{font-size:1.1rem;font-weight:600;margin-bottom:1rem}
+
+/* Legacy article overlay overrides */
 .article-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg-primary);z-index:2000;overflow-y:auto;display:none;animation:fadeIn .3s}
-.article-overlay.active{display:flex}
-.article-content{flex:1;padding:2rem;max-width:800px;margin:0 auto}
-.article-sidebar{width:300px;background:var(--bg-secondary);border-left:1px solid var(--border);padding:1.5rem;position:sticky;top:0;height:100vh;overflow-y:auto;flex-shrink:0}
+.article-overlay.active{display:block}
 .article-close{position:fixed;top:1rem;right:1rem;z-index:2001;width:40px;height:40px;border-radius:50%;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.article-hero{height:300px;border-radius:12px;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;font-size:3rem}
-.article-breadcrumb{font-size:.8rem;color:var(--text-muted);margin-bottom:1rem}
-.article-breadcrumb a{color:var(--accent);text-decoration:none;cursor:pointer}
-.article-meta{display:flex;gap:1rem;font-size:.8rem;color:var(--text-secondary);margin-bottom:1.5rem;flex-wrap:wrap}
-.article-body h2{font-size:1.3rem;font-weight:700;margin:2rem 0 1rem}
-.article-body p{color:var(--text-secondary);line-height:1.8;margin-bottom:1rem;font-size:.95rem}
-.article-body ul{padding-left:1.5rem;margin-bottom:1rem}
-.article-body li{color:var(--text-secondary);line-height:1.8;margin-bottom:.5rem}
-.article-body blockquote{border-left:3px solid var(--accent);padding:1rem 1.5rem;background:rgba(10,102,194,.08);border-radius:0 8px 8px 0;margin:1.5rem 0;font-style:italic;color:var(--text-secondary)}
-.article-cta{background:linear-gradient(135deg,var(--accent),#7c3aed);padding:2rem;border-radius:12px;text-align:center;margin:2rem 0}
-.article-cta h3{color:#fff;margin-bottom:.5rem}.article-cta p{color:rgba(255,255,255,.8)}
-.toc{background:var(--bg-secondary);border-radius:8px;padding:1rem;margin-bottom:1.5rem}
-.toc h4{font-size:.8rem;font-weight:600;margin-bottom:.75rem;text-transform:uppercase;color:var(--text-muted)}
-.toc a{display:block;font-size:.8rem;color:var(--text-secondary);padding:.3rem 0;text-decoration:none;transition:color .2s}
-.toc a:hover{color:var(--accent)}
 @media(max-width:1024px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:repeat(2,1fr)}.article-overlay.active{flex-direction:column}.article-sidebar{width:100%;height:auto;position:static}}
 @media(max-width:768px){#sidebar{transform:translateX(-100%)}#sidebar.open{transform:translateX(0)}#main-content{margin-left:0}.mobile-toggle{display:block}.grid-4,.grid-3{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}.section{padding:1rem}.search-bar{width:180px}.social-detail-panel{display:none}.insta-grid{grid-template-columns:repeat(2,1fr)}}
 </style>
@@ -294,7 +311,8 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 <div id="feedback" class="section"><div class="section-header"><div><h2 class="section-title">Centro de Feedback</h2><p class="section-subtitle">Gestiona los comentarios y revisiones del equipo</p></div><button class="btn btn-primary btn-sm" onclick="openFeedbackEditor(-1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Nuevo Feedback</button></div><div class="tab-bar" id="feedback-tabs"><div class="tab-item active" onclick="switchFeedbackTab('pending',this)">Pendiente (5)</div><div class="tab-item" onclick="switchFeedbackTab('approved',this)">Aprobado (31)</div><div class="tab-item" onclick="switchFeedbackTab('history',this)">Historial</div></div><div id="feedback-list"></div></div>
 <div id="settings" class="section"><div class="section-header"><div><h2 class="section-title">Configuraci&#243;n</h2><p class="section-subtitle">Personaliza tu experiencia en STS INSIGHT</p></div><button class="btn btn-primary btn-sm" onclick="saveSettings()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Guardar</button></div><div class="settings-section"><h3>Perfil</h3><div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;"><div class="avatar" style="width:64px;height:64px;font-size:1.5rem;" id="settings-avatar">AM</div><div><div style="font-weight:600;font-size:1.1rem;"><span class="settings-editable" contenteditable="true" data-field="name" id="settings-name">Alexis Morales</span></div><div style="color:var(--text-secondary);font-size:.85rem;"><span class="settings-editable" contenteditable="true" data-field="role" id="settings-role">Marketing &amp; Business Development</span></div><div style="color:var(--text-muted);font-size:.8rem;"><span class="settings-editable" contenteditable="true" data-field="email" id="settings-email">alexis.morales@sts-security.com</span></div></div></div></div><div class="settings-section"><h3>Notificaciones</h3><div class="setting-row"><label>Email de nuevas revisiones</label><div class="toggle-switch on" onclick="this.classList.toggle('on')"></div></div><div class="setting-row"><label>Notificaciones de feedback</label><div class="toggle-switch on" onclick="this.classList.toggle('on')"></div></div><div class="setting-row"><label>Alertas de publicaci&#243;n</label><div class="toggle-switch on" onclick="this.classList.toggle('on')"></div></div></div><div class="settings-section"><h3>Apariencia</h3><div class="setting-row"><label>Modo oscuro</label><div class="toggle-switch on" onclick="this.classList.toggle('on')"></div></div></div><div class="settings-section"><h3>Acerca de</h3><p style="color:var(--text-secondary);font-size:.85rem;">STS INSIGHT v1.0 - Desarrollado para STS Security</p></div></div>
 </div>
-<div class="article-overlay" id="article-overlay"><button class="article-close" onclick="closeArticle()">&#10005;</button><div class="article-content" id="article-content"></div><div class="article-sidebar" id="article-sidebar"></div></div>
+<div class="article-overlay" id="article-overlay"><button class="article-close" onclick="closeArticle()">&#10005;</button><div id="article-page-container"></div></div>
+<div id="blogEditorOverlay" class="blog-editor-overlay"></div>
 <div id="editorOverlay" class="editor-overlay"><div class="editor-panel" id="editorPanel"></div></div>
 <div id="toastContainer"></div>
 <script>
@@ -472,50 +490,131 @@ tabs[1].textContent='Aprobado ('+appCount+')';
 
 function renderAll(){renderBlogs();renderLinkedin();renderFacebook();renderInstagram();renderFeedback();}
 
-/* BLOG EDITOR */
+/* BLOG EDITOR - FULL SCREEN */
 function openBlogEditor(idx){
 var isNew=idx===-1;
 var b=isNew?{title:'',category:'Seguridad',keyword:'',readTime:'5 min',status:'Pendiente',color:'#1a3a5c',content:''}:blogs[idx];
 var colors=['#1a3a5c','#1a2a4a','#0a2a3a','#1a2040','#2a1a3a','#1a2a2a','#2a1a1a','#0a3a2a'];
 var cats=['Seguridad','Tecnologia','Monitoreo','IA','Acceso','Ciberseguridad'];
 var stats=['Pendiente','Aprobado','Requiere Cambios'];
-var h='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;"><h2 style="font-size:1.2rem;font-weight:700;">'+(isNew?'Nuevo Articulo':'Editar Articulo')+'</h2><button class="btn btn-ghost btn-sm" onclick="closeEditor()">Cerrar</button></div>';
-h+='<div class="editor-field"><label>Titulo del articulo</label><input type="text" id="blogEdTitle" value="'+escH(b.title)+'" placeholder="Escribe el titulo..."></div>';
-h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">';
-h+='<div class="editor-field"><label>Categoria</label><select id="blogEdCategory">'+cats.map(function(c){return '<option'+(c===b.category?' selected':'')+'>'+c+'</option>'}).join('')+'</select></div>';
-h+='<div class="editor-field"><label>Tiempo de lectura</label><input type="text" id="blogEdReadTime" value="'+escH(b.readTime)+'" placeholder="5 min"></div>';
-h+='</div>';
-h+='<div class="editor-field"><label>Keyword SEO</label><input type="text" id="blogEdKeyword" value="'+escH(b.keyword)+'" placeholder="Keyword principal"></div>';
-h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">';
-h+='<div class="editor-field"><label>Estado</label><select id="blogEdStatus">'+stats.map(function(s){return '<option'+(s===b.status?' selected':'')+'>'+s+'</option>'}).join('')+'</select></div>';
-h+='<div class="editor-field"><label>Color del encabezado</label><div class="color-options" id="blogEdColors">'+colors.map(function(c){return '<div class="color-opt'+(c===b.color?' active':'')+'" style="background:'+c+';" data-color="'+c+'" onclick="selectBlogColor(this)"></div>'}).join('')+'</div></div>';
-h+='</div>';
-h+='<div class="editor-field"><label>Contenido del articulo</label>';
-h+='<div class="editor-toolbar">';
+
+var h='<div class="blog-editor-topbar">';
+h+='<button class="btn btn-ghost btn-sm" onclick="closeBlogEditor()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Volver</button>';
+h+='<span style="font-size:.85rem;font-weight:600;color:var(--text-secondary);">'+(isNew?'Nuevo Art\u00edculo':'Editar Art\u00edculo')+'</span>';
+h+='<div style="display:flex;gap:.5rem;">';
+h+='<button class="btn btn-ghost btn-sm" onclick="closeBlogEditor()">Cancelar</button>';
+h+='<button class="btn btn-ghost btn-sm" onclick="saveBlogDraft('+idx+')">Guardar Borrador</button>';
+h+='<button class="btn btn-primary btn-sm" onclick="publishBlogArticle('+idx+')">Publicar</button>';
+h+='</div></div>';
+
+h+='<div class="blog-editor-body">';
+h+='<div class="blog-editor-main">';
+h+='<input type="text" class="blog-title-input" id="blogEdTitle" value="'+escH(b.title)+'" placeholder="Escribe el t\u00edtulo aqu\u00ed...">';
+h+='<div class="blog-toolbar">';
 h+='<button onclick="blogExecCmd(\'bold\')" title="Negrita"><b>B</b></button>';
 h+='<button onclick="blogExecCmd(\'italic\')" title="Cursiva"><i>I</i></button>';
 h+='<button onclick="blogExecCmd(\'underline\')" title="Subrayado"><u>U</u></button>';
-h+='<button onclick="blogExecCmd(\'formatBlock\',\'h2\')" title="H2">H2</button>';
-h+='<button onclick="blogExecCmd(\'formatBlock\',\'h3\')" title="H3">H3</button>';
-h+='<button onclick="blogExecCmd(\'insertUnorderedList\')" title="Lista">Bullet</button>';
-h+='<button onclick="blogExecCmd(\'formatBlock\',\'blockquote\')" title="Cita">Quote</button>';
-h+='<button onclick="blogExecCmd(\'formatBlock\',\'p\')" title="Parrafo">P</button>';
+h+='<button onclick="blogExecCmd(\'strikeThrough\')" title="Tachado"><s>S</s></button>';
+h+='<span class="tb-sep"></span>';
+h+='<button onclick="blogExecCmd(\'formatBlock\',\'h2\')" title="Encabezado 2">H2</button>';
+h+='<button onclick="blogExecCmd(\'formatBlock\',\'h3\')" title="Encabezado 3">H3</button>';
+h+='<button onclick="blogExecCmd(\'formatBlock\',\'blockquote\')" title="Cita">&#8220;</button>';
+h+='<span class="tb-sep"></span>';
+h+='<button onclick="blogExecCmd(\'insertUnorderedList\')" title="Lista">&#8226;</button>';
+h+='<button onclick="blogExecCmd(\'insertOrderedList\')" title="Lista numerada">1.</button>';
+h+='<span class="tb-sep"></span>';
+h+='<button onclick="blogInsertLink()" title="Enlace">Link</button>';
+h+='<span class="tb-sep"></span>';
+h+='<button onclick="blogExecCmd(\'undo\')" title="Deshacer">&#8617;</button>';
+h+='<button onclick="blogExecCmd(\'redo\')" title="Rehacer">&#8618;</button>';
 h+='</div>';
-h+='<div id="blogEdContent" contenteditable="true" style="min-height:300px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:1rem;color:var(--text-primary);font-size:.9rem;line-height:1.8;outline:none;">'+b.content+'</div></div>';
-h+='<div class="editor-actions"><button class="btn btn-ghost" onclick="closeEditor()">Cancelar</button><button class="btn btn-primary" onclick="saveBlogEditor('+idx+')">Guardar Articulo</button></div>';
-openEditor(h,true);
+h+='<div id="blogEdContent" class="blog-content-editor" contenteditable="true" data-placeholder="Comienza a escribir tu art\u00edculo...">'+b.content+'</div>';
+h+='</div>';
+
+h+='<div class="blog-editor-sidebar">';
+h+='<div style="margin-bottom:1.5rem;">';
+h+='<label style="display:block;font-size:.75rem;font-weight:600;color:var(--text-muted);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.03em;">Categor\u00eda</label>';
+h+='<select id="blogEdCategory" style="width:100%;background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:.65rem .85rem;color:var(--text-primary);font-family:inherit;font-size:.85rem;">'+cats.map(function(c){return '<option'+(c===b.category?' selected':'')+'>'+c+'</option>'}).join('')+'</select></div>';
+h+='<div style="margin-bottom:1.5rem;">';
+h+='<label style="display:block;font-size:.75rem;font-weight:600;color:var(--text-muted);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.03em;">Keyword SEO</label>';
+h+='<input type="text" id="blogEdKeyword" value="'+escH(b.keyword)+'" placeholder="Keyword principal" style="width:100%;background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:.65rem .85rem;color:var(--text-primary);font-family:inherit;font-size:.85rem;"></div>';
+h+='<div style="margin-bottom:1.5rem;">';
+h+='<label style="display:block;font-size:.75rem;font-weight:600;color:var(--text-muted);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.03em;">Tiempo de lectura</label>';
+h+='<input type="text" id="blogEdReadTime" value="'+escH(b.readTime)+'" placeholder="5 min" style="width:100%;background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:.65rem .85rem;color:var(--text-primary);font-family:inherit;font-size:.85rem;"></div>';
+h+='<div style="margin-bottom:1.5rem;">';
+h+='<label style="display:block;font-size:.75rem;font-weight:600;color:var(--text-muted);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.03em;">Estado</label>';
+h+='<select id="blogEdStatus" style="width:100%;background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:.65rem .85rem;color:var(--text-primary);font-family:inherit;font-size:.85rem;">'+stats.map(function(s){return '<option'+(s===b.status?' selected':'')+'>'+s+'</option>'}).join('')+'</select></div>';
+h+='<div style="margin-bottom:1.5rem;">';
+h+='<label style="display:block;font-size:.75rem;font-weight:600;color:var(--text-muted);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.03em;">Color del encabezado</label>';
+h+='<div id="blogEdColors" style="display:flex;gap:.5rem;flex-wrap:wrap;">'+colors.map(function(c){return '<div class="color-opt'+(c===b.color?' active':'')+'" style="background:'+c+';width:32px;height:32px;border-radius:8px;cursor:pointer;border:2px solid transparent;transition:all .2s;" data-color="'+c+'" onclick="selectBlogColor(this)"></div>'}).join('')+'</div></div>';
+h+='</div></div></div>';
+
+var overlay=document.getElementById('blogEditorOverlay');
+overlay.innerHTML=h;
+overlay.classList.add('active');
+document.body.style.overflow='hidden';
+
+var titleInput=document.getElementById('blogEdTitle');
+titleInput.addEventListener('keydown',function(e){if(e.key==='Enter')e.preventDefault()});
 }
 
-function selectBlogColor(el){document.querySelectorAll('#blogEdColors .color-opt').forEach(function(c){c.classList.remove('active')});el.classList.add('active')}
-function blogExecCmd(cmd,val){document.execCommand(cmd,false,val||null);document.getElementById('blogEdContent').focus()}
-function saveBlogEditor(idx){
+function selectBlogColor(el){
+document.querySelectorAll('#blogEdColors .color-opt').forEach(function(c){c.classList.remove('active')});
+el.classList.add('active');
+}
+
+function blogExecCmd(cmd,val){
+document.execCommand(cmd,false,val||null);
+document.getElementById('blogEdContent').focus();
+}
+
+function blogInsertLink(){
+var url=prompt('Ingresa la URL del enlace:');
+if(url){document.execCommand('createLink',false,url);document.getElementById('blogEdContent').focus()}
+}
+
+function closeBlogEditor(){
+document.getElementById('blogEditorOverlay').classList.remove('active');
+document.body.style.overflow='';
+}
+
+function saveBlogDraft(idx){
 var isNew=idx===-1;
 var colorEl=document.querySelector('#blogEdColors .color-opt.active');
-var obj={title:document.getElementById('blogEdTitle').value,category:document.getElementById('blogEdCategory').value,keyword:document.getElementById('blogEdKeyword').value,readTime:document.getElementById('blogEdReadTime').value,status:document.getElementById('blogEdStatus').value,color:colorEl?colorEl.dataset.color:'#1a3a5c',content:document.getElementById('blogEdContent').innerHTML};
+var obj={
+title:document.getElementById('blogEdTitle').value||'Sin t\u00edtulo',
+category:document.getElementById('blogEdCategory').value,
+keyword:document.getElementById('blogEdKeyword').value,
+readTime:document.getElementById('blogEdReadTime').value,
+status:'Pendiente',
+color:colorEl?colorEl.dataset.color:'#1a3a5c',
+content:document.getElementById('blogEdContent').innerHTML
+};
 if(isNew){blogs.push(obj)}else{blogs[idx]=obj}
-saveK('sts_insight_blogs',blogs);closeEditor();renderBlogs();showToast(isNew?'Articulo creado':'Articulo actualizado');
+saveK('sts_insight_blogs',blogs);
+closeBlogEditor();renderBlogs();
+showToast(isNew?'Art\u00edculo creado como borrador':'Borrador guardado');
 }
-function deleteBlog(i){if(confirm('Eliminar este articulo?')){blogs.splice(i,1);saveK('sts_insight_blogs',blogs);renderBlogs();showToast('Articulo eliminado','error')}}
+
+function publishBlogArticle(idx){
+var isNew=idx===-1;
+var colorEl=document.querySelector('#blogEdColors .color-opt.active');
+var obj={
+title:document.getElementById('blogEdTitle').value||'Sin t\u00edtulo',
+category:document.getElementById('blogEdCategory').value,
+keyword:document.getElementById('blogEdKeyword').value,
+readTime:document.getElementById('blogEdReadTime').value,
+status:'Aprobado',
+color:colorEl?colorEl.dataset.color:'#1a3a5c',
+content:document.getElementById('blogEdContent').innerHTML
+};
+if(isNew){blogs.push(obj)}else{blogs[idx]=obj}
+saveK('sts_insight_blogs',blogs);
+closeBlogEditor();renderBlogs();
+showToast(isNew?'Art\u00edculo publicado':'Art\u00edculo actualizado');
+}
+
+function deleteBlog(i){if(confirm('Eliminar este art\u00edculo?')){blogs.splice(i,1);saveK('sts_insight_blogs',blogs);renderBlogs();showToast('Art\u00edculo eliminado','error')}}
 
 /* LINKEDIN EDITOR */
 function openLinkedinEditor(idx){
@@ -811,65 +910,118 @@ if(section==='calendar')buildCalTable();
 
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
 
-/* ARTICLE VIEWER */
+/* ARTICLE VIEWER - BLOG POST PAGE */
 function openArticle(idx){
 var a=blogs[idx];
-document.getElementById('article-content').innerHTML=
-'<div class="article-hero" style="background:linear-gradient(135deg,'+a.color+',#0a0a1a);"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>'+
-'<div class="article-breadcrumb"><a onclick="closeArticle()">Blog SEO</a> &gt; <span>'+escH(a.title)+'</span></div>'+
-'<h1 style="font-size:1.8rem;font-weight:800;line-height:1.3;margin-bottom:1rem;">'+escH(a.title)+'</h1>'+
-'<div class="article-meta"><span>STS Security</span><span>8 de Julio, 2026</span><span>'+escH(a.readTime)+' de lectura</span></div>'+
-'<div id="article-toolbar" style="display:none;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:8px;margin-bottom:1rem;flex-wrap:wrap;gap:4px;">'+
-'<button class="btn btn-ghost btn-sm" onclick="execArtCmd(\'bold\')" title="Negrita"><b>B</b></button>'+
-'<button class="btn btn-ghost btn-sm" onclick="execArtCmd(\'italic\')" title="Cursiva"><i>I</i></button>'+
-'<button class="btn btn-ghost btn-sm" onclick="execArtCmd(\'underline\')" title="Subrayado"><u>U</u></button>'+
-'<button class="btn btn-ghost btn-sm" onclick="execArtCmd(\'formatBlock\',\'h2\')" title="H2">H2</button>'+
-'<button class="btn btn-ghost btn-sm" onclick="execArtCmd(\'formatBlock\',\'h3\')" title="H3">H3</button>'+
-'<button class="btn btn-ghost btn-sm" onclick="execArtCmd(\'insertUnorderedList\')" title="Lista">List</button>'+
-'<button class="btn btn-ghost btn-sm" onclick="execArtCmd(\'formatBlock\',\'blockquote\')" title="Cita">Quote</button>'+
-'<button class="btn btn-ghost btn-sm" onclick="execArtCmd(\'formatBlock\',\'p\')" title="Parrafo">P</button>'+
-'</div>'+
-'<div id="article-body" class="article-body" contenteditable="false" style="min-height:300px;outline:none;">'+a.content+'</div>'+
-'<div class="article-cta"><h3>Listo para proteger tu empresa?</h3><p>Contacta a STS Security para una consulta personalizada.</p><button class="btn btn-primary" style="margin-top:1rem;background:white;color:var(--accent);">Solicitar Consulta</button></div>';
-document.getElementById('article-sidebar').innerHTML=
-'<h3 style="font-size:.9rem;font-weight:600;margin-bottom:1rem;">Panel de Revision</h3>'+
-'<div style="margin-bottom:1rem;"><label style="font-size:.75rem;color:var(--text-muted);display:block;margin-bottom:.3rem;">Estado</label><span class="badge badge-'+(a.status==='Aprobado'?'success':a.status==='Pendiente'?'warning':'danger')+'">'+a.status+'</span></div>'+
-'<div style="margin-bottom:1rem;"><label style="font-size:.75rem;color:var(--text-muted);display:block;margin-bottom:.3rem;">Categoria</label><p style="font-size:.85rem;">'+a.category+'</p></div>'+
-'<div style="margin-bottom:1rem;"><label style="font-size:.75rem;color:var(--text-muted);display:block;margin-bottom:.3rem;">Keyword</label><p style="font-size:.85rem;">'+a.keyword+'</p></div>'+
-'<div style="margin-bottom:1rem;"><label style="font-size:.75rem;color:var(--text-muted);display:block;margin-bottom:.3rem;">Comentarios</label><textarea id="art-comment" style="width:100%;height:80px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:.5rem;color:var(--text-primary);font-family:inherit;font-size:.8rem;resize:vertical;" placeholder="Agregar comentario..."></textarea></div>'+
-'<button id="art-edit-btn" class="btn btn-primary" style="width:100%;margin-bottom:.5rem;" onclick="toggleArtEdit()">Editar articulo</button>'+
-'<button id="art-save-btn" class="btn btn-success" style="width:100%;margin-bottom:.5rem;display:none;" onclick="saveArticle('+idx+')">Guardar</button>'+
-'<button class="btn btn-success" style="width:100%;margin-bottom:.5rem;">Marcar como aprobado</button>'+
-'<button class="btn btn-danger" style="width:100%;">Solicitar cambios</button>';
+var sc=a.status==='Aprobado'?'success':a.status==='Pendiente'?'warning':'danger';
+var now=new Date();
+var dateStr=now.getDate()+' de '+['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'][now.getMonth()]+' '+now.getFullYear();
+
+var related=[];
+var otherBlogs=blogs.filter(function(_,i){return i!==idx});
+for(var r=0;r<Math.min(3,otherBlogs.length);r++){
+var ri=Math.floor(Math.random()*otherBlogs.length);
+related.push({blog:otherBlogs[ri],origIdx:blogs.indexOf(otherBlogs[ri])});
+otherBlogs.splice(ri,1);
+}
+
+var tocHtml=generateTOC(a.content);
+
+var h='<button class="article-close" onclick="closeArticle()">&#10005;</button>';
+h+='<div class="blog-article-page">';
+h+='<div style="margin-bottom:1rem;"><a onclick="closeArticle()" style="color:var(--accent);font-size:.85rem;cursor:pointer;text-decoration:none;">&#8592; Volver al Blog</a></div>';
+h+='<div style="margin-bottom:.5rem;"><span class="badge badge-'+sc+'" style="font-size:.7rem;">'+escH(a.category)+'</span></div>';
+h+='<h1>'+escH(a.title)+'</h1>';
+h+='<div class="blog-article-meta">';
+h+='<span>By <b>STS Security</b></span>';
+h+='<span>'+dateStr+'</span>';
+h+='<span>'+escH(a.readTime)+' de lectura</span>';
+h+='</div>';
+h+='<div style="height:280px;border-radius:12px;margin-bottom:2rem;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,'+a.color+',#0a0a1a);font-size:3rem;"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>';
+
+if(tocHtml){
+h+='<div class="blog-toc" id="blogToc"><h4>Contenidos</h4>'+tocHtml+'</div>';
+}
+
+h+='<div class="blog-article-body" id="article-body">'+a.content+'</div>';
+
+h+='<div class="article-cta" style="background:linear-gradient(135deg,var(--accent),#7c3aed);padding:2rem;border-radius:12px;text-align:center;margin:2.5rem 0;">';
+h+='<h3 style="color:#fff;margin-bottom:.5rem;font-size:1.2rem;">\u00bfListo para proteger tu empresa?</h3>';
+h+='<p style="color:rgba(255,255,255,.8);margin-bottom:1rem;">Contacta a STS Security para una consulta personalizada de seguridad empresarial.</p>';
+h+='<button class="btn btn-primary" style="background:white;color:var(--accent);font-weight:600;">Solicitar Consulta</button>';
+h+='</div>';
+
+if(related.length>0){
+h+='<div class="blog-related">';
+h+='<h3>Art\u00edculos Relacionados</h3>';
+h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">';
+related.forEach(function(r){
+var rsc=r.blog.status==='Aprobado'?'success':r.blog.status==='Pendiente'?'warning':'danger';
+h+='<div class="blog-card" onclick="openArticle('+r.origIdx+')" style="cursor:pointer;">';
+h+='<div style="height:100px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,'+r.blog.color+',#0a0a1a);font-size:1.5rem;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>';
+h+='<div style="padding:.75rem;"><div style="font-size:.65rem;font-weight:600;text-transform:uppercase;margin-bottom:.3rem;color:var(--success);">'+escH(r.blog.category)+'</div>';
+h+='<div style="font-size:.85rem;font-weight:600;line-height:1.3;margin-bottom:.3rem;">'+escH(r.blog.title)+'</div>';
+h+='<div style="font-size:.7rem;color:var(--text-muted);">'+escH(r.blog.readTime)+' de lectura</div></div></div>';
+});
+h+='</div></div>';
+}
+
+h+='<div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">';
+h+='<div style="display:flex;gap:.5rem;flex-wrap:wrap;">';
+h+='<span class="badge badge-'+sc+'">'+escH(a.status)+'</span>';
+h+='<span class="badge badge-info">'+escH(a.category)+'</span>';
+h+='</div>';
+h+='<div style="margin-top:1rem;display:flex;gap:.5rem;">';
+h+='<button class="btn btn-primary btn-sm" onclick="closeArticle();openBlogEditor('+idx+')">Editar art\u00edculo</button>';
+h+='<button class="btn btn-danger btn-sm" onclick="deleteBlogFromArticle('+idx+')">Eliminar</button>';
+h+='</div>';
+h+='<div style="margin-top:1rem;">';
+h+='<label style="font-size:.75rem;color:var(--text-muted);display:block;margin-bottom:.3rem;">Comentarios / Notas</label>';
+h+='<textarea id="art-comment" style="width:100%;height:80px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:.5rem;color:var(--text-primary);font-family:inherit;font-size:.8rem;resize:vertical;" placeholder="Agregar comentario..."></textarea>';
+h+='</div>';
+h+='<div style="margin-top:.75rem;display:flex;gap:.5rem;">';
+h+='<button class="btn btn-success btn-sm" onclick="setBlogStatus('+idx+',\'Aprobado\')">Marcar aprobado</button>';
+h+='<button class="btn btn-ghost btn-sm" style="color:var(--warning);border-color:var(--warning);" onclick="setBlogStatus('+idx+',\'Requiere Cambios\')">Requiere cambios</button>';
+h+='</div>';
+h+='</div>';
+h+='</div>';
+
+document.getElementById('article-page-container').innerHTML=h;
 document.getElementById('article-overlay').classList.add('active');
 document.body.style.overflow='hidden';
 }
 
-var artEditing=false;
-function toggleArtEdit(){
-artEditing=!artEditing;
-var body=document.getElementById('article-body');
-var toolbar=document.getElementById('article-toolbar');
-var editBtn=document.getElementById('art-edit-btn');
-var saveBtn=document.getElementById('art-save-btn');
-if(artEditing){
-body.contentEditable='true';toolbar.style.display='flex';editBtn.style.display='none';saveBtn.style.display='block';
-body.style.background='var(--bg-secondary)';body.style.padding='1rem';body.style.borderRadius='8px';
-}else{
-body.contentEditable='false';toolbar.style.display='none';editBtn.style.display='block';saveBtn.style.display='none';
-body.style.background='';body.style.padding='';body.style.borderRadius='';
-}
+function generateTOC(html){
+var tmp=document.createElement('div');
+tmp.innerHTML=html;
+var headings=tmp.querySelectorAll('h2,h3');
+if(headings.length===0)return '';
+var tocHtml='';
+headings.forEach(function(h,i){
+var id='toc-'+i;
+h.id=id;
+var indent=h.tagName==='H3'?'padding-left:1rem;':'';
+tocHtml+='<a href="#'+id+'" style="'+indent+'">'+h.textContent+'</a>';
+});
+return tocHtml;
 }
 
-function execArtCmd(cmd,val){document.execCommand(cmd,false,val||null);document.getElementById('article-body').focus()}
-
-function saveArticle(idx){
-var title=document.getElementById('article-content').querySelector('h1').textContent;
-var content=document.getElementById('article-body').innerHTML;
-blogs[idx].title=title;
-blogs[idx].content=content;
+function setBlogStatus(idx,status){
+blogs[idx].status=status;
 saveK('sts_insight_blogs',blogs);
-toggleArtEdit();showToast('Articulo guardado');
+renderBlogs();
+showToast('Estado actualizado a: '+status);
+closeArticle();
+}
+
+function deleteBlogFromArticle(idx){
+if(confirm('Eliminar este art\u00edculo?')){
+blogs.splice(idx,1);
+saveK('sts_insight_blogs',blogs);
+renderBlogs();
+closeArticle();
+showToast('Art\u00edculo eliminado','error');
+}
 }
 
 function closeArticle(){document.getElementById('article-overlay').classList.remove('active');document.body.style.overflow=''}
