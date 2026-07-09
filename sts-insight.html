@@ -606,14 +606,11 @@ function deleteBlog(i){if(confirm('Eliminar este art\u00edculo?')){blogs.splice(
 /* LINKEDIN EDITOR */
 function openLinkedinEditor(idx){
 var isNew=idx===-1;
-var p=isNew?{text:'',hashtags:'',objective:'',cta:'',status:'Pendiente',time:'Ahora',imageBg:'linear-gradient(135deg,#1a2a5a,#0a1a3a)',imageEmoji:'Post',engagement:'0 likes - 0 comments - 0 shares'}:linkedinPosts[idx];
+var p=isNew?{text:'',status:'Pendiente',time:'Ahora',imageBg:'linear-gradient(135deg,#1a2a5a,#0a1a3a)',imageEmoji:'Post',engagement:'0 likes - 0 comments - 0 shares'}:linkedinPosts[idx];
 var stats=['Pendiente','Aprobado','Requiere Cambios'];
 var h='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;"><h2 style="font-size:1.2rem;font-weight:700;">'+(isNew?'Nuevo Post LinkedIn':'Editar Post LinkedIn')+'</h2><button class="btn btn-ghost btn-sm" onclick="closeEditor()">Cerrar</button></div>';
 h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">';
 h+='<div><div class="editor-field"><label>Texto del post</label><textarea id="lnEdText" style="min-height:200px;" placeholder="Escribe tu publicacion...">'+escH(p.text)+'</textarea></div>';
-h+='<div class="editor-field"><label>Hashtags</label><input type="text" id="lnEdHashtags" value="'+escH(p.hashtags)+'" placeholder="#hashtag1 #hashtag2"></div>';
-h+='<div class="editor-field"><label>Objetivo</label><input type="text" id="lnEdObjective" value="'+escH(p.objective)+'" placeholder="Ej: Generar awareness"></div>';
-h+='<div class="editor-field"><label>CTA</label><input type="text" id="lnEdCta" value="'+escH(p.cta)+'" placeholder="Ej: Contactanos"></div>';
 h+='<div class="editor-field"><label>Estado</label><select id="lnEdStatus">'+stats.map(function(s){return '<option'+(s===p.status?' selected':'')+'>'+s+'</option>'}).join('')+'</select></div>';
 h+='</div><div>';
 h+='<div style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:12px;overflow:hidden;">';
@@ -631,7 +628,7 @@ ta.addEventListener('input',function(){pv.textContent=ta.value});
 
 function saveLinkedinEditor(idx){
 var isNew=idx===-1;
-var obj={text:document.getElementById('lnEdText').value,hashtags:document.getElementById('lnEdHashtags').value,objective:document.getElementById('lnEdObjective').value,cta:document.getElementById('lnEdCta').value,status:document.getElementById('lnEdStatus').value,time:isNew?'Ahora':linkedinPosts[idx].time,imageBg:isNew?'linear-gradient(135deg,#1a2a5a,#0a1a3a)':linkedinPosts[idx].imageBg,imageEmoji:isNew?'Post':linkedinPosts[idx].imageEmoji,engagement:isNew?'0 likes':linkedinPosts[idx].engagement};
+var obj={text:document.getElementById('lnEdText').value,status:document.getElementById('lnEdStatus').value,time:isNew?'Ahora':linkedinPosts[idx].time,imageBg:isNew?'linear-gradient(135deg,#1a2a5a,#0a1a3a)':linkedinPosts[idx].imageBg,imageEmoji:isNew?'Post':linkedinPosts[idx].imageEmoji,engagement:isNew?'0 likes':linkedinPosts[idx].engagement};
 if(isNew){linkedinPosts.push(obj)}else{linkedinPosts[idx]=obj}
 saveK('sts_insight_linkedin',linkedinPosts);closeEditor();renderLinkedin();showToast(isNew?'Post creado':'Post actualizado');
 }
@@ -640,13 +637,11 @@ function deleteLinkedinPost(i){if(confirm('Eliminar esta publicacion?')){linkedi
 /* FACEBOOK EDITOR */
 function openFacebookEditor(idx){
 var isNew=idx===-1;
-var p=isNew?{text:'',objective:'',cta:'',status:'Pendiente',time:'Ahora',imageBg:'linear-gradient(135deg,#0a2a5c,#0a1a3c)',imageEmoji:'Post',engagement:'0 likes'}:facebookPosts[idx];
+var p=isNew?{text:'',status:'Pendiente',time:'Ahora',imageBg:'linear-gradient(135deg,#0a2a5c,#0a1a3c)',imageEmoji:'Post',engagement:'0 likes'}:facebookPosts[idx];
 var h='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;"><h2 style="font-size:1.2rem;font-weight:700;">'+(isNew?'Nuevo Post Facebook':'Editar Post Facebook')+'</h2><button class="btn btn-ghost btn-sm" onclick="closeEditor()">Cerrar</button></div>';
 h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">';
 h+='<div>';
 h+='<div class="editor-field"><label>Texto del post</label><textarea id="fbEdText" style="min-height:150px;" placeholder="Escribe tu publicacion...">'+escH(p.text)+'</textarea></div>';
-h+='<div class="editor-field"><label>Objetivo</label><input type="text" id="fbEdObjective" value="'+escH(p.objective)+'" placeholder="Objetivo del post"></div>';
-h+='<div class="editor-field"><label>CTA</label><input type="text" id="fbEdCta" value="'+escH(p.cta)+'" placeholder="Call to action"></div>';
 h+='<div class="editor-field"><label>Estado</label><select id="fbEdStatus"><option value="Pendiente"'+(p.status==='Pendiente'?' selected':'')+'>Pendiente</option><option value="Aprobado"'+(p.status==='Aprobado'?' selected':'')+'>Aprobado</option><option value="Requiere Cambios"'+(p.status==='Requiere Cambios'?' selected':'')+'>Requiere Cambios</option></select></div>';
 h+='</div><div>';
 h+='<div style="background:#1877f2;border-radius:12px;padding:1rem;max-width:400px;margin:0 auto;">';
@@ -663,7 +658,7 @@ openEditor(h);
 }
 function saveFacebookEditor(idx){
 var isNew=idx===-1;
-var obj={text:document.getElementById('fbEdText').value,objective:document.getElementById('fbEdObjective').value,cta:document.getElementById('fbEdCta').value,status:document.getElementById('fbEdStatus').value,time:'Ahora',imageBg:'linear-gradient(135deg,#0a2a5c,#0a1a3c)',imageEmoji:'Post',engagement:'0 likes'};
+var obj={text:document.getElementById('fbEdText').value,status:document.getElementById('fbEdStatus').value,time:'Ahora',imageBg:'linear-gradient(135deg,#0a2a5c,#0a1a3c)',imageEmoji:'Post',engagement:'0 likes'};
 if(isNew){facebookPosts.push(obj)}else{facebookPosts[idx]=obj}
 saveK('sts_insight_facebook',facebookPosts);closeEditor();renderFacebook();showToast(isNew?'Post creado':'Post actualizado');
 }
@@ -678,8 +673,6 @@ h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">';
 h+='<div><div class="editor-field"><label>Emoji/Simbolo</label><input type="text" id="igEdEmoji" value="'+escH(p.emoji)+'" placeholder="Emoji representativo"></div>';
 h+='<div class="editor-field"><label>Color de fondo</label><select id="igEdColor"><option value="#0a3a5c"'+(p.color==='#0a3a5c'?' selected':'')+'>Azul oscuro</option><option value="#1a2a4a"'+(p.color==='#1a2a4a'?' selected':'')+'>Azul marino</option><option value="#2a1a3a"'+(p.color==='#2a1a3a'?' selected':'')+'>Morado oscuro</option><option value="#0a3a2a"'+(p.color==='#0a3a2a'?' selected':'')+'>Verde oscuro</option><option value="#3a1a2a"'+(p.color==='#3a1a2a'?' selected':'')+'>Borgona</option><option value="#1a3a3a"'+(p.color==='#1a3a3a'?' selected':'')+'>Teal oscuro</option></select></div>';
 h+='<div class="editor-field"><label>CapTION</label><textarea id="igEdCaption" style="min-height:150px;" placeholder="Escribe el caption...">'+escH(p.caption)+'</textarea></div>';
-h+='<div class="editor-field"><label>Objetivo</label><input type="text" id="igEdObjective" value="'+escH(p.objective)+'" placeholder="Objetivo del post"></div>';
-h+='<div class="editor-field"><label>CTA</label><input type="text" id="igEdCta" value="'+escH(p.cta)+'" placeholder="Call to action"></div>';
 h+='</div><div>';
 h+='<div style="background:#1a1a1a;border-radius:12px;padding:1rem;max-width:320px;margin:0 auto;">';
 h+='<div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem;"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);"></div><div><div style="font-weight:600;font-size:.8rem;">sts_security</div><div style="font-size:.7rem;color:var(--text-muted);">Ahora</div></div></div>';
@@ -693,7 +686,7 @@ openEditor(h);
 
 function saveInstagramEditor(idx){
 var isNew=idx===-1;
-var obj={emoji:document.getElementById('igEdEmoji').value,color:document.getElementById('igEdColor').value,caption:document.getElementById('igEdCaption').value,likes:isNew?'0':instagramPosts[idx].likes,comments:isNew?'0':instagramPosts[idx].comments,objective:document.getElementById('igEdObjective').value,cta:document.getElementById('igEdCta').value};
+var obj={emoji:document.getElementById('igEdEmoji').value,color:document.getElementById('igEdColor').value,caption:document.getElementById('igEdCaption').value,likes:isNew?'0':instagramPosts[idx].likes,comments:isNew?'0':instagramPosts[idx].comments};
 if(isNew){instagramPosts.push(obj)}else{instagramPosts[idx]=obj}
 saveK('sts_insight_instagram',instagramPosts);closeEditor();renderInstagram();showToast(isNew?'Post creado':'Post actualizado');
 }
