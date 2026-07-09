@@ -957,26 +957,6 @@ document.body.style.overflow='hidden';
 
 function closeInstaModal(){document.getElementById('insta-modal').classList.remove('active');document.body.style.overflow=''}
 
-function buildCalTable(){
-const c=document.getElementById('cal-table-container');
-let h='<table class="cal-tbl"><thead><tr><th>Semana</th><th>Fecha</th><th>Tipo de contenido</th><th>Tema</th><th>Objetivo</th><th>Formato</th></tr></thead><tbody>';
-calData.forEach(week=>{
-h+='<tr class="cal-sep"><td colspan="6"><div class="cal-sep-inner"><span class="cal-sep-label" style="background:'+week.color+'">'+week.week+'</span><span class="cal-sep-dates">'+week.dates+'</span></div></td></tr>';
-week.posts.forEach(p=>{
-h+='<tr>';
-h+='<td class="cal-week-cell">'+p.wk+'</td>';
-h+='<td class="cal-date-cell"><div class="day">'+p.day+'</div><div class="weekday">'+p.weekday+'</div></td>';
-h+='<td><span class="cal-type-badge '+p.badge+'">'+p.type+'</span></td>';
-h+='<td class="cal-topic-cell">'+p.topic+'</td>';
-h+='<td class="cal-obj-cell">'+p.obj+'</td>';
-h+='<td><span class="cal-format-badge">'+p.format+'</span></td>';
-h+='</tr>';
-});
-});
-h+='</tbody></table>';
-c.innerHTML=h;
-}
-
 function closePopups(){
 document.getElementById('overlay-bg').classList.remove('active');
 }
