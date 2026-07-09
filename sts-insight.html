@@ -109,11 +109,6 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .social-post-actions{display:flex;border-top:1px solid var(--border);padding:.5rem 1rem}
 .social-post-actions button{flex:1;padding:.5rem;background:none;border:none;color:var(--text-secondary);font-family:inherit;font-size:.8rem;cursor:pointer;border-radius:6px;transition:background .2s}
 .social-post-actions button:hover{background:rgba(255,255,255,.05)}
-.social-detail-panel{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
-.social-detail-panel h4{font-size:.9rem;font-weight:600;margin-bottom:1rem}
-.social-detail-row{margin-bottom:.75rem}
-.social-detail-row label{font-size:.75rem;color:var(--text-muted);display:block;margin-bottom:.25rem}
-.social-detail-row p{font-size:.85rem;color:var(--text-secondary)}
 .insta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
 .insta-card{aspect-ratio:1;border-radius:4px;overflow:hidden;cursor:pointer;position:relative;transition:opacity .2s}
 .insta-card:hover{opacity:.85}
@@ -249,7 +244,8 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .article-overlay.active{display:block}
 .article-close{position:fixed;top:1rem;right:1rem;z-index:2001;width:40px;height:40px;border-radius:50%;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
 @media(max-width:1024px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:repeat(2,1fr)}.article-overlay.active{flex-direction:column}.article-sidebar{width:100%;height:auto;position:static}}
-@media(max-width:768px){#sidebar{transform:translateX(-100%)}#sidebar.open{transform:translateX(0)}#main-content{margin-left:0}.mobile-toggle{display:block}.grid-4,.grid-3{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}.section{padding:1rem}.search-bar{width:180px}.social-detail-panel{display:none}.insta-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){#sidebar{transform:translateX(-100%)}#sidebar.open{transform:translateX(0)}#main-content{margin-left:0}.mobile-toggle{display:block}.grid-4,.grid-3{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}.section{padding:1rem}.search-bar{width:180px}
+.insta-grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -423,11 +419,6 @@ h+='<div class="social-post-image" style="background:'+p.imageBg+';">'+escH(p.im
 h+='<div class="social-post-engagement">'+escH(p.engagement)+'</div>';
 h+='<div class="social-post-actions"><button>Like</button><button>Comentar</button><button>Compartir</button><button>Enviar</button></div>';
 h+='</div></div>';
-h+='<div class="social-detail-panel"><h4>Detalle de Publicacion</h4>';
-h+='<div class="social-detail-row"><label>Objetivo</label><p>'+escH(p.objective)+'</p></div>';
-h+='<div class="social-detail-row"><label>CTA</label><p>"'+escH(p.cta)+'"</p></div>';
-h+='<div class="social-detail-row"><label>Estado</label><p><span class="badge badge-'+(p.status==='Aprobado'?'success':'warning')+'">'+escH(p.status)+'</span></p></div>';
-h+='<div class="social-detail-row"><label>Hashtags</label><p style="font-size:.8rem;">'+escH(p.hashtags)+'</p></div></div>';
 });
 g.innerHTML=h;
 document.getElementById('linkedin-subtitle').textContent=linkedinPosts.length+' publicaciones programadas';
@@ -445,10 +436,6 @@ h+='<div class="social-post-image" style="background:'+p.imageBg+';">'+escH(p.im
 h+='<div class="social-post-engagement">'+escH(p.engagement)+'</div>';
 h+='<div class="social-post-actions"><button>Me gusta</button><button>Comentar</button><button>Compartir</button></div>';
 h+='</div></div>';
-h+='<div class="social-detail-panel"><h4>Detalle de Publicacion</h4>';
-h+='<div class="social-detail-row"><label>Objetivo</label><p>'+escH(p.objective)+'</p></div>';
-h+='<div class="social-detail-row"><label>CTA</label><p>"'+escH(p.cta)+'"</p></div>';
-h+='<div class="social-detail-row"><label>Estado</label><p><span class="badge badge-'+(p.status==='Aprobado'?'success':'warning')+'">'+escH(p.status)+'</span></p></div></div>';
 });
 g.innerHTML=h;
 document.getElementById('facebook-subtitle').textContent=facebookPosts.length+' publicaciones programadas';
@@ -1037,8 +1024,6 @@ modal.innerHTML='<div style="background:var(--bg-card);border-radius:12px;max-wi
 '<div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;"><div class="social-post-logo" style="width:36px;height:36px;font-size:.6rem;">STS</div><div><div style="font-weight:600;font-size:.9rem;">sts_security</div><div style="font-size:.7rem;color:var(--text-muted);">Hace 1 hora</div></div></div>'+
 '<p style="font-size:.9rem;color:var(--text-secondary);line-height:1.6;margin-bottom:1rem;">'+escH(p.caption)+'</p>'+
 '<div style="display:flex;gap:1.5rem;font-size:.85rem;color:var(--text-secondary);margin-bottom:1rem;"><span>Likes '+p.likes+'</span><span>Comments '+p.comments+'</span></div>'+
-'<div style="margin-bottom:.75rem;"><label style="font-size:.75rem;color:var(--text-muted);display:block;margin-bottom:.25rem;">Objetivo</label><p style="font-size:.85rem;">'+escH(p.objective)+'</p></div>'+
-'<div style="margin-bottom:.75rem;"><label style="font-size:.75rem;color:var(--text-muted);display:block;margin-bottom:.25rem;">CTA</label><p style="font-size:.85rem;">'+escH(p.cta)+'</p></div>'+
 '<button class="btn btn-ghost btn-sm" style="margin-top:auto;" onclick="document.getElementById(\'instaModal\').remove()">Cerrar</button></div></div>';
 document.body.appendChild(modal);
 modal.style.display='flex';
