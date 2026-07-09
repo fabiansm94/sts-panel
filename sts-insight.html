@@ -300,6 +300,20 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .comment-btn .comment-count{background:var(--accent);color:#fff;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem}
 .post-card-actions{display:flex;gap:.5rem;padding:.5rem 1rem;border-top:1px solid var(--border);flex-wrap:wrap}
 @media(max-width:768px){.social-editor{grid-template-columns:1fr}.comment-panel{width:100%}}
+.select-bar{display:none;align-items:center;gap:1rem;padding:.75rem 1rem;background:var(--navy);color:#fff;border-radius:10px;margin-bottom:1rem}
+.select-bar.active{display:flex}
+.select-bar .sel-count{font-size:.85rem;font-weight:600}
+.select-bar .sel-actions{margin-left:auto;display:flex;gap:.5rem}
+.select-bar .sel-btn{padding:.4rem .8rem;border-radius:9999px;border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;font-family:inherit;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s}
+.select-bar .sel-btn:hover{background:rgba(255,255,255,.1)}
+.select-bar .sel-btn.danger{border-color:var(--danger);color:var(--danger)}
+.select-bar .sel-btn.danger:hover{background:rgba(214,57,57,.2)}
+.card-select{position:absolute;top:10px;left:10px;z-index:11;width:22px;height:22px;border-radius:6px;border:2px solid var(--border);background:#fff;cursor:pointer;display:none;align-items:center;justify-content:center;transition:all .15s}
+.blog-card:hover .card-select,.social-card:hover .card-select,.insta-card .card-select{display:flex}
+.card-select.checked{background:var(--accent);border-color:var(--accent)}
+.card-select.checked::after{content:'✓';color:#fff;font-size:.7rem;font-weight:700}
+.multi-select-mode .card-select{display:flex}
+.multi-select-mode .card-actions{display:none!important}
 </style>
 </head>
 <body>
@@ -315,8 +329,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 <div class="logo-text"><h2>STS INSIGHT</h2><span>Content Review Portal</span></div>
 </div>
 <nav class="sidebar-nav">
-<div class="nav-item active" data-section="dashboard" onclick="navigateTo('dashboard')"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span> Dashboard</div>
-<div class="nav-item" data-section="blog" onclick="navigateTo('blog')"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span> Blog SEO</div>
+<div class="nav-item active" data-section="blog" onclick="navigateTo('blog')"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span> Blog SEO</div>
 <div class="nav-item" data-section="linkedin" onclick="navigateTo('linkedin')"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></span> LinkedIn</div>
 <div class="nav-item" data-section="facebook" onclick="navigateTo('facebook')"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></span> Facebook</div>
 <div class="nav-item" data-section="instagram" onclick="navigateTo('instagram')"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></span> Instagram</div>
@@ -335,27 +348,14 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 <div id="topbar">
 <div style="display:flex;align-items:center;gap:1rem;">
 <button class="mobile-toggle" onclick="toggleSidebar()">&#9776;</button>
-<div id="breadcrumb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> <span>Dashboard</span></div>
+<div id="breadcrumb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> <span>Blog SEO</span></div>
 </div>
 <div class="search-bar"><span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><input type="text" placeholder="Buscar contenido..." id="globalSearch" oninput="handleSearch(this.value)"></div>
 </div>
-<div id="dashboard" class="section active">
-<div class="welcome-banner"><h2>Bienvenido al portal de revisi&#243;n de contenidos de STS Security.</h2><p>Gestiona, revisa y aprueba todo el contenido digital de STS Security desde un solo lugar.</p></div>
-<div class="grid-4" style="margin-bottom:1.5rem;">
-<div class="kpi-card blue"><div class="kpi-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><div class="kpi-value" id="kpi-total">48</div><div class="kpi-label">Total Contenidos</div></div>
-<div class="kpi-card green"><div class="kpi-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div class="kpi-value">31</div><div class="kpi-label">Aprobados</div></div>
-<div class="kpi-card yellow"><div class="kpi-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="kpi-value">12</div><div class="kpi-label">Pendientes</div></div>
-<div class="kpi-card red"><div class="kpi-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></div><div class="kpi-value">5</div><div class="kpi-label">En Revisi&#243;n</div></div>
-</div>
-<div class="grid-2">
-<div class="card"><h3 style="font-size:1rem;font-weight:600;margin-bottom:1rem;">Distribuci&#243;n de Contenidos</h3><div class="bar-chart"><div class="bar-group"><div class="bar" style="height:70%;background:var(--blog);position:relative;"><span class="bar-value" style="color:var(--blog);">12</span></div><span class="bar-label">Blog SEO</span></div><div class="bar-group"><div class="bar" style="height:85%;background:var(--linkedin);position:relative;"><span class="bar-value" style="color:var(--linkedin);">14</span></div><span class="bar-label">LinkedIn</span></div><div class="bar-group"><div class="bar" style="height:65%;background:var(--facebook);position:relative;"><span class="bar-value" style="color:var(--facebook);">11</span></div><span class="bar-label">Facebook</span></div><div class="bar-group"><div class="bar" style="height:65%;background:var(--instagram);position:relative;"><span class="bar-value" style="color:var(--instagram);">11</span></div><span class="bar-label">Instagram</span></div></div></div>
-<div class="card"><h3 style="font-size:1rem;font-weight:600;margin-bottom:1rem;">Progreso General</h3><div class="progress-container"><div class="progress-label"><span>Completado</span><span style="color:var(--accent);font-weight:600;">65%</span></div><div class="progress-bar"><div class="progress-fill" style="width:65%;"></div></div></div><h3 style="font-size:1rem;font-weight:600;margin:1.5rem 0 1rem;">Hitos del Proyecto</h3><div class="timeline"><div class="timeline-item done"><div class="tl-date">Junio 2026</div><div class="tl-text">Estrategia definida</div></div><div class="timeline-item active"><div class="tl-date">Julio 2026</div><div class="tl-text">Contenidos en producci&#243;n</div></div><div class="timeline-item"><div class="tl-date">Agosto 2026</div><div class="tl-text">Campa&#241;a activa</div></div><div class="timeline-item"><div class="tl-date">Septiembre 2026</div><div class="tl-text">An&#225;lisis de resultados</div></div></div></div></div>
-<div class="card" style="margin-top:1.5rem;"><h3 style="font-size:1rem;font-weight:600;margin-bottom:1rem;">Actividad Reciente</h3><div class="activity-item"><div class="activity-dot" style="background:var(--success);"></div><div><div class="activity-text">Blog "Seguridad Empresarial" aprobado</div><div class="activity-time">Hace 2 horas</div></div></div><div class="activity-item"><div class="activity-dot" style="background:var(--linkedin);"></div><div><div class="activity-text">Publicaci&#243;n LinkedIn programada</div><div class="activity-time">Hace 4 horas</div></div></div><div class="activity-item"><div class="activity-dot" style="background:var(--instagram);"></div><div><div class="activity-text">Feedback recibido en Instagram</div><div class="activity-time">Hace 6 horas</div></div></div><div class="activity-item"><div class="activity-dot" style="background:var(--blog);"></div><div><div class="activity-text">Nuevo blogspot creado</div><div class="activity-time">Hace 1 d&#237;a</div></div></div><div class="activity-item"><div class="activity-dot" style="background:var(--warning);"></div><div><div class="activity-text">Calendario actualizado</div><div class="activity-time">Hace 2 d&#237;as</div></div></div></div>
-</div>
-<div id="blog" class="section"><div class="section-header"><div><h2 class="section-title">Blog SEO</h2><p class="section-subtitle">Art&#237;culos optimizados para motores de b&#250;squeda</p></div><div style="display:flex;align-items:center;gap:.5rem;"><button class="btn btn-primary btn-sm" onclick="openBlogEditor(-1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Nuevo Art&#237;culo</button><div class="filter-group"><button class="btn btn-ghost active" onclick="filterBlog('all',this)">Todos</button><button class="btn btn-ghost" onclick="filterBlog('Pendiente',this)">Pendiente</button><button class="btn btn-ghost" onclick="filterBlog('Aprobado',this)">Aprobado</button><button class="btn btn-ghost" onclick="filterBlog('Requiere Cambios',this)">Requiere Cambios</button></div></div></div><div class="grid-3" id="blog-grid"></div></div>
-<div id="linkedin" class="section"><div class="section-header"><div><h2 class="section-title">LinkedIn</h2><p class="section-subtitle" id="linkedin-subtitle">14 publicaciones programadas</p></div><button class="btn btn-primary btn-sm" onclick="openLinkedinEditor(-1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Nueva Publicaci&#243;n</button></div><div class="grid-2" id="linkedin-grid"></div></div>
-<div id="facebook" class="section"><div class="section-header"><div><h2 class="section-title">Facebook</h2><p class="section-subtitle" id="facebook-subtitle">11 publicaciones programadas</p></div><button class="btn btn-primary btn-sm" onclick="openFacebookEditor(-1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Nueva Publicaci&#243;n</button></div><div class="grid-2" id="facebook-grid"></div></div>
-<div id="instagram" class="section"><div class="section-header"><div><h2 class="section-title">Instagram</h2><p class="section-subtitle" id="instagram-subtitle">11 publicaciones programadas</p></div><button class="btn btn-primary btn-sm" onclick="openInstagramEditor(-1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Nuevo Post</button></div><div class="insta-grid" id="insta-grid"></div></div>
+<div id="blog" class="section active"><div class="section-header"><div><h2 class="section-title">Blog SEO</h2><p class="section-subtitle">Art&#237;culos optimizados para motores de b&#250;squeda</p></div><div style="display:flex;align-items:center;gap:.5rem;"><button class="btn btn-ghost btn-sm" onclick="toggleMultiSelectMode('blog')">Seleccionar</button><button class="btn btn-primary btn-sm" onclick="openBlogEditor(-1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Nuevo Art&#237;culo</button><div class="filter-group"><button class="btn btn-ghost active" onclick="filterBlog('all',this)">Todos</button><button class="btn btn-ghost" onclick="filterBlog('Pendiente',this)">Pendiente</button><button class="btn btn-ghost" onclick="filterBlog('Aprobado',this)">Aprobado</button><button class="btn btn-ghost" onclick="filterBlog('Requiere Cambios',this)">Requiere Cambios</button></div></div></div><div id="selectBar-blog" class="select-bar"><span class="sel-count">0 seleccionados</span><div class="sel-actions"><button class="sel-btn" onclick="toggleMultiSelectMode('blog')">Cancelar</button><button class="sel-btn danger" onclick="bulkDelete('blog')">Eliminar</button></div></div><div class="grid-3" id="blog-grid"></div></div>
+<div id="linkedin" class="section"><div class="section-header"><div><h2 class="section-title">LinkedIn</h2><p class="section-subtitle" id="linkedin-subtitle">14 publicaciones programadas</p></div><div style="display:flex;align-items:center;gap:.5rem;"><button class="btn btn-ghost btn-sm" onclick="toggleMultiSelectMode('linkedin')">Seleccionar</button><button class="btn btn-primary btn-sm" onclick="openLinkedinEditor(-1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Nueva Publicaci&#243;n</button></div></div><div id="selectBar-linkedin" class="select-bar"><span class="sel-count">0 seleccionados</span><div class="sel-actions"><button class="sel-btn" onclick="toggleMultiSelectMode('linkedin')">Cancelar</button><button class="sel-btn danger" onclick="bulkDelete('linkedin')">Eliminar</button></div></div><div class="grid-2" id="linkedin-grid"></div></div>
+<div id="facebook" class="section"><div class="section-header"><div><h2 class="section-title">Facebook</h2><p class="section-subtitle" id="facebook-subtitle">11 publicaciones programadas</p></div><div style="display:flex;align-items:center;gap:.5rem;"><button class="btn btn-ghost btn-sm" onclick="toggleMultiSelectMode('facebook')">Seleccionar</button><button class="btn btn-primary btn-sm" onclick="openFacebookEditor(-1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Nueva Publicaci&#243;n</button></div></div><div id="selectBar-facebook" class="select-bar"><span class="sel-count">0 seleccionados</span><div class="sel-actions"><button class="sel-btn" onclick="toggleMultiSelectMode('facebook')">Cancelar</button><button class="sel-btn danger" onclick="bulkDelete('facebook')">Eliminar</button></div></div><div class="grid-2" id="facebook-grid"></div></div>
+<div id="instagram" class="section"><div class="section-header"><div><h2 class="section-title">Instagram</h2><p class="section-subtitle" id="instagram-subtitle">11 publicaciones programadas</p></div><div style="display:flex;align-items:center;gap:.5rem;"><button class="btn btn-ghost btn-sm" onclick="toggleMultiSelectMode('instagram')">Seleccionar</button><button class="btn btn-primary btn-sm" onclick="openInstagramEditor(-1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Nuevo Post</button></div></div><div id="selectBar-instagram" class="select-bar"><span class="sel-count">0 seleccionados</span><div class="sel-actions"><button class="sel-btn" onclick="toggleMultiSelectMode('instagram')">Cancelar</button><button class="sel-btn danger" onclick="bulkDelete('instagram')">Eliminar</button></div></div><div class="insta-grid" id="insta-grid"></div></div>
 <div id="calendar" class="section"><div class="section-header"><div><h2 class="section-title">Calendario Editorial</h2><p class="section-subtitle">Estrategia Marketing Digital</p></div><div style="display:flex;align-items:center;gap:1rem;"><span style="font-weight:600;color:var(--text-secondary);">Julio - Agosto 2026</span><span style="font-size:.8rem;color:var(--text-muted);background:var(--bg-primary);padding:4px 12px;border-radius:9999px;border:1px solid var(--border);" id="cal-count">12 publicaciones programadas</span></div></div><div class="filter-group" style="margin-bottom:1.5rem;"><button class="btn btn-ghost active" onclick="filterCalPlatform('all',this)">Todos</button><button class="btn btn-ghost" onclick="filterCalPlatform('linkedin',this)">LinkedIn</button><button class="btn btn-ghost" onclick="filterCalPlatform('facebook',this)">Facebook</button><button class="btn btn-ghost" onclick="filterCalPlatform('instagram',this)">Instagram</button></div><div id="cal-table-container"></div></div>
 
 <div id="feedback" class="section"><div class="section-header"><div><h2 class="section-title">Centro de Feedback</h2><p class="section-subtitle">Gestiona los comentarios y revisiones del equipo</p></div><button class="btn btn-primary btn-sm" onclick="openFeedbackEditor(-1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Nuevo Feedback</button></div><div class="tab-bar" id="feedback-tabs"><div class="tab-item active" onclick="switchFeedbackTab('pending',this)">Pendiente (5)</div><div class="tab-item" onclick="switchFeedbackTab('approved',this)">Aprobado (31)</div><div class="tab-item" onclick="switchFeedbackTab('history',this)">Historial</div></div><div id="feedback-list"></div></div>
@@ -383,6 +383,50 @@ var COMMENT_SVG='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" str
 var IMG_SVG='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>';
 var VID_SVG='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>';
 var CLOSE_SVG='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+
+var multiSelectMode=false;
+var selectedItems={};
+
+function toggleMultiSelectMode(platform){
+multiSelectMode=!multiSelectMode;
+selectedItems={};
+updateSelectBar(platform);
+document.querySelectorAll('#'+(platform==='blog'?'blog-grid':platform==='linkedin'?'linkedin-grid':platform==='facebook'?'facebook-grid':'insta-grid')+' .card-select').forEach(function(c){c.classList.remove('checked');c.style.display=multiSelectMode?'flex':'none'});
+document.querySelectorAll('#'+(platform==='blog'?'blog-grid':platform==='linkedin'?'linkedin-grid':platform==='facebook'?'facebook-grid':'insta-grid')).forEach(function(g){g.classList.toggle('multi-select-mode',multiSelectMode)});
+}
+
+function toggleItemSelect(platform,idx,el){
+var key=platform+'_'+idx;
+if(selectedItems[key]){delete selectedItems[key];el.classList.remove('checked')}else{selectedItems[key]=true;el.classList.add('checked')}
+updateSelectBar(platform);
+}
+
+function updateSelectBar(platform){
+var count=Object.keys(selectedItems).length;
+var bar=document.getElementById('selectBar-'+platform);
+if(!bar)return;
+if(count>0){
+bar.classList.add('active');
+bar.querySelector('.sel-count').textContent=count+' seleccionado'+(count>1?'s':'');
+}else{
+bar.classList.remove('active');
+}
+}
+
+function bulkDelete(platform){
+var keys=Object.keys(selectedItems);
+if(keys.length===0)return;
+if(!confirm('Eliminar '+keys.length+' elemento'+(keys.length>1?'s':'')+'?'))return;
+var indices=keys.map(function(k){return parseInt(k.split('_')[1])}).sort(function(a,b){return b-a});
+var posts=platform==='blog'?blogs:platform==='linkedin'?linkedinPosts:platform==='facebook'?facebookPosts:instagramPosts;
+indices.forEach(function(i){posts.splice(i,1)});
+var storageKey=platform==='blog'?'sts_insight_blogs':'sts_insight_'+platform;
+saveK(storageKey,posts);
+selectedItems={};
+multiSelectMode=false;
+renderBlogs();renderLinkedin();renderFacebook();renderInstagram();
+showToast(indices.length+' elemento'+(indices.length>1?'s':'')+' eliminado'+(indices.length>1?'s':''),'error');
+}
 
 function showToast(msg,type){type=type||'success';var c=document.getElementById('toastContainer');var t=document.createElement('div');t.className='toast '+type;t.textContent=msg;c.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transform='translateX(100%)';setTimeout(function(){t.remove()},300)},3000)}
 function openEditor(html,lg){var o=document.getElementById('editorOverlay');var p=document.getElementById('editorPanel');p.className='editor-panel'+(lg?' editor-panel-lg':'');p.innerHTML=html;o.classList.add('active');document.body.style.overflow='hidden'}
@@ -461,6 +505,7 @@ var sc=b.status==='Aprobado'?'success':b.status==='Pendiente'?'warning':'danger'
 var approved=b.approved;
 var commentCount=(b.postComments||[]).length;
 h+='<div class="blog-card" data-status="'+b.status+'" onclick="openArticle('+i+')">';
+h+='<div class="card-select" onclick="event.stopPropagation();toggleItemSelect(\'blog\','+i+',this)"></div>';
 h+='<div class="blog-card-image" style="background:linear-gradient(135deg,'+b.color+',#0a0a1a);"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>';
 h+='<div class="blog-card-body"><div class="blog-card-category" style="color:var(--success);">'+escH(b.category)+'</div>';
 h+='<div class="blog-card-title">'+escH(b.title)+'</div>';
@@ -477,7 +522,7 @@ h+='</div></div></div>';
 h+='<div class="add-card-btn" onclick="openBlogEditor(-1)" style="min-height:380px;">'+PLUS_SVG+' Nuevo Articulo</div>';
 g.innerHTML=h;
 var total=blogs.length+linkedinPosts.length+facebookPosts.length+instagramPosts.length;
-document.getElementById('kpi-total').textContent=total;
+var kpiEl=document.getElementById('kpi-total');if(kpiEl)kpiEl.textContent=total;
 }
 
 function renderLinkedin(){
@@ -486,6 +531,7 @@ linkedinPosts.forEach(function(p,i){
 var approved=p.approved;
 var commentCount=(p.postComments||[]).length;
 h+='<div class="social-card">';
+h+='<div class="card-select" onclick="event.stopPropagation();toggleItemSelect(\'linkedin\','+i+',this)"></div>';
 h+='<div class="card-actions"><button class="action-btn edit-btn" onclick="event.stopPropagation();openLinkedinEditor('+i+')" title="Editar">'+EDIT_SVG+'</button><button class="action-btn delete-btn" onclick="event.stopPropagation();deleteLinkedinPost('+i+')" title="Eliminar">'+DEL_SVG+'</button></div>';
 h+='<div class="social-post">';
 h+='<div class="social-post-header"><div class="social-post-logo">STS</div><div><div class="social-post-name">STS Security</div><div class="social-post-time">'+escH(p.time)+' Globe</div></div></div>';
@@ -512,6 +558,7 @@ facebookPosts.forEach(function(p,i){
 var approved=p.approved;
 var commentCount=(p.postComments||[]).length;
 h+='<div class="social-card">';
+h+='<div class="card-select" onclick="event.stopPropagation();toggleItemSelect(\'facebook\','+i+',this)"></div>';
 h+='<div class="card-actions"><button class="action-btn edit-btn" onclick="event.stopPropagation();openFacebookEditor('+i+')" title="Editar">'+EDIT_SVG+'</button><button class="action-btn delete-btn" onclick="event.stopPropagation();deleteFacebookPost('+i+')" title="Eliminar">'+DEL_SVG+'</button></div>';
 h+='<div class="social-post">';
 h+='<div class="social-post-header"><div class="social-post-logo" style="background:linear-gradient(135deg,var(--facebook),#0a4aa0);">STS</div><div><div class="social-post-name">STS Security</div><div class="social-post-time">'+escH(p.time)+' Globe</div></div></div>';
@@ -539,6 +586,7 @@ var approved=p.approved;
 var commentCount=(p.postComments||[]).length;
 h+='<div style="display:flex;flex-direction:column;">';
 h+='<div class="insta-card" style="background:linear-gradient(135deg,'+p.color+',#0a0a1a);" onclick="openInstaModal('+i+')">';
+h+='<div class="card-select" onclick="event.stopPropagation();toggleItemSelect(\'instagram\','+i+',this)"></div>';
 h+='<div class="card-actions"><button class="action-btn edit-btn" onclick="event.stopPropagation();openInstagramEditor('+i+')" title="Editar">'+EDIT_SVG+'</button><button class="action-btn delete-btn" onclick="event.stopPropagation();deleteInstagramPost('+i+')" title="Eliminar">'+DEL_SVG+'</button></div>';
 h+='<div class="insta-card-overlay"><span>Likes '+p.likes+'</span><span>Comments '+p.comments+'</span></div></div>';
 h+='<div class="post-card-actions">';
@@ -1052,12 +1100,13 @@ document.getElementById('sidebar-role').textContent=s.role||'';
 
 /* NAVIGATION */
 function navigateTo(section){
+if(!section||section==='dashboard')section='blog';
 document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
 document.getElementById(section).classList.add('active');
 document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active')});
 var nav=document.querySelector('.nav-item[data-section="'+section+'"]');
 if(nav)nav.classList.add('active');
-var names={dashboard:'Dashboard',blog:'Blog SEO',linkedin:'LinkedIn',facebook:'Facebook',instagram:'Instagram',calendar:'Calendario Editorial',feedback:'Feedback',settings:'Configuracion'};
+var names={blog:'Blog SEO',linkedin:'LinkedIn',facebook:'Facebook',instagram:'Instagram',calendar:'Calendario Editorial',feedback:'Feedback',settings:'Configuracion'};
 document.getElementById('breadcrumb').innerHTML='Home <span>'+(names[section]||section)+'</span>';
 window.scrollTo(0,0);
 if(section==='calendar')buildCalTable();
@@ -1285,11 +1334,17 @@ var now=new Date();
 var dateStr=now.getDate()+'/'+(now.getMonth()+1)+'/'+now.getFullYear()+' '+now.getHours()+':'+String(now.getMinutes()).padStart(2,'0');
 if(!posts[currentCommentIdx].postComments)posts[currentCommentIdx].postComments=[];
 posts[currentCommentIdx].postComments.push({author:'Alexis Morales',text:text,date:dateStr});
+var platformName=currentCommentPlatform==='linkedin'?'LinkedIn':currentCommentPlatform==='facebook'?'Facebook':currentCommentPlatform==='blog'?'Blog SEO':'Instagram';
+var postTitle=posts[currentCommentIdx].title||posts[currentCommentIdx].text||posts[currentCommentIdx].caption||'Post';
+if(postTitle.length>50)postTitle=postTitle.substring(0,50)+'...';
+feedbackItems.unshift({title:platformName+': '+postTitle,platform:currentCommentPlatform,status:'Pendiente',comment:text});
+saveK('sts_insight_feedback',feedbackItems);
 saveK(currentCommentPlatform==='blog'?'sts_insight_blogs':'sts_insight_'+currentCommentPlatform,posts);
 input.value='';
 renderCommentEntries(posts[currentCommentIdx].postComments);
 renderBlogs();renderLinkedin();renderFacebook();renderInstagram();
-showToast('Comentario agregado');
+renderFeedback();
+showToast('Comentario agregado y enviado a Feedback');
 }
 
 /* FILTERS */
