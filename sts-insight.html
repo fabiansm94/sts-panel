@@ -464,9 +464,10 @@ h+='<div class="blog-card" data-status="'+b.status+'" onclick="openArticle('+i+'
 h+='<div class="blog-card-image" style="background:linear-gradient(135deg,'+b.color+',#0a0a1a);"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>';
 h+='<div class="blog-card-body"><div class="blog-card-category" style="color:var(--success);">'+escH(b.category)+'</div>';
 h+='<div class="blog-card-title">'+escH(b.title)+'</div>';
-h+='<div class="blog-card-meta"><span>'+escH(b.readTime)+' de lectura</span><span class="badge badge-'+sc+'">'+escH(b.status)+'</span></div></div>';
-h+='<div class="post-card-actions">';
+h+='<div class="blog-card-meta"><span>'+escH(b.readTime)+' de lectura</span><span class="badge badge-'+sc+'">'+escH(b.status)+'</span>';
 h+='<button class="approval-btn'+(approved?' approved':'')+'" onclick="event.stopPropagation();toggleApproval(\'blog\','+i+')">'+APPROVE_SVG+(approved?' Aprobado':' Aprobar')+'</button>';
+h+='</div></div>';
+h+='<div class="post-card-actions">';
 h+='<button class="comment-btn" onclick="event.stopPropagation();openCommentPanel(\'blog\','+i+')">'+COMMENT_SVG+' Comentarios'+(commentCount>0?'<span class="comment-count">'+commentCount+'</span>':'')+'</button>';
 h+='<div style="margin-left:auto;display:flex;gap:4px;">';
 h+='<button class="action-btn edit-btn" onclick="event.stopPropagation();openBlogEditor('+i+')" title="Editar">'+EDIT_SVG+'</button>';
