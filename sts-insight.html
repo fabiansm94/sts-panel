@@ -314,6 +314,94 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .card-select.checked::after{content:'✓';color:#fff;font-size:.7rem;font-weight:700}
 .multi-select-mode .card-select{display:flex}
 .multi-select-mode .card-actions{display:none!important}
+
+/* ===== INTERACTIVE ENHANCEMENTS ===== */
+@keyframes cardEntrance{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(61,156,210,.4)}50%{box-shadow:0 0 0 8px rgba(61,156,210,0)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes bounceIn{0%{transform:scale(.3);opacity:0}50%{transform:scale(1.05)}70%{transform:scale(.9)}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}10%,30%,50%,70%,90%{transform:translateX(-2px)}20%,40%,60%,80%{transform:translateX(2px)}}
+@keyframes rippleExpand{to{transform:scale(4);opacity:0}}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(60px) rotate(720deg);opacity:0}}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInScale{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+@keyframes glowPulse{0%,100%{opacity:.6}50%{opacity:1}}
+@keyframes typing{from{width:0}to{width:100%}}
+@keyframes blink{50%{border-color:transparent}}
+@keyframes progressFill{from{width:0}to{width:var(--fill-width,70%)}}
+
+.card-entrance{animation:cardEntrance .4s ease both}
+.card-entrance:nth-child(1){animation-delay:0s}
+.card-entrance:nth-child(2){animation-delay:.06s}
+.card-entrance:nth-child(3){animation-delay:.12s}
+.card-entrance:nth-child(4){animation-delay:.18s}
+.card-entrance:nth-child(5){animation-delay:.24s}
+.card-entrance:nth-child(6){animation-delay:.3s}
+.card-entrance:nth-child(7){animation-delay:.36s}
+.card-entrance:nth-child(8){animation-delay:.42s}
+.card-entrance:nth-child(9){animation-delay:.48s}
+
+.btn{position:relative;overflow:hidden}
+.ripple-effect{position:absolute;border-radius:50%;background:rgba(255,255,255,.4);width:20px;height:20px;animation:rippleExpand .5s linear;pointer-events:none}
+
+.card-3d{transition:transform .25s ease,box-shadow .25s ease;transform-style:preserve-3d;perspective:800px}
+.card-3d:hover{transform:translateY(-4px) rotateX(2deg) rotateY(-1deg);box-shadow:0 12px 35px rgba(37,49,76,.15)}
+
+.btn-press:active{transform:scale(.95)!important}
+.btn-bounce{animation:bounceIn .4s ease}
+
+.nav-item{position:relative;overflow:hidden}
+.nav-item::after{content:'';position:absolute;left:0;top:0;height:100%;width:3px;background:var(--accent);transform:scaleY(0);transition:transform .2s ease;border-radius:0 2px 2px 0}
+.nav-item.active::after{transform:scaleY(1)}
+.nav-item:hover::after{transform:scaleY(.6)}
+
+.confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999}
+.confetti-piece{position:absolute;width:8px;height:8px;border-radius:2px;animation:confettiFall 1.2s ease forwards}
+
+.skeleton{background:linear-gradient(90deg,var(--border) 25%,#f0f4f8 50%,var(--border) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:6px}
+.skeleton-text{height:14px;margin-bottom:8px;border-radius:4px}
+.skeleton-title{height:20px;width:60%;margin-bottom:12px;border-radius:4px}
+.skeleton-avatar{width:40px;height:40px;border-radius:50%}
+
+.kpi-value{display:inline-block}
+.kpi-value.counting{animation:glowPulse .6s ease infinite}
+
+.tooltip-wrap{position:relative}
+.tooltip-wrap::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(4px);background:var(--navy);color:#fff;padding:4px 10px;border-radius:6px;font-size:.72rem;font-weight:500;white-space:nowrap;opacity:0;pointer-events:none;transition:all .2s;z-index:100}
+.tooltip-wrap:hover::after{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.sidebar-link-new{display:flex;align-items:center;gap:.6rem;padding:.6rem 1.25rem;color:var(--accent);font-size:.75rem;font-weight:600;border:1px dashed var(--accent);border-radius:8px;margin:.5rem 1rem;cursor:pointer;transition:all .2s;text-decoration:none}
+.sidebar-link-new:hover{background:rgba(61,156,210,.1);transform:translateX(4px)}
+.sidebar-link-new svg{width:14px;height:14px;flex-shrink:0}
+
+.hover-lift{transition:transform .2s ease,box-shadow .2s ease}
+.hover-lift:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.1)}
+
+.approval-btn.approved{animation:bounceIn .4s ease}
+.approval-btn:active{transform:scale(.9)}
+
+.toast{animation:slideUp .3s ease!important}
+.toast.success{background:linear-gradient(135deg,#80c996,#6bb882)}
+.toast.error{background:linear-gradient(135deg,#d63939,#c03030)}
+
+.filter-group .btn{transition:all .2s ease,transform .15s}
+.filter-group .btn:active{transform:scale(.95)}
+
+.blog-card,.social-card,.feedback-item{transition:all .25s cubic-bezier(.4,0,.2,1)}
+.blog-card:active,.social-card:active{transform:scale(.98)}
+
+.search-bar{transition:all .2s ease}
+.search-bar:focus-within{box-shadow:0 0 0 3px rgba(61,156,210,.15);border-color:var(--accent)}
+
+.comment-panel{animation:slideInRight .3s cubic-bezier(.4,0,.2,1)}
+
+@keyframes counterUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.animate-counter{animation:counterUp .5s ease both}
+
+.sidebar-link{transition:all .2s ease,transform .15s,padding-left .2s}
+.sidebar-link:hover{transform:translateX(4px);padding-left:1.6rem}
+.sidebar-link:active{transform:translateX(2px) scale(.98)}
+
 </style>
 </head>
 <body>
@@ -1431,6 +1519,169 @@ facebook:[
 /* INIT */
 setTimeout(function(){var s=document.getElementById('splash');s.classList.add('fade-out');setTimeout(function(){s.style.display='none'},800)},3000);
 loadAll();renderAll();loadSettings();
+
+/* ===== INTERACTIVE JS ===== */
+(function(){
+// Ripple effect on buttons
+document.addEventListener('click',function(e){
+var btn=e.target.closest('.btn,.action-btn,.nav-item,.sidebar-link,.filter-group button,.sel-btn,.approval-btn,.comment-btn');
+if(!btn)return;
+var r=document.createElement('span');r.className='ripple-effect';
+var rect=btn.getBoundingClientRect();
+var x=e.clientX-rect.left-10;var y=e.clientY-rect.top-10;
+r.style.left=x+'px';r.style.top=y+'px';
+btn.appendChild(r);
+setTimeout(function(){r.remove()},500);
+});
+
+// 3D tilt on cards
+document.addEventListener('mousemove',function(e){
+var card=e.target.closest('.blog-card,.social-card,.kpi-card,.feedback-item');
+if(!card)return;
+var rect=card.getBoundingClientRect();
+var x=(e.clientX-rect.left)/rect.width-.5;
+var y=(e.clientY-rect.top)/rect.height-.5;
+card.style.transform='translateY(-3px) rotateX('+(-y*5)+'deg) rotateY('+(x*5)+'deg)';
+});
+document.addEventListener('mouseleave',function(e){
+var card=e.target.closest('.blog-card,.social-card,.kpi-card,.feedback-item');
+if(card)card.style.transform='';
+},true);
+
+// Button press effect
+document.addEventListener('mousedown',function(e){
+var btn=e.target.closest('.btn,.action-btn');
+if(btn)btn.classList.add('btn-press');
+});
+document.addEventListener('mouseup',function(e){
+var btn=e.target.closest('.btn,.action-btn');
+if(btn)btn.classList.remove('btn-press');
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown',function(e){
+// Ctrl+K = focus search
+if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();var sb=document.querySelector('.search-bar input');if(sb)sb.focus();}
+// Ctrl+N = new blog
+if((e.ctrlKey||e.metaKey)&&e.key==='n'){e.preventDefault();navigateTo('blog');setTimeout(function(){openBlogEditor()},200);}
+// Escape = close panels
+if(e.key==='Escape'){
+closeCommentPanel();
+var overlays=document.querySelectorAll('.editor-overlay.active,.blog-editor-overlay.active');
+overlays.forEach(function(o){o.classList.remove('active')});
+var selects=document.querySelectorAll('.card-select.checked');
+selects.forEach(function(s){s.classList.remove('checked');s.checked=false});
+var mode=document.querySelector('.multi-select-mode');
+if(mode){mode.classList.remove('multi-select-mode');var sb=document.querySelector('.select-bar.active');if(sb)sb.classList.remove('active');}
+}
+});
+
+// Confetti burst function
+window.burstConfetti=function(x,y){
+var c=document.createElement('div');c.className='confetti-container';document.body.appendChild(c);
+var colors=['#3d9cd2','#80c996','#f59e0b','#d63939','#ec4899','#8b5cf6','#14b8a6'];
+for(var i=0;i<24;i++){
+var p=document.createElement('div');p.className='confetti-piece';
+p.style.left=(x+Math.random()*40-20)+'px';
+p.style.top=(y+Math.random()*40-20)+'px';
+p.style.background=colors[Math.floor(Math.random()*colors.length)];
+p.style.animationDuration=(.6+Math.random()*.8)+'s';
+p.style.animationDelay=(Math.random()*.2)+'s';
+p.style.transform='rotate('+Math.random()*360+'deg)';
+c.appendChild(p);
+}
+setTimeout(function(){c.remove()},2000);
+};
+
+// Animated number counter
+window.animateCount=function(el,target,duration){
+var start=parseInt(el.textContent)||0;
+var diff=target-start;
+if(diff===0)return;
+var startTime=null;
+el.classList.add('counting');
+function step(ts){
+if(!startTime)startTime=ts;
+var p=Math.min((ts-startTime)/duration,1);
+var val=Math.floor(start+diff*p);
+el.textContent=val;
+if(p<1)requestAnimationFrame(step);
+else{el.textContent=target;el.classList.remove('counting');}
+}
+requestAnimationFrame(step);
+};
+
+// Staggered card entrance
+window.animateCards=function(container){
+var cards=container.querySelectorAll('.blog-card,.social-card,.feedback-item,.kpi-card');
+cards.forEach(function(c,i){
+c.classList.remove('card-entrance');
+void c.offsetWidth;
+c.classList.add('card-entrance');
+c.style.animationDelay=(i*.06)+'s';
+});
+};
+
+// Auto-apply entrance animation when sections change
+var origNav=window.navigateTo;
+if(typeof origNav==='function'){
+window.navigateTo=function(section){
+origNav(section);
+setTimeout(function(){
+var active=document.querySelector('.section.active');
+if(active)animateCards(active);
+},100);
+};
+}
+
+// Skeleton loader helper
+window.showSkeleton=function(container,count){
+var html='';
+for(var i=0;i<(count||3);i++){
+html+='<div style="padding:1rem;border:1px solid var(--border);border-radius:12px;margin-bottom:.75rem">';
+html+='<div class="skeleton skeleton-title"></div>';
+html+='<div class="skeleton skeleton-text" style="width:90%"></div>';
+html+='<div class="skeleton skeleton-text" style="width:70%"></div>';
+html+='</div>';
+}
+container.innerHTML=html;
+};
+
+// Hover tooltip on title attributes
+document.addEventListener('mouseover',function(e){
+var el=e.target.closest('[title]');
+if(!el||el.dataset.tip)return;
+el.dataset.tip=el.getAttribute('title');
+el.removeAttribute('title');
+});
+
+// Approval confetti hook
+var origToggleApproval=window.toggleApproval;
+if(typeof origToggleApproval==='function'){
+window.toggleApproval=function(type,idx){
+origToggleApproval(type,idx);
+var btns=document.querySelectorAll('.approval-btn');
+btns.forEach(function(b){
+if(b.classList.contains('approved')&&!b.dataset.confetti){
+b.dataset.confetti='1';
+var rect=b.getBoundingClientRect();
+burstConfetti(rect.left+rect.width/2,rect.top);
+}
+});
+};
+}
+
+// Smooth scroll on section switch
+var origShowView=window.showView;
+if(typeof origShowView==='function'){
+window.showView=function(v){
+origShowView(v);
+var main=document.querySelector('.main');
+if(main)main.scrollTo({top:0,behavior:'smooth'});
+};
+}
+
+})();
 </script>
 </body>
 </html>
