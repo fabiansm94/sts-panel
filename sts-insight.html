@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STS INSIGHT | Content Review Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg-primary:#0a0a0f;--bg-secondary:#12121a;--bg-card:#1a1a2e;--bg-card-hover:#222240;--border:#2a2a3e;--text-primary:#f0f0f5;--text-secondary:#8888a0;--text-muted:#555570;--accent:#0a66c2;--accent-hover:#0d7ae6;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--linkedin:#0a66c2;--facebook:#1877f2;--instagram:#e4405f;--blog:#22c55e;--sidebar-width:260px;--topbar-height:60px}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg-primary);color:var(--text-primary);overflow-x:hidden;min-height:100vh}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg-primary)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}::-webkit-scrollbar-thumb:hover{background:var(--text-muted)}
+
+#splash{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg-primary);z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s,transform .8s}
+#splash.fade-out{opacity:0;transform:scale(1.05);pointer-events:none}
+#splash .shield{animation:fadeInUp 1s ease forwards;opacity:0}
+#splash .splash-title{font-size:3rem;font-weight:800;letter-spacing:4px;color:var(--text-primary);margin-top:1.5rem;animation:fadeInUp 1s .3s ease forwards;opacity:0}
+#splash .splash-subtitle{font-size:1rem;color:var(--text-secondary);margin-top:.5rem;letter-spacing:2px;text-transform:uppercase;animation:fadeInUp 1s .5s ease forwards;opacity:0}
+#splash .splash-tagline{font-size:.875rem;color:var(--text-muted);margin-top:1.5rem;animation:fadeInUp 1s .7s ease forwards;opacity:0;max-width:400px;text-align:center;line-height:1.6}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+#sidebar{position:fixed;top:0;left:0;width:var(--sidebar-width);height:100vh;background:#0f0f1a;border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:1000;transition:transform .3s}
+.sidebar-header{padding:1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.75rem}
+.sidebar-header .logo-text h2{font-size:.9rem;font-weight:700;letter-spacing:2px}
+.sidebar-header .logo-text span{font-size:.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px}
+.sidebar-nav{flex:1;overflow-y:auto;padding:.75rem 0}
+.nav-item{display:flex;align-items:center;gap:.75rem;padding:.7rem 1.5rem;cursor:pointer;transition:all .2s;color:var(--text-secondary);font-size:.85rem;font-weight:500;border-left:3px solid transparent}
+.nav-item:hover{background:rgba(10,102,194,.08);color:var(--text-primary)}
+.nav-item.active{background:rgba(10,102,194,.12);color:var(--accent);border-left-color:var(--accent)}
+.nav-item .nav-icon{width:18px;text-align:center;font-size:1rem}
+.sidebar-footer{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:.75rem}
+.avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#7c3aed);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:#fff;flex-shrink:0}
+.sidebar-footer .user-info{font-size:.8rem;overflow:hidden}
+.sidebar-footer .user-info .name{color:var(--text-primary);font-weight:600}
+.sidebar-footer .user-info .role{color:var(--text-muted);font-size:.7rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+#main-content{margin-left:var(--sidebar-width);min-height:100vh;display:flex;flex-direction:column}
+#topbar{height:var(--topbar-height);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;background:var(--bg-secondary);position:sticky;top:0;z-index:100}
+#breadcrumb{font-size:.8rem;color:var(--text-muted)}#breadcrumb span{color:var(--text-secondary)}
+.search-bar{display:flex;align-items:center;gap:.5rem;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.4rem .75rem;width:280px}
+.search-bar input{background:none;border:none;outline:none;color:var(--text-primary);font-family:inherit;font-size:.85rem;width:100%}
+.search-bar input::placeholder{color:var(--text-muted)}
+.section{display:none;padding:2rem;animation:sectionIn .3s ease}.section.active{display:block}
+@keyframes sectionIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;transition:all .2s;position:relative;overflow:hidden}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.3);background:var(--bg-card-hover)}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
+.section-title{font-size:1.5rem;font-weight:700}
+.section-subtitle{color:var(--text-secondary);font-size:.85rem;margin-top:.25rem}
+
+.btn{padding:.5rem 1rem;border-radius:8px;border:none;font-family:inherit;font-size:.8rem;font-weight:500;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent-hover)}
+.btn-ghost{background:transparent;color:var(--text-secondary);border:1px solid var(--border)}.btn-ghost:hover{color:var(--text-primary);border-color:var(--text-muted)}.btn-ghost.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-success{background:var(--success);color:#fff}.btn-success:hover{background:#16a34a}
+.btn-danger{background:var(--danger);color:#fff}.btn-danger:hover{background:#dc2626}
+.btn-sm{padding:.3rem .6rem;font-size:.75rem}
+.badge{display:inline-flex;padding:.2rem .6rem;border-radius:20px;font-size:.7rem;font-weight:600;text-transform:uppercase}
+.badge-success{background:rgba(34,197,94,.15);color:var(--success)}.badge-warning{background:rgba(245,158,11,.15);color:var(--warning)}.badge-danger{background:rgba(239,68,68,.15);color:var(--danger)}.badge-info{background:rgba(10,102,194,.15);color:var(--accent)}
+
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+
+.kpi-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;position:relative;overflow:hidden}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.kpi-card.blue::before{background:linear-gradient(90deg,var(--accent),#7c3aed)}
+.kpi-card.green::before{background:linear-gradient(90deg,var(--success),#06b6d4)}
+.kpi-card.yellow::before{background:linear-gradient(90deg,var(--warning),#f97316)}
+.kpi-card.red::before{background:linear-gradient(90deg,var(--danger),#f97316)}
+.kpi-card .kpi-icon{font-size:1.5rem;margin-bottom:.5rem}
+.kpi-card .kpi-value{font-size:2rem;font-weight:800}
+.kpi-card .kpi-label{font-size:.8rem;color:var(--text-secondary);margin-top:.25rem}
+
+.welcome-banner{background:linear-gradient(135deg,rgba(10,102,194,.2),rgba(124,58,237,.1));border:1px solid rgba(10,102,194,.3);border-radius:16px;padding:2rem;margin-bottom:1.5rem}
+.welcome-banner h2{font-size:1.5rem;font-weight:700;margin-bottom:.5rem}
+.welcome-banner p{color:var(--text-secondary);font-size:.9rem}
+
+.progress-container{margin:1rem 0}
+.progress-label{display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.5rem}
+.progress-bar{height:8px;background:var(--bg-secondary);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--accent),#7c3aed);transition:width 1.5s ease}
+
+.bar-chart{display:flex;align-items:flex-end;gap:1rem;height:160px;padding:1rem 0}
+.bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:.5rem}
+.bar{width:100%;max-width:50px;border-radius:6px 6px 0 0;transition:height 1s ease;position:relative}
+.bar-label{font-size:.7rem;color:var(--text-secondary);text-align:center}
+.bar-value{font-size:.75rem;font-weight:600;position:absolute;top:-20px;left:50%;transform:translateX(-50%)}
+
+.timeline{position:relative;padding-left:2rem}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--border)}
+.timeline-item{position:relative;padding-bottom:1.5rem}
+.timeline-item::before{content:'';position:absolute;left:-1.65rem;top:.25rem;width:12px;height:12px;border-radius:50%;background:var(--border);border:2px solid var(--bg-primary)}
+.timeline-item.active::before{background:var(--accent);box-shadow:0 0 10px rgba(10,102,194,.5)}
+.timeline-item.done::before{background:var(--success)}
+.timeline-item .tl-date{font-size:.75rem;color:var(--text-muted);font-weight:600}
+.timeline-item .tl-text{font-size:.85rem;color:var(--text-secondary);margin-top:.25rem}
+.timeline-item.active .tl-text{color:var(--text-primary);font-weight:600}
+
+.activity-item{display:flex;align-items:flex-start;gap:.75rem;padding:.75rem 0;border-bottom:1px solid var(--border)}
+.activity-item:last-child{border-bottom:none}
+.activity-dot{width:8px;height:8px;border-radius:50%;margin-top:.4rem;flex-shrink:0}
+.activity-text{font-size:.85rem;color:var(--text-secondary)}
+.activity-time{font-size:.7rem;color:var(--text-muted);margin-top:.2rem}
+
+.blog-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all .2s}
+.blog-card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.blog-card-image{height:160px;display:flex;align-items:center;justify-content:center;font-size:2.5rem}
+.blog-card-body{padding:1rem}
+.blog-card-category{font-size:.7rem;font-weight:600;text-transform:uppercase;margin-bottom:.5rem}
+.blog-card-title{font-size:.95rem;font-weight:600;line-height:1.4;margin-bottom:.5rem}
+.blog-card-meta{display:flex;align-items:center;gap:.75rem;font-size:.75rem;color:var(--text-muted);flex-wrap:wrap}
+.blog-card-footer{padding:.75rem 1rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+
+.article-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg-primary);z-index:2000;overflow-y:auto;display:none;animation:fadeIn .3s}
+.article-overlay.active{display:flex}
+.article-content{flex:1;padding:2rem;max-width:800px;margin:0 auto}
+.article-sidebar{width:300px;background:var(--bg-secondary);border-left:1px solid var(--border);padding:1.5rem;position:sticky;top:0;height:100vh;overflow-y:auto;flex-shrink:0}
+.article-close{position:fixed;top:1rem;right:1rem;z-index:2001;width:40px;height:40px;border-radius:50%;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.article-hero{height:300px;border-radius:12px;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;font-size:3rem}
+.article-breadcrumb{font-size:.8rem;color:var(--text-muted);margin-bottom:1rem}
+.article-breadcrumb a{color:var(--accent);text-decoration:none;cursor:pointer}
+.article-meta{display:flex;gap:1rem;font-size:.8rem;color:var(--text-secondary);margin-bottom:1.5rem;flex-wrap:wrap}
+.article-body h2{font-size:1.3rem;font-weight:700;margin:2rem 0 1rem}
+.article-body p{color:var(--text-secondary);line-height:1.8;margin-bottom:1rem;font-size:.95rem}
+.article-body ul{padding-left:1.5rem;margin-bottom:1rem}
+.article-body li{color:var(--text-secondary);line-height:1.8;margin-bottom:.5rem}
+.article-body blockquote{border-left:3px solid var(--accent);padding:1rem 1.5rem;background:rgba(10,102,194,.08);border-radius:0 8px 8px 0;margin:1.5rem 0;font-style:italic;color:var(--text-secondary)}
+.article-cta{background:linear-gradient(135deg,var(--accent),#7c3aed);padding:2rem;border-radius:12px;text-align:center;margin:2rem 0}
+.article-cta h3{color:#fff;margin-bottom:.5rem}.article-cta p{color:rgba(255,255,255,.8)}
+
+.social-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all .2s}
+.social-card:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.3)}
+.social-post{background:#1c1c28;border:1px solid var(--border);border-radius:10px;overflow:hidden;max-width:100%}
+.social-post-header{display:flex;align-items:center;gap:.75rem;padding:1rem}
+.social-post-logo{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#7c3aed);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#fff;flex-shrink:0}
+.social-post-name{font-weight:600;font-size:.9rem}
+.social-post-time{font-size:.75rem;color:var(--text-muted)}
+.social-post-text{padding:0 1rem 1rem;font-size:.9rem;color:var(--text-secondary);line-height:1.6}
+.social-post-image{height:200px;margin:0 1rem;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.social-post-engagement{padding:.75rem 1rem;font-size:.8rem;color:var(--text-muted)}
+.social-post-actions{display:flex;border-top:1px solid var(--border);padding:.5rem 1rem}
+.social-post-actions button{flex:1;padding:.5rem;background:none;border:none;color:var(--text-secondary);font-family:inherit;font-size:.8rem;cursor:pointer;border-radius:6px;transition:background .2s}
+.social-post-actions button:hover{background:rgba(255,255,255,.05)}
+.social-detail-panel{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
+.social-detail-panel h4{font-size:.9rem;font-weight:600;margin-bottom:1rem}
+.social-detail-row{margin-bottom:.75rem}
+.social-detail-row label{font-size:.75rem;color:var(--text-muted);display:block;margin-bottom:.25rem}
+.social-detail-row p{font-size:.85rem;color:var(--text-secondary)}
+
+.insta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
+.insta-card{aspect-ratio:1;border-radius:4px;overflow:hidden;cursor:pointer;position:relative;transition:opacity .2s}
+.insta-card:hover{opacity:.85}
+.insta-card-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;gap:1rem;opacity:0;transition:opacity .2s;font-weight:600;font-size:.9rem}
+.insta-card:hover .insta-card-overlay{opacity:1}
+.insta-modal{position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center}
+.insta-modal.active{display:flex}
+.insta-modal-content{background:var(--bg-card);border-radius:12px;max-width:900px;width:95%;display:flex;overflow:hidden;max-height:80vh}
+.insta-modal-image{flex:1;min-height:400px;display:flex;align-items:center;justify-content:center;font-size:4rem}
+.insta-modal-details{width:320px;padding:1.5rem;overflow-y:auto;display:flex;flex-direction:column}
+.insta-modal-close{position:fixed;top:1rem;right:1rem;background:var(--bg-card);border:1px solid var(--border);color:#fff;width:40px;height:40px;border-radius:50%;font-size:1.2rem;cursor:pointer;z-index:3001;display:flex;align-items:center;justify-content:center}
+
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.calendar-header-cell{padding:.75rem;text-align:center;font-size:.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;background:var(--bg-card);border-bottom:1px solid var(--border)}
+.calendar-cell{min-height:100px;padding:.5rem;background:var(--bg-secondary);border-right:1px solid var(--border);border-bottom:1px solid var(--border);cursor:pointer;transition:background .2s;position:relative}
+.calendar-cell:nth-child(7n){border-right:none}
+.calendar-cell:hover{background:var(--bg-card)}
+.calendar-cell.empty{background:var(--bg-primary);cursor:default}
+.calendar-cell.today{background:rgba(10,102,194,.1)}
+.calendar-day-num{font-size:.8rem;font-weight:600;margin-bottom:.5rem}
+.calendar-dots{display:flex;gap:4px;flex-wrap:wrap}
+.calendar-dot{width:8px;height:8px;border-radius:50%}
+.calendar-popup{position:fixed;z-index:2000;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;box-shadow:0 20px 60px rgba(0,0,0,.5);min-width:280px;display:none}
+.calendar-popup.active{display:block}
+.calendar-popup h4{font-size:.9rem;margin-bottom:.75rem}
+.cal-popup-item{padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.8rem}
+.cal-popup-item:last-child{border-bottom:none}
+
+.strategy-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem}
+.strategy-card h3{font-size:1rem;font-weight:700;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.strategy-card p{color:var(--text-secondary);font-size:.85rem;line-height:1.6}
+.workflow{display:flex;flex-direction:column;align-items:center;padding:2rem 0}
+.workflow-step{width:240px;padding:1rem;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;text-align:center;transition:all .3s}
+.workflow-step.active-step{border-color:var(--accent);background:rgba(10,102,194,.1);box-shadow:0 0 20px rgba(10,102,194,.2)}
+.workflow-step.done-step{border-color:var(--success)}
+.workflow-line{width:2px;height:30px;background:var(--border)}
+.workflow-line.done-line{background:var(--success)}
+.workflow-step .step-icon{font-size:1.2rem;margin-bottom:.3rem}
+.workflow-step .step-name{font-size:.85rem;font-weight:600}
+
+.metric-large{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem}
+.metric-large .metric-val{font-size:2.2rem;font-weight:800}
+.metric-large .metric-label{font-size:.85rem;color:var(--text-secondary)}
+.metric-large .metric-change{font-size:.8rem;margin-top:.5rem}
+.donut-container{display:flex;align-items:center;gap:2rem;justify-content:center;padding:1rem;flex-wrap:wrap}
+.donut{width:100px;height:100px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700}
+.donut-label{font-size:.8rem;color:var(--text-secondary);text-align:center}
+
+.feedback-item{display:flex;align-items:flex-start;gap:1rem;padding:1rem;border:1px solid var(--border);border-radius:10px;margin-bottom:.75rem;background:var(--bg-card);cursor:pointer;transition:all .2s}
+.feedback-item:hover{background:var(--bg-card-hover)}
+.feedback-detail{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;display:none}
+.feedback-detail.active{display:block}
+.comment-thread{max-height:300px;overflow-y:auto}
+.comment{padding:.75rem;background:var(--bg-secondary);border-radius:8px;margin-bottom:.5rem}
+.comment-author{font-size:.8rem;font-weight:600;margin-bottom:.25rem}
+.comment-text{font-size:.85rem;color:var(--text-secondary)}
+.comment-date{font-size:.7rem;color:var(--text-muted);margin-top:.25rem}
+
+.settings-section{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1rem}
+.settings-section h3{font-size:1rem;font-weight:600;margin-bottom:1rem}
+.toggle-switch{width:44px;height:24px;background:var(--border);border-radius:12px;position:relative;cursor:pointer;transition:background .2s;display:inline-block}
+.toggle-switch.on{background:var(--accent)}
+.toggle-switch::after{content:'';width:18px;height:18px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:transform .2s}
+.toggle-switch.on::after{transform:translateX(20px)}
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:.75rem 0;border-bottom:1px solid var(--border)}
+.setting-row:last-child{border-bottom:none}
+.setting-row label{font-size:.9rem}
+
+.tab-bar{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:1rem}
+.tab-item{padding:.75rem 1.25rem;font-size:.85rem;font-weight:500;color:var(--text-secondary);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.tab-item:hover{color:var(--text-primary)}
+.tab-item.active{color:var(--accent);border-bottom-color:var(--accent)}
+.toc{background:var(--bg-secondary);border-radius:8px;padding:1rem;margin-bottom:1.5rem}
+.toc h4{font-size:.8rem;font-weight:600;margin-bottom:.75rem;text-transform:uppercase;color:var(--text-muted)}
+.toc a{display:block;font-size:.8rem;color:var(--text-secondary);padding:.3rem 0;text-decoration:none;transition:color .2s}
+.toc a:hover{color:var(--accent)}
+.date-select{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.4rem .75rem;color:var(--text-primary);font-family:inherit;font-size:.85rem}
+.date-select option{background:var(--bg-card)}
+.filter-group{display:flex;gap:.5rem;flex-wrap:wrap}
+.mobile-toggle{display:none;background:none;border:none;color:var(--text-primary);font-size:1.5rem;cursor:pointer}
+.overlay-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1500;display:none}
+.overlay-bg.active{display:block}
+@media(max-width:1024px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:repeat(2,1fr)}.article-overlay.active{flex-direction:column}.article-sidebar{width:100%;height:auto;position:static}.insta-modal-content{flex-direction:column}.insta-modal-details{width:100%}}
+@media(max-width:768px){#sidebar{transform:translateX(-100%)}#sidebar.open{transform:translateX(0)}#main-content{margin-left:0}.mobile-toggle{display:block}.grid-4,.grid-3{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}.section{padding:1rem}.search-bar{width:180px}.social-detail-panel{display:none}.calendar-cell{min-height:60px}.donut-container{flex-direction:column;gap:1rem}}
+</style>
+</head>
+<body>
+
+<div id="splash">
+<div class="shield"><svg width="80" height="80" viewBox="0 0 80 80" fill="none"><path d="M40 4L8 18V38C8 56.5 21.2 73.5 40 78C58.8 73.5 72 56.5 72 38V18L40 4Z" fill="url(#sg1)" stroke="rgba(10,102,194,.5)" stroke-width="2"/><path d="M40 20L24 28V40C24 50.5 30.8 60 40 63C49.2 60 56 50.5 56 40V28L40 20Z" fill="rgba(10,102,194,.3)"/><path d="M36 42L44 42V46H36V42ZM36 32H44V40H36V32Z" fill="rgba(255,255,255,.8)"/><defs><linearGradient id="sg1" x1="8" y1="4" x2="72" y2="78"><stop offset="0%" stop-color="#1a1a3e"/><stop offset="100%" stop-color="#0a0a1a"/></linearGradient></defs></svg></div>
+<div class="splash-title">STS INSIGHT</div>
+<div class="splash-subtitle">Content Review Portal</div>
+<div class="splash-tagline">Centralizando la estrategia de contenidos digitales para STS Security.</div>
+</div>
+
+<div id="sidebar">
+<div class="sidebar-header">
+<svg width="32" height="32" viewBox="0 0 80 80" fill="none"><path d="M40 4L8 18V38C8 56.5 21.2 73.5 40 78C58.8 73.5 72 56.5 72 38V18L40 4Z" fill="url(#sg2)" stroke="rgba(10,102,194,.5)" stroke-width="2"/><path d="M40 20L24 28V40C24 50.5 30.8 60 40 63C49.2 60 56 50.5 56 40V28L40 20Z" fill="rgba(10,102,194,.3)"/><path d="M36 42L44 42V46H36V42ZM36 32H44V40H36V32Z" fill="rgba(255,255,255,.8)"/><defs><linearGradient id="sg2" x1="8" y1="4" x2="72" y2="78"><stop offset="0%" stop-color="#1a1a3e"/><stop offset="100%" stop-color="#0a0a1a"/></linearGradient></defs></svg>
+<div class="logo-text"><h2>STS INSIGHT</h2><span>Content Review Portal</span></div>
+</div>
+<nav class="sidebar-nav">
+<div class="nav-item active" data-section="dashboard" onclick="navigateTo('dashboard')"><span class="nav-icon">🏠</span> Dashboard</div>
+<div class="nav-item" data-section="blog" onclick="navigateTo('blog')"><span class="nav-icon">📰</span> Blog SEO</div>
+<div class="nav-item" data-section="linkedin" onclick="navigateTo('linkedin')"><span class="nav-icon">💼</span> LinkedIn</div>
+<div class="nav-item" data-section="facebook" onclick="navigateTo('facebook')"><span class="nav-icon">📘</span> Facebook</div>
+<div class="nav-item" data-section="instagram" onclick="navigateTo('instagram')"><span class="nav-icon">📸</span> Instagram</div>
+<div class="nav-item" data-section="calendar" onclick="navigateTo('calendar')"><span class="nav-icon">📅</span> Calendario Editorial</div>
+<div class="nav-item" data-section="strategy" onclick="navigateTo('strategy')"><span class="nav-icon">📊</span> Estrategia</div>
+<div class="nav-item" data-section="analytics" onclick="navigateTo('analytics')"><span class="nav-icon">📈</span> Analytics</div>
+<div class="nav-item" data-section="feedback" onclick="navigateTo('feedback')"><span class="nav-icon">📝</span> Feedback</div>
+<div class="nav-item" data-section="settings" onclick="navigateTo('settings')"><span class="nav-icon">⚙️</span> Configuración</div>
+</nav>
+<div class="sidebar-footer">
+<div class="avatar">AM</div>
+<div class="user-info"><div class="name">Alexis Morales</div><div class="role">Marketing &amp; Business Development</div></div>
+</div>
+</div>
+
+<div id="main-content">
+<div id="topbar">
+<div style="display:flex;align-items:center;gap:1rem;">
+<button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+<div id="breadcrumb">🏠 <span>Dashboard</span></div>
+</div>
+<div class="search-bar"><span>🔍</span><input type="text" placeholder="Buscar contenido..." id="globalSearch" oninput="handleSearch(this.value)"></div>
+</div>
+
+<div id="dashboard" class="section active">
+<div class="welcome-banner">
+<h2>Bienvenido al portal de revisión de contenidos de STS Security.</h2>
+<p>Gestiona, revisa y aprueba todo el contenido digital de STS Security desde un solo lugar.</p>
+</div>
+<div class="grid-4" style="margin-bottom:1.5rem;">
+<div class="kpi-card blue"><div class="kpi-icon">📄</div><div class="kpi-value">48</div><div class="kpi-label">Total Contenidos</div></div>
+<div class="kpi-card green"><div class="kpi-icon">✅</div><div class="kpi-value">31</div><div class="kpi-label">Aprobados</div></div>
+<div class="kpi-card yellow"><div class="kpi-icon">⏳</div><div class="kpi-value">12</div><div class="kpi-label">Pendientes</div></div>
+<div class="kpi-card red"><div class="kpi-icon">🔄</div><div class="kpi-value">5</div><div class="kpi-label">En Revisión</div></div>
+</div>
+<div class="grid-2">
+<div class="card">
+<h3 style="font-size:1rem;font-weight:600;margin-bottom:1rem;">Distribución de Contenidos</h3>
+<div class="bar-chart">
+<div class="bar-group"><div class="bar" style="height:70%;background:var(--blog);position:relative;"><span class="bar-value" style="color:var(--blog);">12</span></div><span class="bar-label">Blog SEO</span></div>
+<div class="bar-group"><div class="bar" style="height:85%;background:var(--linkedin);position:relative;"><span class="bar-value" style="color:var(--linkedin);">14</span></div><span class="bar-label">LinkedIn</span></div>
+<div class="bar-group"><div class="bar" style="height:65%;background:var(--facebook);position:relative;"><span class="bar-value" style="color:var(--facebook);">11</span></div><span class="bar-label">Facebook</span></div>
+<div class="bar-group"><div class="bar" style="height:65%;background:var(--instagram);position:relative;"><span class="bar-value" style="color:var(--instagram);">11</span></div><span class="bar-label">Instagram</span></div>
+</div>
+</div>
+<div class="card">
+<h3 style="font-size:1rem;font-weight:600;margin-bottom:1rem;">Progreso General</h3>
+<div class="progress-container">
+<div class="progress-label"><span>Completado</span><span style="color:var(--accent);font-weight:600;">65%</span></div>
+<div class="progress-bar"><div class="progress-fill" style="width:65%;"></div></div>
+</div>
+<h3 style="font-size:1rem;font-weight:600;margin:1.5rem 0 1rem;">Hitos del Proyecto</h3>
+<div class="timeline">
+<div class="timeline-item done"><div class="tl-date">Junio 2026</div><div class="tl-text">Estrategia definida ✓</div></div>
+<div class="timeline-item active"><div class="tl-date">Julio 2026</div><div class="tl-text">Contenidos en producción</div></div>
+<div class="timeline-item"><div class="tl-date">Agosto 2026</div><div class="tl-text">Campaña activa</div></div>
+<div class="timeline-item"><div class="tl-date">Septiembre 2026</div><div class="tl-text">Análisis de resultados</div></div>
+</div>
+</div>
+</div>
+<div class="card" style="margin-top:1.5rem;">
+<h3 style="font-size:1rem;font-weight:600;margin-bottom:1rem;">Actividad Reciente</h3>
+<div class="activity-item"><div class="activity-dot" style="background:var(--success);"></div><div><div class="activity-text">Blog "Seguridad Empresarial" aprobado</div><div class="activity-time">Hace 2 horas</div></div></div>
+<div class="activity-item"><div class="activity-dot" style="background:var(--linkedin);"></div><div><div class="activity-text">Publicación LinkedIn programada</div><div class="activity-time">Hace 4 horas</div></div></div>
+<div class="activity-item"><div class="activity-dot" style="background:var(--instagram);"></div><div><div class="activity-text">Feedback recibido en Instagram</div><div class="activity-time">Hace 6 horas</div></div></div>
+<div class="activity-item"><div class="activity-dot" style="background:var(--blog);"></div><div><div class="activity-text">Nuevo blogspot creado</div><div class="activity-time">Hace 1 día</div></div></div>
+<div class="activity-item"><div class="activity-dot" style="background:var(--warning);"></div><div><div class="activity-text">Calendario actualizado</div><div class="activity-time">Hace 2 días</div></div></div>
+</div>
+</div>
+
+<div id="blog" class="section">
+<div class="section-header">
+<div><h2 class="section-title">Blog SEO</h2><p class="section-subtitle">Artículos optimizados para motores de búsqueda</p></div>
+<div class="filter-group">
+<button class="btn btn-ghost active" onclick="filterBlog('all',this)">Todos</button>
+<button class="btn btn-ghost" onclick="filterBlog('Pendiente',this)">Pendiente</button>
+<button class="btn btn-ghost" onclick="filterBlog('Aprobado',this)">Aprobado</button>
+<button class="btn btn-ghost" onclick="filterBlog('Requiere Cambios',this)">Requiere Cambios</button>
+</div>
+</div>
+<div class="grid-3" id="blog-grid">
+<div class="blog-card" data-status="Aprobado" onclick="openArticle(0)">
+<div class="blog-card-image" style="background:linear-gradient(135deg,#1a3a5c,#0a1628);">🔒</div>
+<div class="blog-card-body">
+<div class="blog-card-category" style="color:var(--success);">Seguridad</div>
+<div class="blog-card-title">5 Errores que Debilitan el Control de Acceso Empresarial</div>
+<div class="blog-card-meta"><span>📖 5 min de lectura</span><span class="badge badge-success">Aprobado</span></div>
+</div>
+<div class="blog-card-footer"><span style="font-size:.7rem;color:var(--text-muted);">control acceso empresarial</span><button class="btn btn-primary btn-sm">Ver artículo</button></div>
+</div>
+<div class="blog-card" data-status="Pendiente" onclick="openArticle(1)">
+<div class="blog-card-image" style="background:linear-gradient(135deg,#1a2a4a,#0a1020);">📹</div>
+<div class="blog-card-body">
+<div class="blog-card-category" style="color:var(--accent);">Tecnología</div>
+<div class="blog-card-title">La Evolución de la Videovigilancia Empresarial</div>
+<div class="blog-card-meta"><span>📖 7 min de lectura</span><span class="badge badge-warning">Pendiente</span></div>
+</div>
+<div class="blog-card-footer"><span style="font-size:.7rem;color:var(--text-muted);">videovigilancia empresarial</span><button class="btn btn-primary btn-sm">Ver artículo</button></div>
+</div>
+<div class="blog-card" data-status="Aprobado" onclick="openArticle(2)">
+<div class="blog-card-image" style="background:linear-gradient(135deg,#0a2a3a,#0a1a2a);">🤖</div>
+<div class="blog-card-body">
+<div class="blog-card-category" style="color:#a78bfa;">IA</div>
+<div class="blog-card-title">Inteligencia Artificial en Seguridad: Aplicaciones Prácticas</div>
+<div class="blog-card-meta"><span>📖 6 min de lectura</span><span class="badge badge-success">Aprobado</span></div>
+</div>
+<div class="blog-card-footer"><span style="font-size:.7rem;color:var(--text-muted);">IA seguridad</span><button class="btn btn-primary btn-sm">Ver artículo</button></div>
+</div>
+<div class="blog-card" data-status="Requiere Cambios" onclick="openArticle(3)">
+<div class="blog-card-image" style="background:linear-gradient(135deg,#1a2040,#10102a);">📡</div>
+<div class="blog-card-body">
+<div class="blog-card-category" style="color:var(--warning);">Monitoreo</div>
+<div class="blog-card-title">Monitoreo Remoto: El Futuro de la Vigilancia</div>
+<div class="blog-card-meta"><span>📖 4 min de lectura</span><span class="badge badge-danger">Requiere Cambios</span></div>
+</div>
+<div class="blog-card-footer"><span style="font-size:.7rem;color:var(--text-muted);">monitoreo remoto</span><button class="btn btn-primary btn-sm">Ver artículo</button></div>
+</div>
+<div class="blog-card" data-status="Pendiente" onclick="openArticle(4)">
+<div class="blog-card-image" style="background:linear-gradient(135deg,#2a1a3a,#1a0a2a);">🚪</div>
+<div class="blog-card-body">
+<div class="blog-card-category" style="color:var(--success);">Acceso</div>
+<div class="blog-card-title">Portería Virtual: Control de Acceso Moderno</div>
+<div class="blog-card-meta"><span>📖 5 min de lectura</span><span class="badge badge-warning">Pendiente</span></div>
+</div>
+<div class="blog-card-footer"><span style="font-size:.7rem;color:var(--text-muted);">portería virtual</span><button class="btn btn-primary btn-sm">Ver artículo</button></div>
+</div>
+<div class="blog-card" data-status="Aprobado" onclick="openArticle(5)">
+<div class="blog-card-image" style="background:linear-gradient(135deg,#1a2a2a,#0a1a1a);">🛡️</div>
+<div class="blog-card-body">
+<div class="blog-card-category" style="color:var(--danger);">Ciberseguridad</div>
+<div class="blog-card-title">Ciberseguridad y Protección de Datos Empresariales</div>
+<div class="blog-card-meta"><span>📖 8 min de lectura</span><span class="badge badge-success">Aprobado</span></div>
+</div>
+<div class="blog-card-footer"><span style="font-size:.7rem;color:var(--text-muted);">ciberseguridad datos</span><button class="btn btn-primary btn-sm">Ver artículo</button></div>
+</div>
+</div>
+</div>
+
+<div id="linkedin" class="section">
+<div class="section-header">
+<div><h2 class="section-title">LinkedIn</h2><p class="section-subtitle">14 publicaciones programadas</p></div>
+<div class="filter-group">
+<button class="btn btn-ghost active" onclick="toggleLinkedinView('desktop',this)">🖥️ Vista Escritorio</button>
+<button class="btn btn-ghost" onclick="toggleLinkedinView('mobile',this)">📱 Vista Móvil</button>
+</div>
+</div>
+<div class="grid-2" id="linkedin-grid">
+<div class="social-card"><div class="social-post">
+<div class="social-post-header"><div class="social-post-logo">STS</div><div><div class="social-post-name">STS Security</div><div class="social-post-time">Hace 2 horas 🌐</div></div></div>
+<div class="social-post-text">🔒 ¿Sabías que el 60% de las brechas de seguridad en empresas se originan por fallos en el control de acceso? En STS Security implementamos soluciones de portería virtual que reducen ese riesgo hasta en un 85%. #SeguridadEmpresarial #ControlDeAcceso #STS</div>
+<div class="social-post-image" style="background:linear-gradient(135deg,#0a3a5c,#0a1a3a);">🏢🔒</div>
+<div class="social-post-engagement">👍 245 · 💬 38 · 🔄 12</div>
+<div class="social-post-actions"><button>👍 Me gustar</button><button>💬 Comentar</button><button>🔄 Compartir</button><button>📤 Enviar</button></div>
+</div></div>
+<div class="social-detail-panel">
+<h4>📋 Detalle de Publicación</h4>
+<div class="social-detail-row"><label>Objetivo</label><p>Generar awareness sobre soluciones de control de acceso</p></div>
+<div class="social-detail-row"><label>CTA</label><p>"Agenda una demostración gratuita"</p></div>
+<div class="social-detail-row"><label>Estado</label><p><span class="badge badge-success">Aprobado</span></p></div>
+<div class="social-detail-row"><label>Hashtags</label><p style="font-size:.8rem;">#SeguridadEmpresarial #ControlDeAcceso #STS #PorteríaVirtual</p></div>
+</div>
+<div class="social-card"><div class="social-post">
+<div class="social-post-header"><div class="social-post-logo">STS</div><div><div class="social-post-name">STS Security</div><div class="social-post-time">Ayer 🌐</div></div></div>
+<div class="social-post-text">📹 La videovigilancia ha evolucionado. Ya no basta con cámaras que graban. En 2026, las empresas necesitan sistemas de IA que detecten anomalías en tiempo real. En STS Security llevamos la vigilancia al siguiente nivel. ¿Tu empresa está preparada? #Videovigilancia #IA</div>
+<div class="social-post-image" style="background:linear-gradient(135deg,#1a2a5a,#0a1a3a);">📹🤖</div>
+<div class="social-post-engagement">👍 189 · 💬 24 · 🔄 8</div>
+<div class="social-post-actions"><button>👍 Me gustar</button><button>💬 Comentar</button><button>🔄 Compartir</button><button>📤 Enviar</button></div>
+</div></div>
+<div class="social-detail-panel">
+<h4>📋 Detalle de Publicación</h4>
+<div class="social-detail-row"><label>Objetivo</label><p>Posicionar a STS como líder en tecnología de seguridad</p></div>
+<div class="social-detail-row"><label>CTA</label><p>"Contáctanos para una evaluación"</p></div>
+<div class="social-detail-row"><label>Estado</label><p><span class="badge badge-warning">Pendiente</span></p></div>
+<div class="social-detail-row"><label>Hashtags</label><p style="font-size:.8rem;">#Videovigilancia #IA #Innovación #STS</p></div>
+</div>
+<div class="social-card"><div class="social-post">
+<div class="social-post-header"><div class="social-post-logo">STS</div><div><div class="social-post-name">STS Security</div><div class="social-post-time">Hace 3 días 🌐</div></div></div>
+<div class="social-post-text">💼 Caso de éxito: Una empresa manufacturera redujo sus incidentes de seguridad en un 72% después de implementar nuestro sistema de monitoreo remoto. Resultados medibles, seguridad real. #CasoDeExito #MonitoreoRemoto #SeguridadIndustrial</div>
+<div class="social-post-image" style="background:linear-gradient(135deg,#0a3a2a,#0a1a1a);">🏭📊</div>
+<div class="social-post-engagement">👍 312 · 💬 45 · 🔄 18</div>
+<div class="social-post-actions"><button>👍 Me gustar</button><button>💬 Comentar</button><button>🔄 Compartir</button><button>📤 Enviar</button></div>
+</div></div>
+<div class="social-detail-panel">
+<h4>📋 Detalle de Publicación</h4>
+<div class="social-detail-row"><label>Objetivo</label><p>Mostrar resultados concretos a prospectos</p></div>
+<div class="social-detail-row"><label>CTA</label><p>"Solicita tu caso de éxito personalizado"</p></div>
+<div class="social-detail-row"><label>Estado</label><p><span class="badge badge-success">Aprobado</span></p></div>
+<div class="social-detail-row"><label>Hashtags</label><p style="font-size:.8rem;">#CasoDeExito #MonitoreoRemoto #SeguridadIndustrial #STS</p></div>
+</div>
+<div class="social-card"><div class="social-post">
+<div class="social-post-header"><div class="social-post-logo">STS</div><div><div class="social-post-name">STS Security</div><div class="social-post-time">Hace 5 días 🌐</div></div></div>
+<div class="social-post-text">🔐 Ciberseguridad no es solo un problema de TI. Es un problema de negocio. El 43% de los ciberataques están dirigidos a PyMEs, y solo el 14% está preparado. #Ciberseguridad #ProtecciónDeDatos #PyME</div>
+<div class="social-post-image" style="background:linear-gradient(135deg,#2a1a3a,#1a0a2a);">🛡️💻</div>
+<div class="social-post-engagement">👍 278 · 💬 52 · 🔄 21</div>
+<div class="social-post-actions"><button>👍 Me gustar</button><button>💬 Comentar</button><button>🔄 Compartir</button><button>📤 Enviar</button></div>
+</div></div>
+<div class="social-detail-panel">
+<h4>📋 Detalle de Publicación</h4>
+<div class="social-detail-row"><label>Objetivo</label><p>Educar sobre la importancia de la ciberseguridad</p></div>
+<div class="social-detail-row"><label>CTA</label><p>"Descubre si tu empresa es vulnerable"</p></div>
+<div class="social-detail-row"><label>Estado</label><p><span class="badge badge-success">Aprobado</span></p></div>
+<div class="social-detail-row"><label>Hashtags</label><p style="font-size:.8rem;">#Ciberseguridad #ProtecciónDeDatos #PyME #STS</p></div>
+</div>
+</div>
+</div>
+
+<div id="facebook" class="section">
+<div class="section-header">
+<div><h2 class="section-title">Facebook</h2><p class="section-subtitle">11 publicaciones programadas</p></div>
+</div>
+<div class="grid-2">
+<div class="social-card"><div class="social-post">
+<div class="social-post-header"><div class="social-post-logo" style="background:linear-gradient(135deg,var(--facebook),#0a4aa0);">STS</div><div><div class="social-post-name">STS Security</div><div class="social-post-time">Hace 3 horas 🌐</div></div></div>
+<div class="social-post-text">🏢 ¿Tu empresa cuenta con un sistema de seguridad integrado? En STS Security ofrecemos soluciones que combinan videovigilancia, control de acceso y monitoreo remoto en una sola plataforma. 📞 Contáctanos hoy. #SeguridadEmpresarial #STS</div>
+<div class="social-post-image" style="background:linear-gradient(135deg,#0a2a5c,#0a1a3c);">🏢🔐</div>
+<div class="social-post-engagement">👍❤️ 189 · 42 comentarios · 15 compartidos</div>
+<div class="social-post-actions"><button>👍 Me gusta</button><button>💬 Comentar</button><button>🔄 Compartir</button></div>
+</div></div>
+<div class="social-detail-panel">
+<h4>📋 Detalle de Publicación</h4>
+<div class="social-detail-row"><label>Objetivo</label><p>Generar leads mediante contenido educativo</p></div>
+<div class="social-detail-row"><label>CTA</label><p>"Llámanos al +52 55 1234 5678"</p></div>
+<div class="social-detail-row"><label>Estado</label><p><span class="badge badge-success">Aprobado</span></p></div>
+</div>
+<div class="social-card"><div class="social-post">
+<div class="social-post-header"><div class="social-post-logo" style="background:linear-gradient(135deg,var(--facebook),#0a4aa0);">STS</div><div><div class="social-post-name">STS Security</div><div class="social-post-time">Ayer 🌐</div></div></div>
+<div class="social-post-text">📹 ¿Sabías que las cámaras con IA pueden detectar comportamientos sospechosos antes de que ocurra un incidente? Nuestro sistema de videovigilancia inteligente utiliza algoritmos de aprendizaje profundo para proteger tu negocio 24/7. #VideovigilanciaIA</div>
+<div class="social-post-image" style="background:linear-gradient(135deg,#1a2a4a,#0a1a2a);">📹🤖</div>
+<div class="social-post-engagement">👍❤️ 234 · 56 comentarios · 23 compartidos</div>
+<div class="social-post-actions"><button>👍 Me gusta</button><button>💬 Comentar</button><button>🔄 Compartir</button></div>
+</div></div>
+<div class="social-detail-panel">
+<h4>📋 Detalle de Publicación</h4>
+<div class="social-detail-row"><label>Objetivo</label><p>Demostrar capacidades tecnológicas</p></div>
+<div class="social-detail-row"><label>CTA</label><p>"Agenda una demostración gratuita"</p></div>
+<div class="social-detail-row"><label>Estado</label><p><span class="badge badge-warning">Pendiente</span></p></div>
+</div>
+<div class="social-card"><div class="social-post">
+<div class="social-post-header"><div class="social-post-logo" style="background:linear-gradient(135deg,var(--facebook),#0a4aa0);">STS</div><div><div class="social-post-name">STS Security</div><div class="social-post-time">Hace 3 días 🌐</div></div></div>
+<div class="social-post-text">🔐 Consejo de seguridad: Revisa tus protocolos de acceso al menos una vez al trimestre. Muchas brechas ocurren por credenciales desactualizadas. En STS Security te ayudamos a mantener tu seguridad actualizada. #ConsejoDeSeguridad</div>
+<div class="social-post-image" style="background:linear-gradient(135deg,#0a3a2a,#0a1a1a);">🔑📋</div>
+<div class="social-post-engagement">👍❤️ 156 · 28 comentarios · 12 compartidos</div>
+<div class="social-post-actions"><button>👍 Me gusta</button><button>💬 Comentar</button><button>🔄 Compartir</button></div>
+</div></div>
+<div class="social-detail-panel">
+<h4>📋 Detalle de Publicación</h4>
+<div class="social-detail-row"><label>Objetivo</label><p>Educar y generar confianza</p></div>
+<div class="social-detail-row"><label>CTA</label><p>"Déjanos revisar tu sistema actual"</p></div>
+<div class="social-detail-row"><label>Estado</label><p><span class="badge badge-success">Aprobado</span></p></div>
+</div>
+<div class="social-card"><div class="social-post">
+<div class="social-post-header"><div class="social-post-logo" style="background:linear-gradient(135deg,var(--facebook),#0a4aa0);">STS</div><div><div class="social-post-name">STS Security</div><div class="social-post-time">Hace 5 días 🌐</div></div></div>
+<div class="social-post-text">🏗️ Proyecto completado: Instalación de sistema de seguridad integral para complejo industrial en Toluca. 48 cámaras, 12 puntos de acceso y monitoreo remoto 24/7. Resultado: cero incidentes en los primeros 90 días. #ProyectoCompletado</div>
+<div class="social-post-image" style="background:linear-gradient(135deg,#2a2a1a,#1a1a0a);">🏗️✅</div>
+<div class="social-post-engagement">👍❤️ 201 · 35 comentarios · 19 compartidos</div>
+<div class="social-post-actions"><button>👍 Me gusta</button><button>💬 Comentar</button><button>🔄 Compartir</button></div>
+</div></div>
+<div class="social-detail-panel">
+<h4>📋 Detalle de Publicación</h4>
+<div class="social-detail-row"><label>Objetivo</label><p>Mostrar resultados y generar prueba social</p></div>
+<div class="social-detail-row"><label>CTA</label><p>"¿Necesitas una solución similar?"</p></div>
+<div class="social-detail-row"><label>Estado</label><p><span class="badge badge-success">Aprobado</span></p></div>
+</div>
+</div>
+</div>
+
+<div id="instagram" class="section">
+<div class="section-header">
+<div><h2 class="section-title">Instagram</h2><p class="section-subtitle">11 publicaciones programadas</p></div>
+</div>
+<div class="insta-grid" id="insta-grid">
+<div class="insta-card" style="background:linear-gradient(135deg,#0a3a5c,#0a1a3c);" onclick="openInstaModal(0)"><div class="insta-card-overlay"><span>❤️ 1,245</span><span>💬 89</span></div></div>
+<div class="insta-card" style="background:linear-gradient(135deg,#1a2a4a,#0a1a2a);" onclick="openInstaModal(1)"><div class="insta-card-overlay"><span>❤️ 987</span><span>💬 56</span></div></div>
+<div class="insta-card" style="background:linear-gradient(135deg,#2a1a3a,#1a0a2a);" onclick="openInstaModal(2)"><div class="insta-card-overlay"><span>❤️ 1,567</span><span>💬 112</span></div></div>
+<div class="insta-card" style="background:linear-gradient(135deg,#0a3a2a,#0a1a1a);" onclick="openInstaModal(3)"><div class="insta-card-overlay"><span>❤️ 834</span><span>💬 43</span></div></div>
+<div class="insta-card" style="background:linear-gradient(135deg,#3a1a2a,#2a0a1a);" onclick="openInstaModal(4)"><div class="insta-card-overlay"><span>❤️ 1,102</span><span>💬 78</span></div></div>
+<div class="insta-card" style="background:linear-gradient(135deg,#1a3a3a,#0a2a2a);" onclick="openInstaModal(5)"><div class="insta-card-overlay"><span>❤️ 1,345</span><span>💬 95</span></div></div>
+</div>
+</div>
+
+<div id="calendar" class="section">
+<div class="section-header">
+<div><h2 class="section-title">Calendario Editorial</h2><p class="section-subtitle">Planificación de contenidos — Julio 2026</p></div>
+<div style="display:flex;align-items:center;gap:1rem;">
+<button class="btn btn-ghost btn-sm">◀</button>
+<span style="font-weight:600;">Julio 2026</span>
+<button class="btn btn-ghost btn-sm">▶</button>
+</div>
+</div>
+<div class="filter-group" style="margin-bottom:1rem;">
+<button class="btn btn-ghost active">Todos</button>
+<button class="btn btn-ghost">📝 Blog</button>
+<button class="btn btn-ghost">💼 LinkedIn</button>
+<button class="btn btn-ghost">📘 Facebook</button>
+<button class="btn btn-ghost">📸 Instagram</button>
+</div>
+<div class="calendar-grid" id="calendar-grid"></div>
+</div>
+
+<div id="strategy" class="section">
+<div class="section-header">
+<div><h2 class="section-title">Estrategia de Contenidos</h2><p class="section-subtitle">Plan maestro para la presencia digital de STS Security</p></div>
+</div>
+<div class="grid-3" style="margin-bottom:2rem;">
+<div class="strategy-card"><h3>🎯 Objetivos</h3><p>Posicionar a STS Security como referente en seguridad empresarial a través de contenido educativo, casos de éxito y pensamiento líder en el sector.</p></div>
+<div class="strategy-card"><h3>👥 Audiencia</h3><p>Gerentes de operaciones, directores de seguridad, empresas PyME y corporativos que buscan soluciones integrales de protección.</p></div>
+<div class="strategy-card"><h3>🔍 SEO</h3><p>Foco en keywords de cola larga sobre seguridad y monitoreo: "control de acceso empresarial", "videovigilancia inteligente", "monitoreo remoto 24/7".</p></div>
+<div class="strategy-card"><h3>📣 Marketing</h3><p>Contenido educativo + brand awareness. Publicaciones regulares en LinkedIn, Facebook e Instagram con blog SEO como pilar de autoridad.</p></div>
+<div class="strategy-card"><h3>🎨 Branding</h3><p>Identidad visual consistente, tono profesional y confiable. Paleta de colores corporativa, tipografía moderna y messaging uniforme.</p></div>
+<div class="strategy-card"><h3>📈 Beneficios</h3><p>Generación de leads cualificados, autoridad en el sector, reconocimiento de marca y aumento en consultas de prospectos interesados.</p></div>
+</div>
+<div class="card" style="text-align:center;">
+<h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1.5rem;">🔄 Flujo de Trabajo Editorial</h3>
+<div class="workflow">
+<div class="workflow-step done-step"><div class="step-icon">🔍</div><div class="step-name">Investigación</div></div>
+<div class="workflow-line done-line"></div>
+<div class="workflow-step done-step"><div class="step-icon">📊</div><div class="step-name">Análisis SEO</div></div>
+<div class="workflow-line done-line"></div>
+<div class="workflow-step active-step"><div class="step-icon">✍️</div><div class="step-name">Redacción</div></div>
+<div class="workflow-line"></div>
+<div class="workflow-step"><div class="step-icon">🎨</div><div class="step-name">Diseño</div></div>
+<div class="workflow-line"></div>
+<div class="workflow-step"><div class="step-icon">👁️</div><div class="step-name">Revisión</div></div>
+<div class="workflow-line"></div>
+<div class="workflow-step"><div class="step-icon">✅</div><div class="step-name">Aprobación</div></div>
+<div class="workflow-line"></div>
+<div class="workflow-step"><div class="step-icon">📅</div><div class="step-name">Programación</div></div>
+<div class="workflow-line"></div>
+<div class="workflow-step"><div class="step-icon">🚀</div><div class="step-name">Publicación</div></div>
+<div class="workflow-line"></div>
+<div class="workflow-step"><div class="step-icon">📈</div><div class="step-name">Medición</div></div>
+</div>
+</div>
+</div>
+
+<div id="analytics" class="section">
+<div class="section-header">
+<div><h2 class="section-title">Analytics</h2><p class="section-subtitle">Métricas y rendimiento de contenidos</p></div>
+<select class="date-select"><option>Últimos 30 días</option><option>Últimos 90 días</option><option>Este año</option></select>
+</div>
+<div class="grid-4" style="margin-bottom:1.5rem;">
+<div class="metric-large"><div class="metric-val">45,200</div><div class="metric-label">Alcance Esperado</div><div class="metric-change" style="color:var(--success);">↑ +12.5%</div></div>
+<div class="metric-large"><div class="metric-val">4.8%</div><div class="metric-label">Engagement Rate</div><div class="metric-change" style="color:var(--success);">↑ +0.3%</div></div>
+<div class="metric-large"><div class="metric-val">8,340</div><div class="metric-label">Tráfico SEO</div><div class="metric-change" style="color:var(--success);">↑ +18.2%</div></div>
+<div class="metric-large"><div class="metric-val">156</div><div class="metric-label">Leads Generados</div><div class="metric-change" style="color:var(--success);">↑ +8.7%</div></div>
+</div>
+<div class="grid-2" style="margin-bottom:1.5rem;">
+<div class="card">
+<h3 style="font-size:1rem;font-weight:600;margin-bottom:1rem;">Rendimiento por Plataforma</h3>
+<div class="bar-chart">
+<div class="bar-group"><div class="bar" style="height:60%;background:var(--blog);position:relative;"><span class="bar-value" style="color:var(--blog);">12.4k</span></div><span class="bar-label">Blog</span></div>
+<div class="bar-group"><div class="bar" style="height:90%;background:var(--linkedin);position:relative;"><span class="bar-value" style="color:var(--linkedin);">18.2k</span></div><span class="bar-label">LinkedIn</span></div>
+<div class="bar-group"><div class="bar" style="height:70%;background:var(--facebook);position:relative;"><span class="bar-value" style="color:var(--facebook);">9.8k</span></div><span class="bar-label">Facebook</span></div>
+<div class="bar-group"><div class="bar" style="height:80%;background:var(--instagram);position:relative;"><span class="bar-value" style="color:var(--instagram);">14.8k</span></div><span class="bar-label">Instagram</span></div>
+</div>
+</div>
+<div class="card">
+<h3 style="font-size:1rem;font-weight:600;margin-bottom:1rem;">Engagement por Tipo de Contenido</h3>
+<div class="bar-chart">
+<div class="bar-group"><div class="bar" style="height:85%;background:var(--accent);position:relative;"><span class="bar-value" style="color:var(--accent);">5.2%</span></div><span class="bar-label">Artículos</span></div>
+<div class="bar-group"><div class="bar" style="height:70%;background:var(--success);position:relative;"><span class="bar-value" style="color:var(--success);">4.3%</span></div><span class="bar-label">Imágenes</span></div>
+<div class="bar-group"><div class="bar" style="height:95%;background:var(--warning);position:relative;"><span class="bar-value" style="color:var(--warning);">6.1%</span></div><span class="bar-label">Videos</span></div>
+<div class="bar-group"><div class="bar" style="height:55%;background:var(--instagram);position:relative;"><span class="bar-value" style="color:var(--instagram);">3.4%</span></div><span class="bar-label">Stories</span></div>
+</div>
+</div>
+</div>
+<div class="grid-2">
+<div class="card">
+<h3 style="font-size:1rem;font-weight:600;margin-bottom:1rem;">Tendencia de Alcance (Ene-Jun 2026)</h3>
+<div style="position:relative;height:180px;display:flex;align-items:flex-end;gap:0;padding:0 .5rem;">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;"><div style="width:12px;height:12px;border-radius:50%;background:var(--accent);margin-bottom:-6px;z-index:1;"></div><div style="width:100%;height:60%;background:linear-gradient(to top,rgba(10,102,194,.3),rgba(10,102,194,.1));border-radius:4px 4px 0 0;"></div><span style="font-size:.7rem;color:var(--text-muted);margin-top:.5rem;">Ene</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;"><div style="width:12px;height:12px;border-radius:50%;background:var(--accent);margin-bottom:-6px;z-index:1;"></div><div style="width:100%;height:70%;background:linear-gradient(to top,rgba(10,102,194,.3),rgba(10,102,194,.1));border-radius:4px 4px 0 0;"></div><span style="font-size:.7rem;color:var(--text-muted);margin-top:.5rem;">Feb</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;"><div style="width:12px;height:12px;border-radius:50%;background:var(--accent);margin-bottom:-6px;z-index:1;"></div><div style="width:100%;height:55%;background:linear-gradient(to top,rgba(10,102,194,.3),rgba(10,102,194,.1));border-radius:4px 4px 0 0;"></div><span style="font-size:.7rem;color:var(--text-muted);margin-top:.5rem;">Mar</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;"><div style="width:12px;height:12px;border-radius:50%;background:var(--accent);margin-bottom:-6px;z-index:1;"></div><div style="width:100%;height:80%;background:linear-gradient(to top,rgba(10,102,194,.3),rgba(10,102,194,.1));border-radius:4px 4px 0 0;"></div><span style="font-size:.7rem;color:var(--text-muted);margin-top:.5rem;">Abr</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;"><div style="width:12px;height:12px;border-radius:50%;background:var(--accent);margin-bottom:-6px;z-index:1;"></div><div style="width:100%;height:90%;background:linear-gradient(to top,rgba(10,102,194,.3),rgba(10,102,194,.1));border-radius:4px 4px 0 0;"></div><span style="font-size:.7rem;color:var(--text-muted);margin-top:.5rem;">May</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;"><div style="width:12px;height:12px;border-radius:50%;background:var(--accent);margin-bottom:-6px;z-index:1;"></div><div style="width:100%;height:100%;background:linear-gradient(to top,rgba(10,102,194,.4),rgba(10,102,194,.15));border-radius:4px 4px 0 0;"></div><span style="font-size:.7rem;color:var(--text-muted);margin-top:.5rem;">Jun</span></div>
+</div>
+</div>
+<div class="card">
+<h3 style="font-size:1rem;font-weight:600;margin-bottom:1rem;">Distribución de Audiencia</h3>
+<div class="donut-container">
+<div><div class="donut" style="background:conic-gradient(var(--accent) 0% 65%,var(--border) 65% 100%);"><span style="background:var(--bg-card);width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;">65%</span></div><div class="donut-label" style="margin-top:.5rem;">Empresas PyME</div></div>
+<div><div class="donut" style="background:conic-gradient(var(--success) 0% 25%,var(--border) 25% 100%);"><span style="background:var(--bg-card);width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;">25%</span></div><div class="donut-label" style="margin-top:.5rem;">Corporativo</div></div>
+<div><div class="donut" style="background:conic-gradient(var(--warning) 0% 10%,var(--border) 10% 100%);"><span style="background:var(--bg-card);width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;">10%</span></div><div class="donut-label" style="margin-top:.5rem;">Gubernamental</div></div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="feedback" class="section">
+<div class="section-header">
+<div><h2 class="section-title">Centro de Feedback</h2><p class="section-subtitle">Gestiona los comentarios y revisiones del equipo</p></div>
+</div>
+<div class="tab-bar" id="feedback-tabs">
+<div class="tab-item active" onclick="switchFeedbackTab('pending',this)">Pendiente (5)</div>
+<div class="tab-item" onclick="switchFeedbackTab('approved',this)">Aprobado (31)</div>
+<div class="tab-item" onclick="switchFeedbackTab('history',this)">Historial</div>
+</div>
+<div id="feedback-list">
+<div class="feedback-item" onclick="showFeedbackDetail(0)">
+<div class="social-post-logo" style="flex-shrink:0;width:36px;height:36px;font-size:.6rem;">📰</div>
+<div style="flex:1;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.25rem;"><span style="font-size:.9rem;font-weight:600;">Blog: "5 Errores de Control de Acceso"</span><span class="badge badge-warning">Pendiente</span></div>
+<div style="font-size:.8rem;color:var(--text-secondary);margin-bottom:.25rem;">"Excelente artículo, pero ajustar el tono para que sea más corporativo en la introducción."</div>
+<div style="font-size:.7rem;color:var(--text-muted);">Roberto García · Hace 3 horas</div></div></div>
+<div class="feedback-item" onclick="showFeedbackDetail(1)">
+<div class="social-post-logo" style="flex-shrink:0;width:36px;height:36px;font-size:.6rem;">📸</div>
+<div style="flex:1;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.25rem;"><span style="font-size:.9rem;font-weight:600;">Instagram: Post de Monitoreo Remoto</span><span class="badge badge-warning">Pendiente</span></div>
+<div style="font-size:.8rem;color:var(--text-secondary);margin-bottom:.25rem;">"La imagen necesita el logo actualizado. Usar la versión 2026 del manual de marca."</div>
+<div style="font-size:.7rem;color:var(--text-muted);">María López · Hace 5 horas</div></div></div>
+<div class="feedback-item" onclick="showFeedbackDetail(2)">
+<div class="social-post-logo" style="flex-shrink:0;width:36px;height:36px;font-size:.6rem;">💼</div>
+<div style="flex:1;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.25rem;"><span style="font-size:.9rem;font-weight:600;">LinkedIn: Caso de Éxito Industrial</span><span class="badge badge-warning">Pendiente</span></div>
+<div style="font-size:.8rem;color:var(--text-secondary);margin-bottom:.25rem;">"Agregar CTA al final del post. Incluir enlace al formulario de contacto."</div>
+<div style="font-size:.7rem;color:var(--text-muted);">Carlos Ruiz · Hace 8 horas</div></div></div>
+<div class="feedback-item" onclick="showFeedbackDetail(3)">
+<div class="social-post-logo" style="flex-shrink:0;width:36px;height:36px;font-size:.6rem;">📰</div>
+<div style="flex:1;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.25rem;"><span style="font-size:.9rem;font-weight:600;">Blog: "Monitoreo Remoto: El Futuro"</span><span class="badge badge-danger">Requiere Cambios</span></div>
+<div style="font-size:.8rem;color:var(--text-secondary);margin-bottom:.25rem;">"Revisar ortografía en el tercer párrafo. Hay una palabra duplicada."</div>
+<div style="font-size:.7rem;color:var(--text-muted);">Ana Torres · Hace 1 día</div></div></div>
+<div class="feedback-item" onclick="showFeedbackDetail(4)">
+<div class="social-post-logo" style="flex-shrink:0;width:36px;height:36px;font-size:.6rem;">📘</div>
+<div style="flex:1;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.25rem;"><span style="font-size:.9rem;font-weight:600;">Facebook: Consejo de Seguridad</span><span class="badge badge-warning">Pendiente</span></div>
+<div style="font-size:.8rem;color:var(--text-secondary);margin-bottom:.25rem;">"El tono es demasiado técnico para la audiencia de Facebook. Simplificar el mensaje."</div>
+<div style="font-size:.7rem;color:var(--text-muted);">Pedro Sánchez · Hace 1 día</div></div></div>
+</div>
+<div class="feedback-detail" id="feedback-detail">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;"><h3 style="font-size:1.1rem;font-weight:600;">Detalle del Feedback</h3><button class="btn btn-ghost btn-sm" onclick="document.getElementById('feedback-detail').classList.remove('active');">✕ Cerrar</button></div>
+<div class="comment-thread">
+<div class="comment"><div class="comment-author">Roberto García</div><div class="comment-text">Excelente artículo, pero ajustar el tono para que sea más corporativo en la introducción.</div><div class="comment-date">Hace 3 horas</div></div>
+<div class="comment"><div class="comment-author">Alexis Morales</div><div class="comment-text">Entendido, voy a revisar la introducción. ¿Qué te parece si comenzamos con un dato estadístico?</div><div class="comment-date">Hace 2 horas</div></div>
+<div class="comment"><div class="comment-author">Roberto García</div><div class="comment-text">Perfecto, eso le daría más autoridad. Incluir el dato del 60% de brechas por control de acceso.</div><div class="comment-date">Hace 1 hora</div></div>
+</div>
+<div style="margin-top:1rem;">
+<div style="margin-bottom:.75rem;"><label style="font-size:.8rem;color:var(--text-muted);display:block;margin-bottom:.3rem;">Estado</label>
+<select class="date-select" style="width:100%;"><option>Pendiente</option><option>Aprobado</option><option>Requiere Cambios</option></select></div>
+<textarea style="width:100%;height:80px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:.75rem;color:var(--text-primary);font-family:inherit;font-size:.85rem;resize:vertical;margin-bottom:.75rem;" placeholder="Escribe una respuesta..."></textarea>
+<div style="display:flex;gap:.5rem;"><button class="btn btn-primary">Guardar</button><button class="btn btn-success">Marcar como aprobado</button><button class="btn btn-danger">Solicitar cambios</button></div>
+</div>
+</div>
+</div>
+
+<div id="settings" class="section">
+<div class="section-header">
+<div><h2 class="section-title">Configuración</h2><p class="section-subtitle">Personaliza tu experiencia en STS INSIGHT</p></div>
+</div>
+<div class="settings-section">
+<h3>👤 Perfil</h3>
+<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+<div class="avatar" style="width:64px;height:64px;font-size:1.5rem;">AM</div>
+<div><div style="font-weight:600;font-size:1.1rem;">Alexis Morales</div><div style="color:var(--text-secondary);font-size:.85rem;">Marketing &amp; Business Development</div><div style="color:var(--text-muted);font-size:.8rem;">alexis.morales@sts-security.com</div></div>
+</div>
+</div>
+<div class="settings-section">
+<h3>🔔 Notificaciones</h3>
+<div class="setting-row"><label>Email de nuevas revisiones</label><div class="toggle-switch on" onclick="this.classList.toggle('on')"></div></div>
+<div class="setting-row"><label>Notificaciones de feedback</label><div class="toggle-switch on" onclick="this.classList.toggle('on')"></div></div>
+<div class="setting-row"><label>Alertas de publicación</label><div class="toggle-switch on" onclick="this.classList.toggle('on')"></div></div>
+<div class="setting-row"><label>Resumen semanal</label><div class="toggle-switch" onclick="this.classList.toggle('on')"></div></div>
+</div>
+<div class="settings-section">
+<h3>🎨 Apariencia</h3>
+<div class="setting-row"><label>Modo oscuro</label><div class="toggle-switch on" onclick="this.classList.toggle('on')"></div></div>
+<div class="setting-row"><label>Animaciones</label><div class="toggle-switch on" onclick="this.classList.toggle('on')"></div></div>
+</div>
+<div class="settings-section">
+<h3>📦 Datos</h3>
+<button class="btn btn-ghost" style="margin-bottom:.5rem;">📥 Exportar datos (CSV)</button>
+<button class="btn btn-ghost">📥 Exportar informe (PDF)</button>
+</div>
+<div class="settings-section">
+<h3>ℹ️ Acerca de</h3>
+<p style="color:var(--text-secondary);font-size:.85rem;">STS INSIGHT v1.0 — Desarrollado para STS Security</p>
+<p style="color:var(--text-muted);font-size:.8rem;margin-top:.25rem;">Portal de revisión de contenidos digitales</p>
+</div>
+</div>
+
+<div class="article-overlay" id="article-overlay"><button class="article-close" onclick="closeArticle()">✕</button><div class="article-content" id="article-content"></div><div class="article-sidebar" id="article-sidebar"></div></div>
+<div class="insta-modal" id="insta-modal"><button class="insta-modal-close" onclick="closeInstaModal()">✕</button><div class="insta-modal-content" id="insta-modal-content"></div></div>
+<div class="calendar-popup" id="calendar-popup"></div>
+<div class="overlay-bg" id="overlay-bg" onclick="closePopups()"></div>
+</div>
+
+<script>
+const blogArticles=[
+{title:"5 Errores que Debilitan el Control de Acceso Empresarial",category:"Seguridad",status:"Aprobado",readTime:"5 min",keyword:"control acceso empresarial",color:"#1a3a5c",content:"<h2>Introducci\u00f3n</h2><p>El control de acceso es uno de los pilares fundamentales de la seguridad empresarial. Sin embargo, muchas organizaciones cometen errores cr\u00edticos que comprometen la integridad de sus instalaciones y datos.</p><h2>1. No actualizar credenciales regularmente</h2><p>Uno de los errores m\u00e1s frecuentes es mantener credenciales activas mucho tiempo despu\u00e9s de que un empleado haya dejado la empresa.</p><blockquote>El control de acceso debe ser un proceso din\u00e1mico, no una configuraci\u00f3n est\u00e1tica.</blockquote><h2>2. Falta de auditor\u00edas peri\u00f3dicas</h2><p>Realizar auditor\u00edas de acceso al menos una vez al trimestre es esencial.</p><h2>3. Confiar \u00fanicamente en contrase\u00f1as</h2><p>Las contrase\u00f1as por s\u00ed solas no son suficientes. La autenticaci\u00f3n de dos factores a\u00f1ade capas adicionales de seguridad.</p><h2>4. No integrar sistemas de seguridad</h2><p>Un error com\u00fan es tener sistemas de videovigilancia, control de acceso y alarmas operando de forma independiente.</p><h2>5. Ignorar la infraestructura de red</h2><p>Los sistemas de control de acceso modernos dependen de la red. No asegurar la infraestructura expone todo el sistema.</p><h2>Conclusi\u00f3n</h2><p>Evitar estos cinco errores puede reducir significativamente los riesgos de seguridad en tu empresa.</p>"},
+{title:"La Evoluci\u00f3n de la Videovigilancia Empresarial",category:"Tecnolog\u00eda",status:"Pendiente",readTime:"7 min",keyword:"videovigilancia empresarial",color:"#1a2a4a",content:"<h2>De las c\u00e1maras anal\u00f3gicas a la IA</h2><p>La videovigilancia ha experimentado una transformaci\u00f3n radical en las \u00faltimas dos d\u00e9cadas.</p><h2>Primera generaci\u00f3n: C\u00e1maras CCTV</h2><p>Los sistemas tradicionales proporcionaban grabaci\u00f3n continua pero requer\u00edan revisi\u00f3n manual.</p><h2>Segunda generaci\u00f3n: C\u00e1maras IP</h2><p>La migraci\u00f3n a IP permiti\u00f3 la transmisi\u00f3n en alta definici\u00f3n y acceso remoto.</p><h2>Tercera generaci\u00f3n: Sistemas con IA</h2><ul><li>Detecci\u00f3n de comportamientos sospechosos</li><li>Reconocimiento facial en tiempo real</li><li>An\u00e1lisis de multitudes</li><li>Alertas autom\u00e1ticas</li></ul><h2>El futuro: Video analytics predictivo</h2><p>La pr\u00f3xima frontera es la capacidad predictiva.</p>"},
+{title:"Inteligencia Artificial en Seguridad: Aplicaciones Pr\u00e1cticas",category:"IA",status:"Aprobado",readTime:"6 min",keyword:"IA seguridad",color:"#0a2a3a",content:"<h2>La IA revoluciona la seguridad empresarial</h2><p>La inteligencia artificial ya no es ciencia ficci\u00f3n. En el campo de la seguridad, las aplicaciones pr\u00e1cticas est\u00e1n transformando c\u00f3mo las empresas protegen sus activos.</p><h2>An\u00e1lisis de video inteligente</h2><p>Los sistemas pueden procesar miles de horas de grabaci\u00f3n en minutos, identificando patrones an\u00f3malos.</p><h2>Detecci\u00f3n de intrusiones avanzada</h2><p>Los algoritmos de aprendizaje profundo reducen falsos positivos en un 90%.</p><h2>Gesti\u00f3n de accesos biom\u00e9trica</h2><p>La IA potencia sistemas biom\u00e9tricos que aprenden y se adaptan con cada interacci\u00f3n.</p><blockquote>La IA no reemplaza a los profesionales de seguridad; los potencia.</blockquote>"},
+{title:"Monitoreo Remoto: El Futuro de la Vigilancia",category:"Monitoreo",status:"Requiere Cambios",readTime:"4 min",keyword:"monitoreo remoto",color:"#1a2040",content:"<h2>Vigilancia sin fronteras</h2><p>El monitoreo remoto ha eliminado las barreras geogr\u00e1ficas de la seguridad.</p><h2>Beneficios del monitoreo remoto</h2><ul><li>Reducci\u00f3n de costos operativos en un 40%</li><li>Disponibilidad 24/7</li><li>Respuesta inmediata ante alertas</li><li>Escalabilidad seg\u00fan las necesidades</li></ul><h2>Tecnolog\u00edas habilitadoras</h2><p>Conectividad de alta velocidad, almacenamiento en la nube y plataformas centralizadas.</p><h2>Casos de uso</h2><p>Desde complejos industriales hasta sucursales bancarias.</p>"},
+{title:"Porter\u00eda Virtual: Control de Acceso Moderno",category:"Acceso",status:"Pendiente",readTime:"5 min",keyword:"porter\u00eda virtual",color:"#2a1a3a",content:"<h2>Reemplazando la porter\u00eda tradicional</h2><p>La porter\u00eda virtual combina tecnolog\u00eda de vanguardia con servicio de seguridad premium.</p><h2>Componentes del sistema</h2><ul><li>C\u00e1maras HD con visi\u00f3n nocturna</li><li>Intercomunicadores con reconocimiento de voz</li><li>Sistemas de control de acceso remoto</li><li>Software de gesti\u00f3n centralizado</li></ul><h2>Ventajas para las empresas</h2><p>Reducci\u00f3n del 60% en costos de seguridad y mejora del 45% en tiempos de respuesta.</p>"},
+{title:"Ciberseguridad y Protecci\u00f3n de Datos Empresariales",category:"Ciberseguridad",status:"Aprobado",readTime:"8 min",keyword:"ciberseguridad datos",color:"#1a2a2a",content:"<h2>La amenaza invisible</h2><p>El 43% de los ciberataques est\u00e1n dirigidos a PyMEs, y solo el 14% est\u00e1 preparado.</p><h2>Principales vectores de ataque</h2><ul><li>Phishing e ingenier\u00eda social</li><li>Ransomware</li><li>Inyecci\u00f3n SQL</li><li>Ataques DDoS</li><li>Fugas de datos internas</li></ul><h2>Protecci\u00f3n integral</h2><p>En STS Security creemos que la seguridad debe ser hol\u00edstica.</p><blockquote>La mejor inversi\u00f3n en ciberseguridad es la que haces antes de que ocurra un incidente.</blockquote>"}
+];
+
+const instagramPosts=[
+{emoji:"\u{1F3E2}\u{1F512}",color:"#0a3a5c",caption:"Tu empresa protegida 24/7 con nuestras soluciones de seguridad integral. #SeguridadEmpresarial #STS",likes:"1,245",comments:"89"},
+{emoji:"\u{1F4F9}\u{1F916}",color:"#1a2a4a",caption:"La videovigilancia inteligente ya est\u00e1 aqu\u00ed. Detectamos amenazas antes de que ocurran. #IA #Videovigilancia",likes:"987",comments:"56"},
+{emoji:"\u{1F6E1}\u{FE0F}",color:"#2a1a3a",caption:"Protecci\u00f3n completa para tu negocio. Desde el control de acceso hasta el monitoreo remoto. #Protecci\u00f3nTotal",likes:"1,567",comments:"112"},
+{emoji:"\u{1F3ED}\u{1F4CA}",color:"#0a3a2a",caption:"Casos de \u00e9xito en el sector industrial. Seguridad que genera resultados medibles. #Industria #Seguridad",likes:"834",comments:"43"},
+{emoji:"\u{1F510}",color:"#3a1a2a",caption:"Cada detalle cuenta cuando se trata de seguridad. Conf\u00eda en los expertos. #Ciberseguridad #Datos",likes:"1,102",comments:"78"},
+{emoji:"\u{1F680}\u{1F4C8}",color:"#1a3a3a",caption:"Impulsando la seguridad empresarial con tecnolog\u00eda de vanguardia. #Innovaci\u00f3n #STS #Futuro",likes:"1,345",comments:"95"}
+];
+
+const calendarData={
+1:[{type:"blog",title:"Blog: Control de Acceso"}],
+3:[{type:"linkedin",title:"LinkedIn: Caso de \u00e9xito"}],
+5:[{type:"facebook",title:"Facebook: Consejo de Seguridad"},{type:"instagram",title:"Instagram: Infograf\u00eda"}],
+7:[{type:"blog",title:"Blog: Videovigilancia IA"}],
+9:[{type:"linkedin",title:"LinkedIn: Tip de Seguridad"}],
+10:[{type:"instagram",title:"Instagram: Behind the Scenes"}],
+12:[{type:"facebook",title:"Facebook: Proyecto Completado"},{type:"blog",title:"Blog: Monitoreo Remoto"}],
+14:[{type:"linkedin",title:"LinkedIn: Art\u00edculo de Opini\u00f3n"}],
+16:[{type:"instagram",title:"Instagram: Reel"},{type:"facebook",title:"Facebook: Testimonio"}],
+18:[{type:"blog",title:"Blog: Porter\u00eda Virtual"}],
+20:[{type:"linkedin",title:"LinkedIn: Dato del D\u00eda"}],
+21:[{type:"instagram",title:"Instagram: Carrusel"}],
+23:[{type:"facebook",title:"Facebook: Oferta Especial"},{type:"blog",title:"Blog: Ciberseguridad"}],
+25:[{type:"linkedin",title:"LinkedIn: Resumen Semanal"}],
+27:[{type:"instagram",title:"Instagram: Stories"},{type:"facebook",title:"Facebook: Evento"}],
+28:[{type:"blog",title:"Blog: Tendencias 2026"}],
+30:[{type:"linkedin",title:"LinkedIn: Infograf\u00eda"}],
+31:[{type:"instagram",title:"Instagram: Post Final"}]
+};
+
+function navigateTo(section){
+document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+document.getElementById(section).classList.add('active');
+document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+const nav=document.querySelector('.nav-item[data-section="'+section+'"]');
+if(nav)nav.classList.add('active');
+const names={dashboard:'Dashboard',blog:'Blog SEO',linkedin:'LinkedIn',facebook:'Facebook',instagram:'Instagram',calendar:'Calendario Editorial',strategy:'Estrategia',analytics:'Analytics',feedback:'Feedback',settings:'Configuraci\u00f3n'};
+document.getElementById('breadcrumb').innerHTML='\u{1F3E0} <span>'+(names[section]||section)+'</span>';
+closePopups();
+window.scrollTo(0,0);
+if(section==='calendar')buildCalendar();
+}
+
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+
+setTimeout(()=>{const s=document.getElementById('splash');s.classList.add('fade-out');setTimeout(()=>s.style.display='none',800)},3000);
+
+function filterBlog(status,btn){
+document.querySelectorAll('#blog .filter-group .btn').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+document.querySelectorAll('#blog-grid .blog-card').forEach(card=>{
+card.style.display=(status==='all'||card.dataset.status===status)?'block':'none';
+});
+}
+
+function openArticle(idx){
+const a=blogArticles[idx];
+document.getElementById('article-content').innerHTML=
+'<div class="article-hero" style="background:linear-gradient(135deg,'+a.color+',#0a0a1a);display:flex;align-items:center;justify-content:center;font-size:3rem;">\u{1F4F0}</div>'+
+'<div class="article-breadcrumb"><a onclick="closeArticle()">Blog SEO</a> > '+a.title+'</div>'+
+'<h1 style="font-size:1.8rem;font-weight:800;line-height:1.3;margin-bottom:1rem;">'+a.title+'</h1>'+
+'<div class="article-meta"><span>\u{270D}\u{FE0F} STS Security</span><span>\u{1F4C5} 8 de Julio, 2026</span><span>\u{1F4D6} '+a.readTime+' de lectura</span></div>'+
+'<div class="toc"><h4>Tabla de Contenidos</h4><a href="#">Introducci\u00f3n</a><a href="#">Desarrollo</a><a href="#">Conclusiones</a></div>'+
+'<div class="article-body">'+a.content+'</div>'+
+'<div class="article-cta"><h3>\u00bfListo para proteger tu empresa?</h3><p>Contacta a STS Security para una consulta personalizada.</p><button class="btn btn-primary" style="margin-top:1rem;background:white;color:var(--accent);">Solicitar Consulta</button></div>'+
+'<h3 style="margin-top:2rem;font-size:1.1rem;">Art\u00edculos Relacionados</h3>'+
+'<div style="display:flex;gap:1rem;margin-top:1rem;flex-wrap:wrap;">'+
+'<div style="flex:1;min-width:200px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;"><div style="font-size:.8rem;font-weight:600;margin-bottom:.5rem;">Inteligencia Artificial en Seguridad</div><div style="font-size:.7rem;color:var(--text-muted);">6 min de lectura</div></div>'+
+'<div style="flex:1;min-width:200px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;"><div style="font-size:.8rem;font-weight:600;margin-bottom:.5rem;">Porter\u00eda Virtual: Control Moderno</div><div style="font-size:.7rem;color:var(--text-muted);">5 min de lectura</div></div></div>';
+document.getElementById('article-sidebar').innerHTML=
+'<h3 style="font-size:.9rem;font-weight:600;margin-bottom:1rem;">Panel de Revisi\u00f3n</h3>'+
+'<div style="margin-bottom:1rem;"><label style="font-size:.75rem;color:var(--text-muted);display:block;margin-bottom:.3rem;">Estado</label><span class="badge badge-'+(a.status==='Aprobado'?'success':a.status==='Pendiente'?'warning':'danger')+'">'+a.status+'</span></div>'+
+'<div style="margin-bottom:1rem;"><label style="font-size:.75rem;color:var(--text-muted);display:block;margin-bottom:.3rem;">Categor\u00eda</label><p style="font-size:.85rem;">'+a.category+'</p></div>'+
+'<div style="margin-bottom:1rem;"><label style="font-size:.75rem;color:var(--text-muted);display:block;margin-bottom:.3rem;">Keyword</label><p style="font-size:.85rem;">'+a.keyword+'</p></div>'+
+'<div style="margin-bottom:1rem;"><label style="font-size:.75rem;color:var(--text-muted);display:block;margin-bottom:.3rem;">Comentarios</label><textarea style="width:100%;height:80px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:.5rem;color:var(--text-primary);font-family:inherit;font-size:.8rem;resize:vertical;" placeholder="Agregar comentario..."></textarea></div>'+
+'<button class="btn btn-success" style="width:100%;margin-bottom:.5rem;">Marcar como aprobado</button>'+
+'<button class="btn btn-danger" style="width:100%;">Solicitar cambios</button>';
+document.getElementById('article-overlay').classList.add('active');
+document.body.style.overflow='hidden';
+}
+
+function closeArticle(){document.getElementById('article-overlay').classList.remove('active');document.body.style.overflow=''}
+
+function toggleLinkedinView(view,btn){
+document.querySelectorAll('#linkedin .filter-group .btn').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+const g=document.getElementById('linkedin-grid');
+g.style.gridTemplateColumns=view==='mobile'?'repeat(auto-fill,minmax(280px,1fr))':'repeat(2,1fr)';
+}
+
+function openInstaModal(idx){
+const p=instagramPosts[idx];
+document.getElementById('insta-modal-content').innerHTML=
+'<div class="insta-modal-image" style="background:linear-gradient(135deg,'+p.color+',#0a0a1a);"><span style="font-size:4rem;">'+p.emoji+'</span></div>'+
+'<div class="insta-modal-details">'+
+'<div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;"><div class="social-post-logo" style="width:36px;height:36px;font-size:.6rem;">STS</div><div><div style="font-weight:600;font-size:.9rem;">sts_security</div><div style="font-size:.7rem;color:var(--text-muted);">Hace 1 hora</div></div></div>'+
+'<p style="font-size:.9rem;color:var(--text-secondary);line-height:1.6;margin-bottom:1rem;">'+p.caption+'</p>'+
+'<div style="display:flex;gap:1.5rem;font-size:.85rem;color:var(--text-secondary);margin-bottom:1rem;"><span>\u{2764}\u{FE0F} '+p.likes+'</span><span>\u{1F4AC} '+p.comments+'</span></div>'+
+'<div class="social-detail-row"><label style="font-size:.75rem;color:var(--text-muted);display:block;margin-bottom:.3rem;">Objetivo</label><p style="font-size:.85rem;">Generar awareness y engagement</p></div>'+
+'<div class="social-detail-row"><label style="font-size:.75rem;color:var(--text-muted);display:block;margin-bottom:.3rem;">CTA</label><p style="font-size:.85rem;">"Visita nuestro perfil para m\u00e1s info"</p></div>'+
+'<div style="margin-top:1rem;"><label style="font-size:.75rem;color:var(--text-muted);display:block;margin-bottom:.3rem;">Vista M\u00f3vil</label>'+
+'<div style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:20px;padding:1rem;max-width:280px;"><div style="background:var(--bg-card);border-radius:8px;overflow:hidden;"><div style="height:150px;background:linear-gradient(135deg,'+p.color+',#0a0a1a);display:flex;align-items:center;justify-content:center;font-size:2rem;">'+p.emoji+'</div><div style="padding:.5rem;"><div style="font-size:.7rem;color:var(--text-muted);">\u{2764}\u{FE0F} '+p.likes+' &nbsp; \u{1F4AC} '+p.comments+'</div></div></div></div></div>'+
+'</div>';
+document.getElementById('insta-modal').classList.add('active');
+document.body.style.overflow='hidden';
+}
+
+function closeInstaModal(){document.getElementById('insta-modal').classList.remove('active');document.body.style.overflow=''}
+
+function buildCalendar(){
+const grid=document.getElementById('calendar-grid');
+const days=['Lun','Mar','Mi\u00e9','Jue','Vie','S\u00e1b','Dom'];
+let html='';
+days.forEach(d=>html+='<div class="calendar-header-cell">'+d+'</div>');
+for(let i=0;i<2;i++)html+='<div class="calendar-cell empty"></div>';
+for(let d=1;d<=31;d++){
+const hasData=calendarData[d];
+const today=d===9;
+html+='<div class="calendar-cell'+(today?' today':'')+'" onclick="showCalendarPopup(event,'+d+')">';
+html+='<div class="calendar-day-num">'+d+'</div>';
+if(hasData){
+html+='<div class="calendar-dots">';
+hasData.forEach(item=>{
+const colors={blog:'var(--blog)',linkedin:'var(--linkedin)',facebook:'var(--facebook)',instagram:'var(--instagram)'};
+html+='<div class="calendar-dot" style="background:'+colors[item.type]+';"></div>';
+});
+html+='</div>';
+}
+html+='</div>';
+}
+grid.innerHTML=html;
+}
+
+function showCalendarPopup(e,d){
+const data=calendarData[d];
+const popup=document.getElementById('calendar-popup');
+if(!data||!data.length){popup.classList.remove('active');return;}
+let html='<h4>Julio '+d+', 2026</h4>';
+const icons={blog:'\u{1F4DD}',linkedin:'\u{1F4BC}',facebook:'\u{1F4D8}',instagram:'\u{1F4F8}'};
+data.forEach(item=>{html+='<div class="cal-popup-item">'+(icons[item.type]||'')+' '+item.title+'</div>';});
+popup.innerHTML=html;
+popup.style.left=Math.min(e.clientX,window.innerWidth-300)+'px';
+popup.style.top=Math.min(e.clientY,window.innerHeight-200)+'px';
+popup.classList.add('active');
+document.getElementById('overlay-bg').classList.add('active');
+}
+
+function closePopups(){
+document.getElementById('calendar-popup').classList.remove('active');
+document.getElementById('overlay-bg').classList.remove('active');
+}
+
+function switchFeedbackTab(tab,btn){
+document.querySelectorAll('#feedback-tabs .tab-item').forEach(t=>t.classList.remove('active'));
+btn.classList.add('active');
+document.getElementById('feedback-detail').classList.remove('active');
+}
+
+function showFeedbackDetail(idx){
+document.getElementById('feedback-detail').classList.add('active');
+}
+
+function handleSearch(q){
+q=q.toLowerCase();
+document.querySelectorAll('.section.active .blog-card,.section.active .social-card,.section.active .feedback-item,.section.active .insta-card').forEach(el=>{
+const text=el.textContent.toLowerCase();
+el.style.display=text.includes(q)?'':'none';
+});
+}
+</script>
+
+</body>
+</html>
