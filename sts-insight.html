@@ -251,6 +251,55 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 @media(max-width:1024px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:repeat(2,1fr)}.article-overlay.active{flex-direction:column}.article-sidebar{width:100%;height:auto;position:static}}
 @media(max-width:768px){#sidebar{transform:translateX(-100%)}#sidebar.open{transform:translateX(0)}#main-content{margin-left:0}.mobile-toggle{display:block}.grid-4,.grid-3{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}.section{padding:1rem}.search-bar{width:180px}
 .insta-grid{grid-template-columns:repeat(2,1fr)}}
+/* Social Editor Styles */
+.social-editor{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;min-height:400px}
+.social-editor-left{display:flex;flex-direction:column;gap:1rem}
+.social-editor-right{display:flex;flex-direction:column}
+.social-editor-preview{background:var(--bg-primary);border:1px solid var(--border);border-radius:12px;overflow:hidden;flex:1}
+.social-editor-compose{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.social-editor-compose-header{padding:1rem;display:flex;align-items:center;gap:.75rem;border-bottom:1px solid var(--border)}
+.social-editor-compose-body{padding:1rem}
+.social-editor-compose textarea{width:100%;border:none;outline:none;resize:none;font-family:inherit;font-size:.9rem;color:var(--text-primary);min-height:120px;line-height:1.6;background:transparent}
+.social-editor-compose textarea::placeholder{color:var(--text-muted)}
+.social-editor-compose-footer{padding:.75rem 1rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.social-editor-actions-row{display:flex;gap:.5rem}
+.social-editor-action-btn{display:flex;align-items:center;gap:.35rem;padding:.4rem .7rem;border:none;background:none;color:var(--text-muted);font-family:inherit;font-size:.78rem;font-weight:500;cursor:pointer;border-radius:6px;transition:all .15s}
+.social-editor-action-btn:hover{background:var(--bg-primary);color:var(--text-primary)}
+.social-editor-action-btn svg{flex-shrink:0}
+.media-upload-zone{border:2px dashed var(--border);border-radius:8px;padding:1.5rem;text-align:center;cursor:pointer;transition:all .2s;color:var(--text-muted);font-size:.85rem}
+.media-upload-zone:hover{border-color:var(--accent);color:var(--accent);background:rgba(61,156,210,.03)}
+.media-upload-zone.has-media{padding:.5rem;border-style:solid}
+.media-preview-container{position:relative;display:inline-block}
+.media-preview-container img,.media-preview-container video{max-width:100%;max-height:200px;border-radius:8px;display:block}
+.media-remove-btn{position:absolute;top:4px;right:4px;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.7rem}
+.char-count{font-size:.75rem;color:var(--text-muted)}
+.char-count.warn{color:var(--warning)}
+.char-count.over{color:var(--danger)}
+/* Comment Panel */
+.comment-panel-overlay{position:fixed;inset:0;background:rgba(37,49,76,.5);z-index:6000;display:none;justify-content:flex-end;backdrop-filter:blur(2px)}
+.comment-panel-overlay.active{display:flex}
+.comment-panel{width:400px;max-width:90vw;background:#ffffff;height:100%;display:flex;flex-direction:column;box-shadow:-4px 0 20px rgba(0,0,0,.15);animation:slideInRight .25s ease}
+@keyframes slideInRight{from{transform:translateX(100%)}to{transform:translateX(0)}}
+.comment-panel-header{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.comment-panel-header h3{font-size:1rem;font-weight:600;color:var(--navy)}
+.comment-panel-body{flex:1;overflow-y:auto;padding:1rem 1.25rem}
+.comment-panel-input{padding:1rem 1.25rem;border-top:1px solid var(--border);display:flex;gap:.5rem;flex-shrink:0}
+.comment-panel-input input{flex:1;border:1px solid var(--border);border-radius:9999px;padding:.5rem 1rem;font-family:inherit;font-size:.85rem;outline:none;color:var(--text-primary);background:var(--bg-primary)}
+.comment-panel-input input:focus{border-color:var(--accent)}
+.comment-panel-input button{padding:.5rem 1rem;border-radius:9999px;border:none;background:var(--accent);color:#fff;font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;white-space:nowrap}
+.comment-panel-input button:hover{background:var(--accent-hover)}
+.comment-entry{padding:.75rem;background:var(--bg-primary);border-radius:10px;margin-bottom:.5rem}
+.comment-entry-author{font-size:.78rem;font-weight:600;color:var(--navy);margin-bottom:.2rem}
+.comment-entry-text{font-size:.85rem;color:var(--text-secondary);line-height:1.5}
+.comment-entry-date{font-size:.68rem;color:var(--text-muted);margin-top:.25rem}
+.approval-btn{display:flex;align-items:center;gap:.35rem;padding:.35rem .7rem;border-radius:9999px;border:1px solid var(--border);background:#fff;cursor:pointer;font-family:inherit;font-size:.75rem;font-weight:600;transition:all .2s;color:var(--text-muted)}
+.approval-btn:hover{border-color:var(--success);color:var(--success)}
+.approval-btn.approved{background:var(--success);color:#fff;border-color:var(--success)}
+.comment-btn{display:flex;align-items:center;gap:.35rem;padding:.35rem .7rem;border-radius:9999px;border:1px solid var(--border);background:#fff;cursor:pointer;font-family:inherit;font-size:.75rem;font-weight:600;transition:all .2s;color:var(--text-muted)}
+.comment-btn:hover{border-color:var(--accent);color:var(--accent)}
+.comment-btn .comment-count{background:var(--accent);color:#fff;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem}
+.post-card-actions{display:flex;gap:.5rem;padding:.5rem 1rem;border-top:1px solid var(--border);flex-wrap:wrap}
+@media(max-width:768px){.social-editor{grid-template-columns:1fr}.comment-panel{width:100%}}
 </style>
 </head>
 <body>
@@ -316,12 +365,24 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 <div id="blogEditorOverlay" class="blog-editor-overlay"></div>
 <div id="editorOverlay" class="editor-overlay"><div class="editor-panel" id="editorPanel"></div></div>
 <div id="toastContainer"></div>
+<div class="comment-panel-overlay" id="commentPanelOverlay" onclick="if(event.target===this)closeCommentPanel()">
+<div class="comment-panel">
+<div class="comment-panel-header"><h3 id="commentPanelTitle">Comentarios</h3><button class="btn btn-ghost btn-sm" onclick="closeCommentPanel()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Cerrar</button></div>
+<div class="comment-panel-body" id="commentPanelBody"></div>
+<div class="comment-panel-input"><input type="text" id="commentPanelInput" placeholder="Agregar comentario..." onkeydown="if(event.key==='Enter')addPostComment()"><button onclick="addPostComment()">Enviar</button></div>
+</div>
+</div>
 <script>
 
 
 var EDIT_SVG='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
 var DEL_SVG='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>';
 var PLUS_SVG='<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
+var APPROVE_SVG='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+var COMMENT_SVG='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';
+var IMG_SVG='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>';
+var VID_SVG='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>';
+var CLOSE_SVG='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
 
 function showToast(msg,type){type=type||'success';var c=document.getElementById('toastContainer');var t=document.createElement('div');t.className='toast '+type;t.textContent=msg;c.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transform='translateX(100%)';setTimeout(function(){t.remove()},300)},3000)}
 function openEditor(html,lg){var o=document.getElementById('editorOverlay');var p=document.getElementById('editorPanel');p.className='editor-panel'+(lg?' editor-panel-lg':'');p.innerHTML=html;o.classList.add('active');document.body.style.overflow='hidden'}
@@ -341,26 +402,26 @@ var defaultBlogs=[
 ];
 
 var defaultLinkedin=[
-{text:"Seguridad empresarial: El 60% de las brechas se originan por fallos en el control de acceso. En STS implementamos soluciones que reducen ese riesgo en un 85%. #SeguridadEmpresarial #ControlDeAcceso #STS",hashtags:"#SeguridadEmpresarial #ControlDeAcceso #STS",objective:"Generar awareness sobre control de acceso",cta:"Agenda una demostracion gratuita",status:"Aprobado",time:"Hace 2 horas",imageBg:"linear-gradient(135deg,#0a3a5c,#0a1a3a)",imageEmoji:"Seguridad",engagement:"245 likes - 38 comentarios - 12 compartidos"},
-{text:"La videovigilancia ha evolucionado. En 2026 las empresas necesitan sistemas de IA que detecten anomalias en tiempo real. Tu empresa esta preparada? #Videovigilancia #IA",hashtags:"#Videovigilancia #IA #Innovacion #STS",objective:"Posicionar a STS como lider tecnologico",cta:"Contactanos para una evaluacion",status:"Pendiente",time:"Ayer",imageBg:"linear-gradient(135deg,#1a2a5a,#0a1a3a)",imageEmoji:"IA",engagement:"189 likes - 24 comentarios - 8 compartidos"},
-{text:"Caso de exito: Empresa manufacturera redujo incidentes en 72% con nuestro monitoreo remoto. Resultados medibles, seguridad real. #CasoDeExito #MonitoreoRemoto",hashtags:"#CasoDeExito #MonitoreoRemoto #SeguridadIndustrial #STS",objective:"Mostrar resultados concretos",cta:"Solicita tu caso de exito",status:"Aprobado",time:"Hace 3 dias",imageBg:"linear-gradient(135deg,#0a3a2a,#0a1a1a)",imageEmoji:"Exito",engagement:"312 likes - 45 comentarios - 18 compartidos"},
-{text:"Ciberseguridad no es solo TI. El 43% de ciberataques van a PyMEs y solo el 14% esta preparado. #Ciberseguridad #ProteccionDeDatos #PyME",hashtags:"#Ciberseguridad #ProteccionDeDatos #PyME #STS",objective:"Educar sobre ciberseguridad",cta:"Descubre si tu empresa es vulnerable",status:"Aprobado",time:"Hace 5 dias",imageBg:"linear-gradient(135deg,#2a1a3a,#1a0a2a)",imageEmoji:"Ciber",engagement:"278 likes - 52 comentarios - 21 compartidos"}
+{text:"Seguridad empresarial: El 60% de las brechas se originan por fallos en el control de acceso. En STS implementamos soluciones que reducen ese riesgo en un 85%. #SeguridadEmpresarial #ControlDeAcceso #STS",status:"Aprobado",time:"Hace 2 horas",engagement:"245 likes - 38 comentarios - 12 compartidos",media:null,approved:true,postComments:[]},
+{text:"La videovigilancia ha evolucionado. En 2026 las empresas necesitan sistemas de IA que detecten anomalias en tiempo real. Tu empresa esta preparada? #Videovigilancia #IA",status:"Pendiente",time:"Ayer",engagement:"189 likes - 24 comentarios - 8 compartidos",media:null,approved:false,postComments:[]},
+{text:"Caso de exito: Empresa manufacturera redujo incidentes en 72% con nuestro monitoreo remoto. Resultados medibles, seguridad real. #CasoDeExito #MonitoreoRemoto",status:"Aprobado",time:"Hace 3 dias",engagement:"312 likes - 45 comentarios - 18 compartidos",media:null,approved:true,postComments:[]},
+{text:"Ciberseguridad no es solo TI. El 43% de ciberataques van a PyMEs y solo el 14% esta preparado. #Ciberseguridad #ProteccionDeDatos #PyME",status:"Aprobado",time:"Hace 5 dias",engagement:"278 likes - 52 comentarios - 21 compartidos",media:null,approved:true,postComments:[]}
 ];
 
 var defaultFacebook=[
-{text:"Tu empresa cuenta con un sistema de seguridad integrado? En STS ofrecemos soluciones que combinan videovigilancia, control de acceso y monitoreo remoto. Contactanos hoy. #SeguridadEmpresarial #STS",objective:"Generar leads",cta:"Llamanos al +52 55 1234 5678",status:"Aprobado",time:"Hace 3 horas",imageBg:"linear-gradient(135deg,#0a2a5c,#0a1a3c)",imageEmoji:"Seguridad",engagement:"189 likes - 42 comentarios - 15 compartidos"},
-{text:"Sabias que las camaras con IA pueden detectar comportamientos sospechosos antes de un incidente? #VideovigilanciaIA",objective:"Demostrar capacidades",cta:"Agenda una demostracion",status:"Pendiente",time:"Ayer",imageBg:"linear-gradient(135deg,#1a2a4a,#0a1a2a)",imageEmoji:"IA",engagement:"234 likes - 56 comentarios - 23 compartidos"},
-{text:"Consejo: Revisa protocolos de acceso al menos una vez al trimestre. #ConsejoDeSeguridad",objective:"Educar y generar confianza",cta:"Dejanos revisar tu sistema",status:"Aprobado",time:"Hace 3 dias",imageBg:"linear-gradient(135deg,#0a3a2a,#0a1a1a)",imageEmoji:"Consejo",engagement:"156 likes - 28 comentarios - 12 compartidos"},
-{text:"Proyecto completado: Instalacion en Toluca. 48 camaras, 12 puntos de acceso, monitoreo 24/7. Cero incidentes en 90 dias. #ProyectoCompletado",objective:"Generar prueba social",cta:"Necesitas una solucion similar?",status:"Aprobado",time:"Hace 5 dias",imageBg:"linear-gradient(135deg,#2a2a1a,#1a1a0a)",imageEmoji:"Exito",engagement:"201 likes - 35 comentarios - 19 compartidos"}
+{text:"Tu empresa cuenta con un sistema de seguridad integrado? En STS ofrecemos soluciones que combinan videovigilancia, control de acceso y monitoreo remoto. Contactanos hoy. #SeguridadEmpresarial #STS",status:"Aprobado",time:"Hace 3 horas",engagement:"189 likes - 42 comentarios - 15 compartidos",media:null,approved:true,postComments:[]},
+{text:"Sabias que las camaras con IA pueden detectar comportamientos sospechosos antes de un incidente? #VideovigilanciaIA",status:"Pendiente",time:"Ayer",engagement:"234 likes - 56 comentarios - 23 compartidos",media:null,approved:false,postComments:[]},
+{text:"Consejo: Revisa protocolos de acceso al menos una vez al trimestre. #ConsejoDeSeguridad",status:"Aprobado",time:"Hace 3 dias",engagement:"156 likes - 28 comentarios - 12 compartidos",media:null,approved:true,postComments:[]},
+{text:"Proyecto completado: Instalacion en Toluca. 48 camaras, 12 puntos de acceso, monitoreo 24/7. Cero incidentes en 90 dias. #ProyectoCompletado",status:"Aprobado",time:"Hace 5 dias",engagement:"201 likes - 35 comentarios - 19 compartidos",media:null,approved:true,postComments:[]}
 ];
 
 var defaultInstagram=[
-{emoji:"Edificio",color:"#0a3a5c",caption:"Tu empresa protegida 24/7 con nuestras soluciones de seguridad integral. #SeguridadEmpresarial #STS",likes:"1,245",comments:"89",objective:"Generar awareness",cta:"Visita nuestro perfil"},
-{emoji:"IA",color:"#1a2a4a",caption:"La videovigilancia inteligente ya esta aqui. Detectamos amenazas antes de que ocurran. #IA #Videovigilancia",likes:"987",comments:"56",objective:"Demostrar capacidades",cta:"Solicita una demo"},
-{emoji:"Proteccion",color:"#2a1a3a",caption:"Proteccion completa para tu negocio. Desde el control de acceso hasta el monitoreo remoto. #ProteccionTotal",likes:"1,567",comments:"112",objective:"Posicionar solucion integral",cta:"Contactanos"},
-{emoji:"Exito",color:"#0a3a2a",caption:"Casos de exito en el sector industrial. Seguridad que genera resultados medibles. #Industria #Seguridad",likes:"834",comments:"43",objective:"Generar prueba social",cta:"Conoce mas"},
-{emoji:"Ciber",color:"#3a1a2a",caption:"Cada detalle cuenta cuando se trata de seguridad. Confia en los expertos. #Ciberseguridad #Datos",likes:"1,102",comments:"78",objective:"Educar sobre ciberseguridad",cta:"Descubre como"},
-{emoji:"Futuro",color:"#1a3a3a",caption:"Impulsando la seguridad empresarial con tecnologia de vanguardia. #Innovacion #STS #Futuro",likes:"1,345",comments:"95",objective:"Posicionar marca innovadora",cta:"Listo para el futuro?"}
+{caption:"Tu empresa protegida 24/7 con nuestras soluciones de seguridad integral. #SeguridadEmpresarial #STS",color:"#0a3a5c",likes:"1,245",comments:"89",media:null,approved:true,postComments:[]},
+{caption:"La videovigilancia inteligente ya esta aqui. Detectamos amenazas antes de que ocurran. #IA #Videovigilancia",color:"#1a2a4a",likes:"987",comments:"56",media:null,approved:false,postComments:[]},
+{caption:"Proteccion completa para tu negocio. Desde el control de acceso hasta el monitoreo remoto. #ProteccionTotal",color:"#2a1a3a",likes:"1,567",comments:"112",media:null,approved:true,postComments:[]},
+{caption:"Casos de exito en el sector industrial. Seguridad que genera resultados medibles. #Industria #Seguridad",color:"#0a3a2a",likes:"834",comments:"43",media:null,approved:true,postComments:[]},
+{caption:"Cada detalle cuenta cuando se trata de seguridad. Confia en los expertos. #Ciberseguridad #Datos",color:"#3a1a2a",likes:"1,102",comments:"78",media:null,approved:true,postComments:[]},
+{caption:"Impulsando la seguridad empresarial con tecnologia de vanguardia. #Innovacion #STS #Futuro",color:"#1a3a3a",likes:"1,345",comments:"95",media:null,approved:true,postComments:[]}
 ];
 
 var defaultStrategy=[
@@ -415,15 +476,24 @@ document.getElementById('kpi-total').textContent=total;
 function renderLinkedin(){
 var g=document.getElementById('linkedin-grid'),h='';
 linkedinPosts.forEach(function(p,i){
+var approved=p.approved;
+var commentCount=(p.postComments||[]).length;
 h+='<div class="social-card">';
 h+='<div class="card-actions"><button class="action-btn edit-btn" onclick="event.stopPropagation();openLinkedinEditor('+i+')" title="Editar">'+EDIT_SVG+'</button><button class="action-btn delete-btn" onclick="event.stopPropagation();deleteLinkedinPost('+i+')" title="Eliminar">'+DEL_SVG+'</button></div>';
 h+='<div class="social-post">';
 h+='<div class="social-post-header"><div class="social-post-logo">STS</div><div><div class="social-post-name">STS Security</div><div class="social-post-time">'+escH(p.time)+' Globe</div></div></div>';
 h+='<div class="social-post-text">'+escH(p.text)+'</div>';
-h+='<div class="social-post-image" style="background:'+p.imageBg+';">'+escH(p.imageEmoji)+'</div>';
+if(p.media){h+='<div class="social-post-image" style="background:#f0f0f0;"><img src="'+p.media+'" style="max-width:100%;max-height:200px;border-radius:8px;object-fit:cover;"></div>';}
 h+='<div class="social-post-engagement">'+escH(p.engagement)+'</div>';
 h+='<div class="social-post-actions"><button>Like</button><button>Comentar</button><button>Compartir</button><button>Enviar</button></div>';
-h+='</div></div>';
+h+='</div>';
+h+='<div class="post-card-actions">';
+h+='<button class="approval-btn'+(approved?' approved':'')+'" onclick="toggleApproval(\'linkedin\','+i+')">'+APPROVE_SVG+(approved?' Aprobado':' Aprobar')+'</button>';
+h+='<button class="comment-btn" onclick="openCommentPanel(\'linkedin\','+i+')">'+COMMENT_SVG+' Comentarios'+(commentCount>0?'<span class="comment-count">'+commentCount+'</span>':'')+'</button>';
+h+='<div style="margin-left:auto;display:flex;gap:4px;">';
+h+='<button class="action-btn edit-btn" onclick="openLinkedinEditor('+i+')" title="Editar">'+EDIT_SVG+'</button>';
+h+='<button class="action-btn delete-btn" onclick="deleteLinkedinPost('+i+')" title="Eliminar">'+DEL_SVG+'</button>';
+h+='</div></div></div>';
 });
 g.innerHTML=h;
 document.getElementById('linkedin-subtitle').textContent=linkedinPosts.length+' publicaciones programadas';
@@ -432,15 +502,24 @@ document.getElementById('linkedin-subtitle').textContent=linkedinPosts.length+' 
 function renderFacebook(){
 var g=document.getElementById('facebook-grid'),h='';
 facebookPosts.forEach(function(p,i){
+var approved=p.approved;
+var commentCount=(p.postComments||[]).length;
 h+='<div class="social-card">';
 h+='<div class="card-actions"><button class="action-btn edit-btn" onclick="event.stopPropagation();openFacebookEditor('+i+')" title="Editar">'+EDIT_SVG+'</button><button class="action-btn delete-btn" onclick="event.stopPropagation();deleteFacebookPost('+i+')" title="Eliminar">'+DEL_SVG+'</button></div>';
 h+='<div class="social-post">';
 h+='<div class="social-post-header"><div class="social-post-logo" style="background:linear-gradient(135deg,var(--facebook),#0a4aa0);">STS</div><div><div class="social-post-name">STS Security</div><div class="social-post-time">'+escH(p.time)+' Globe</div></div></div>';
 h+='<div class="social-post-text">'+escH(p.text)+'</div>';
-h+='<div class="social-post-image" style="background:'+p.imageBg+';">'+escH(p.imageEmoji)+'</div>';
+if(p.media){h+='<div class="social-post-image" style="background:#f0f0f0;"><img src="'+p.media+'" style="max-width:100%;max-height:200px;border-radius:8px;object-fit:cover;"></div>';}
 h+='<div class="social-post-engagement">'+escH(p.engagement)+'</div>';
 h+='<div class="social-post-actions"><button>Me gusta</button><button>Comentar</button><button>Compartir</button></div>';
-h+='</div></div>';
+h+='</div>';
+h+='<div class="post-card-actions">';
+h+='<button class="approval-btn'+(approved?' approved':'')+'" onclick="toggleApproval(\'facebook\','+i+')">'+APPROVE_SVG+(approved?' Aprobado':' Aprobar')+'</button>';
+h+='<button class="comment-btn" onclick="openCommentPanel(\'facebook\','+i+')">'+COMMENT_SVG+' Comentarios'+(commentCount>0?'<span class="comment-count">'+commentCount+'</span>':'')+'</button>';
+h+='<div style="margin-left:auto;display:flex;gap:4px;">';
+h+='<button class="action-btn edit-btn" onclick="openFacebookEditor('+i+')" title="Editar">'+EDIT_SVG+'</button>';
+h+='<button class="action-btn delete-btn" onclick="deleteFacebookPost('+i+')" title="Eliminar">'+DEL_SVG+'</button>';
+h+='</div></div></div>';
 });
 g.innerHTML=h;
 document.getElementById('facebook-subtitle').textContent=facebookPosts.length+' publicaciones programadas';
@@ -449,9 +528,16 @@ document.getElementById('facebook-subtitle').textContent=facebookPosts.length+' 
 function renderInstagram(){
 var g=document.getElementById('insta-grid'),h='';
 instagramPosts.forEach(function(p,i){
+var approved=p.approved;
+var commentCount=(p.postComments||[]).length;
+h+='<div style="display:flex;flex-direction:column;">';
 h+='<div class="insta-card" style="background:linear-gradient(135deg,'+p.color+',#0a0a1a);" onclick="openInstaModal('+i+')">';
 h+='<div class="card-actions"><button class="action-btn edit-btn" onclick="event.stopPropagation();openInstagramEditor('+i+')" title="Editar">'+EDIT_SVG+'</button><button class="action-btn delete-btn" onclick="event.stopPropagation();deleteInstagramPost('+i+')" title="Eliminar">'+DEL_SVG+'</button></div>';
 h+='<div class="insta-card-overlay"><span>Likes '+p.likes+'</span><span>Comments '+p.comments+'</span></div></div>';
+h+='<div class="post-card-actions">';
+h+='<button class="approval-btn'+(approved?' approved':'')+'" onclick="toggleApproval(\'instagram\','+i+')">'+APPROVE_SVG+(approved?' Aprobado':' Aprobar')+'</button>';
+h+='<button class="comment-btn" onclick="openCommentPanel(\'instagram\','+i+')">'+COMMENT_SVG+' Comentarios'+(commentCount>0?'<span class="comment-count">'+commentCount+'</span>':'')+'</button>';
+h+='</div></div>';
 });
 h+='<div class="add-card-btn" onclick="openInstagramEditor(-1)">'+PLUS_SVG+' Nuevo Post</div>';
 g.innerHTML=h;
@@ -611,29 +697,52 @@ function deleteBlog(i){if(confirm('Eliminar este art\u00edculo?')){blogs.splice(
 /* LINKEDIN EDITOR */
 function openLinkedinEditor(idx){
 var isNew=idx===-1;
-var p=isNew?{text:'',status:'Pendiente',time:'Ahora',imageBg:'linear-gradient(135deg,#1a2a5a,#0a1a3a)',imageEmoji:'Post',engagement:'0 likes - 0 comments - 0 shares'}:linkedinPosts[idx];
-var stats=['Pendiente','Aprobado','Requiere Cambios'];
-var h='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;"><h2 style="font-size:1.2rem;font-weight:700;">'+(isNew?'Nuevo Post LinkedIn':'Editar Post LinkedIn')+'</h2><button class="btn btn-ghost btn-sm" onclick="closeEditor()">Cerrar</button></div>';
-h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">';
-h+='<div><div class="editor-field"><label>Texto del post</label><textarea id="lnEdText" style="min-height:200px;" placeholder="Escribe tu publicacion...">'+escH(p.text)+'</textarea></div>';
-h+='<div class="editor-field"><label>Estado</label><select id="lnEdStatus">'+stats.map(function(s){return '<option'+(s===p.status?' selected':'')+'>'+s+'</option>'}).join('')+'</select></div>';
-h+='</div><div>';
-h+='<div style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:12px;overflow:hidden;">';
-h+='<div style="background:var(--bg-card);padding:1rem;display:flex;align-items:center;gap:.75rem;"><div class="social-post-logo" style="width:40px;height:40px;font-size:.7rem;">STS</div><div><div style="font-weight:600;font-size:.9rem;">STS Security</div><div style="font-size:.75rem;color:var(--text-muted);">Ahora</div></div></div>';
-h+='<div style="padding:0 1rem 1rem;font-size:.9rem;color:var(--text-secondary);line-height:1.6;min-height:100px;" id="lnPreview"></div>';
-h+='<div style="padding:.75rem 1rem;font-size:.8rem;color:var(--text-muted);">0 likes - 0 comments</div></div></div>';
+var p=isNew?{text:'',status:'Pendiente',time:'Ahora',engagement:'0 likes - 0 comments - 0 shares',media:null,approved:false,postComments:[]}:linkedinPosts[idx];
+var h='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;"><h2 style="font-size:1.2rem;font-weight:700;">'+(isNew?'Crear publicacion en LinkedIn':'Editar publicacion')+'</h2><button class="btn btn-ghost btn-sm" onclick="closeEditor()">Cerrar</button></div>';
+h+='<div class="social-editor">';
+h+='<div class="social-editor-left">';
+h+='<div class="social-editor-compose">';
+h+='<div class="social-editor-compose-header"><div class="social-post-logo" style="width:48px;height:48px;font-size:.75rem;">STS</div><div><div style="font-weight:600;font-size:.9rem;color:var(--navy);">STS Security</div><div style="font-size:.75rem;color:var(--text-muted);">Visible para: Anyone Globe</div></div></div>';
+h+='<div class="social-editor-compose-body"><textarea id="lnEdText" placeholder="¿Qué quieres compartir con tu red?" oninput="updateLnPreview()">'+escH(p.text)+'</textarea></div>';
+h+='<div class="social-editor-compose-footer">';
+h+='<div class="social-editor-actions-row">';
+h+='<label class="social-editor-action-btn" style="cursor:pointer;">'+IMG_SVG+' Foto<input type="file" accept="image/*" style="display:none;" onchange="handleMediaUpload(this,\'lnEdMedia\',\'lnMediaPreview\')"></label>';
+h+='<label class="social-editor-action-btn" style="cursor:pointer;">'+VID_SVG+' Video<input type="file" accept="video/*" style="display:none;" onchange="handleMediaUpload(this,\'lnEdMedia\',\'lnMediaPreview\')"></label>';
 h+='</div>';
-h+='<div class="editor-actions"><button class="btn btn-ghost" onclick="closeEditor()">Cancelar</button><button class="btn btn-primary" onclick="saveLinkedinEditor('+idx+')">Guardar Post</button></div>';
-openEditor(h);
+h+='<span class="char-count" id="lnCharCount">'+p.text.length+'/3000</span>';
+h+='</div></div>';
+h+='<div id="lnMediaPreview">'+(p.media?'<div class="media-preview-container"><img src="'+p.media+'"><button class="media-remove-btn" onclick="removeMedia(\'lnEdMedia\',\'lnMediaPreview\')">&times;</button></div>':'')+'</div>';
+h+='<input type="hidden" id="lnEdMedia" value="'+(p.media||'')+'">';
+h+='<div class="editor-field"><label>Estado</label><select id="lnEdStatus"><option value="Pendiente"'+(p.status==='Pendiente'?' selected':'')+'>Pendiente</option><option value="Aprobado"'+(p.status==='Aprobado'?' selected':'')+'>Aprobado</option><option value="Requiere Cambios"'+(p.status==='Requiere Cambios'?' selected':'')+'>Requiere Cambios</option></select></div>';
+h+='</div>';
+h+='<div class="social-editor-right"><div class="social-editor-preview">';
+h+='<div style="padding:1rem;background:var(--navy);color:#fff;font-weight:600;font-size:.85rem;">Vista previa</div>';
+h+='<div style="padding:1rem;">';
+h+='<div class="social-post" style="border:none;box-shadow:none;">';
+h+='<div class="social-post-header"><div class="social-post-logo">STS</div><div><div class="social-post-name">STS Security</div><div class="social-post-time">Ahora Globe</div></div></div>';
+h+='<div class="social-post-text" id="lnPreviewText">'+escH(p.text)+'</div>';
+h+='<div id="lnPreviewMedia"></div>';
+h+='<div class="social-post-engagement">0 likes - 0 comments</div>';
+h+='<div class="social-post-actions"><button>Like</button><button>Comentar</button><button>Compartir</button><button>Enviar</button></div>';
+h+='</div></div></div></div>';
+h+='</div>';
+h+='<div class="editor-actions"><button class="btn btn-ghost" onclick="closeEditor()">Cancelar</button><button class="btn btn-primary" onclick="saveLinkedinEditor('+idx+')">Publicar</button></div>';
+openEditor(h,true);
 var ta=document.getElementById('lnEdText');
-var pv=document.getElementById('lnPreview');
-pv.textContent=ta.value;
-ta.addEventListener('input',function(){pv.textContent=ta.value});
+ta.addEventListener('input',function(){updateLnPreview();var cc=document.getElementById('lnCharCount');cc.textContent=this.value.length+'/3000';cc.className='char-count'+(this.value.length>3000?' over':this.value.length>2500?' warn':'');});
+}
+
+function updateLnPreview(){
+var t=document.getElementById('lnEdText').value;
+document.getElementById('lnPreviewText').textContent=t||'¿Qué quieres compartir con tu red?';
+var media=document.getElementById('lnEdMedia').value;
+var pm=document.getElementById('lnPreviewMedia');
+if(media){pm.innerHTML='<div style="margin:0 1rem 1rem;border-radius:8px;overflow:hidden;"><img src="'+media+'" style="max-width:100%;max-height:200px;object-fit:cover;"></div>';}else{pm.innerHTML='';}
 }
 
 function saveLinkedinEditor(idx){
 var isNew=idx===-1;
-var obj={text:document.getElementById('lnEdText').value,status:document.getElementById('lnEdStatus').value,time:isNew?'Ahora':linkedinPosts[idx].time,imageBg:isNew?'linear-gradient(135deg,#1a2a5a,#0a1a3a)':linkedinPosts[idx].imageBg,imageEmoji:isNew?'Post':linkedinPosts[idx].imageEmoji,engagement:isNew?'0 likes':linkedinPosts[idx].engagement};
+var obj={text:document.getElementById('lnEdText').value,status:document.getElementById('lnEdStatus').value,time:isNew?'Ahora':linkedinPosts[idx].time,engagement:isNew?'0 likes - 0 comments - 0 shares':linkedinPosts[idx].engagement,media:document.getElementById('lnEdMedia').value||null,approved:isNew?false:linkedinPosts[idx].approved,postComments:isNew?[]:linkedinPosts[idx].postComments};
 if(isNew){linkedinPosts.push(obj)}else{linkedinPosts[idx]=obj}
 saveK('sts_insight_linkedin',linkedinPosts);closeEditor();renderLinkedin();showToast(isNew?'Post creado':'Post actualizado');
 }
@@ -642,28 +751,52 @@ function deleteLinkedinPost(i){if(confirm('Eliminar esta publicacion?')){linkedi
 /* FACEBOOK EDITOR */
 function openFacebookEditor(idx){
 var isNew=idx===-1;
-var p=isNew?{text:'',status:'Pendiente',time:'Ahora',imageBg:'linear-gradient(135deg,#0a2a5c,#0a1a3c)',imageEmoji:'Post',engagement:'0 likes'}:facebookPosts[idx];
-var h='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;"><h2 style="font-size:1.2rem;font-weight:700;">'+(isNew?'Nuevo Post Facebook':'Editar Post Facebook')+'</h2><button class="btn btn-ghost btn-sm" onclick="closeEditor()">Cerrar</button></div>';
-h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">';
-h+='<div>';
-h+='<div class="editor-field"><label>Texto del post</label><textarea id="fbEdText" style="min-height:150px;" placeholder="Escribe tu publicacion...">'+escH(p.text)+'</textarea></div>';
+var p=isNew?{text:'',status:'Pendiente',time:'Ahora',engagement:'0 likes',media:null,approved:false,postComments:[]}:facebookPosts[idx];
+var h='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;"><h2 style="font-size:1.2rem;font-weight:700;">'+(isNew?'Crear publicacion en Facebook':'Editar publicacion')+'</h2><button class="btn btn-ghost btn-sm" onclick="closeEditor()">Cerrar</button></div>';
+h+='<div class="social-editor">';
+h+='<div class="social-editor-left">';
+h+='<div class="social-editor-compose" style="border-radius:12px;">';
+h+='<div class="social-editor-compose-header"><div class="social-post-logo" style="width:48px;height:48px;font-size:.75rem;background:linear-gradient(135deg,var(--facebook),#0a4aa0);">STS</div><div><div style="font-weight:600;font-size:.9rem;color:var(--navy);">STS Security</div><div style="font-size:.75rem;color:var(--text-muted);">Ahora Globe</div></div></div>';
+h+='<div class="social-editor-compose-body"><textarea id="fbEdText" placeholder="¿Qué está pasando?" oninput="updateFbPreview()">'+escH(p.text)+'</textarea></div>';
+h+='<div class="social-editor-compose-footer">';
+h+='<div class="social-editor-actions-row">';
+h+='<label class="social-editor-action-btn" style="cursor:pointer;">'+IMG_SVG+' Foto<input type="file" accept="image/*" style="display:none;" onchange="handleMediaUpload(this,\'fbEdMedia\',\'fbMediaPreview\')"></label>';
+h+='<label class="social-editor-action-btn" style="cursor:pointer;">'+VID_SVG+' Video<input type="file" accept="video/*" style="display:none;" onchange="handleMediaUpload(this,\'fbEdMedia\',\'fbMediaPreview\')"></label>';
+h+='</div>';
+h+='<span class="char-count" id="fbCharCount">'+p.text.length+'/63206</span>';
+h+='</div></div>';
+h+='<div id="fbMediaPreview">'+(p.media?'<div class="media-preview-container"><img src="'+p.media+'"><button class="media-remove-btn" onclick="removeMedia(\'fbEdMedia\',\'fbMediaPreview\')">&times;</button></div>':'')+'</div>';
+h+='<input type="hidden" id="fbEdMedia" value="'+(p.media||'')+'">';
 h+='<div class="editor-field"><label>Estado</label><select id="fbEdStatus"><option value="Pendiente"'+(p.status==='Pendiente'?' selected':'')+'>Pendiente</option><option value="Aprobado"'+(p.status==='Aprobado'?' selected':'')+'>Aprobado</option><option value="Requiere Cambios"'+(p.status==='Requiere Cambios'?' selected':'')+'>Requiere Cambios</option></select></div>';
-h+='</div><div>';
-h+='<div style="background:#1877f2;border-radius:12px;padding:1rem;max-width:400px;margin:0 auto;">';
-h+='<div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem;"><div style="width:40px;height:40px;border-radius:50%;background:#1877f2;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.7rem;">STS</div><div><div style="font-weight:600;font-size:.85rem;color:#fff;">STS Security</div><div style="font-size:.7rem;color:rgba(255,255,255,.7);">Ahora · 🌐</div></div></div>';
-h+='<div id="fbPreviewText" style="font-size:.85rem;color:#e4e6eb;line-height:1.5;margin-bottom:.75rem;min-height:60px;">'+escH(p.text)+'</div>';
-h+='<div style="background:#242526;border-radius:8px;padding:.5rem;margin-bottom:.75rem;text-align:center;color:#b0b3b8;font-size:.8rem;">Imagen del post</div>';
-h+='<div style="display:flex;justify-content:space-around;border-top:1px solid #3e4042;padding-top:.5rem;">';
-h+='<span style="color:#b0b3b8;font-size:.8rem;">👍 Me gusta</span>';
-h+='<span style="color:#b0b3b8;font-size:.8rem;">💬 Comentar</span>';
-h+='<span style="color:#b0b3b8;font-size:.8rem;">↗ Compartir</span>';
+h+='</div>';
+h+='<div class="social-editor-right"><div class="social-editor-preview">';
+h+='<div style="padding:1rem;background:var(--facebook);color:#fff;font-weight:600;font-size:.85rem;">Vista previa</div>';
+h+='<div style="padding:1rem;">';
+h+='<div class="social-post" style="border:none;box-shadow:none;">';
+h+='<div class="social-post-header"><div class="social-post-logo" style="background:linear-gradient(135deg,var(--facebook),#0a4aa0);">STS</div><div><div class="social-post-name">STS Security</div><div class="social-post-time">Ahora Globe</div></div></div>';
+h+='<div class="social-post-text" id="fbPreviewText">'+escH(p.text)+'</div>';
+h+='<div id="fbPreviewMedia"></div>';
+h+='<div class="social-post-engagement">0 likes - 0 comments</div>';
+h+='<div class="social-post-actions"><button>Me gusta</button><button>Comentar</button><button>Compartir</button></div>';
 h+='</div></div></div></div>';
-h+='<div class="editor-actions"><button class="btn btn-ghost" onclick="closeEditor()">Cancelar</button><button class="btn btn-primary" onclick="saveFacebookEditor('+idx+')">Guardar Post</button></div>';
-openEditor(h);
+h+='</div>';
+h+='<div class="editor-actions"><button class="btn btn-ghost" onclick="closeEditor()">Cancelar</button><button class="btn btn-primary" onclick="saveFacebookEditor('+idx+')">Publicar</button></div>';
+openEditor(h,true);
+var ta=document.getElementById('fbEdText');
+ta.addEventListener('input',function(){updateFbPreview();var cc=document.getElementById('fbCharCount');cc.textContent=this.value.length+'/63206';cc.className='char-count';});
 }
+
+function updateFbPreview(){
+var t=document.getElementById('fbEdText').value;
+document.getElementById('fbPreviewText').textContent=t||'¿Qué está pasando?';
+var media=document.getElementById('fbEdMedia').value;
+var pm=document.getElementById('fbPreviewMedia');
+if(media){pm.innerHTML='<div style="margin:0 1rem 1rem;border-radius:8px;overflow:hidden;"><img src="'+media+'" style="max-width:100%;max-height:200px;object-fit:cover;"></div>';}else{pm.innerHTML='';}
+}
+
 function saveFacebookEditor(idx){
 var isNew=idx===-1;
-var obj={text:document.getElementById('fbEdText').value,status:document.getElementById('fbEdStatus').value,time:'Ahora',imageBg:'linear-gradient(135deg,#0a2a5c,#0a1a3c)',imageEmoji:'Post',engagement:'0 likes'};
+var obj={text:document.getElementById('fbEdText').value,status:document.getElementById('fbEdStatus').value,time:isNew?'Ahora':facebookPosts[idx].time,engagement:isNew?'0 likes':facebookPosts[idx].engagement,media:document.getElementById('fbEdMedia').value||null,approved:isNew?false:facebookPosts[idx].approved,postComments:isNew?[]:facebookPosts[idx].postComments};
 if(isNew){facebookPosts.push(obj)}else{facebookPosts[idx]=obj}
 saveK('sts_insight_facebook',facebookPosts);closeEditor();renderFacebook();showToast(isNew?'Post creado':'Post actualizado');
 }
@@ -672,26 +805,52 @@ function deleteFacebookPost(i){if(confirm('Eliminar esta publicacion?')){faceboo
 /* INSTAGRAM EDITOR */
 function openInstagramEditor(idx){
 var isNew=idx===-1;
-var p=isNew?{emoji:'Post',color:'#1a2a4a',caption:'',likes:'0',comments:'0',objective:'',cta:''}:instagramPosts[idx];
-var h='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;"><h2 style="font-size:1.2rem;font-weight:700;">'+(isNew?'Nuevo Post Instagram':'Editar Post Instagram')+'</h2><button class="btn btn-ghost btn-sm" onclick="closeEditor()">Cerrar</button></div>';
-h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">';
-h+='<div><div class="editor-field"><label>Emoji/Simbolo</label><input type="text" id="igEdEmoji" value="'+escH(p.emoji)+'" placeholder="Emoji representativo"></div>';
-h+='<div class="editor-field"><label>Color de fondo</label><select id="igEdColor"><option value="#0a3a5c"'+(p.color==='#0a3a5c'?' selected':'')+'>Azul oscuro</option><option value="#1a2a4a"'+(p.color==='#1a2a4a'?' selected':'')+'>Azul marino</option><option value="#2a1a3a"'+(p.color==='#2a1a3a'?' selected':'')+'>Morado oscuro</option><option value="#0a3a2a"'+(p.color==='#0a3a2a'?' selected':'')+'>Verde oscuro</option><option value="#3a1a2a"'+(p.color==='#3a1a2a'?' selected':'')+'>Borgona</option><option value="#1a3a3a"'+(p.color==='#1a3a3a'?' selected':'')+'>Teal oscuro</option></select></div>';
-h+='<div class="editor-field"><label>CapTION</label><textarea id="igEdCaption" style="min-height:150px;" placeholder="Escribe el caption...">'+escH(p.caption)+'</textarea></div>';
-h+='</div><div>';
-h+='<div style="background:#1a1a1a;border-radius:12px;padding:1rem;max-width:320px;margin:0 auto;">';
-h+='<div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem;"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);"></div><div><div style="font-weight:600;font-size:.8rem;">sts_security</div><div style="font-size:.7rem;color:var(--text-muted);">Ahora</div></div></div>';
-h+='<div id="igPreviewImg" style="aspect-ratio:1;border-radius:4px;background:linear-gradient(135deg,'+p.color+',#0a0a1a);display:flex;align-items:center;justify-content:center;margin-bottom:.75rem;font-size:2rem;">'+escH(p.emoji)+'</div>';
-h+='<div style="font-size:.85rem;color:var(--text-secondary);line-height:1.6;margin-bottom:.75rem;">"+escH(p.caption)+"</div>';
-h+='<div style="display:flex;gap:1rem;font-size:.8rem;color:var(--text-muted);">0 likes - 0 comments</div></div></div>';
+var p=isNew?{caption:'',color:'#1a2a4a',likes:'0',comments:'0',media:null,approved:false,postComments:[]}:instagramPosts[idx];
+var h='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;"><h2 style="font-size:1.2rem;font-weight:700;">'+(isNew?'Crear post en Instagram':'Editar post')+'</h2><button class="btn btn-ghost btn-sm" onclick="closeEditor()">Cerrar</button></div>';
+h+='<div class="social-editor">';
+h+='<div class="social-editor-left">';
+h+='<div class="social-editor-compose">';
+h+='<div class="social-editor-compose-header"><div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);flex-shrink:0;"></div><div><div style="font-weight:600;font-size:.9rem;color:var(--navy);">sts_security</div><div style="font-size:.75rem;color:var(--text-muted);">Ahora</div></div></div>';
+h+='<div class="social-editor-compose-body">';
+h+='<div id="igMediaPreview">'+(p.media?'<div class="media-preview-container" style="margin-bottom:1rem;display:block;"><img src="'+p.media+'" style="max-width:100%;max-height:200px;border-radius:8px;object-fit:cover;"><button class="media-remove-btn" onclick="removeMedia(\'igEdMedia\',\'igMediaPreview\')">&times;</button></div>':'')+'</div>';
+h+='<textarea id="igEdCaption" placeholder="Escribe una caption..." oninput="updateIgPreview()" style="min-height:120px;">'+escH(p.caption)+'</textarea></div>';
+h+='<div class="social-editor-compose-footer">';
+h+='<div class="social-editor-actions-row">';
+h+='<label class="social-editor-action-btn" style="cursor:pointer;">'+IMG_SVG+' Foto<input type="file" accept="image/*" style="display:none;" onchange="handleMediaUpload(this,\'igEdMedia\',\'igMediaPreview\')"></label>';
+h+='<label class="social-editor-action-btn" style="cursor:pointer;">'+VID_SVG+' Video<input type="file" accept="video/*" style="display:none;" onchange="handleMediaUpload(this,\'igEdMedia\',\'igMediaPreview\')"></label>';
 h+='</div>';
-h+='<div class="editor-actions"><button class="btn btn-ghost" onclick="closeEditor()">Cancelar</button><button class="btn btn-primary" onclick="saveInstagramEditor('+idx+')">Guardar Post</button></div>';
-openEditor(h);
+h+='<span class="char-count" id="igCharCount">'+p.caption.length+'/2200</span>';
+h+='</div></div>';
+h+='<input type="hidden" id="igEdMedia" value="'+(p.media||'')+'">';
+h+='<div class="editor-field"><label>Color de fondo</label><select id="igEdColor"><option value="#0a3a5c"'+(p.color==='#0a3a5c'?' selected':'')+'>Azul oscuro</option><option value="#1a2a4a"'+(p.color==='#1a2a4a'?' selected':'')+'>Azul marino</option><option value="#2a1a3a"'+(p.color==='#2a1a3a'?' selected':'')+'>Morado oscuro</option><option value="#0a3a2a"'+(p.color==='#0a3a2a'?' selected':'')+'>Verde oscuro</option><option value="#3a1a2a"'+(p.color==='#3a1a2a'?' selected':'')+'>Borgona</option><option value="#1a3a3a"'+(p.color==='#1a3a3a'?' selected':'')+'>Teal oscuro</option></select></div>';
+h+='</div>';
+h+='<div class="social-editor-right"><div class="social-editor-preview">';
+h+='<div style="padding:1rem;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;font-weight:600;font-size:.85rem;">Vista previa</div>';
+h+='<div style="padding:1rem;">';
+h+='<div class="social-post" style="border:none;box-shadow:none;">';
+h+='<div class="social-post-header"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);flex-shrink:0;"></div><div><div class="social-post-name">sts_security</div><div class="social-post-time">Ahora</div></div></div>';
+h+='<div id="igPreviewImg" style="aspect-ratio:1;border-radius:4px;background:linear-gradient(135deg,'+p.color+',#0a0a1a);display:flex;align-items:center;justify-content:center;margin:0 1rem 1rem;font-size:2rem;">'+escH(p.caption? p.caption.substring(0,20):'')+'</div>';
+h+='<div class="social-post-text" id="igPreviewText" style="font-size:.85rem;">'+escH(p.caption)+'</div>';
+h+='<div class="social-post-engagement">0 likes - 0 comments</div>';
+h+='</div></div></div></div>';
+h+='</div>';
+h+='<div class="editor-actions"><button class="btn btn-ghost" onclick="closeEditor()">Cancelar</button><button class="btn btn-primary" onclick="saveInstagramEditor('+idx+')">Publicar</button></div>';
+openEditor(h,true);
+var ta=document.getElementById('igEdCaption');
+ta.addEventListener('input',function(){updateIgPreview();var cc=document.getElementById('igCharCount');cc.textContent=this.value.length+'/2200';cc.className='char-count'+(this.value.length>2200?' over':'');});
+}
+
+function updateIgPreview(){
+var t=document.getElementById('igEdCaption').value;
+document.getElementById('igPreviewText').textContent=t;
+var media=document.getElementById('igEdMedia').value;
+var pi=document.getElementById('igPreviewImg');
+if(media){pi.innerHTML='<img src="'+media+'" style="width:100%;height:100%;object-fit:cover;border-radius:4px;">';}else{pi.textContent=t?t.substring(0,20):'';}
 }
 
 function saveInstagramEditor(idx){
 var isNew=idx===-1;
-var obj={emoji:document.getElementById('igEdEmoji').value,color:document.getElementById('igEdColor').value,caption:document.getElementById('igEdCaption').value,likes:isNew?'0':instagramPosts[idx].likes,comments:isNew?'0':instagramPosts[idx].comments};
+var obj={caption:document.getElementById('igEdCaption').value,color:document.getElementById('igEdColor').value,likes:isNew?'0':instagramPosts[idx].likes,comments:isNew?'0':instagramPosts[idx].comments,media:document.getElementById('igEdMedia').value||null,approved:isNew?false:instagramPosts[idx].approved,postComments:isNew?[]:instagramPosts[idx].postComments};
 if(isNew){instagramPosts.push(obj)}else{instagramPosts[idx]=obj}
 saveK('sts_insight_instagram',instagramPosts);closeEditor();renderInstagram();showToast(isNew?'Post creado':'Post actualizado');
 }
@@ -1036,6 +1195,90 @@ if(el.classList.contains('add-card-btn'))return;
 var text=el.textContent.toLowerCase();
 el.style.display=text.includes(q)?'':'none';
 });
+}
+
+/* MEDIA UPLOAD */
+function handleMediaUpload(input,hiddenId,previewId){
+var file=input.files[0];
+if(!file)return;
+var reader=new FileReader();
+reader.onload=function(e){
+var dataUrl=e.target.result;
+document.getElementById(hiddenId).value=dataUrl;
+var preview=document.getElementById(previewId);
+if(file.type.startsWith('video/')){
+preview.innerHTML='<div class="media-preview-container"><video src="'+dataUrl+'" style="max-width:100%;max-height:200px;border-radius:8px;" controls></video><button class="media-remove-btn" onclick="removeMedia(\''+hiddenId+'\',\''+previewId+'\')">&times;</button></div>';
+}else{
+preview.innerHTML='<div class="media-preview-container"><img src="'+dataUrl+'" style="max-width:100%;max-height:200px;border-radius:8px;object-fit:cover;"><button class="media-remove-btn" onclick="removeMedia(\''+hiddenId+'\',\''+previewId+'\')">&times;</button></div>';
+}
+if(hiddenId==='lnEdMedia')updateLnPreview();
+if(hiddenId==='fbEdMedia')updateFbPreview();
+if(hiddenId==='igEdMedia')updateIgPreview();
+};
+reader.readAsDataURL(file);
+}
+
+function removeMedia(hiddenId,previewId){
+document.getElementById(hiddenId).value='';
+document.getElementById(previewId).innerHTML='';
+if(hiddenId==='lnEdMedia')updateLnPreview();
+if(hiddenId==='fbEdMedia')updateFbPreview();
+if(hiddenId==='igEdMedia')updateIgPreview();
+}
+
+/* APPROVAL TOGGLE */
+function toggleApproval(platform,idx){
+var posts=platform==='linkedin'?linkedinPosts:platform==='facebook'?facebookPosts:instagramPosts;
+posts[idx].approved=!posts[idx].approved;
+if(posts[idx].approved)posts[idx].status='Aprobado';
+saveK('sts_insight_'+platform,posts);
+renderLinkedin();renderFacebook();renderInstagram();
+showToast(posts[idx].approved?'Post aprobado':'Aprobacion removida');
+}
+
+/* COMMENT PANEL */
+var currentCommentPlatform='',currentCommentIdx=-1;
+function openCommentPanel(platform,idx){
+currentCommentPlatform=platform;currentCommentIdx=idx;
+var posts=platform==='linkedin'?linkedinPosts:platform==='facebook'?facebookPosts:instagramPosts;
+var p=posts[idx];
+var platformName=platform==='linkedin'?'LinkedIn':platform==='facebook'?'Facebook':'Instagram';
+document.getElementById('commentPanelTitle').textContent='Comentarios - '+platformName;
+renderCommentEntries(p.postComments||[]);
+document.getElementById('commentPanelOverlay').classList.add('active');
+document.body.style.overflow='hidden';
+}
+
+function closeCommentPanel(){
+document.getElementById('commentPanelOverlay').classList.remove('active');
+document.body.style.overflow='';
+currentCommentPlatform='';currentCommentIdx=-1;
+}
+
+function renderCommentEntries(comments){
+var h='';
+if(comments.length===0)h='<div style="text-align:center;padding:2rem;color:var(--text-muted);font-size:.85rem;">Sin comentarios ainda</div>';
+comments.forEach(function(c,i){
+h+='<div class="comment-entry"><div class="comment-entry-author">'+escH(c.author)+'</div><div class="comment-entry-text">'+escH(c.text)+'</div><div class="comment-entry-date">'+escH(c.date)+'</div></div>';
+});
+document.getElementById('commentPanelBody').innerHTML=h;
+document.getElementById('commentPanelBody').scrollTop=99999;
+}
+
+function addPostComment(){
+var input=document.getElementById('commentPanelInput');
+var text=input.value.trim();
+if(!text||currentCommentIdx===-1)return;
+var posts=currentCommentPlatform==='linkedin'?linkedinPosts:currentCommentPlatform==='facebook'?facebookPosts:instagramPosts;
+var now=new Date();
+var dateStr=now.getDate()+'/'+(now.getMonth()+1)+'/'+now.getFullYear()+' '+now.getHours()+':'+String(now.getMinutes()).padStart(2,'0');
+if(!posts[currentCommentIdx].postComments)posts[currentCommentIdx].postComments=[];
+posts[currentCommentIdx].postComments.push({author:'Alexis Morales',text:text,date:dateStr});
+saveK('sts_insight_'+currentCommentPlatform,posts);
+input.value='';
+renderCommentEntries(posts[currentCommentIdx].postComments);
+renderLinkedin();renderFacebook();renderInstagram();
+showToast('Comentario agregado');
 }
 
 /* FILTERS */
