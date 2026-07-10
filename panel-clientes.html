@@ -3475,7 +3475,7 @@ function filterSocial(network,btn){
 
 loadClients();renderTable();renderDashboard();
 
-async function downloadNewPDF(){
+async async function downloadNewPDF(){
     if(typeof html2canvas==='undefined'||typeof jspdf==='undefined'){showToast('Librerías de PDF no cargadas','error');return;}
     const btn=document.querySelector('.dl-btn.pdf');btn.textContent='Generando...';
     try{const{jsPDF}=window.jspdf;const pdf=new jsPDF('l','mm','a4');const pw=pdf.internal.pageSize.getWidth();const ph=pdf.internal.pageSize.getHeight();
