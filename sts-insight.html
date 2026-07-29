@@ -581,7 +581,9 @@ blogs=loadK('sts_insight_blogs',defaultBlogs);
 linkedinPosts=loadK('sts_insight_linkedin',defaultLinkedin);
 facebookPosts=loadK('sts_insight_facebook',defaultFacebook);
 instagramPosts=loadK('sts_insight_instagram',defaultInstagram);
-calData=loadK('sts_insight_calendar',defaultCalendar);
+var calVersion=loadK('sts_insight_cal_version',1);
+if(calVersion<2){calData=defaultCalendar;saveK('sts_insight_calendar',calData);saveK('sts_insight_cal_version',2);}
+else{calData=loadK('sts_insight_calendar',defaultCalendar);}
 strategyItems=loadK('sts_insight_strategy',defaultStrategy);
 feedbackItems=loadK('sts_insight_feedback',defaultFeedback);
 }
