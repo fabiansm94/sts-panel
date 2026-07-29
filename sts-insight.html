@@ -1168,11 +1168,20 @@ buildCalTable();
 function downloadCalPDF(){
 if(typeof html2canvas==='undefined'||typeof jspdf==='undefined'){showToast('Librerias de PDF no cargadas','error');return;}
 showToast('Generando PDF...','success');
+var section=document.getElementById('calendar');
+var origHeight=section.style.height;
+var origOverflow=section.style.overflow;
+section.style.height='auto';
+section.style.overflow='visible';
 var container=document.getElementById('cal-table-container');
-var origOverflow=container.style.overflow;
 container.style.overflow='visible';
-html2canvas(container,{scale:2,useCORS:true,backgroundColor:'#f5f7fa'}).then(function(canvas){
-container.style.overflow=origOverflow;
+container.style.maxHeight='none';
+try{
+html2canvas(section,{scale:1.5,useCORS:true,backgroundColor:'#f5f7fa',logging:false,windowWidth:1200}).then(function(canvas){
+section.style.height=origHeight;
+section.style.overflow=origOverflow;
+container.style.overflow='';
+container.style.maxHeight='';
 var{jsPDF}=window.jspdf;
 var pdf=new jsPDF('l','mm','a4');
 var pw=pdf.internal.pageSize.getWidth();
@@ -1184,7 +1193,20 @@ var h=canvas.height*ratio;
 pdf.addImage(img,'PNG',(pw-w)/2,10,w,h);
 pdf.save('Calendario-LinkedIn-STS-INSIGHT.pdf');
 showToast('PDF descargado','success');
-}).catch(function(e){showToast('Error al generar PDF','error');});
+}).catch(function(e){
+section.style.height=origHeight;
+section.style.overflow=origOverflow;
+container.style.overflow='';
+container.style.maxHeight='';
+showToast('Error: '+e.message,'error');
+});
+}catch(e){
+section.style.height=origHeight;
+section.style.overflow=origOverflow;
+container.style.overflow='';
+container.style.maxHeight='';
+showToast('Error al generar PDF','error');
+}
 }
 
 /* SETTINGS */
