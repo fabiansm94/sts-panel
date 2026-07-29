@@ -582,7 +582,7 @@ linkedinPosts=loadK('sts_insight_linkedin',defaultLinkedin);
 facebookPosts=loadK('sts_insight_facebook',defaultFacebook);
 instagramPosts=loadK('sts_insight_instagram',defaultInstagram);
 var calVersion=loadK('sts_insight_cal_version',1);
-if(calVersion<2){calData=defaultCalendar;saveK('sts_insight_calendar',calData);saveK('sts_insight_cal_version',2);}
+if(calVersion<3){calData=defaultCalendar;saveK('sts_insight_calendar',calData);saveK('sts_insight_cal_version',3);}
 else{calData=loadK('sts_insight_calendar',defaultCalendar);}
 strategyItems=loadK('sts_insight_strategy',defaultStrategy);
 feedbackItems=loadK('sts_insight_feedback',defaultFeedback);
@@ -1494,48 +1494,8 @@ var defaultCalendar={linkedin:[
 {week:"Semana 12",dates:"Semana 12",color:"#0a66c2",posts:[
 {wk:"S12",day:"",weekday:"",type:"Tendencias",badge:"cal-badge-tendencias",topic:"Tendencias que redefinirán la seguridad empresarial en los próximos cinco años",obj:"Alta dirección",format:"Post texto + imagen"}
 ]}],
-instagram:[
-{week:"Semana 1",dates:"13 - 17 de Julio, 2026",color:"linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)",posts:[
-{wk:"S1",day:13,weekday:"Lunes",type:"Branding",badge:"cal-badge-marca",topic:"La tranquilidad comienza en casa",design:"La tranquilidad tambien se protege.",visual:"Familia llegando a su hogar.",obj:"Conexion emocional."},
-{wk:"S1",day:15,weekday:"Miercoles",type:"Educativo",badge:"cal-badge-educacion",topic:"Monitoreo vs. solo grabacion",design:"Tus camaras realmente protegen?",visual:"Dueno revisando camaras desde celular.",obj:"Beneficio del monitoreo activo."},
-{wk:"S1",day:17,weekday:"Viernes",type:"Solucion STS",badge:"cal-badge-estrategica",topic:"Monitoreo 24/7",design:"Siempre atentos.",visual:"Centro de monitoreo moderno.",obj:"Capacidad de respuesta continua."}
-]},
-{week:"Semana 2",dates:"20 - 24 de Julio, 2026",color:"linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)",posts:[
-{wk:"S2",day:20,weekday:"Lunes",type:"Educativo",badge:"cal-badge-educacion",topic:"Seguridad para comercios",design:"Cierra tu negocio, no tu tranquilidad.",visual:"Comerciante verificando sistema.",obj:"Tranquilidad al finalizar jornada."},
-{wk:"S2",day:22,weekday:"Miercoles",type:"Sector",badge:"cal-badge-estrategica",topic:"Condominios",design:"Seguridad para disfrutar cada espacio.",visual:"Familia en condominio moderno.",obj:"Aliado de condominios."},
-{wk:"S2",day:24,weekday:"Viernes",type:"Solucion STS",badge:"cal-badge-estrategica",topic:"Construccion",design:"Tu proyecto protegido 24 horas.",visual:"Ingeniero supervisando obra.",obj:"Aplicacion en construccion."}
-]},
-{week:"Semana 3",dates:"27 - 31 de Julio, 2026",color:"linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)",posts:[
-{wk:"S3",day:27,weekday:"Lunes",type:"Branding",badge:"cal-badge-marca",topic:"Negocios protegidos",design:"Mientras tu descansas, nosotros vigilamos.",visual:"Vista nocturna de comercio.",obj:"Respaldo permanente."},
-{wk:"S3",day:29,weekday:"Miercoles",type:"Educativo",badge:"cal-badge-educacion",topic:"Prevencion",design:"La prevencion marca la diferencia.",visual:"Empresaria recibiendo alerta.",obj:"Actuar antes del incidente."},
-{wk:"S3",day:31,weekday:"Viernes",type:"Institucional",badge:"cal-badge-perspectiva",topic:"STS protege diferentes entornos",design:"Protegemos lo que mas valoras.",visual:"Casa, negocio y obra unidos.",obj:"Posicionamiento integral."}
-]},
-{week:"Semana 4",dates:"3 - 7 de Agosto, 2026",color:"linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)",posts:[
-{wk:"S4",day:3,weekday:"Lunes",type:"Educativo",badge:"cal-badge-educacion",topic:"Falsas alarmas",design:"Cada alerta merece atencion.",visual:"Operador verificando alerta.",obj:"Reducir falsas alarmas."},
-{wk:"S4",day:5,weekday:"Miercoles",type:"Sector",badge:"cal-badge-estrategica",topic:"Airbnb y alquileres",design:"Protege tu propiedad sin estar.",visual:"Propietario revisando desde celular.",obj:"Dirigirse a propietarios."},
-{wk:"S4",day:7,weekday:"Viernes",type:"Branding",badge:"cal-badge-marca",topic:"Seguridad que acompana tu dia",design:"Mas que tecnologia, tranquilidad.",visual:"Familia desayunando tranquila.",obj:"Cerrar ciclo de confianza."}
-]}],
-facebook:[
-{week:"Semana 1",dates:"13 - 17 de Julio, 2026",color:"#1877f2",posts:[
-{wk:"S1",day:13,weekday:"Lunes",type:"Imagen + texto",badge:"cal-badge-perspectiva",topic:"Su empresa realmente esta protegida? 5 senales de alerta.",obj:"Conciencia"},
-{wk:"S1",day:15,weekday:"Miercoles",type:"Imagen",badge:"cal-badge-educacion",topic:"Error: instalar camaras sin estrategia de seguridad.",obj:"Educacion"},
-{wk:"S1",day:17,weekday:"Viernes",type:"Caso de uso",badge:"cal-badge-estrategica",topic:"Como un sistema disenado previene perdidas.",obj:"Confianza"}
-]},
-{week:"Semana 2",dates:"20 - 24 de Julio, 2026",color:"#1877f2",posts:[
-{wk:"S2",day:20,weekday:"Lunes",type:"Imagen + consejos",badge:"cal-badge-educacion",topic:"5 recomendaciones sin gran inversion.",obj:"Valor"},
-{wk:"S2",day:22,weekday:"Miercoles",type:"Video corto",badge:"cal-badge-innovacion",topic:"Que hace un control de acceso?",obj:"Educacion"},
-{wk:"S2",day:24,weekday:"Viernes",type:"Imagen",badge:"cal-badge-perspectiva",topic:"Que buscar al elegir empresa de seguridad?",obj:"Autoridad"}
-]},
-{week:"Semana 3",dates:"27 - 31 de Julio, 2026",color:"#1877f2",posts:[
-{wk:"S3",day:27,weekday:"Lunes",type:"Infografia",badge:"cal-badge-estrategica",topic:"Puntos vulnerables mas comunes en empresa.",obj:"Conciencia"},
-{wk:"S3",day:29,weekday:"Miercoles",type:"Imagen",badge:"cal-badge-educacion",topic:"Vale la pena integrar camaras, alarma y control?",obj:"Educacion"},
-{wk:"S3",day:31,weekday:"Viernes",type:"Testimonio",badge:"cal-badge-experiencia",topic:"Como la tecnologia protege colaboradores.",obj:"Confianza"}
-]},
-{week:"Semana 4",dates:"3 - 7 de Agosto, 2026",color:"#1877f2",posts:[
-{wk:"S4",day:3,weekday:"Lunes",type:"Imagen",badge:"cal-badge-marca",topic:"La seguridad es inversion para continuidad.",obj:"Branding"},
-{wk:"S4",day:5,weekday:"Miercoles",type:"Pregunta",badge:"cal-badge-cultura",topic:"Mayor riesgo de seguridad para una empresa?",obj:"Engagement"},
-{wk:"S4",day:7,weekday:"Viernes",type:"Imagen + CTA",badge:"cal-badge-estrategica",topic:"Agenda asesoria con STS Security.",obj:"Conversion"}
-]}]};
+instagram:[],
+facebook:[]};
 
 /* INIT */
 setTimeout(function(){var s=document.getElementById('splash');s.classList.add('fade-out');setTimeout(function(){s.style.display='none'},800)},3000);
