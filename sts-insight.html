@@ -1066,29 +1066,32 @@ h+='<div style="font-weight:700;font-size:.95rem;color:#fff">Calendario '+name+'
 h+='<div style="text-align:right"><div style="font-weight:600;font-size:.8rem;color:#fff">Julio - Agosto 2026</div><div style="font-size:.7rem;color:rgba(255,255,255,.7)">'+pc+' publicaciones</div></div></div>';
 h+='<div style="overflow-x:auto;border:1px solid var(--border);border-top:none;border-radius:0 0 12px 12px;">';
 h+='<table class="cal-tbl">';
-if(isL)h+='<thead><tr><th>Semana</th><th>Fecha</th><th>Tipo</th><th>Tema</th><th>Objetivo</th><th>Formato</th><th></th></tr></thead>';
+if(isL)h+='<thead><tr><th>Semana</th><th>Tema</th><th>Enfoque</th><th>P\u00fablico</th><th></th></tr></thead>';
 else if(isF)h+='<thead><tr><th>Semana</th><th>Fecha</th><th>Tipo</th><th>Tema</th><th>Objetivo</th><th></th></tr></thead>';
 else h+='<thead><tr><th>Semana</th><th>Fecha</th><th>Tipo</th><th>Tema</th><th>Texto</th><th>Visual</th><th>Objetivo</th><th></th></tr></thead>';
 h+='<tbody>';
 weeks.forEach(function(week,wi){
-var cols=isL?7:isF?6:8;
+var cols=isL?5:isF?6:8;
 h+='<tr class="cal-sep"><td colspan="'+cols+'"><div class="cal-sep-inner"><span class="cal-sep-label" style="background:'+week.color+'">'+week.week+'</span><span class="cal-sep-dates">'+week.dates+'</span></div></td></tr>';
 week.posts.forEach(function(p,pi){
 h+='<tr>';
 h+='<td class="cal-week-cell">'+p.wk+'</td>';
+if(isL){
+h+='<td class="cal-topic-cell" contenteditable="false" data-cal="'+plat+'-'+wi+'-'+pi+'-topic">'+p.topic+'</td>';
+h+='<td><span class="cal-type-badge '+p.badge+'">'+p.type+'</span></td>';
+h+='<td class="cal-obj-cell" contenteditable="false" data-cal="'+plat+'-'+wi+'-'+pi+'-obj">'+p.obj+'</td>';
+}else{
 h+='<td class="cal-date-cell"><div class="day">'+p.day+'</div><div class="weekday">'+p.weekday+'</div></td>';
 h+='<td><span class="cal-type-badge '+p.badge+'">'+p.type+'</span></td>';
 h+='<td class="cal-topic-cell" contenteditable="false" data-cal="'+plat+'-'+wi+'-'+pi+'-topic">'+p.topic+'</td>';
-if(isL){
-h+='<td class="cal-obj-cell" contenteditable="false" data-cal="'+plat+'-'+wi+'-'+pi+'-obj">'+p.obj+'</td>';
-h+='<td><span class="cal-format-badge">'+p.format+'</span></td>';
-}else if(isF){
+if(isF){
 var ob=p.obj==='Conciencia'?'cal-badge-perspectiva':p.obj==='Educacion'?'cal-badge-educacion':p.obj==='Confianza'?'cal-badge-experiencia':p.obj==='Valor'?'cal-badge-estrategica':p.obj==='Autoridad'?'cal-badge-liderazgo':p.obj==='Branding'?'cal-badge-marca':p.obj==='Engagement'?'cal-badge-cultura':'cal-badge-estrategica';
 h+='<td><span class="cal-type-badge '+ob+'">'+p.obj+'</span></td>';
 }else{
 h+='<td class="cal-obj-cell" contenteditable="false" data-cal="'+plat+'-'+wi+'-'+pi+'-design">'+p.design+'</td>';
 h+='<td class="cal-obj-cell" contenteditable="false" data-cal="'+plat+'-'+wi+'-'+pi+'-visual">'+p.visual+'</td>';
 h+='<td class="cal-obj-cell">'+p.obj+'</td>';
+}
 }
 h+='<td><div class="cal-row-actions">';
 h+='<button class="action-btn edit-btn" onclick="calEditRow(this,\''+plat+'\','+wi+','+pi+')" title="Editar">'+EDIT_SVG+'</button>';
@@ -1453,25 +1456,41 @@ renderFeedback();
 
 /* DEFAULT CALENDAR DATA */
 var defaultCalendar={linkedin:[
-{week:"Semana 1",dates:"13 - 17 de Julio, 2026",color:"#0a66c2",posts:[
-{wk:"S1",day:13,weekday:"Lunes",type:"Perspectiva STS",badge:"cal-badge-perspectiva",topic:"La seguridad empresarial ya no se trata solamente de proteger, sino de anticipar",obj:"Presentar la vision de STS",format:"Post texto + imagen"},
-{wk:"S1",day:15,weekday:"Miercoles",type:"Educacion",badge:"cal-badge-educacion",topic:"5 errores que debilitan el control de acceso",obj:"Demostrar conocimiento",format:"Imagen corporativa"},
-{wk:"S1",day:17,weekday:"Viernes",type:"Innovacion",badge:"cal-badge-innovacion",topic:"De camaras tradicionales a inteligencia aplicada",obj:"Introducir analitica y tecnologia",format:"Imagen corporativa"}
+{week:"Semana 1",dates:"Semana 1",color:"#0a66c2",posts:[
+{wk:"S1",day:"",weekday:"",type:"Estrategia empresarial",badge:"cal-badge-estrategica",topic:"La seguridad como ventaja competitiva, no como un costo operativo",obj:"Gerentes generales / Dueños",format:"Post texto + imagen"}
 ]},
-{week:"Semana 2",dates:"20 - 24 de Julio, 2026",color:"#0a66c2",posts:[
-{wk:"S2",day:20,weekday:"Lunes",type:"Gestion de riesgo",badge:"cal-badge-riesgo",topic:"Su empresa esta comprando seguridad o solamente equipos?",obj:"Cambiar percepcion de inversion",format:"Post de opinion"},
-{wk:"S2",day:22,weekday:"Miercoles",type:"Solucion estrategica",badge:"cal-badge-estrategica",topic:"La transformacion del control de accesos en condominios",obj:"Posicionar Porteria Virtual",format:"Imagen corporativa"},
-{wk:"S2",day:24,weekday:"Viernes",type:"Cultura empresarial",badge:"cal-badge-cultura",topic:"La tecnologia no reemplaza una estrategia: la fortalece",obj:"Humanizar la marca",format:"Imagen + reflexion"}
+{week:"Semana 2",dates:"Semana 2",color:"#0a66c2",posts:[
+{wk:"S2",day:"",weekday:"",type:"Sector: Condominios",badge:"cal-badge-perspectiva",topic:"¿Cómo impacta la seguridad en la administración eficiente de un condominio?",obj:"Administradores",format:"Post texto + imagen"}
 ]},
-{week:"Semana 3",dates:"27 - 31 de Julio, 2026",color:"#0a66c2",posts:[
-{wk:"S3",day:27,weekday:"Lunes",type:"Liderazgo STS",badge:"cal-badge-liderazgo",topic:"El futuro sera integrado: personas, procesos y tecnologia",obj:"Posicionar a STS como referente",format:"Post largo LinkedIn"},
-{wk:"S3",day:29,weekday:"Miercoles",type:"Educacion empresarial",badge:"cal-badge-empresarial",topic:"Que evaluar antes de invertir en videovigilancia",obj:"Hablarle a gerentes",format:"Imagen corporativa"},
-{wk:"S3",day:31,weekday:"Viernes",type:"Experiencia STS",badge:"cal-badge-experiencia",topic:"Lo que hemos aprendido implementando soluciones",obj:"Construir confianza",format:"Storytelling"}
+{week:"Semana 3",dates:"Semana 3",color:"#0a66c2",posts:[
+{wk:"S3",day:"",weekday:"",type:"Transformación digital",badge:"cal-badge-innovacion",topic:"Los datos también son un activo de seguridad",obj:"Gerentes / TI / Operaciones",format:"Post texto + imagen"}
 ]},
-{week:"Semana 4",dates:"3 - 7 de Agosto, 2026",color:"#0a66c2",posts:[
-{wk:"S4",day:3,weekday:"Lunes",type:"Tendencias",badge:"cal-badge-tendencias",topic:"3 tendencias transformando la seguridad electronica",obj:"Mostrar innovacion",format:"Imagen corporativa"},
-{wk:"S4",day:5,weekday:"Miercoles",type:"Opinion",badge:"cal-badge-opinion",topic:"Mas tecnologia no siempre significa mas seguridad",obj:"Generar debate",format:"Post reflexion"},
-{wk:"S4",day:7,weekday:"Viernes",type:"Marca STS",badge:"cal-badge-marca",topic:"La seguridad como aliado estrategico del negocio",obj:"Cerrar ciclo",format:"Imagen institucional"}
+{week:"Semana 4",dates:"Semana 4",color:"#0a66c2",posts:[
+{wk:"S4",day:"",weekday:"",type:"Sector: Construcción",badge:"cal-badge-riesgo",topic:"Gestión del riesgo en proyectos de construcción: más allá de evitar robos",obj:"Desarrolladores / Directores de obra",format:"Post texto + imagen"}
+]},
+{week:"Semana 5",dates:"Semana 5",color:"#0a66c2",posts:[
+{wk:"S5",day:"",weekday:"",type:"Tendencias",badge:"cal-badge-tendencias",topic:"¿Qué esperan hoy las empresas de un proveedor de seguridad?",obj:"CEOs / Compras",format:"Post texto + imagen"}
+]},
+{week:"Semana 6",dates:"Semana 6",color:"#0a66c2",posts:[
+{wk:"S6",day:"",weekday:"",type:"Sector: Hotelería",badge:"cal-badge-experiencia",topic:"La seguridad como parte de la experiencia del huésped",obj:"Gerentes hoteleros",format:"Post texto + imagen"}
+]},
+{week:"Semana 7",dates:"Semana 7",color:"#0a66c2",posts:[
+{wk:"S7",day:"",weekday:"",type:"Innovación",badge:"cal-badge-innovacion",topic:"Del monitoreo a la inteligencia operacional",obj:"Directores de Operaciones",format:"Post texto + imagen"}
+]},
+{week:"Semana 8",dates:"Semana 8",color:"#0a66c2",posts:[
+{wk:"S8",day:"",weekday:"",type:"Sector: Parqueos",badge:"cal-badge-estrategica",topic:"La movilidad y la seguridad en la administración de parqueos",obj:"Operadores / Administradores",format:"Post texto + imagen"}
+]},
+{week:"Semana 9",dates:"Semana 9",color:"#0a66c2",posts:[
+{wk:"S9",day:"",weekday:"",type:"Gestión empresarial",badge:"cal-badge-liderazgo",topic:"Continuidad operativa: el verdadero objetivo de una estrategia de seguridad",obj:"Alta dirección",format:"Post texto + imagen"}
+]},
+{week:"Semana 10",dates:"Semana 10",color:"#0a66c2",posts:[
+{wk:"S10",day:"",weekday:"",type:"KPIs",badge:"cal-badge-educacion",topic:"¿Está midiendo los indicadores correctos de seguridad?",obj:"Gerencia",format:"Post texto + imagen"}
+]},
+{week:"Semana 11",dates:"Semana 11",color:"#0a66c2",posts:[
+{wk:"S11",day:"",weekday:"",type:"Eficiencia",badge:"cal-badge-empresarial",topic:"Cómo optimizar recursos sin comprometer la protección",obj:"Finanzas / Operaciones",format:"Post texto + imagen"}
+]},
+{week:"Semana 12",dates:"Semana 12",color:"#0a66c2",posts:[
+{wk:"S12",day:"",weekday:"",type:"Tendencias",badge:"cal-badge-tendencias",topic:"Tendencias que redefinirán la seguridad empresarial en los próximos cinco años",obj:"Alta dirección",format:"Post texto + imagen"}
 ]}],
 instagram:[
 {week:"Semana 1",dates:"13 - 17 de Julio, 2026",color:"linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)",posts:[
