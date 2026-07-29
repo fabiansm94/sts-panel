@@ -1166,47 +1166,65 @@ buildCalTable();
 }
 
 function downloadCalPDF(){
-if(typeof html2canvas==='undefined'||typeof jspdf==='undefined'){showToast('Librerias de PDF no cargadas','error');return;}
+if(typeof jspdf==='undefined'){showToast('Libreria PDF no cargada','error');return;}
 showToast('Generando PDF...','success');
-var section=document.getElementById('calendar');
-var origHeight=section.style.height;
-var origOverflow=section.style.overflow;
-section.style.height='auto';
-section.style.overflow='visible';
-var container=document.getElementById('cal-table-container');
-container.style.overflow='visible';
-container.style.maxHeight='none';
 try{
-html2canvas(section,{scale:1.5,useCORS:true,backgroundColor:'#f5f7fa',logging:false,windowWidth:1200}).then(function(canvas){
-section.style.height=origHeight;
-section.style.overflow=origOverflow;
-container.style.overflow='';
-container.style.maxHeight='';
 var{jsPDF}=window.jspdf;
 var pdf=new jsPDF('l','mm','a4');
 var pw=pdf.internal.pageSize.getWidth();
 var ph=pdf.internal.pageSize.getHeight();
-var img=canvas.toDataURL('image/png');
-var ratio=Math.min((pw-20)/canvas.width,(ph-20)/canvas.height);
-var w=canvas.width*ratio;
-var h=canvas.height*ratio;
-pdf.addImage(img,'PNG',(pw-w)/2,10,w,h);
+var x=15;var y=15;
+// Title
+pdf.setFontSize(18);pdf.setTextColor(37,49,76);pdf.text('Calendario Editorial - STS INSIGHT',x,y);y+=10;
+pdf.setFontSize(10);pdf.setTextColor(100);pdf.text('Estrategia Marketing Digital | Julio - Agosto 2026',x,y);y+=12;
+var platforms=calPlatformFilter==='all'?['linkedin','instagram','facebook']:[calPlatformFilter];
+platforms.forEach(function(plat){
+var weeks=calData[plat];if(!weeks||weeks.length===0)return;
+var isL=plat==='linkedin';
+var name=isL?'LinkedIn':plat==='facebook'?'Facebook':'Instagram';
+var hdrColor=isL?[10,102,194]:plat==='facebook'?[24,119,242]:[131,58,180];
+// Platform header
+pdf.setFillColor(hdrColor[0],hdrColor[1],hdrColor[2]);pdf.rect(x,y-5,pw-30,10,'F');
+pdf.setFontSize(12);pdf.setTextColor(255);pdf.text('Calendario '+name,x+3,y+1);y+=12;
+// Table header
+pdf.setFontSize(8);pdf.setTextColor(37,49,76);pdf.setFont(undefined,'bold');
+if(isL){
+pdf.text('Semana',x,y);pdf.text('Tema',x+20,y);pdf.text('Enfoque',x+130,y);pdf.text('Publico',x+175,y);
+}else{
+pdf.text('Semana',x,y);pdf.text('Fecha',x+20,y);pdf.text('Tipo',x+50,y);pdf.text('Tema',x+80,y);pdf.text('Objetivo',x+160,y);
+}
+y+=2;pdf.setDrawColor(200);pdf.line(x,y,pw-15,y);y+=5;
+pdf.setFont(undefined,'normal');pdf.setFontSize(7.5);pdf.setTextColor(60);
+weeks.forEach(function(week){
+// Week separator
+pdf.setFillColor(240,244,248);pdf.rect(x-2,y-4,pw-26,7,'F');
+pdf.setFont(undefined,'bold');pdf.setFontSize(8);pdf.setTextColor(37,49,76);
+pdf.text(week.week,x,y);pdf.setFont(undefined,'normal');pdf.setFontSize(7.5);pdf.setTextColor(100);
+pdf.text(week.dates,x+30,y);y+=7;
+week.posts.forEach(function(p){
+pdf.setTextColor(60);
+if(isL){
+pdf.text(p.wk,x,y);
+var topicLines=pdf.splitTextToSize(p.topic,105);pdf.text(topicLines[0],x+20,y);
+pdf.text(p.type,x+130,y);
+pdf.text(p.obj,x+175,y);
+}else{
+pdf.text(p.wk,x,y);
+pdf.text((p.day||'')+' '+(p.weekday||''),x+20,y);
+pdf.text(p.type,x+50,y);
+var topicLines=pdf.splitTextToSize(p.topic,75);pdf.text(topicLines[0],x+80,y);
+pdf.text(p.obj||'',x+160,y);
+}
+y+=5;
+if(y>ph-20){pdf.addPage();y=15;}
+});
+y+=3;
+});
+y+=8;
+});
 pdf.save('Calendario-LinkedIn-STS-INSIGHT.pdf');
 showToast('PDF descargado','success');
-}).catch(function(e){
-section.style.height=origHeight;
-section.style.overflow=origOverflow;
-container.style.overflow='';
-container.style.maxHeight='';
-showToast('Error: '+e.message,'error');
-});
-}catch(e){
-section.style.height=origHeight;
-section.style.overflow=origOverflow;
-container.style.overflow='';
-container.style.maxHeight='';
-showToast('Error al generar PDF','error');
-}
+}catch(e){showToast('Error: '+e.message,'error');}
 }
 
 /* SETTINGS */
